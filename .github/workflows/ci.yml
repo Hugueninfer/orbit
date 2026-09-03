@@ -3,6 +3,7 @@ on:
   push:
     branches: ['**']
   pull_request:
+  workflow_call:
 permissions:
   contents: read
 concurrency:
@@ -47,7 +48,7 @@ jobs:
         working-directory: web
       - run: npm audit --omit=dev --audit-level=high
         working-directory: web
-      - run: uv tool run pip-audit --path .venv/lib/python3.14/site-packages
+      - run: uv export --frozen --no-dev --no-emit-project --output-file requirements-audit.txt > /dev/null && uv tool run pip-audit -r requirements-audit.txt --no-deps
         working-directory: backend
       - run: ./scripts/generate-api.sh && git diff --exit-code -- backend/openapi.json web/src/generated/api.ts
       - run: cp .env.example .env && docker compose up -d --build --wait
@@ -57,6 +58,15 @@ jobs:
         working-directory: web
         env:
           ORBIT_BASE_URL: http://127.0.0.1:8080
+      - name: Preserve the tested release image
+        if: github.event_name == 'release'
+        run: docker save orbit:local | gzip > orbit-tested.tar.gz
+      - uses: actions/upload-artifact@v4
+        if: github.event_name == 'release'
+        with:
+          name: orbit-tested-image
+          path: orbit-tested.tar.gz
+          retention-days: 1
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

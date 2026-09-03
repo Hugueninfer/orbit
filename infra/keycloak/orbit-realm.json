@@ -14,7 +14,10 @@
       "redirectUris": [
         "http://localhost:8080/auth/callback",
         "http://localhost:5173/auth/callback",
-        "http://localhost:8082/auth/callback"
+        "http://localhost:8082/auth/callback",
+        "http://localhost:8080/auth/silent-callback",
+        "http://localhost:5173/auth/silent-callback",
+        "http://localhost:8082/auth/silent-callback"
       ],
       "webOrigins": [
         "http://localhost:8080",

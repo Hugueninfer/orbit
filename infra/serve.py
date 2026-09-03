@@ -11,6 +11,12 @@ from fastapi.responses import FileResponse, JSONResponse
 from app.main import app
 
 logger = logging.getLogger("orbit.requests")
+logger.setLevel(logging.INFO)
+logger.propagate = False
+if not logger.handlers:
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter("%(message)s"))
+    logger.addHandler(handler)
 web_root = Path(os.environ.get("WEB_DIST", "/app/web/dist")).resolve()
 
 
@@ -20,8 +26,8 @@ async def request_context(request: Request, call_next):
     started = time.monotonic()
     try:
         response = await call_next(request)
-    except Exception:
-        logger.exception("Unhandled request failure: %s", request_id)
+    except Exception as exc:
+        logger.error(json.dumps({"event": "request_failure", "request_id": request_id, "exception_type": type(exc).__name__}))
         response = JSONResponse({"type":"about:blank","title":"Erro interno","status":500,"detail":"Não foi possível concluir. Tente novamente.","request_id":request_id},status_code=500,media_type="application/problem+json")
     response.headers["X-Request-ID"] = request_id
     response.headers["X-Content-Type-Options"] = "nosniff"
@@ -31,8 +37,11 @@ async def request_context(request: Request, call_next):
     response.headers["Content-Security-Policy"] = (
         "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; "
         "font-src 'self'; img-src 'self' data:; connect-src 'self' https: http://localhost:8081; "
-        "frame-src https: http://localhost:8081; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+        "frame-src 'self' https: http://localhost:8081; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
     )
+    if request.url.path == "/auth/silent-callback":
+        response.headers["X-Frame-Options"] = "SAMEORIGIN"
+        response.headers["Content-Security-Policy"] = response.headers["Content-Security-Policy"].replace("frame-ancestors 'none'", "frame-ancestors 'self'")
     if request.url.path == "/api/docs":
         response.headers["Content-Security-Policy"] = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https://fastapi.tiangolo.com; frame-ancestors 'none'; base-uri 'self'"
     if request.url.path.startswith("/api"):

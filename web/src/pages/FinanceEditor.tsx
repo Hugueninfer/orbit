@@ -7,15 +7,23 @@ import type {
   CreditCard as CardType,
   Transaction,
   Recurrence,
+  Purchase,
 } from "../types";
 import { Button, Drawer, Field, useToast } from "../components/ui";
-import { installmentParts, localDate, money, parseMoney } from "../format";
+import {
+  installmentParts,
+  localDate,
+  money,
+  parseMoney,
+  parseBalance,
+} from "../format";
 export function TransactionEditor({
   accounts,
   categories,
   cards,
   onClose,
   transaction,
+  purchase,
   today = localDate(),
 }: {
   accounts: Account[];
@@ -23,25 +31,39 @@ export function TransactionEditor({
   cards: CardType[];
   onClose: () => void;
   transaction?: Transaction | null;
+  purchase?: Purchase | null;
   today?: string;
 }) {
-  const [type, setType] = useState<string>(transaction?.kind ?? "expense");
+  const [type, setType] = useState<string>(
+    purchase ? "card" : (transaction?.kind ?? "expense"),
+  );
   const [amount, setAmount] = useState(
-    transaction ? (transaction.amount / 100).toFixed(2).replace(".", ",") : "",
+    transaction || purchase
+      ? ((transaction?.amount ?? purchase!.amount) / 100)
+          .toFixed(2)
+          .replace(".", ",")
+      : "",
   );
   const [description, setDescription] = useState(
-    transaction?.description ?? "",
+    transaction?.description ?? purchase?.description ?? "",
   );
-  const [date, setDate] = useState(transaction?.date ?? today);
+  const [date, setDate] = useState(
+    transaction?.date ?? purchase?.purchase_date ?? today,
+  );
   const [account, setAccount] = useState(
     transaction?.account_id ?? accounts[0]?.id ?? "",
   );
   const [destination, setDestination] = useState(accounts[1]?.id ?? "");
-  const [category, setCategory] = useState(transaction?.category_id ?? "");
-  const [card, setCard] = useState(cards[0]?.id ?? "");
-  const [count, setCount] = useState(1);
+  const [category, setCategory] = useState(
+    transaction?.category_id ?? purchase?.category_id ?? "",
+  );
+  const [card, setCard] = useState(purchase?.card_id ?? cards[0]?.id ?? "");
+  const [count, setCount] = useState(purchase?.installment_count ?? 1);
   const [status, setStatus] = useState(transaction?.status ?? "posted");
   const [recurring, setRecurring] = useState(false);
+  const [frequency, setFrequency] = useState<Frequency>("monthly");
+  const [interval, setInterval] = useState(1);
+  const [endDate, setEndDate] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [key] = useState(crypto.randomUUID());
@@ -61,16 +83,16 @@ export function TransactionEditor({
       if (!description.trim()) throw new Error("Adicione uma descrição.");
       if (type === "card") {
         await actions(
-          "/purchases",
+          purchase ? `/purchases/${purchase.id}` : "/purchases",
           {
-            card_id: card,
+            ...(purchase ? { version: purchase.version } : { card_id: card }),
             category_id: category || null,
             description,
             amount: value,
             installment_count: count,
             purchase_date: date,
           },
-          "POST",
+          purchase ? "PATCH" : "POST",
           key,
         );
       } else if (type === "transfer") {
@@ -87,16 +109,24 @@ export function TransactionEditor({
           key,
         );
       } else if (recurring && !transaction) {
-        await actions("/recurrences", {
-          account_id: account,
-          category_id: category || null,
-          kind: type,
-          amount: value,
-          currency: accounts.find((a) => a.id === account)?.currency ?? "BRL",
-          description,
-          start_date: date,
-          day_of_month: Number(date.slice(-2)),
-        });
+        await actions(
+          "/recurrences",
+          {
+            account_id: account,
+            category_id: category || null,
+            kind: type,
+            amount: value,
+            currency: accounts.find((a) => a.id === account)?.currency ?? "BRL",
+            description,
+            start_date: date,
+            day_of_month: Number(date.slice(-2)),
+            frequency,
+            interval,
+            end_date: endDate || null,
+          },
+          "POST",
+          key,
+        );
       } else {
         const payload = {
           account_id: account,
@@ -127,7 +157,13 @@ export function TransactionEditor({
   }
   return (
     <Drawer
-      title={transaction ? "Editar transação" : "Nova transação"}
+      title={
+        purchase
+          ? "Editar compra"
+          : transaction
+            ? "Editar transação"
+            : "Nova transação"
+      }
       open
       onClose={onClose}
       description="Tudo sob controle, até o último centavo"
@@ -150,7 +186,7 @@ export function TransactionEditor({
             ["card", "Cartão"],
           ].map(([k, label]) => (
             <button
-              disabled={!!transaction}
+              disabled={!!transaction || !!purchase}
               key={k}
               className={type === k ? "active" : ""}
               onClick={() => {
@@ -212,7 +248,11 @@ export function TransactionEditor({
       {type === "card" ? (
         <>
           <Field label="Cartão de crédito">
-            <select value={card} onChange={(e) => setCard(e.target.value)}>
+            <select
+              disabled={!!purchase}
+              value={card}
+              onChange={(e) => setCard(e.target.value)}
+            >
               {cards.map((c) => (
                 <option key={c.id} value={c.id}>
                   {c.name} (••{c.last_four})
@@ -293,6 +333,7 @@ export function TransactionEditor({
             <>
               <Field label="Situação">
                 <select
+                  disabled={recurring}
                   value={status}
                   onChange={(e) =>
                     setStatus(e.target.value as Transaction["status"])
@@ -310,14 +351,25 @@ export function TransactionEditor({
                     checked={recurring}
                     onChange={(e) => setRecurring(e.target.checked)}
                   />
-                  Repetir mensalmente neste dia
+                  Repetir esta transação
                 </label>
               )}
               {recurring && (
-                <p className="form-help">
-                  A recorrência gera lançamentos previstos. Confirme cada um
-                  quando o pagamento acontecer.
-                </p>
+                <>
+                  <RecurrenceFields
+                    frequency={frequency}
+                    setFrequency={setFrequency}
+                    interval={interval}
+                    setInterval={setInterval}
+                    endDate={endDate}
+                    setEndDate={setEndDate}
+                    minDate={date}
+                  />
+                  <p className="form-help">
+                    Os próximos lançamentos serão criados como previstos.
+                    Confirme cada um quando o pagamento acontecer.
+                  </p>
+                </>
               )}
             </>
           )}
@@ -380,7 +432,7 @@ export function FinanceResourceEditor({
                         name,
                         type,
                         currency: "BRL",
-                        opening_balance: opening ? parseMoney(opening) : 0,
+                        opening_balance: opening ? parseBalance(opening) : 0,
                         color: "#44e2cd",
                       }
                     : kind === "categories"
@@ -521,6 +573,10 @@ export function RecurrenceEditor({
     (recurrence.amount / 100).toFixed(2).replace(".", ","),
   );
   const [description, setDescription] = useState(recurrence.description);
+  const [frequency, setFrequency] = useState<Frequency>(recurrence.frequency);
+  const [interval, setInterval] = useState(recurrence.interval);
+  const [endDate, setEndDate] = useState(recurrence.end_date ?? "");
+  const [day, setDay] = useState(recurrence.day_of_month);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const action = useActions();
@@ -545,6 +601,10 @@ export function RecurrenceEditor({
                     version: recurrence.version,
                     amount: parseMoney(amount),
                     description,
+                    frequency,
+                    interval,
+                    end_date: endDate || null,
+                    day_of_month: day,
                   },
                   "PATCH",
                 );
@@ -575,11 +635,93 @@ export function RecurrenceEditor({
           onChange={(e) => setAmount(e.target.value)}
         />
       </Field>
+      <RecurrenceFields
+        frequency={frequency}
+        setFrequency={setFrequency}
+        interval={interval}
+        setInterval={setInterval}
+        endDate={endDate}
+        setEndDate={setEndDate}
+        minDate={recurrence.start_date}
+      />
+      {frequency === "monthly" && (
+        <Field label="Dia do mês">
+          <input
+            type="number"
+            min={1}
+            max={31}
+            value={day}
+            onChange={(e) => setDay(Number(e.target.value))}
+          />
+        </Field>
+      )}
       <p className="form-help">
         Os lançamentos já realizados permanecem no histórico. As alterações
-        orientam novas ocorrências.
+        atualizam os lançamentos futuros previstos. O histórico já realizado é
+        preservado.
       </p>
       {error && <p className="form-error">{error}</p>}
     </Drawer>
+  );
+}
+
+type Frequency = "daily" | "weekly" | "monthly" | "yearly";
+export const frequencyNames: Record<Frequency, string> = {
+  daily: "dia(s)",
+  weekly: "semana(s)",
+  monthly: "mês(es)",
+  yearly: "ano(s)",
+};
+function RecurrenceFields({
+  frequency,
+  setFrequency,
+  interval,
+  setInterval,
+  endDate,
+  setEndDate,
+  minDate,
+}: {
+  frequency: Frequency;
+  setFrequency: (v: Frequency) => void;
+  interval: number;
+  setInterval: (v: number) => void;
+  endDate: string;
+  setEndDate: (v: string) => void;
+  minDate: string;
+}) {
+  return (
+    <>
+      <div className="form-grid">
+        <Field label="Repetir a cada">
+          <input
+            type="number"
+            min={1}
+            max={365}
+            value={interval}
+            onChange={(e) => setInterval(Number(e.target.value))}
+          />
+        </Field>
+        <Field label="Frequência">
+          <select
+            value={frequency}
+            onChange={(e) => setFrequency(e.target.value as Frequency)}
+          >
+            {Object.entries(frequencyNames).map(([value, label]) => (
+              <option value={value} key={value}>
+                {label}
+              </option>
+            ))}
+          </select>
+        </Field>
+      </div>
+      <Field label="Data final (opcional)">
+        <input
+          type="date"
+          min={minDate}
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+        />
+      </Field>
+    </>
   );
 }

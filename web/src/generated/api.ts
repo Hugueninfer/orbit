@@ -542,7 +542,8 @@ export interface paths {
     delete?: never;
     options?: never;
     head?: never;
-    patch?: never;
+    /** Edit Purchase */
+    patch: operations["edit_purchase_api_v1_purchases__identifier__patch"];
     trace?: never;
   };
   "/api/v1/purchases/{identifier}/cancel": {
@@ -1842,6 +1843,21 @@ export interface components {
       /** Version */
       version: number;
     };
+    /** PurchasePatch */
+    PurchasePatch: {
+      /** Amount */
+      amount?: number | null;
+      /** Category Id */
+      category_id?: string | null;
+      /** Description */
+      description?: string | null;
+      /** Installment Count */
+      installment_count?: number | null;
+      /** Purchase Date */
+      purchase_date?: string | null;
+      /** Version */
+      version: number;
+    };
     /** PurchasePreview */
     PurchasePreview: {
       /** Installments */
@@ -1871,9 +1887,22 @@ export interface components {
        */
       currency: string;
       /** Day Of Month */
-      day_of_month: number;
+      day_of_month?: number | null;
       /** Description */
       description: string;
+      /** End Date */
+      end_date?: string | null;
+      /**
+       * Frequency
+       * @default monthly
+       * @enum {string}
+       */
+      frequency: "daily" | "weekly" | "monthly" | "yearly";
+      /**
+       * Interval
+       * @default 1
+       */
+      interval: number;
       /**
        * Kind
        * @enum {string}
@@ -1904,16 +1933,35 @@ export interface components {
       day_of_month: number;
       /** Description */
       description: string;
+      /** End Date */
+      end_date: string | null;
+      /**
+       * Frequency
+       * @enum {string}
+       */
+      frequency: "daily" | "weekly" | "monthly" | "yearly";
+      /**
+       * Generated Through
+       * Format: date
+       */
+      generated_through: string;
       /**
        * Id
        * Format: uuid
        */
       id: string;
+      /** Interval */
+      interval: number;
       /**
        * Kind
        * @enum {string}
        */
       kind: "income" | "expense";
+      /**
+       * Schedule Effective Date
+       * Format: date
+       */
+      schedule_effective_date: string;
       /**
        * Start Date
        * Format: date
@@ -1924,12 +1972,24 @@ export interface components {
     };
     /** RecurrencePatch */
     RecurrencePatch: {
+      /** Account Id */
+      account_id?: string | null;
       /** Active */
       active?: boolean | null;
       /** Amount */
       amount?: number | null;
+      /** Category Id */
+      category_id?: string | null;
+      /** Day Of Month */
+      day_of_month?: number | null;
       /** Description */
       description?: string | null;
+      /** End Date */
+      end_date?: string | null;
+      /** Frequency */
+      frequency?: ("daily" | "weekly" | "monthly" | "yearly") | null;
+      /** Interval */
+      interval?: number | null;
       /** Version */
       version: number;
     };
@@ -2446,8 +2506,12 @@ export interface components {
       kind: "income" | "expense";
       /** Recurrence Id */
       recurrence_id: string | null;
+      /** Recurrence Superseded */
+      recurrence_superseded: boolean;
       /** Reversal Of */
       reversal_of: string | null;
+      /** Scheduled Date */
+      scheduled_date: string | null;
       /**
        * Status
        * @enum {string}
@@ -3811,6 +3875,41 @@ export interface operations {
       cookie?: never;
     };
     requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["PurchaseOut"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  edit_purchase_api_v1_purchases__identifier__patch: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        identifier: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["PurchasePatch"];
+      };
+    };
     responses: {
       /** @description Successful Response */
       200: {

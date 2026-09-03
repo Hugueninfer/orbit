@@ -2,11 +2,11 @@
 
 O usuário pediu para manter a especificação v1.1 como base funcional e adotar o pacote de telas Stitch como referência visual exata para desenvolvimento futuro.
 
-- Base funcional consolidada: `outputs/orbit_base_do_projeto.md`.
-- Prioridades de portfólio, uso pessoal, demo, gratuidade e deploy Docker: `outputs/orbit_portfolio_e_deploy.md`.
-- Sistema visual e catálogo das 19 telas: `outputs/orbit_design/design.json`.
-- Guia de uso: `outputs/orbit_design/LEIA-ME.md`.
-- Imagens e HTMLs originais: `outputs/orbit_design/references/stitch_original/`.
+- Base funcional consolidada: `docs/specification.md`.
+- Prioridades de portfólio, uso pessoal, demo, gratuidade e deploy Docker: `docs/deployment-requirements.md`.
+- Sistema visual e catálogo das 19 telas: `docs/design/design.json`.
+- Guia de uso: `docs/design/LEIA-ME.md`.
+- Imagens e HTMLs originais: `docs/design/references/stitch_original/`.
 
 Antes de desenvolver uma tela Orbit, consultar o JSON e a imagem/HTML correspondente. Para uma tela ainda inexistente, usar a receita e os componentes da tela irmã mais próxima. Preservar o visual escolhido; registrar desvios necessários. As diferenças entre tokens do guia e dos HTMLs estão documentadas no JSON.
 

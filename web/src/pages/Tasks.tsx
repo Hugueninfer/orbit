@@ -89,7 +89,7 @@ export function TaskRow({
   );
 }
 export default function Tasks() {
-  const tasks = useApi<Task[]>("/tasks");
+  const tasks = useApi<Task[]>("/tasks?archived=true");
   const lists = useApi<TaskList[]>("/task-lists");
   const actions = useActions();
   const toast = useToast();
@@ -98,6 +98,8 @@ export default function Tasks() {
   const [tab, setTab] = useState("today");
   const [search, setSearch] = useState("");
   const [list, setList] = useState("");
+  const [priorityFilter, setPriorityFilter] = useState("");
+  const [tagFilter, setTagFilter] = useState("");
   const [newList, setNewList] = useState(false);
   const [listName, setListName] = useState("");
   const [busy, setBusy] = useState(false);
@@ -126,14 +128,18 @@ export default function Tasks() {
   if (tasks.isLoading || lists.isLoading) return <Loading />;
   if (tasks.error)
     return <ErrorState error={tasks.error} retry={() => tasks.refetch()} />;
-  const all = tasks.data ?? [];
+  const all = (tasks.data ?? []).filter((t) => !t.archived);
   const active = all.filter((t) => !["done", "cancelled"].includes(t.status));
   const completed = all.filter((t) => t.status === "done");
-  const filtered = all.filter(
+  const filtered = (tasks.data ?? []).filter(
     (t) =>
+      (tab === "archived" ? t.archived : !t.archived) &&
+      (!priorityFilter || t.priority === priorityFilter) &&
+      (!tagFilter || t.tags.includes(tagFilter)) &&
       (!list || t.list_id === list) &&
       t.title.toLowerCase().includes(search.toLowerCase()) &&
       (tab === "all" ||
+        tab === "archived" ||
         (tab === "done" && t.status === "done") ||
         (tab === "today" &&
           !["done", "cancelled"].includes(t.status) &&
@@ -197,6 +203,7 @@ export default function Tasks() {
             ["upcoming", "Próximas"],
             ["all", "Todas"],
             ["done", "Concluídas"],
+            ["archived", "Arquivadas"],
           ].map(([key, label]) => (
             <button
               key={key}
@@ -234,6 +241,32 @@ export default function Tasks() {
             </option>
           ))}
         </select>
+        <select
+          className="control"
+          aria-label="Filtrar por prioridade"
+          value={priorityFilter}
+          onChange={(e) => setPriorityFilter(e.target.value)}
+        >
+          <option value="">Todas as prioridades</option>
+          {Object.entries(priorities).map(([k, v]) => (
+            <option key={k} value={k}>
+              {v}
+            </option>
+          ))}
+        </select>
+        <select
+          className="control"
+          aria-label="Filtrar por tag"
+          value={tagFilter}
+          onChange={(e) => setTagFilter(e.target.value)}
+        >
+          <option value="">Todas as tags</option>
+          {[...new Set((tasks.data ?? []).flatMap((t) => t.tags))]
+            .sort()
+            .map((tag) => (
+              <option key={tag}>{tag}</option>
+            ))}
+        </select>
       </div>
       <section>
         <h2 className="section-heading">
@@ -255,9 +288,29 @@ export default function Tasks() {
                   task={t}
                   listName={lists.data?.find((l) => l.id === t.list_id)?.name}
                   onEdit={() => setEditing(t)}
-                  onToggle={() => toggle(t)}
+                  onToggle={() => {
+                    if (!t.archived) void toggle(t);
+                  }}
                 />
               </div>
+              {t.archived && (
+                <Button
+                  onClick={async () => {
+                    try {
+                      await actions(
+                        `/tasks/${t.id}`,
+                        { version: t.version, archived: false },
+                        "PATCH",
+                      );
+                      toast("Tarefa restaurada");
+                    } catch (e) {
+                      toast((e as Error).message, true);
+                    }
+                  }}
+                >
+                  Restaurar
+                </Button>
+              )}
               {list && tab === "all" && (
                 <button
                   className="icon-button"
@@ -432,7 +485,7 @@ function TaskEditor({
                 onClick={() => setRemove(true)}
               >
                 <Trash2 size={17} />
-                <span className="desktop-only">Arquivar</span>
+                <span>Arquivar</span>
               </Button>
             )}
             <Button onClick={onClose}>Cancelar</Button>

@@ -55,6 +55,7 @@ import {
   FinanceResourceEditor,
   TransactionEditor,
   RecurrenceEditor,
+  frequencyNames,
 } from "./FinanceEditor";
 const statusNames: Record<string, string> = {
   posted: "Realizada",
@@ -80,6 +81,7 @@ export default function Finance() {
     "accounts" | "categories" | "cards" | null
   >(null);
   const [editing, setEditing] = useState<Transaction | null>(null);
+  const [editPurchase, setEditPurchase] = useState<Purchase | null>(null);
   const [invoice, setInvoice] = useState<Invoice | null>(null);
   const [reverse, setReverse] = useState<{
     id: string;
@@ -137,13 +139,43 @@ export default function Finance() {
     a.click();
     URL.revokeObjectURL(url);
   }
-  if (accounts.isLoading || transactions.isLoading) return <Loading />;
-  if (accounts.error)
+  const sources = [
+    accounts,
+    categories,
+    cards,
+    transactions,
+    invoices,
+    purchases,
+    recurrences,
+    report,
+  ];
+  const failed = sources.find((source) => source.error);
+  if (sources.some((source) => source.isLoading)) return <Loading />;
+  if (failed?.error && sources.some((source) => source.data === undefined))
     return (
-      <ErrorState error={accounts.error} retry={() => accounts.refetch()} />
+      <ErrorState
+        error={failed.error}
+        retry={() => {
+          sources.forEach((source) => void source.refetch());
+        }}
+      />
     );
   return (
     <div className="page">
+      {failed?.error && (
+        <div>
+          <p className="form-help">
+            Exibindo os últimos dados recebidos. Não foi possível atualizar os
+            valores.
+          </p>
+          <ErrorState
+            error={failed.error}
+            retry={() => {
+              sources.forEach((source) => void source.refetch());
+            }}
+          />
+        </div>
+      )}
       <div className="toolbar">
         <div className="tabs">
           <button
@@ -472,6 +504,22 @@ export default function Finance() {
                 </div>
                 <Badge>{statusNames[p.status]}</Badge>
                 <span className="mono">{money(p.amount)}</span>
+                {p.status === "active" &&
+                  p.installments.every(
+                    (i) =>
+                      i.close_date >= today &&
+                      !invoices.data?.find(
+                        (invoice) => invoice.id === i.invoice_id,
+                      )?.paid,
+                  ) && (
+                    <button
+                      className="icon-button"
+                      aria-label={`Editar compra ${p.description}`}
+                      onClick={() => setEditPurchase(p)}
+                    >
+                      <Pencil size={15} />
+                    </button>
+                  )}
                 {p.status === "active" && (
                   <Button
                     variant="ghost"
@@ -531,7 +579,8 @@ export default function Finance() {
                 <div className="row-content">
                   <strong>{r.description}</strong>
                   <small>
-                    Todo dia {r.day_of_month} · {r.active ? "Ativa" : "Pausada"}
+                    A cada {r.interval} {frequencyNames[r.frequency]} ·{" "}
+                    {r.active ? "Ativa" : "Pausada"}
                   </small>
                 </div>
                 <span className="mono">{money(r.amount)}</span>
@@ -568,7 +617,7 @@ export default function Finance() {
             {!recurrences.data?.length && (
               <Empty
                 title="Seu planejamento mensal"
-                description="Ao criar uma transação, marque a opção de repetir mensalmente."
+                description="Ao criar uma transação, marque a opção de repetir."
               />
             )}
           </>
@@ -653,6 +702,16 @@ export default function Finance() {
           }}
         />
       )}
+      {editPurchase && (
+        <TransactionEditor
+          accounts={ac}
+          categories={cats}
+          cards={ca}
+          purchase={editPurchase}
+          today={today}
+          onClose={() => setEditPurchase(null)}
+        />
+      )}
       {resource && (
         <FinanceResourceEditor
           kind={resource}
@@ -665,6 +724,10 @@ export default function Finance() {
           invoice={invoices.data?.find((i) => i.id === invoice.id) ?? invoice}
           accounts={ac}
           cardName={cardName(invoice.card_id)}
+          preferredAccount={
+            ca.find((c) => c.id === invoice.card_id)?.payment_account_id ??
+            undefined
+          }
           today={today}
           onClose={() => setInvoice(null)}
         />
@@ -730,19 +793,25 @@ function InvoiceDrawer({
   invoice,
   accounts,
   cardName,
+  preferredAccount,
   today,
   onClose,
 }: {
   invoice: Invoice;
   accounts: Account[];
   cardName: string;
+  preferredAccount?: string;
   today: string;
   onClose: () => void;
 }) {
   const [amount, setAmount] = useState(
     (Math.max(0, invoice.remaining) / 100).toFixed(2).replace(".", ","),
   );
-  const [account, setAccount] = useState(accounts[0]?.id ?? "");
+  const [account, setAccount] = useState(
+    accounts.find((a) => a.id === preferredAccount)?.id ??
+      accounts[0]?.id ??
+      "",
+  );
   const [date, setDate] = useState(today);
   const [key, setKey] = useState(crypto.randomUUID());
   const [busy, setBusy] = useState(false);

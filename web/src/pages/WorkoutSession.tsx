@@ -26,14 +26,23 @@ import {
   useToast,
 } from "../components/ui";
 import { decimal, minutes, displayLoad, canonicalLoad } from "../format";
+type SetDraft = {
+  load: string;
+  loadChanged: boolean;
+  reps: string;
+  type: WorkoutSet["type"];
+  rpe: string;
+  rir: string;
+};
 export default function WorkoutSession() {
   const { id } = useParams();
   const profile = useApi<Profile>("/me");
   const unit = profile.data?.weight_unit ?? "kg";
   const query = useApi<Session>(`/sessions/${id}`);
   const [exerciseIndex, setExerciseIndex] = useState(0);
+  const [drafts, setDrafts] = useState<Record<string, SetDraft>>({});
   const [now, setNow] = useState(Date.now());
-  const [restAdjustment, setRestAdjustment] = useState(0);
+  const [restOverride, setRestOverride] = useState<number | null>(null);
   const [finish, setFinish] = useState(false);
   const [cancel, setCancel] = useState(false);
   const [notes, setNotes] = useState("");
@@ -44,7 +53,7 @@ export default function WorkoutSession() {
     const timer = window.setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(timer);
   }, []);
-  useEffect(() => setRestAdjustment(0), [query.data?.rest_until]);
+  useEffect(() => setRestOverride(null), [query.data?.rest_until]);
   if (query.isLoading) return <Loading />;
   if (query.error)
     return <ErrorState error={query.error} retry={() => query.refetch()} />;
@@ -56,8 +65,10 @@ export default function WorkoutSession() {
   const active = session.status === "active";
   const remaining = Math.max(
     0,
-    (session.rest_until ? Date.parse(session.rest_until) - now : 0) / 1000 +
-      restAdjustment,
+    ((restOverride ??
+      (session.rest_until ? Date.parse(session.rest_until) : now)) -
+      now) /
+      1000,
   );
   return (
     <div className="page session">
@@ -136,6 +147,15 @@ export default function WorkoutSession() {
             unit={unit}
             disabled={busy || session.status === "cancelled"}
             onBusy={setBusy}
+            draft={drafts[set.id]}
+            onDraft={(draft) =>
+              setDrafts((current) => {
+                const next = { ...current };
+                if (draft) next[set.id] = draft;
+                else delete next[set.id];
+                return next;
+              })
+            }
           />
         ))}
         {active && (
@@ -182,25 +202,21 @@ export default function WorkoutSession() {
           </p>
           <div className="actions" style={{ marginTop: 22 }}>
             <Button
-              onClick={() => setRestAdjustment(restAdjustment - 15)}
+              onClick={() =>
+                setRestOverride(Date.now() + Math.max(0, remaining - 15) * 1000)
+              }
               disabled={!remaining}
             >
               −15s
             </Button>
-            <Button onClick={() => setRestAdjustment(restAdjustment + 30)}>
-              +30s
-            </Button>
             <Button
               onClick={() =>
-                setRestAdjustment(
-                  -(session.rest_until
-                    ? Math.max(0, (Date.parse(session.rest_until) - now) / 1000)
-                    : 0),
-                )
+                setRestOverride(Date.now() + (remaining + 30) * 1000)
               }
             >
-              Pular
+              +30s
             </Button>
+            <Button onClick={() => setRestOverride(Date.now())}>Pular</Button>
           </div>
         </Card>
       ) : (
@@ -234,7 +250,7 @@ export default function WorkoutSession() {
       )}
       <div className="between">
         <Button
-          disabled={exerciseIndex === 0}
+          disabled={busy || exerciseIndex === 0}
           onClick={() => setExerciseIndex((i) => i - 1)}
         >
           <ArrowLeft size={17} />
@@ -250,7 +266,7 @@ export default function WorkoutSession() {
         </div>
         <Button
           variant="primary"
-          disabled={exerciseIndex === session.exercises.length - 1}
+          disabled={busy || exerciseIndex === session.exercises.length - 1}
           onClick={() => setExerciseIndex((i) => i + 1)}
         >
           Próximo
@@ -261,7 +277,7 @@ export default function WorkoutSession() {
         <div className="between">
           <Button
             variant="ghost"
-            disabled={busy}
+            disabled={busy || Object.keys(drafts).length > 0}
             onClick={async () => {
               setBusy(true);
               try {
@@ -292,7 +308,7 @@ export default function WorkoutSession() {
             <Button onClick={() => setFinish(false)}>Continuar treino</Button>
             <Button
               variant="primary"
-              disabled={busy || !completed}
+              disabled={busy || !completed || Object.keys(drafts).length > 0}
               onClick={async () => {
                 setBusy(true);
                 try {
@@ -316,6 +332,11 @@ export default function WorkoutSession() {
         }
       >
         <h1>{completed} séries concluídas</h1>
+        {Object.keys(drafts).length > 0 && (
+          <p className="form-error">
+            Salve as séries editadas antes de finalizar o treino.
+          </p>
+        )}
         <p className="muted" style={{ margin: "12px 0 26px" }}>
           Volume registrado:{" "}
           {decimal(Number(displayLoad(session.volume, unit)))} {unit}
@@ -365,7 +386,11 @@ function SetRow({
   disabled,
   onBusy,
   unit,
+  draft,
+  onDraft,
 }: {
+  draft?: SetDraft;
+  onDraft: (draft?: SetDraft) => void;
   unit: "kg" | "lb";
   set: WorkoutSet;
   index: number;
@@ -373,20 +398,28 @@ function SetRow({
   disabled: boolean;
   onBusy: (b: boolean) => void;
 }) {
-  const [load, setLoad] = useState(displayLoad(set.load, unit));
-  const [loadChanged, setLoadChanged] = useState(false);
-  const [reps, setReps] = useState(String(set.reps));
-  const [type, setType] = useState(set.type);
+  const [load, setLoad] = useState(draft?.load ?? displayLoad(set.load, unit));
+  const [loadChanged, setLoadChanged] = useState(draft?.loadChanged ?? false);
+  const [reps, setReps] = useState(draft?.reps ?? String(set.reps));
+  const [type, setType] = useState(draft?.type ?? set.type);
+  const [rpe, setRpe] = useState(draft?.rpe ?? set.rpe?.toString() ?? "");
+  const [rir, setRir] = useState(draft?.rir ?? set.rir?.toString() ?? "");
   const [edit, setEdit] = useState(false);
+  function preserve(change: Partial<SetDraft>) {
+    onDraft({ load, loadChanged, reps, type, rpe, rir, ...change });
+  }
   const [reason, setReason] = useState("");
   const actions = useActions();
   const toast = useToast();
   useEffect(() => {
+    if (draft) return;
     setLoad(displayLoad(set.load, unit));
     setLoadChanged(false);
     setReps(String(set.reps));
     setType(set.type);
-  }, [set.load, set.reps, set.type, unit]);
+    setRpe(set.rpe?.toString() ?? "");
+    setRir(set.rir?.toString() ?? "");
+  }, [set.load, set.reps, set.type, set.rpe, set.rir, unit, draft]);
   async function save() {
     onBusy(true);
     try {
@@ -398,10 +431,13 @@ function SetRow({
           reps: Number(reps),
           type,
           completed: true,
+          rpe: rpe === "" ? null : Number(rpe),
+          rir: rir === "" ? null : Number(rir),
           reason,
         },
         "PUT",
       );
+      onDraft(undefined);
       setEdit(false);
       toast("Série registrada");
     } catch (e) {
@@ -417,7 +453,11 @@ function SetRow({
         <select
           aria-label={`Tipo da série ${index + 1}`}
           value={type}
-          onChange={(e) => setType(e.target.value as WorkoutSet["type"])}
+          onChange={(e) => {
+            const value = e.target.value as WorkoutSet["type"];
+            setType(value);
+            preserve({ type: value });
+          }}
           disabled={disabled}
           style={{
             minWidth: 0,
@@ -443,6 +483,7 @@ function SetRow({
           onChange={(e) => {
             setLoad(e.target.value);
             setLoadChanged(true);
+            preserve({ load: e.target.value, loadChanged: true });
           }}
         />
         <input
@@ -452,7 +493,10 @@ function SetRow({
           max={1000}
           value={reps}
           disabled={disabled}
-          onChange={(e) => setReps(e.target.value)}
+          onChange={(e) => {
+            setReps(e.target.value);
+            preserve({ reps: e.target.value });
+          }}
         />
         <button
           className={`check-button ${set.completed_at ? "checked" : ""}`}
@@ -469,6 +513,54 @@ function SetRow({
           )}
         </button>
       </div>
+      {draft && (
+        <Button
+          variant="ghost"
+          disabled={disabled}
+          onClick={() => onDraft(undefined)}
+        >
+          Descartar alterações da série {index + 1}
+        </Button>
+      )}
+      <details className="set-effort">
+        <summary>Esforço · série {index + 1} (opcional)</summary>
+        <div className="form-grid">
+          <Field
+            label={`RPE da série ${index + 1}`}
+            hint="Esforço percebido, de 0 a 10"
+          >
+            <input
+              type="number"
+              min={0}
+              max={10}
+              step="0.5"
+              disabled={disabled}
+              value={rpe}
+              onChange={(e) => {
+                setRpe(e.target.value);
+                preserve({ rpe: e.target.value });
+              }}
+            />
+          </Field>
+          <Field
+            label={`RIR da série ${index + 1}`}
+            hint="Repetições que ainda conseguiria fazer"
+          >
+            <input
+              type="number"
+              min={0}
+              max={10}
+              step="0.5"
+              disabled={disabled}
+              value={rir}
+              onChange={(e) => {
+                setRir(e.target.value);
+                preserve({ rir: e.target.value });
+              }}
+            />
+          </Field>
+        </div>
+      </details>
       <Drawer
         open={edit}
         title="Corrigir série do histórico"

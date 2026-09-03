@@ -20,3 +20,6 @@ test-results/
 work/
 
 *.egg-info/
+
+*.dump
+requirements-audit.txt

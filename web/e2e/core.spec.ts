@@ -66,6 +66,13 @@ test("demo journey persists tasks, habits, money and workout sets", async ({
     .getByRole("button", { name: "Retomar treino", exact: true })
     .click();
   await page.getByLabel("Carga da série 1", { exact: true }).fill("32");
+  await page.getByRole("button", { name: "Próximo", exact: true }).click();
+  await page.getByRole("button", { name: "Anterior", exact: true }).click();
+  await expect(
+    page.getByLabel("Carga da série 1", { exact: true }),
+  ).toHaveValue("32");
+  await page.getByText("Esforço · série 1 (opcional)", { exact: true }).click();
+  await page.getByLabel("RPE da série 1", { exact: true }).fill("8");
   await page.getByLabel("Repetições da série 1", { exact: true }).fill("10");
   await page
     .getByRole("button", { name: "Salvar série 1", exact: true })
@@ -77,6 +84,20 @@ test("demo journey persists tasks, habits, money and workout sets", async ({
   await expect(
     page.getByLabel("Carga da série 1", { exact: true }),
   ).toHaveValue("32");
+  await page.getByText("Esforço · série 1 (opcional)", { exact: true }).click();
+  await expect(page.getByLabel("RPE da série 1", { exact: true })).toHaveValue(
+    "8",
+  );
+  await page.getByLabel("Carga da série 2", { exact: true }).fill("999");
+  await page
+    .getByRole("button", {
+      name: "Descartar alterações da série 2",
+      exact: true,
+    })
+    .click();
+  await expect(
+    page.getByLabel("Carga da série 2", { exact: true }),
+  ).not.toHaveValue("999");
   await page.getByRole("button", { name: "Finalizar", exact: true }).click();
   await page
     .getByRole("button", { name: "Concluir sessão", exact: true })
@@ -124,4 +145,141 @@ test("all routes fit viewport and drawers retain keyboard focus", async ({
   await expect(page.getByRole("dialog")).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).toHaveCount(0);
+});
+
+test("card purchase editing, partial payment and recurrence creation persist", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page
+    .getByRole("button", { name: "Experimentar demonstração", exact: true })
+    .click();
+  await expect(page.getByText("FOCO DO DIA", { exact: true })).toBeVisible();
+  await page.goto("/financas");
+  await page.getByRole("button", { name: "Novo cartão", exact: true }).click();
+  let dialog = page.getByRole("dialog");
+  await dialog.getByLabel("Nome", { exact: true }).fill("Cartão de validação");
+  await dialog.getByLabel("Dia de fechamento").fill("31");
+  await dialog.getByRole("button", { name: "Salvar", exact: true }).click();
+  await expect(dialog).toHaveCount(0);
+  await page.goto("/financas?new=1");
+  dialog = page.getByRole("dialog");
+  await dialog.getByRole("button", { name: "Cartão", exact: true }).click();
+  await dialog
+    .getByLabel("Cartão de crédito")
+    .selectOption({ label: "Cartão de validação (••0000)" });
+  await dialog.getByLabel("Valor da operação · BRL").fill("10,01");
+  await dialog
+    .getByLabel("Descrição", { exact: true })
+    .fill("Compra parcelada validada");
+  await dialog.getByLabel("Número de parcelas").fill("3");
+  await dialog
+    .getByRole("button", { name: "Confirmar transação", exact: true })
+    .click();
+  await expect(dialog).toHaveCount(0);
+  await page.getByRole("button", { name: "Compras", exact: true }).click();
+  await page
+    .getByRole("button", {
+      name: "Editar compra Compra parcelada validada",
+      exact: true,
+    })
+    .click();
+  await dialog.getByLabel("Valor da operação · BRL").fill("20,02");
+  await dialog
+    .getByRole("button", { name: "Confirmar transação", exact: true })
+    .click();
+  await expect(dialog).toHaveCount(0);
+  await page.reload();
+  await page.getByRole("button", { name: "Compras", exact: true }).click();
+  await expect(
+    page
+      .locator(".transaction-row")
+      .filter({ hasText: "Compra parcelada validada" }),
+  ).toContainText("20,02");
+  await page.getByRole("button", { name: "Faturas", exact: true }).click();
+  await page
+    .locator(".transaction-row")
+    .filter({ hasText: "Cartão de validação" })
+    .first()
+    .getByRole("button", { name: "Abrir" })
+    .click();
+  await expect(dialog.getByRole("heading", { name: /6,68/ })).toBeVisible();
+  await dialog.getByLabel("Valor (R$)", { exact: true }).fill("3,34");
+  await dialog
+    .getByRole("button", { name: "Registrar pagamento", exact: true })
+    .click();
+  await expect(dialog.getByRole("heading", { name: /3,34/ })).toBeVisible();
+  await dialog.getByRole("button", { name: "Fechar", exact: true }).click();
+  await page.getByRole("button", { name: "Compras", exact: true }).click();
+  await expect(
+    page.getByRole("button", {
+      name: "Editar compra Compra parcelada validada",
+      exact: true,
+    }),
+  ).toHaveCount(0);
+  await page.goto("/financas?new=1");
+  await dialog.getByLabel("Valor da operação · BRL").fill("42,00");
+  await dialog
+    .getByLabel("Descrição", { exact: true })
+    .fill("Recorrência validada");
+  await dialog.getByText("Repetir esta transação", { exact: true }).click();
+  await dialog
+    .getByLabel("Frequência", { exact: true })
+    .selectOption("monthly");
+  await dialog
+    .getByRole("button", { name: "Confirmar transação", exact: true })
+    .click();
+  await expect(dialog).toHaveCount(0);
+  await expect(
+    page.getByText("Recorrência validada", { exact: true }),
+  ).toBeVisible();
+  await page.reload();
+  await expect(
+    page.getByText("Recorrência validada", { exact: true }),
+  ).toBeVisible();
+});
+
+test("finance failure is explicit and partial habit notes survive month navigation", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page
+    .getByRole("button", { name: "Experimentar demonstração", exact: true })
+    .click();
+  await expect(page.getByText("FOCO DO DIA", { exact: true })).toBeVisible();
+  await page.goto("/habitos");
+  await page
+    .getByRole("button", { name: "Registrar Beber água", exact: true })
+    .click();
+  const dialog = page.getByRole("dialog");
+  await dialog.getByLabel(/Quantidade/).fill("3");
+  await dialog.getByLabel("Como foi hoje?").fill("Registro parcial preservado");
+  await dialog
+    .getByRole("button", { name: "Salvar check-in", exact: true })
+    .click();
+  await expect(dialog).toHaveCount(0);
+  await page.getByRole("button", { name: "Mês anterior", exact: true }).click();
+  await page.getByRole("button", { name: "Próximo mês", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Registrar Beber água", exact: true })
+    .click();
+  await expect(dialog.getByLabel(/Quantidade/)).toHaveValue("3");
+  await expect(dialog.getByLabel("Como foi hoje?")).toHaveValue(
+    "Registro parcial preservado",
+  );
+  await page.keyboard.press("Escape");
+  await page.route("**/api/v1/transactions", (route) =>
+    route.fulfill({
+      status: 503,
+      contentType: "application/problem+json",
+      body: JSON.stringify({ detail: "Falha controlada de transações" }),
+    }),
+  );
+  await page.goto("/financas");
+  await expect(
+    page.getByText("Falha controlada de transações", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("SALDO CONSOLIDADO", { exact: true }),
+  ).toHaveCount(0);
 });

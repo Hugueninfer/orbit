@@ -22,18 +22,20 @@ Keycloak's `start-dev` and HTTP are **local-only**. For public use, use managed 
 
 ## Release
 
-Build and retain the immutable image tag/digest. Back up, apply migrations once via the `migrate` service, then start/recreate app. On a managed free web service, run `scripts/migrate-remote.sh IMAGE PRIVATE_ENV_FILE` from the operator's machine before deploying; no unsupported paid pre-deploy hook is assumed.
+Publish the reviewed GitHub release and retain the verified image digest from its workflow summary. CI tests, saves and publishes that same image; both Render services reference its digest. Back up, apply migrations once via the `migrate` service, then start/recreate app. On a managed free web service, run `scripts/migrate-remote.sh IMAGE PRIVATE_ENV_FILE` from the operator's machine before deploying; no unsupported paid pre-deploy hook is assumed.
 
 Application rollback means running the previous compatible image. A database backup restore is a separate reviewed recovery operation. Never automatically downgrade destructive migrations.
 
 ## Backup and restore
 
 ```sh
-./scripts/backup.sh /secure/location/orbit-YYYY-MM-DD.dump
-./scripts/restore-check.sh /secure/location/orbit-YYYY-MM-DD.dump
+./scripts/backup.sh orbit-personal .env.personal /secure/location/orbit-YYYY-MM-DD.dump
+./scripts/restore-check.sh orbit-personal .env.personal /secure/location/orbit-YYYY-MM-DD.dump
 ```
 
-Backups use mode 600 under the current umask and should be stored encrypted off-host. The check script creates a new temporary database, restores there, verifies the schema and removes only that temporary database. It never overwrites the live database. To recover production, create a fresh DB, restore a selected backup, verify owner rows and key transactions, and deliberately switch the app's connection string.
+Project and environment arguments are mandatory; use `orbit .env` for demo. Backups are atomically published with mode 600, refuse existing destinations and should be stored encrypted off-host. The check script creates a new temporary database, restores there, verifies the schema and removes only that temporary database. It never overwrites the live database. To recover production, create a fresh DB, restore a selected backup, verify owner rows and key transactions, and deliberately switch the app's connection string.
+
+For managed PostgreSQL, save a separate private `.env.pg-personal` file with `PGHOST` (direct endpoint), `PGPORT=5432`, `PGUSER`, `PGPASSWORD`, `PGDATABASE`, and `PGSSLROOTCERT=system`, and `PGSSLMODE=verify-full` (or the provider's required verified TLS configuration). Run `./scripts/backup-remote.sh .env.pg-personal /secure/location/personal-YYYY-MM-DD.dump`. The database credential is passed through Docker's env file, not a command-line URL. Restore-check that dump into the local isolated database with the command above before relying on it. Never put backup dumps or private env files in Git.
 
 A volume is persistence, not a backup. Set a retention schedule suited to your use; avoid retaining unbounded demo audit data.
 

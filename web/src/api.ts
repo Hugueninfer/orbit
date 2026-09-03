@@ -62,6 +62,7 @@ export async function getOidc() {
       authority: cfg.oidc_authority,
       client_id: cfg.oidc_client_id,
       redirect_uri: `${location.origin}/auth/callback`,
+      silent_redirect_uri: `${location.origin}/auth/silent-callback`,
       post_logout_redirect_uri: location.origin,
       response_type: "code",
       scope: "openid profile email",

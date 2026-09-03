@@ -33,7 +33,7 @@ import {
   Stat,
   useToast,
 } from "../components/ui";
-import { dateLabel, localDate } from "../format";
+import { dateLabel, localDate, weekDates } from "../format";
 const weekdays = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
 export default function Habits() {
   const habits = useApi<Habit[]>("/habits");
@@ -83,7 +83,7 @@ export default function Habits() {
     : 0;
   async function mark(habit: Habit) {
     const entry = getStats(habit.id)?.calendar.find((c) => c.date === selected);
-    if (entry?.completed) {
+    if (entry && entry.quantity > 0) {
       setCheckin(habit);
       setQuantity(String(entry.quantity));
       setNote(
@@ -92,9 +92,9 @@ export default function Habits() {
       );
       return;
     }
-    if (habit.target_quantity > 1) {
+    if ((entry?.target ?? habit.target_quantity) > 1) {
       setCheckin(habit);
-      setQuantity(String(habit.target_quantity));
+      setQuantity(String(entry?.target ?? habit.target_quantity));
       setNote("");
       return;
     }
@@ -112,18 +112,19 @@ export default function Habits() {
   function changeMonth(delta: number) {
     const d = new Date(`${month}-15T12:00:00`);
     d.setMonth(d.getMonth() + delta);
-    setMonth(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`);
+    const nextMonth = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+    setMonth(nextMonth);
+    setSelected(nextMonth === today.slice(0, 7) ? today : `${nextMonth}-01`);
   }
   if (habits.isLoading) return <Loading />;
   if (habits.error)
     return <ErrorState error={habits.error} retry={() => habits.refetch()} />;
-  const startWeek = new Date(`${selected}T12:00:00`);
-  startWeek.setDate(startWeek.getDate() - ((startWeek.getDay() + 6) % 7));
-  const week = Array.from({ length: 7 }, (_, i) => {
-    const d = new Date(startWeek);
-    d.setDate(d.getDate() + i);
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-  });
+  const weekStart = me.data?.week_start ?? 0;
+  const week = weekDates(selected, weekStart);
+  const calendarWeekdays = Array.from(
+    { length: 7 },
+    (_, i) => weekdays[(i + weekStart) % 7],
+  );
   return (
     <div className="page">
       {stats.find((s) => s.error)?.error && (
@@ -203,10 +204,13 @@ export default function Habits() {
                 <button
                   key={d}
                   className={selected === d ? "selected" : ""}
-                  onClick={() => setSelected(d)}
+                  onClick={() => {
+                    setSelected(d);
+                    setMonth(d.slice(0, 7));
+                  }}
                   disabled={d > today}
                 >
-                  <small>{weekdays[i]}</small>
+                  <small>{calendarWeekdays[i]}</small>
                   <strong>{d.slice(-2)}</strong>
                   {d === today ? (
                     <Badge tone="teal">Hoje</Badge>
@@ -245,7 +249,12 @@ export default function Habits() {
                     <div className="row">
                       <CheckButton
                         checked={entry?.completed ?? false}
-                        disabled={selected > today}
+                        disabled={
+                          selected > today ||
+                          stats[active.findIndex((item) => item.id === h.id)]
+                            ?.isFetching ||
+                          !data
+                        }
                         onClick={() => mark(h)}
                         label={`Registrar ${h.name}`}
                       />
@@ -264,7 +273,7 @@ export default function Habits() {
                           </span>
                         </strong>
                         <small>
-                          Meta: {h.target_quantity} {h.unit} ·{" "}
+                          Meta: {entry?.target ?? h.target_quantity} {h.unit} ·{" "}
                           {h.schedule.kind === "daily"
                             ? "Todos os dias"
                             : h.schedule.kind === "times_per_week"
@@ -342,11 +351,18 @@ export default function Habits() {
               {dateLabel(`${month}-01`, { month: "long", year: "numeric" })}
             </h3>
             <div className="calendar">
-              {["D", "S", "T", "Q", "Q", "S", "S"].map((d, i) => (
-                <span key={i}>{d}</span>
+              {calendarWeekdays.map((d, i) => (
+                <span key={i}>{d.slice(0, 1)}</span>
               ))}
               {Array.from(
-                { length: new Date(`${month}-01T12:00:00`).getDay() },
+                {
+                  length:
+                    (new Date(`${month}-01T12:00:00Z`).getUTCDay() +
+                      6 -
+                      weekStart +
+                      7) %
+                    7,
+                },
                 (_, i) => (
                   <span key={`blank${i}`} />
                 ),
@@ -371,7 +387,10 @@ export default function Habits() {
                           }
                         : undefined
                     }
-                    onClick={() => setSelected(d)}
+                    onClick={() => {
+                      setSelected(d);
+                      setMonth(d.slice(0, 7));
+                    }}
                   >
                     {i + 1}
                   </button>

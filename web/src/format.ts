@@ -1,12 +1,20 @@
 export function parseMoney(value: string): number {
-  const normalized = value.trim().replace(/\s|R\$/g, "");
+  return parseLocalizedMoney(value, false);
+}
+export function parseBalance(value: string): number {
+  return parseLocalizedMoney(value, true);
+}
+function parseLocalizedMoney(value: string, signed: boolean): number {
+  const raw = value.trim().replace(/\s|R\$/g, "");
+  const negative = signed && raw.startsWith("-");
+  const normalized = negative ? raw.slice(1) : raw;
   if (!/^(?:\d+|\d{1,3}(?:\.\d{3})+)(?:,\d{1,2})?$/.test(normalized))
     throw new Error("Informe um valor como 123,45.");
   const [whole, cents = ""] = normalized.replaceAll(".", "").split(",");
   const minor = Number(whole) * 100 + Number(cents.padEnd(2, "0"));
-  if (!Number.isSafeInteger(minor) || minor <= 0)
+  if (!Number.isSafeInteger(minor) || (!signed && minor <= 0))
     throw new Error("O valor deve ser maior que zero.");
-  return minor;
+  return negative ? -minor : minor;
 }
 export const money = (value: number, currency = "BRL") =>
   new Intl.NumberFormat("pt-BR", { style: "currency", currency }).format(
@@ -65,4 +73,17 @@ export function canonicalLoad(value: string, unit: "kg" | "lb" = "kg"): string {
     Math.round((Number(value) / (unit === "lb" ? 2.20462262185 : 1)) * 1000) /
       1000,
   );
+}
+
+// Profile weekdays use Monday=0; civil dates stay independent of device timezone.
+export function weekDates(date: string, weekStart = 0): string[] {
+  const start = new Date(`${date}T12:00:00Z`);
+  start.setUTCDate(
+    start.getUTCDate() - ((start.getUTCDay() + 6 - weekStart + 7) % 7),
+  );
+  return Array.from({ length: 7 }, (_, i) => {
+    const day = new Date(start);
+    day.setUTCDate(day.getUTCDate() + i);
+    return day.toISOString().slice(0, 10);
+  });
 }

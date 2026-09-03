@@ -1,13 +1,15 @@
 # Two independent ONLINE installations; supply distinct Neon projects/credentials.
+# Replace BOTH image URLs with the exact digest printed by the verified GitHub release.
+# This placeholder intentionally cannot deploy before a reviewed image is published.
 # Free services lack pre-deploy jobs: apply migrations with scripts/migrate-remote.sh first.
 services:
   - type: web
     name: orbit-demo
-    runtime: docker
+    runtime: image
     plan: free
     region: oregon
-    dockerfilePath: ./Dockerfile
-    dockerContext: .
+    image:
+      url: ghcr.io/replace-owner/orbit:replace-with-verified-digest
     healthCheckPath: /api/v1/health
     autoDeployTrigger: off
     envVars:
@@ -19,11 +21,11 @@ services:
         sync: false
   - type: web
     name: orbit-personal
-    runtime: docker
+    runtime: image
     plan: free
     region: oregon
-    dockerfilePath: ./Dockerfile
-    dockerContext: .
+    image:
+      url: ghcr.io/replace-owner/orbit:replace-with-verified-digest
     healthCheckPath: /api/v1/health
     autoDeployTrigger: off
     envVars:

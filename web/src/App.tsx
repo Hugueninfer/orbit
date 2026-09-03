@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { lazy, Suspense, useEffect, useState } from "react";
 import {
   Link,
@@ -51,7 +52,9 @@ const nav = [
 let callbackPromise:
   | ReturnType<Awaited<ReturnType<typeof getOidc>>["signinRedirectCallback"]>
   | undefined;
+let silentCallbackPromise: Promise<void> | undefined;
 export default function App() {
+  const queryClient = useQueryClient();
   const [config, setConfig] = useState<Config>();
   const [auth, setAuth] = useState<boolean | null>(null);
   const [error, setError] = useState<Error>();
@@ -63,7 +66,12 @@ export default function App() {
       try {
         const cfg = await getConfig();
         if (mounted) setConfig(cfg);
-        if (location.pathname === "/auth/callback") {
+        if (location.pathname === "/auth/silent-callback") {
+          const manager = await getOidc();
+          silentCallbackPromise ??= manager.signinSilentCallback();
+          await silentCallbackPromise;
+          return;
+        } else if (location.pathname === "/auth/callback") {
           const manager = await getOidc();
           callbackPromise ??= manager.signinRedirectCallback();
           const user = await callbackPromise;
@@ -81,7 +89,11 @@ export default function App() {
       }
     }
     void init();
-    const expire = () => setAuth(false);
+    const expire = () => {
+      setToken(undefined);
+      queryClient.clear();
+      setAuth(false);
+    };
     window.addEventListener("orbit:unauthorized", expire);
     return () => {
       mounted = false;
