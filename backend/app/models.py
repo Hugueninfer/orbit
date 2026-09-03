@@ -54,6 +54,30 @@ class Token(Base):
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
 
 
+class Credential(Base):
+    __tablename__ = "credentials"
+    owner_id: Mapped[UUID] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), primary_key=True)
+    email: Mapped[str] = mapped_column(String(254), unique=True)
+    password_hash: Mapped[str] = mapped_column(String(300))
+    failures: Mapped[int] = mapped_column(default=0)
+    locked_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class PersonalSession(Base):
+    __tablename__ = "personal_sessions"
+    digest: Mapped[str] = mapped_column(String(64), primary_key=True)
+    owner_id: Mapped[UUID] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), index=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: clock.now())
+
+
+class LoginThrottle(Base):
+    __tablename__ = "login_throttle"
+    key: Mapped[str] = mapped_column(String(30), primary_key=True)
+    attempts: Mapped[int] = mapped_column(default=0)
+    window_start: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+
+
 def encode(value):
     if isinstance(value, UUID):
         return str(value)

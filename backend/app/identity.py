@@ -66,17 +66,24 @@ def authenticated(
     credentials: HTTPAuthorizationCredentials | None = Security(HTTPBearer(auto_error=False)),
 ) -> User:
     header = request.headers.get("Authorization", "")
-    if not header.startswith("Bearer "):
-        problem(401, "Autenticação necessária")
-    token = header[7:]
     config = settings()
-    if config.app_mode == "demo":
+    if config.app_mode == "personal" and not config.oidc_authority:
+        from .accounts import local_user
+
+        query = local_user(request, db)
+    elif config.app_mode == "demo":
+        if not header.startswith("Bearer "):
+            problem(401, "Autenticação necessária")
+        token = header[7:]
         digest = hashlib.sha256(token.encode()).hexdigest()
         access = db.get(Token, digest)
         if not access or access.expires_at <= clock.now():
             problem(401, "Sessão demo expirada")
         query = select(User).where(User.id == access.owner_id, User.expires_at > clock.now())
     else:
+        if not header.startswith("Bearer "):
+            problem(401, "Autenticação necessária")
+        token = header[7:]
         try:
             signing_key = jwks().get_signing_key_from_jwt(token)
             claims = jwt.decode(

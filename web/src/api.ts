@@ -29,6 +29,8 @@ export async function request<T>(
   const headers = new Headers(options.headers);
   if (token) headers.set("Authorization", `Bearer ${token}`);
   if (options.body) headers.set("Content-Type", "application/json");
+  if (!["GET", "HEAD", "OPTIONS"].includes(options.method ?? "GET"))
+    headers.set("X-Orbit-CSRF", "1");
   const response = await fetch(`/api/v1${path}`, { ...options, headers });
   if (!response.ok) {
     let message = `Não foi possível concluir (${response.status}).`;
@@ -39,6 +41,11 @@ export async function request<T>(
     } catch {
       /* non-JSON infrastructure errors */
     }
+    if (path === "/auth/login" && response.status === 401)
+      message = "E-mail ou senha inválidos.";
+    if (path === "/auth/login" && response.status === 429)
+      message =
+        "Muitas tentativas. Aguarde alguns minutos antes de tentar novamente.";
     if (response.status === 401) {
       token = undefined;
       sessionStorage.removeItem(DEMO_STORAGE);
@@ -83,7 +90,15 @@ export async function getOidc() {
 export async function restoreAuth() {
   const cfg = await getConfig();
   if (cfg.app_mode === "demo") return !!loadToken();
-  if (!cfg.oidc_authority) return false;
+  if (!cfg.oidc_authority) {
+    const response = await fetch("/api/v1/me", { credentials: "same-origin" });
+    if (response.status === 401) return false;
+    if (!response.ok)
+      throw new Error(
+        "Não foi possível verificar sua sessão. Tente novamente.",
+      );
+    return true;
+  }
   const manager = await getOidc();
   const user = await manager.getUser();
   if (user && !user.expired) {
@@ -100,11 +115,22 @@ export async function startDemo() {
   sessionStorage.setItem(DEMO_STORAGE, JSON.stringify(data));
   setToken(data.access_token);
 }
+export async function startPersonal(email: string, password: string) {
+  await request("/auth/login", {
+    method: "POST",
+    body: JSON.stringify({ email, password }),
+  });
+}
 export async function logout() {
   setToken(undefined);
   sessionStorage.removeItem(DEMO_STORAGE);
   if ((await getConfig()).app_mode === "personal") {
-    await (await getOidc()).signoutRedirect();
+    if ((await getConfig()).oidc_authority)
+      await (await getOidc()).signoutRedirect();
+    else {
+      await request("/auth/logout", { method: "POST" });
+      window.location.assign("/");
+    }
   } else window.location.assign("/");
 }
 export function useApi<T>(path: string, enabled = true) {

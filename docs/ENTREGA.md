@@ -29,7 +29,7 @@ Abra `http://localhost:8080`. Docker e Compose são os únicos requisitos do cam
 - Contas, categorias, despesas/receitas, transferências, previsões e recorrências com geração automática.
 - Cartões, parcelamento exato em centavos, faturas, pagamentos parciais, edição antes do fechamento e estornos auditáveis.
 - Rotinas de treino, séries, cargas, repetições, RPE/RIR opcionais, descanso, histórico e recordes.
-- Preferências de fuso, início de semana e unidade de carga; login pessoal OIDC com PKCE.
+- Preferências de fuso, início de semana e unidade de carga; login pessoal com e-mail/senha próprio e OIDC opcional.
 
 ## Portfólio e operação
 
@@ -39,7 +39,7 @@ As 19 telas Stitch e o JSON visual estão preservados em [docs/design](design/LE
 
 ## O que ainda depende de configuração externa
 
-Você já tem GitHub. Para o caminho online preparado, faltam Render, Neon e um provedor OIDC, como Auth0. O [guia de publicação](../infra/render/README.md) descreve os passos para duas instalações online gratuitas dentro das cotas dos provedores. Serviços gratuitos podem dormir e compartilham limites; não há promessa de disponibilidade contínua sem custo.
+O caminho online usa GitHub, Render e Neon. A pedido do usuário, Auth0 deixou de ser necessário; o Orbit oferece login próprio com conta criada por comando administrativo. O [guia de publicação](../infra/render/README.md) descreve os passos para duas instalações online gratuitas dentro das cotas dos provedores. Serviços gratuitos podem dormir e compartilham limites; não há promessa de disponibilidade contínua sem custo.
 
 O fluxo completo de Telegram/áudio é uma integração opcional ainda incompleta: há estrutura de captura, processamento e simulação, mas faltam conversas de esclarecimento, ações dos recibos e validação com os serviços reais. Não use essa integração como automação financeira pessoal em produção nesta versão.
 

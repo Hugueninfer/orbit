@@ -4,7 +4,8 @@ A single FastAPI application owns the transactional business rules. React consum
 
 ## Backend modules
 
-- `identity`: OIDC verification, profile, owner lookup, expiring isolated demo sessions and guarded reset.
+- `identity`: profile, owner lookup, optional OIDC verification, expiring isolated demo sessions and guarded reset.
+- `accounts`: default personal email/password login, scrypt hashes, revocable cookie sessions, PostgreSQL login limits, origin/header CSRF checks, operator-only provisioning and recovery.
 - `tasks`: lists, ordering and optimistic versions; checklist/tags carried in the task aggregate.
 - `habits` / `domain`: local-date calendars, historical schedule interpretation, daily/weekly streaks.
 - `finance` / `recurrences` / `resources`: money, accounts, ledger movements, transfers, recurrence generation, purchases, cycles, invoice settlement and credit carry-forward.

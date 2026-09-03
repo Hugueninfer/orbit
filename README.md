@@ -24,7 +24,7 @@ docker compose stop
 docker compose up -d --wait
 ```
 
-Do not use `docker compose down -v` on data you want to keep. For real data, configure personal OIDC mode and backups first.
+Do not use `docker compose down -v` on data you want to keep. For real data, configure personal mode, create your account and set up backups first.
 
 ## Explore in five minutes
 
@@ -36,7 +36,7 @@ Do not use `docker compose down -v` on data you want to keep. For real data, con
 
 ## Implemented core
 
-- OIDC Authorization Code + PKCE personal login; issuer/audience/signature validation, profile preferences and owner-scoped access. Demo credentials are unavailable in personal mode.
+- Built-in email/password login with scrypt, HttpOnly sessions, CSRF protection and persistent login limits. Operator-only account creation and recovery; optional OIDC PKCE for existing providers. Demo credentials are unavailable in personal mode.
 - Task lists, statuses, deadlines, priorities, tags, checklists, archival/restoration, filtering and version-conflict protection.
 - Habit schedules, quantity check-ins, local dates, calendar, adherence and streaks with future-effective schedule and target edits.
 - Integer-money accounts, categories, cash transactions, planned transactions, atomic transfers and idempotent daily/weekly/monthly/yearly recurring occurrences with automatic initial horizons.
@@ -53,18 +53,18 @@ The optional Telegram adapter includes linking, durable inbox/outbox, provider b
 | API | Python 3.14 runtime, FastAPI/Pydantic, SQLAlchemy 2, psycopg 3, Alembic |
 | Data | PostgreSQL 18; typed relational tables, owner-aware foreign keys, integer money, local DATE and UTC instants |
 | Web | React 19, TypeScript, Vite, TanStack Query, Radix dialogs, Recharts; generated OpenAPI DTOs |
-| Identity | OIDC PKCE; local Keycloak profile; managed OIDC for online personal use |
+| Identity | Built-in email/password and revocable sessions; optional OIDC/Keycloak |
 | Delivery | One non-root multi-stage Docker image with same-origin SPA/API; Compose migration job, persistent DB volume |
 | Quality | Real PostgreSQL integration tests, critical domain tests, Vitest and Playwright desktop/mobile journeys |
 | Operations | Readiness/liveness, structured request logs and request IDs, backups and isolated restoration script |
-| Cloud | Two free-plan Render Blueprint services with external PostgreSQL/OIDC; optional Terraform EC2/SSM lab |
+| Cloud | Two free-plan Render Blueprint services with external PostgreSQL; optional Terraform EC2/SSM lab |
 
 This is a modular monolith. No microservices, Kubernetes, permanent worker or paid observability stack is required for the core.
 
 ```mermaid
 flowchart LR
   Browser[Desktop / mobile browser] --> App[Docker: React SPA + FastAPI]
-  Browser <-->|OIDC + PKCE| Identity[Identity provider]
+  Browser -.->|Optional OIDC + PKCE| Identity[Identity provider]
   App --> DB[(PostgreSQL)]
   App --> Logs[Request IDs / structured logs]
   Job[One-time migration / scheduled CLI] --> DB
@@ -76,7 +76,7 @@ flowchart LR
 
 ## Personal mode and online hosting
 
-Local OIDC testing and free online setup are documented in [the runbook](docs/runbook.md) and [Render deployment guide](infra/render/README.md). The user already has GitHub; Render, Neon and identity-provider setup remain external steps. No cloud accounts or paid resources are created by `docker compose up`.
+Personal login setup, optional OIDC testing and free online hosting are documented in [the runbook](docs/runbook.md) and [Render deployment guide](infra/render/README.md). GitHub, Render and Neon are sufficient; Auth0 is not required. No cloud accounts or paid resources are created by `docker compose up`.
 
 Free services can sleep and have shared quotas. Two URLs do not imply two codebases. Render's 750 monthly free instance-hours are shared by all free services in the workspace; do not promise both instances stay online continuously. See the provider links and verified date in the deployment guide.
 

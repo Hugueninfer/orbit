@@ -75,11 +75,11 @@ def test_expired_demo_is_rejected_and_cleaned(client):
         assert db.get(User, UUID(user_id)) is None
 
 
-def test_personal_config_fails_closed():
+def test_personal_local_config_defaults_to_secure_cookies():
     from app.config import Settings
 
-    with pytest.raises(ValueError):
-        Settings(app_mode="personal", oidc_authority="")
+    config = Settings(app_mode="personal", oidc_authority="")
+    assert config.session_cookie_secure is True
 
 
 def test_standard_oidc_discovery_validates_issuer(monkeypatch):

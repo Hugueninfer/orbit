@@ -33,11 +33,7 @@ services:
         value: personal
       - key: DATABASE_URL
         sync: false
-      - key: OIDC_AUTHORITY
-        sync: false
-      - key: OIDC_CLIENT_ID
-        sync: false
-      - key: OIDC_AUDIENCE
-        sync: false
+      - key: SESSION_COOKIE_SECURE
+        value: "true"
       - key: ALLOWED_ORIGINS
         sync: false

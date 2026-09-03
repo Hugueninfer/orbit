@@ -209,7 +209,7 @@ export default function Settings() {
         <p>
           {profile.is_demo
             ? "Esta sessão é temporária e contém apenas dados fictícios."
-            : "Sua autenticação é gerenciada pelo provedor de identidade da sua conta."}
+            : "Seu acesso é individual. Encerre a sessão ao terminar em um dispositivo compartilhado."}
         </p>
         <div className="between">
           <Badge tone="teal">

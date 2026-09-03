@@ -13,13 +13,13 @@ uv run uvicorn app.main:app --host 0.0.0.0 --port 8000
 
 Production startup does not create or mutate database schema. Apply Alembic as a separate release step. `GET /health/live` checks the process; `/api/v1/health` checks PostgreSQL. Interactive API docs: `/api/docs`; typed contract: `/api/v1/openapi.json`. The root runtime wraps the API to serve the web artifact.
 
-Personal mode requires `OIDC_AUTHORITY`, `OIDC_CLIENT_ID`, and `OIDC_AUDIENCE` configured for signed access tokens. Standard discovery validates the issuer; optional `OIDC_JWKS_URL` supports trusted internal routing. Do not use a personal database for demo: deploy the same artifact against separate databases with explicit `APP_MODE`.
+Personal mode defaults to built-in email/password when `OIDC_AUTHORITY` is empty. Create the account with `python -m app.accounts create EMAIL`; recovery uses `reset-password` and revokes sessions. Passwords use scrypt and seven-day opaque sessions use HttpOnly cookies. Public HTTPS deployments require `SESSION_COOKIE_SECURE=true` and exact `ALLOWED_ORIGINS`. OIDC remains optional with issuer/client/audience settings and standard discovery. Do not use a personal database for demo: deploy the same artifact against separate databases with explicit `APP_MODE`.
 
 `API.md` describes all commands, response fields, accounting policies, and the optional Telegram milestone's limits.
 
 ## Persistence and concurrency
 
-24 relational tables plus Alembic history. Core dates are SQL DATE, technical timestamps TIMESTAMPTZ, money BIGINT, weight NUMERIC. Composite `(owner_id, entity_id)` foreign keys reject cross-tenant references in PostgreSQL, in addition to owner-scoped application queries. JSONB is limited to profile preferences, checklists/tags, historical habit schedules, routine/session snapshots, audit/idempotency/integration payloads.
+27 relational tables plus Alembic history. Core dates are SQL DATE, technical timestamps TIMESTAMPTZ, money BIGINT, weight NUMERIC. Composite `(owner_id, entity_id)` foreign keys reject cross-tenant references in PostgreSQL, in addition to owner-scoped application queries. JSONB is limited to profile preferences, checklists/tags, historical habit schedules, routine/session snapshots, audit/idempotency/integration payloads.
 
 All owner mutations lock the owner row, serializing a single user's commands while allowing different users to progress independently. Version comparisons reject stale edits; unique constraints protect invoice cycles, recurrence occurrences, habit check-ins, and a partial unique index protects the single active workout. Recurrence scheduled-date identity is protected by an immutability trigger independently of editable ledger dates. Creation generates the initial recurrence horizon atomically; future rule reconciliation preserves posted history. Sensitive commands persist request fingerprints and results in the same transaction as their effects. Ledger history and audit reasons survive reversals and closed-invoice refunds.
 

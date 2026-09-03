@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     oidc_audience: str = "orbit-api"
     oidc_jwks_url: str = ""
     allowed_origins: str = "http://localhost:5173,http://localhost:8080"
+    session_cookie_secure: bool = True
     demo_ttl_hours: int = 24
     demo_max_sessions: int = 100
     demo_max_records: int = 5000
@@ -28,8 +29,6 @@ class Settings(BaseSettings):
     def safe_config(self):
         if not self.database_url.startswith("postgresql"):
             raise ValueError("PostgreSQL is required")
-        if self.app_mode == "personal" and not self.oidc_authority:
-            raise ValueError("Personal mode requires OIDC_AUTHORITY")
         if not 1 <= self.demo_ttl_hours <= 48:
             raise ValueError("Demo expiry must be between 1 and 48 hours")
         if not 1 <= self.recurrence_horizon_days <= 366:

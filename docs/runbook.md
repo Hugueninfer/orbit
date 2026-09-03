@@ -2,9 +2,9 @@
 
 ## Environments
 
-Use separate Compose project names and private env files to isolate volumes. Do not change a demo deployment into the personal database. The demo expires; personal mode uses OIDC and persistent users.
+Use separate Compose project names and private env files to isolate volumes. Do not change a demo deployment into the personal database. The demo expires; personal mode uses built-in email/password with persistent users. OIDC remains optional.
 
-For local personal identity:
+For optional local OIDC identity:
 
 1. Copy `.env.example` to `.env.personal` and set:
    - `APP_MODE=personal`, `PORT=8082`
@@ -19,6 +19,20 @@ For local personal identity:
 4. Open http://localhost:8082 and select **Entrar no Orbit**. Login redirects to Keycloak with PKCE, then returns to the app.
 
 Keycloak's `start-dev` and HTTP are **local-only**. For public use, use managed HTTPS OIDC or a production Keycloak installation. Root Compose binds ports to loopback. Online mobile access requires an HTTPS host; the Render guide supplies that deployment path.
+
+## Built-in personal account (default)
+
+Set `APP_MODE=personal`, leave `OIDC_AUTHORITY` empty and set `ALLOWED_ORIGINS` to the application origin. For local HTTP only, set `SESSION_COOKIE_SECURE=false`; online requires `true` and HTTPS. Use a separate Compose project and database. After migrations and startup, run:
+
+```sh
+docker compose -p orbit-personal --env-file .env.personal exec app python -m app.accounts create YOUR_EMAIL
+# Recovery or password change (revokes all sessions):
+docker compose -p orbit-personal --env-file .env.personal exec app python -m app.accounts reset-password YOUR_EMAIL
+```
+
+The CLI prompts twice without echoing the password. Choose 15–128 characters. No account, default password, public signup or email recovery is created automatically. Existing OIDC accounts are not silently linked by email. The online equivalent is `bash scripts/account-remote.sh IMAGE PRIVATE_ENV_FILE create YOUR_EMAIL`.
+
+Passwords use scrypt N=131072/r=8/p=1 with a random salt. Seven-day session cookies are HttpOnly/SameSite=Strict/Secure online; their random tokens are hashed in PostgreSQL. Login allows 30 attempts/minute globally, with a 15-minute account lock after five failures. Password hashes are serialized using a database advisory lock to bound memory use. Rate-limit state survives restarts. Request origin plus `X-Orbit-CSRF: 1` is required on cookie-authenticated writes.
 
 ## Release
 
@@ -64,4 +78,4 @@ No hosted tracing/OTLP exporter is configured. Data/control dependencies are loc
 
 ## External publication
 
-The repo and deploy artifacts do not create accounts, register domains or publish URLs. Configure separate personal/demo PostgreSQL and OIDC, then validate actual HTTPS origins/callbacks and a reload/persistence journey. Keep demo reset disabled in personal mode. Record public URLs only after these checks pass.
+The repo and deploy artifacts do not create accounts, register domains or publish URLs. Configure separate personal/demo PostgreSQL, create the personal account and validate HTTPS origins, login/logout and a reload/persistence journey. Keep demo reset disabled in personal mode. Record public URLs only after these checks pass.

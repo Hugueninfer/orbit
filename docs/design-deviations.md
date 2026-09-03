@@ -7,7 +7,7 @@ Preserved: dark navy surface hierarchy, Geist and JetBrains Mono typography, tur
 Necessary adaptations:
 
 - Mock identities, version labels, metric values and 2024 dates are replaced with real owner-scoped data or explicitly fictitious seeded records.
-- Personal login uses OIDC redirect inside the split panel. A local password/biometric form would contradict the authentication requirement.
+- The user requested login without Auth0 on 2026-09-03. Personal login now restores the original split-panel email/password fields, including password visibility. Sessions last seven days; the mock's 30-day checkbox, passkeys and email recovery are not implemented. Existing OIDC configurations remain optional.
 - Lucide SVG icons replace the external Material Symbols font; Geist/JetBrains fonts are bundled locally.
 - Demo entry/banner/reset are additional approved portfolio flows built from the same components.
 - Open Finance, wearables, generic AI insights, biometric claims and nonexistent integration controls are omitted from the original mock copy; they are outside the functional scope.

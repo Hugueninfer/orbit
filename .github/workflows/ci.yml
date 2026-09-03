@@ -37,8 +37,11 @@ jobs:
       - uses: astral-sh/setup-uv@v6
         with:
           version: '0.8.15'
+      - uses: actions/setup-python@v6
+        id: python
+        with:
           python-version: '3.14'
-      - run: uv sync --frozen
+      - run: uv sync --frozen --python "${{ steps.python.outputs.python-path }}"
         working-directory: backend
       - run: uv run ruff check app tests && uv run mypy app
         working-directory: backend
@@ -52,12 +55,28 @@ jobs:
         working-directory: backend
       - run: ./scripts/generate-api.sh && git diff --exit-code -- backend/openapi.json web/src/generated/api.ts
       - run: cp .env.example .env && docker compose up -d --build --wait
+      - name: Start isolated personal login test installation
+        env:
+          APP_MODE: personal
+          PORT: '8082'
+          POSTGRES_PASSWORD: orbit-ci-personal
+          ALLOWED_ORIGINS: http://127.0.0.1:8082
+          SESSION_COOKIE_SECURE: 'false'
+        run: |
+          docker compose -p orbit-personal-ci up -d --no-build --wait
+          docker compose -p orbit-personal-ci exec -T app python - <<'PY'
+          from app.accounts import provision
+          from app.db import SessionLocal
+          with SessionLocal.begin() as db:
+              provision(db, "browser@example.com", "Orbit browser test password 2026")
+          PY
       - run: npx playwright install --with-deps chromium
         working-directory: web
       - run: npm run e2e
         working-directory: web
         env:
           ORBIT_BASE_URL: http://127.0.0.1:8080
+          ORBIT_PERSONAL_URL: http://127.0.0.1:8082
       - name: Preserve the tested release image
         if: github.event_name == 'release'
         run: docker save orbit:local | gzip > orbit-tested.tar.gz

@@ -28,3 +28,9 @@ Production Python dependencies were audited from the frozen runtime lock export 
 The final mobile regression exposed a real 405px content width in a 390px viewport. Constraining the grid's minimum column width restored correct touch coordinates; assertions now compare scroll width against `documentElement.clientWidth` rather than the browser's overflow-inflated `innerWidth`. Final UI checks passed without forced clicks. Chart rendering is deterministic and financial fetch errors do not masquerade as zeros.
 
 Final mobile header smoke (after visual polish):390px document/content width, quick-action button fully inside header; drawer opens and closes by Escape. Final runtime backend source hashes match all22 source modules. Demo and personal containers remain isolated and healthy. Development servers and disposable test PostgreSQL were stopped after verification.
+
+## Login local sem Auth0 — 2026-09-03
+
+A suíte existente passou com 62 testes antes do último ajuste de revisão; após esse ajuste os 10 testes específicos de login passaram (incluindo o novo caso de espaços na senha). Ruff e mypy passaram em 23 módulos. Os 12 testes Playwright de demo e pessoal passaram em desktop/mobile contra a imagem Docker final `8edc6d008516`. A CLI foi exercitada em terminal com entrada de senha oculta e criou somente `browser@example.com` em banco de teste separado. Alembic upgrade foi aplicado em banco novo e `alembic check` não detectou drift. A revisão independente encerrou seus dois achados; veja `reviews/local-auth.md`.
+
+A configuração de CI agora seleciona Python 3.14 estável pelo setup-python. A tabela de downloads do uv 0.8.15 oferece 3.14.0rc2, enquanto o Docker usa 3.14.7; a execução remota após a alteração ainda precisa ser confirmada.

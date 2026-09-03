@@ -1,3 +1,5 @@
+> Decisão posterior do usuário (2026-09-03): Auth0 não é obrigatório. O padrão pessoal agora é login local com e-mail/senha; OIDC é opcional. Abaixo permanece a consolidação da especificação original. Consulte `plans/2026-09-03-local-login.md` para a alteração.
+
 # Orbit — Base do projeto
 
 Análise registrada em 3 de setembro de 2026 a partir de **Orbit — Personal Operations Hub, especificação v1.1**, datada de 2 de setembro de 2026.

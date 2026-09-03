@@ -10,7 +10,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from starlette.exceptions import HTTPException
 
-from . import dashboard, finance, habits, identity, integrations, resources, tasks, workouts
+from . import accounts, dashboard, finance, habits, identity, integrations, resources, tasks, workouts
 from .config import settings
 from .db import database
 from .identity import authenticated
@@ -36,7 +36,7 @@ app.add_middleware(
     allow_origins=settings().allowed_origins.split(","),
     allow_credentials=False,
     allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE"],
-    allow_headers=["Authorization", "Content-Type", "Idempotency-Key"],
+    allow_headers=["Authorization", "Content-Type", "Idempotency-Key", "X-Orbit-CSRF"],
 )
 
 
@@ -115,6 +115,7 @@ def audit_log(user: User = Depends(authenticated), db: Session = Depends(databas
 
 # Static command routes are registered before generic /{identifier} resource routes.
 for router in [
+    accounts.router,
     identity.router,
     tasks.router,
     habits.router,
