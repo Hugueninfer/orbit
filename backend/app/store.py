@@ -8,11 +8,10 @@ from typing import NoReturn
 from uuid import UUID
 
 from fastapi import HTTPException, Request
-from sqlalchemy import func, select
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from .clock import clock
-from .config import settings
 from .domain import local_date
 from .models import MODELS, Aggregate, Audit, Idempotency, User
 
@@ -57,16 +56,6 @@ def audit(db: Session, user: User, action: str, row: Aggregate, detail: dict | N
 
 
 def add(db: Session, user: User, kind: str, data: dict) -> Aggregate:
-    if user.expires_at:
-        cache_key = f"demo_count:{user.id}"
-        if cache_key not in db.info:
-            db.info[cache_key] = sum(
-                db.scalar(select(func.count()).select_from(model).where(model.owner_id == user.id)) or 0
-                for model in MODELS.values()
-            )
-        if db.info[cache_key] >= settings().demo_max_records:
-            problem(429, "Limite da demonstração atingido. Reinicie os dados.")
-        db.info[cache_key] += 1
     row = MODELS[kind](owner_id=user.id, data=data)
     db.add(row)
     db.flush()

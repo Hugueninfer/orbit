@@ -50,13 +50,15 @@ def stats(
     from_date: date | None = None,
     to_date: date | None = None,
     user: User = Depends(authenticated),
-    db: Session = Depends(database),
+    db: Session = Depends(database, scope="function"),
 ):
     return statistics(db, user, owned(db, user, "habit", identifier), from_date, to_date)
 
 
 @router.get("/habits/{identifier}/checkins", response_model=list[CheckinOut])
-def checkins(identifier: str, user: User = Depends(authenticated), db: Session = Depends(database)):
+def checkins(
+    identifier: str, user: User = Depends(authenticated), db: Session = Depends(database, scope="function")
+):
     habit = owned(db, user, "habit", identifier)
     return [public(r) for r in rows(db, user, "checkin") if r.data["habit_id"] == str(habit.id)]
 
@@ -67,7 +69,7 @@ def put(
     day: date,
     body: CheckinPut,
     user: User = Depends(authenticated),
-    db: Session = Depends(database),
+    db: Session = Depends(database, scope="function"),
 ):
     habit = owned(db, user, "habit", identifier)
     if day > today(user) or day.isoformat() < habit.data["created_date"]:
@@ -90,7 +92,12 @@ def put(
 
 
 @router.delete("/habits/{identifier}/checkins/{day}", response_model=Ok)
-def remove(identifier: str, day: date, user: User = Depends(authenticated), db: Session = Depends(database)):
+def remove(
+    identifier: str,
+    day: date,
+    user: User = Depends(authenticated),
+    db: Session = Depends(database, scope="function"),
+):
     habit = owned(db, user, "habit", identifier)
     for row in rows(db, user, "checkin"):
         if row.data["habit_id"] == str(habit.id) and row.data["date"] == day.isoformat():

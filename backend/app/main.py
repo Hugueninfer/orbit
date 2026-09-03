@@ -91,13 +91,13 @@ def config():
 
 
 @app.get("/api/v1/health", response_model=Health)
-def health(db: Session = Depends(database)):
+def health(db: Session = Depends(database, scope="function")):
     db.execute(text("SELECT 1"))
     return {"status": "ok", "database": "ok"}
 
 
 @app.get("/api/v1/audit", response_model=list[AuditOut])
-def audit_log(user: User = Depends(authenticated), db: Session = Depends(database)):
+def audit_log(user: User = Depends(authenticated), db: Session = Depends(database, scope="function")):
     return [
         {
             "id": str(row.id),

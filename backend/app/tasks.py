@@ -13,7 +13,9 @@ router = APIRouter()
 
 
 @router.post("/tasks/reorder", response_model=list[TaskOut])
-def reorder(body: Reorder, user: User = Depends(authenticated), db: Session = Depends(database)):
+def reorder(
+    body: Reorder, user: User = Depends(authenticated), db: Session = Depends(database, scope="function")
+):
     owned(db, user, "task_list", body.list_id)
     current = [
         r for r in rows(db, user, "task") if r.data["list_id"] == str(body.list_id) and not r.data["archived"]
@@ -31,7 +33,9 @@ def reorder(body: Reorder, user: User = Depends(authenticated), db: Session = De
 
 
 @router.delete("/tasks/{identifier}", response_model=Ok)
-def archive(identifier: str, user: User = Depends(authenticated), db: Session = Depends(database)):
+def archive(
+    identifier: str, user: User = Depends(authenticated), db: Session = Depends(database, scope="function")
+):
     row = owned(db, user, "task", identifier)
     update(db, user, row, {"archived": True}, "archived")
     return {"ok": True}

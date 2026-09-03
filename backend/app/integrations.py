@@ -10,7 +10,7 @@ from typing import Protocol
 import httpx
 from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import Field
-from sqlalchemy import delete, select, text
+from sqlalchemy import delete, func, select, text
 from sqlalchemy.orm import Session
 
 from .clock import clock
@@ -61,7 +61,7 @@ def enabled():
 
 
 @router.get("/integrations/telegram", response_model=IntegrationStatus)
-def status(user: User = Depends(authenticated), db: Session = Depends(database)):
+def status(user: User = Depends(authenticated), db: Session = Depends(database, scope="function")):
     demo = settings().app_mode == "demo"
     return {
         "enabled": enabled(),
@@ -76,7 +76,7 @@ def status(user: User = Depends(authenticated), db: Session = Depends(database))
 
 
 @router.post("/integrations/telegram/link", response_model=LinkCode)
-def link(user: User = Depends(authenticated), db: Session = Depends(database)):
+def link(user: User = Depends(authenticated), db: Session = Depends(database, scope="function")):
     if settings().app_mode != "demo" and not enabled():
         problem(503, "Integração Telegram não configurada")
     for row in rows(db, user, "telegram_link"):
@@ -98,7 +98,7 @@ def link(user: User = Depends(authenticated), db: Session = Depends(database)):
 
 
 @router.delete("/integrations/telegram/link", response_model=Ok)
-def unlink(user: User = Depends(authenticated), db: Session = Depends(database)):
+def unlink(user: User = Depends(authenticated), db: Session = Depends(database, scope="function")):
     db.execute(delete(TelegramLink).where(TelegramLink.owner_id == user.id))
     return {"ok": True}
 
@@ -140,7 +140,9 @@ class Simulation(Input):
 
 
 @router.post("/integrations/telegram/simulate", response_model=SimulationOut)
-def simulate(body: Simulation, user: User = Depends(authenticated), db: Session = Depends(database)):
+def simulate(
+    body: Simulation, user: User = Depends(authenticated), db: Session = Depends(database, scope="function")
+):
     if settings().app_mode != "demo":
         problem(404, "Simulação disponível somente na demonstração")
     try:
@@ -174,7 +176,7 @@ def simulate(body: Simulation, user: User = Depends(authenticated), db: Session 
 
 
 @router.post("/integrations/telegram/webhook", response_model=Ok)
-async def webhook(request: Request, db: Session = Depends(database)):
+async def webhook(request: Request, db: Session = Depends(database, scope="function")):
     secret = settings().telegram_webhook_secret
     if not secret or not secrets.compare_digest(
         request.headers.get("X-Telegram-Bot-Api-Secret-Token", ""), secret
@@ -197,7 +199,21 @@ async def webhook(request: Request, db: Session = Depends(database)):
         "voice": message.get("voice"),
         "message_date": message.get("date"),
     }
-    db.add(Inbox(update_id=update_id, payload=payload, status="pending"))
+    linked = db.scalar(select(TelegramLink).where(TelegramLink.chat_id == payload["chat_id"]))
+    if (
+        linked is None
+        and (db.scalar(select(func.count()).select_from(Inbox).where(Inbox.owner_id.is_(None))) or 0)
+        >= settings().integration_unlinked_inbox_limit
+    ):
+        problem(429, "Fila de integração temporariamente cheia")
+    db.add(
+        Inbox(
+            update_id=update_id,
+            owner_id=linked.owner_id if linked else None,
+            payload=payload,
+            status="pending",
+        )
+    )
     return {"ok": True}
 
 
@@ -233,6 +249,7 @@ def process_inbox(provider: ExpenseProvider | None = None):
             )
             if link:
                 link.chat_id = chat_id
+                inbox.owner_id = link.owner_id
                 link.code_digest = secrets.token_hex(32)
                 response = "Conta vinculada. Envie um áudio de despesa."
             else:

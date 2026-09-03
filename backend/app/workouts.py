@@ -100,7 +100,7 @@ def start(
     body: SessionCreate,
     request: Request,
     user: User = Depends(authenticated),
-    db: Session = Depends(database),
+    db: Session = Depends(database, scope="function"),
 ):
     return idempotent(
         db,
@@ -112,7 +112,11 @@ def start(
 
 
 @router.get("/sessions", response_model=list[SessionOut])
-def sessions(status: str | None = None, user: User = Depends(authenticated), db: Session = Depends(database)):
+def sessions(
+    status: str | None = None,
+    user: User = Depends(authenticated),
+    db: Session = Depends(database, scope="function"),
+):
     return sorted(
         [session_data(r) for r in rows(db, user, "session") if not status or r.data["status"] == status],
         key=lambda r: r["started_at"],
@@ -121,12 +125,14 @@ def sessions(status: str | None = None, user: User = Depends(authenticated), db:
 
 
 @router.get("/sessions/active", response_model=SessionOut | None)
-def active(user: User = Depends(authenticated), db: Session = Depends(database)):
+def active(user: User = Depends(authenticated), db: Session = Depends(database, scope="function")):
     return next((session_data(r) for r in rows(db, user, "session") if r.data["status"] == "active"), None)
 
 
 @router.get("/sessions/{identifier}", response_model=SessionOut)
-def session_detail(identifier: str, user: User = Depends(authenticated), db: Session = Depends(database)):
+def session_detail(
+    identifier: str, user: User = Depends(authenticated), db: Session = Depends(database, scope="function")
+):
     return session_data(owned(db, user, "session", identifier))
 
 
@@ -136,7 +142,7 @@ def complete_set(
     set_id: str,
     body: SetPut,
     user: User = Depends(authenticated),
-    db: Session = Depends(database),
+    db: Session = Depends(database, scope="function"),
 ):
     row = owned(db, user, "session", identifier)
     versioned(row, body.version)
@@ -167,7 +173,10 @@ def complete_set(
 
 @router.post("/sessions/{identifier}/sets", response_model=SessionOut)
 def add_set(
-    identifier: str, body: SetAdd, user: User = Depends(authenticated), db: Session = Depends(database)
+    identifier: str,
+    body: SetAdd,
+    user: User = Depends(authenticated),
+    db: Session = Depends(database, scope="function"),
 ):
     row = owned(db, user, "session", identifier)
     versioned(row, body.version)
@@ -198,7 +207,10 @@ def add_set(
 
 @router.post("/sessions/{identifier}/finish", response_model=SessionOut)
 def finish(
-    identifier: str, body: Finish, user: User = Depends(authenticated), db: Session = Depends(database)
+    identifier: str,
+    body: Finish,
+    user: User = Depends(authenticated),
+    db: Session = Depends(database, scope="function"),
 ):
     row = owned(db, user, "session", identifier)
     versioned(row, body.version)
@@ -224,7 +236,10 @@ def finish(
 
 @router.post("/sessions/{identifier}/cancel", response_model=SessionOut)
 def cancel(
-    identifier: str, body: Version, user: User = Depends(authenticated), db: Session = Depends(database)
+    identifier: str,
+    body: Version,
+    user: User = Depends(authenticated),
+    db: Session = Depends(database, scope="function"),
 ):
     row = owned(db, user, "session", identifier)
     versioned(row, body.version)
@@ -242,7 +257,10 @@ def cancel(
 
 @router.post("/sessions/{identifier}/copy-last", response_model=SessionOut)
 def copy_last(
-    identifier: str, body: Version, user: User = Depends(authenticated), db: Session = Depends(database)
+    identifier: str,
+    body: Version,
+    user: User = Depends(authenticated),
+    db: Session = Depends(database, scope="function"),
 ):
     row = owned(db, user, "session", identifier)
     versioned(row, body.version)

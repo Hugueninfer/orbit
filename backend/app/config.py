@@ -17,6 +17,8 @@ class Settings(BaseSettings):
     demo_ttl_hours: int = 24
     demo_max_sessions: int = 100
     demo_max_records: int = 5000
+    recurrence_horizon_days: int = 365
+    integration_unlinked_inbox_limit: int = 1000
     telegram_webhook_secret: str = ""
     telegram_bot_token: str = ""
     telegram_provider_url: str = ""
@@ -30,6 +32,8 @@ class Settings(BaseSettings):
             raise ValueError("Personal mode requires OIDC_AUTHORITY")
         if not 1 <= self.demo_ttl_hours <= 48:
             raise ValueError("Demo expiry must be between 1 and 48 hours")
+        if not 1 <= self.recurrence_horizon_days <= 366:
+            raise ValueError("Recurrence horizon must be 1..366 days")
         return self
 
 

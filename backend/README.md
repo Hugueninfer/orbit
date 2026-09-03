@@ -21,9 +21,9 @@ Personal mode requires `OIDC_AUTHORITY`, `OIDC_CLIENT_ID`, and `OIDC_AUDIENCE` c
 
 24 relational tables plus Alembic history. Core dates are SQL DATE, technical timestamps TIMESTAMPTZ, money BIGINT, weight NUMERIC. Composite `(owner_id, entity_id)` foreign keys reject cross-tenant references in PostgreSQL, in addition to owner-scoped application queries. JSONB is limited to profile preferences, checklists/tags, historical habit schedules, routine/session snapshots, audit/idempotency/integration payloads.
 
-All owner mutations lock the owner row, serializing a single user's commands while allowing different users to progress independently. Version comparisons reject stale edits; unique constraints protect invoice cycles, recurrence occurrences, habit check-ins, and a partial unique index protects the single active workout. Sensitive commands persist request fingerprints and results in the same transaction as their effects. Ledger history and audit reasons survive reversals and closed-invoice refunds.
+All owner mutations lock the owner row, serializing a single user's commands while allowing different users to progress independently. Version comparisons reject stale edits; unique constraints protect invoice cycles, recurrence occurrences, habit check-ins, and a partial unique index protects the single active workout. Recurrence scheduled-date identity is protected by an immutability trigger independently of editable ledger dates. Creation generates the initial recurrence horizon atomically; future rule reconciliation preserves posted history. Sensitive commands persist request fingerprints and results in the same transaction as their effects. Ledger history and audit reasons survive reversals and closed-invoice refunds.
 
-The seed recreates independent relative-date example records for each demo visitor. Expiry is enforced at authentication and expired tenants are removed on demo creation or by the cleanup job. Demo cap counters are cached only for the current database transaction.
+The seed recreates independent relative-date example records for each demo visitor. Expiry is enforced at authentication and expired tenants are removed on demo creation or by the cleanup job. A persisted monotonic demo row-write budget covers every domain/audit/idempotency/integration insert or update through the session flush boundary. Atomic reservations roll back with failed commands. Only explicit scoped reset replenishes the budget. Database transaction dependencies finish before sending successful responses.
 
 ## Jobs
 
@@ -48,3 +48,5 @@ APP_MODE=demo DATABASE_URL=postgresql+psycopg://orbit:orbit-test@localhost:55432
 ```
 
 `test_domain.py` verifies money/calendar/history boundaries. API tests use real PostgreSQL and include actual concurrent requests, database foreign-key rejection, reversals/reporting, invoice credit carry, timezone boundaries, durable integration deduplication and scoped reset. Identity tests verify real RSA signatures, issuer/audience/expiry, discovery metadata, personal-mode rejection of demo credentials and expiry cleanup; they substitute offline JWKS/discovery retrieval, not token verification.
+
+Review correction migration `4b90d2a724f1` adds recurrence scheduling fields, immutable original scheduled dates, effective-dated habit targets and persisted demo write counters. It refuses conflicting legacy recurrence identities rather than silently deleting financial history. Purchase PATCH atomically regenerates open unpaid installment plans while preserving purchase identity and a complete audit snapshot.

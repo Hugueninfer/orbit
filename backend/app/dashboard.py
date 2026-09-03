@@ -22,7 +22,7 @@ router = APIRouter()
 def dashboard(
     basis: Literal["cash", "accrual"] = "cash",
     user: User = Depends(authenticated),
-    db: Session = Depends(database),
+    db: Session = Depends(database, scope="function"),
 ):
     day = today(user)
     tasks = [representation(db, user, r) for r in rows(db, user, "task") if not r.data["archived"]]

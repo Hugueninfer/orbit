@@ -2082,6 +2082,83 @@
         "title": "PurchaseOut",
         "type": "object"
       },
+      "PurchasePatch": {
+        "additionalProperties": false,
+        "properties": {
+          "amount": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "maximum": 1000000000000000.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount"
+          },
+          "category_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category Id"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "installment_count": {
+            "anyOf": [
+              {
+                "maximum": 120.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Installment Count"
+          },
+          "purchase_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Purchase Date"
+          },
+          "version": {
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "version"
+        ],
+        "title": "PurchasePatch",
+        "type": "object"
+      },
       "PurchasePreview": {
         "properties": {
           "installments": {
@@ -2152,16 +2229,53 @@
             "type": "string"
           },
           "day_of_month": {
-            "maximum": 31.0,
-            "minimum": 1.0,
-            "title": "Day Of Month",
-            "type": "integer"
+            "anyOf": [
+              {
+                "maximum": 31.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Day Of Month"
           },
           "description": {
             "maxLength": 500,
             "minLength": 1,
             "title": "Description",
             "type": "string"
+          },
+          "end_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Date"
+          },
+          "frequency": {
+            "default": "monthly",
+            "enum": [
+              "daily",
+              "weekly",
+              "monthly",
+              "yearly"
+            ],
+            "title": "Frequency",
+            "type": "string"
+          },
+          "interval": {
+            "default": 1,
+            "maximum": 365.0,
+            "minimum": 1.0,
+            "title": "Interval",
+            "type": "integer"
           },
           "kind": {
             "enum": [
@@ -2182,8 +2296,7 @@
           "kind",
           "amount",
           "description",
-          "start_date",
-          "day_of_month"
+          "start_date"
         ],
         "title": "RecurrenceCreate",
         "type": "object"
@@ -2227,10 +2340,41 @@
             "title": "Description",
             "type": "string"
           },
+          "end_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Date"
+          },
+          "frequency": {
+            "enum": [
+              "daily",
+              "weekly",
+              "monthly",
+              "yearly"
+            ],
+            "title": "Frequency",
+            "type": "string"
+          },
+          "generated_through": {
+            "format": "date",
+            "title": "Generated Through",
+            "type": "string"
+          },
           "id": {
             "format": "uuid",
             "title": "Id",
             "type": "string"
+          },
+          "interval": {
+            "title": "Interval",
+            "type": "integer"
           },
           "kind": {
             "enum": [
@@ -2238,6 +2382,11 @@
               "expense"
             ],
             "title": "Kind",
+            "type": "string"
+          },
+          "schedule_effective_date": {
+            "format": "date",
+            "title": "Schedule Effective Date",
             "type": "string"
           },
           "start_date": {
@@ -2261,6 +2410,11 @@
           "description",
           "start_date",
           "day_of_month",
+          "frequency",
+          "interval",
+          "end_date",
+          "generated_through",
+          "schedule_effective_date",
           "active"
         ],
         "title": "RecurrenceOut",
@@ -2269,6 +2423,18 @@
       "RecurrencePatch": {
         "additionalProperties": false,
         "properties": {
+          "account_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Account Id"
+          },
           "active": {
             "anyOf": [
               {
@@ -2291,6 +2457,29 @@
             ],
             "title": "Amount"
           },
+          "category_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category Id"
+          },
+          "day_of_month": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Day Of Month"
+          },
           "description": {
             "anyOf": [
               {
@@ -2301,6 +2490,46 @@
               }
             ],
             "title": "Description"
+          },
+          "end_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Date"
+          },
+          "frequency": {
+            "anyOf": [
+              {
+                "enum": [
+                  "daily",
+                  "weekly",
+                  "monthly",
+                  "yearly"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Frequency"
+          },
+          "interval": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interval"
           },
           "version": {
             "title": "Version",
@@ -3713,6 +3942,10 @@
             ],
             "title": "Recurrence Id"
           },
+          "recurrence_superseded": {
+            "title": "Recurrence Superseded",
+            "type": "boolean"
+          },
           "reversal_of": {
             "anyOf": [
               {
@@ -3724,6 +3957,18 @@
               }
             ],
             "title": "Reversal Of"
+          },
+          "scheduled_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scheduled Date"
           },
           "status": {
             "enum": [
@@ -3765,7 +4010,9 @@
           "transfer_id",
           "invoice_id",
           "recurrence_id",
-          "reversal_of"
+          "reversal_of",
+          "scheduled_date",
+          "recurrence_superseded"
         ],
         "title": "TransactionOut",
         "type": "object"
@@ -5825,6 +6072,58 @@
           }
         ],
         "summary": "Purchase Detail"
+      },
+      "patch": {
+        "operationId": "edit_purchase_api_v1_purchases__identifier__patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "identifier",
+            "required": true,
+            "schema": {
+              "title": "Identifier",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PurchasePatch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurchaseOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Edit Purchase"
       }
     },
     "/api/v1/purchases/{identifier}/cancel": {

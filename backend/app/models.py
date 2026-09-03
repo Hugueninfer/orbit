@@ -5,6 +5,7 @@ JSON document. Only snapshots, tags/checklists and schedule history use JSONB.
 """
 
 from datetime import date, datetime
+from datetime import date as LocalDate
 from decimal import Decimal
 from typing import Any, ClassVar
 from uuid import UUID, uuid4
@@ -42,6 +43,7 @@ class User(Base):
     profile: Mapped[dict[str, Any]] = mapped_column(JSONB)
     version: Mapped[int] = mapped_column(default=1)
     expires_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    demo_write_count: Mapped[int] = mapped_column(BigInteger, default=0)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: clock.now())
 
 
@@ -220,7 +222,13 @@ class Recurrence(Aggregate):
         "recurrences",
         ("account_id", "accounts"),
         ("category_id", "categories"),
-        checks=("amount > 0", "day_of_month BETWEEN 1 AND 31"),
+        checks=(
+            "amount > 0",
+            "day_of_month BETWEEN 1 AND 31",
+            "frequency IN ('daily','weekly','monthly','yearly')",
+            "interval BETWEEN 1 AND 365",
+            "end_date IS NULL OR end_date >= start_date",
+        ),
     )
     account_id: Mapped[UUID]
     category_id: Mapped[UUID | None]
@@ -230,6 +238,11 @@ class Recurrence(Aggregate):
     description: Mapped[str]
     start_date: Mapped[date]
     day_of_month: Mapped[int]
+    frequency: Mapped[str] = mapped_column(String(20))
+    interval: Mapped[int]
+    end_date: Mapped[date | None]
+    generated_through: Mapped[date]
+    schedule_effective_date: Mapped[date]
     active: Mapped[bool]
 
 
@@ -335,7 +348,11 @@ class Transaction(Aggregate):
                 "transaction_kind IN ('income','expense')",
             ),
         ),
-        UniqueConstraint("owner_id", "recurrence_id", "date"),
+        UniqueConstraint("owner_id", "recurrence_id", "scheduled_date", name="uq_transaction_occurrence"),
+        CheckConstraint(
+            "(recurrence_id IS NULL AND scheduled_date IS NULL) OR (recurrence_id IS NOT NULL AND scheduled_date IS NOT NULL)",
+            name="ck_transaction_occurrence_identity",
+        ),
     )
     account_id: Mapped[UUID]
     category_id: Mapped[UUID | None]
@@ -348,6 +365,8 @@ class Transaction(Aggregate):
     transfer_id: Mapped[UUID | None]
     invoice_id: Mapped[UUID | None]
     recurrence_id: Mapped[UUID | None]
+    scheduled_date: Mapped[LocalDate | None]
+    recurrence_superseded: Mapped[bool] = mapped_column(default=False)
     reversal_of: Mapped[UUID | None]
 
 

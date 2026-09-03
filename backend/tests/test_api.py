@@ -14,7 +14,7 @@ def demo(c):
 def post(c, h, path, body, key=None):
     from uuid import uuid4
 
-    if path == "/transactions" and key is None:
+    if path in {"/transactions", "/recurrences"} and key is None:
         key = str(uuid4())
     r = c.post("/api/v1" + path, json=body, headers={**h, **({"Idempotency-Key": key} if key else {})})
     assert r.status_code in (200, 201), r.text
@@ -49,7 +49,7 @@ def test_auth_profile_and_tenant_isolation_every_domain(client):
         assert not ({x["id"] for x in mine} & {x["id"] for x in theirs})
         foreign = c.patch(
             "/api/v1/" + collection + "/" + mine[0]["id"],
-            headers=b,
+            headers={**b, "Idempotency-Key": "foreign-owner-edit"},
             json={"version": mine[0].get("version", 1)},
         )
         assert foreign.status_code in (404, 405), foreign.text
@@ -192,7 +192,7 @@ def test_atomic_transfer_and_recurring_occurrences(client):
             "day_of_month": int(today[-2:]),
         },
     )
-    assert post(c, h, "/recurrences/generate", {"through_date": today})["created"] == 1
+    assert post(c, h, "/recurrences/generate", {"through_date": today})["created"] == 0
     assert post(c, h, "/recurrences/generate", {"through_date": today})["created"] == 0
 
 

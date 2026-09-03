@@ -57,13 +57,14 @@ def habit_stats(
         schedule = schedule_at(schedules, day)
         scheduled = schedule["kind"] != "weekdays" or day.weekday() in schedule["weekdays"]
         quantity = checkins.get(day.isoformat(), 0)
+        effective_target = schedule.get("target_quantity", target)
         calendar.append(
             {
                 "date": day.isoformat(),
                 "scheduled": scheduled,
                 "quantity": quantity,
-                "target": target,
-                "completed": quantity >= target,
+                "target": effective_target,
+                "completed": quantity >= effective_target,
             }
         )
         day += timedelta(days=1)

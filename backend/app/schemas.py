@@ -130,7 +130,18 @@ class RecurrenceCreate(Input):
     currency: Currency = "BRL"
     description: str = Field(min_length=1, max_length=500)
     start_date: date
-    day_of_month: int = Field(ge=1, le=31)
+    day_of_month: int | None = Field(default=None, ge=1, le=31)
+    frequency: Literal["daily", "weekly", "monthly", "yearly"] = "monthly"
+    interval: int = Field(default=1, ge=1, le=365)
+    end_date: date | None = None
+
+    @model_validator(mode="after")
+    def valid_recurrence(self):
+        if self.day_of_month is None:
+            self.day_of_month = self.start_date.day
+        if self.end_date is not None and self.end_date < self.start_date:
+            raise ValueError("Data final deve ser igual ou posterior ao início")
+        return self
 
 
 class CardCreate(Input):
@@ -243,7 +254,17 @@ PATCH_FIELDS = {
     "account": {"name", "color", "archived"},
     "category": {"name", "color", "archived"},
     "transaction": {"account_id", "category_id", "amount", "description", "date", "status"},
-    "recurrence": {"active", "amount", "description"},
+    "recurrence": {
+        "active",
+        "amount",
+        "description",
+        "account_id",
+        "category_id",
+        "frequency",
+        "interval",
+        "day_of_month",
+        "end_date",
+    },
     "card": {"name", "last_four", "limit_amount", "payment_account_id", "color", "archived"},
     "exercise": set(ExerciseCreate.model_fields) | {"archived"},
     "routine": set(RoutineCreate.model_fields) | {"archived"},
@@ -256,3 +277,12 @@ class SetAdd(Input):
     load: Decimal = Field(default=Decimal(0), ge=0, le=10000, max_digits=8, decimal_places=3)
     reps: int = Field(ge=1, le=100)
     type: Literal["normal", "warmup", "drop", "failure"] = "normal"
+
+
+class PurchasePatch(Input):
+    version: int
+    category_id: UUID | None = None
+    description: str | None = Field(default=None, min_length=1, max_length=500)
+    amount: Money | None = None
+    installment_count: int | None = Field(default=None, ge=1, le=120)
+    purchase_date: date | None = None

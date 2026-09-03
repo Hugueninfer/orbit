@@ -1,6 +1,7 @@
 """Explicit response DTOs: OpenAPI is the source of generated client types."""
 
 from datetime import date, datetime
+from datetime import date as LocalDate
 from typing import Any, Literal
 from uuid import UUID
 
@@ -140,6 +141,8 @@ class TransactionOut(Entity):
     invoice_id: UUID | None
     recurrence_id: UUID | None
     reversal_of: UUID | None
+    scheduled_date: LocalDate | None
+    recurrence_superseded: bool
     is_overdue: bool = False
 
 
@@ -161,6 +164,11 @@ class RecurrenceOut(Entity):
     description: str
     start_date: date
     day_of_month: int
+    frequency: Literal["daily", "weekly", "monthly", "yearly"]
+    interval: int
+    end_date: date | None
+    generated_through: date
+    schedule_effective_date: date
     active: bool
 
 

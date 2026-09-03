@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, Request
 from sqlalchemy.orm import Session
 
 from .db import database
-from .domain import add_months, billing_cycle, month_date, split_installments
+from .domain import add_months, billing_cycle, split_installments
 from .identity import authenticated
 from .models import User
 from .responses import (
@@ -19,8 +19,8 @@ from .responses import (
     TransactionOut,
     TransferOut,
 )
-from .schemas import Horizon, PaymentCreate, Preview, PurchaseCreate, Reason, TransferCreate
-from .store import add, audit, idempotent, owned, problem, public, rows, today, update
+from .schemas import Horizon, PaymentCreate, Preview, PurchaseCreate, PurchasePatch, Reason, TransferCreate
+from .store import add, audit, idempotent, owned, problem, public, rows, today, update, versioned
 
 router = APIRouter()
 
@@ -50,6 +50,8 @@ def transaction(db, user, **values):
         "transfer_id": None,
         "invoice_id": None,
         "recurrence_id": None,
+        "scheduled_date": None,
+        "recurrence_superseded": False,
         "reversal_of": None,
         "status": "posted",
     }
@@ -61,7 +63,7 @@ def transfer(
     body: TransferCreate,
     request: Request,
     user: User = Depends(authenticated),
-    db: Session = Depends(database),
+    db: Session = Depends(database, scope="function"),
 ):
     def command():
         source = owned(db, user, "account", body.from_account_id)
@@ -97,7 +99,7 @@ def reverse(
     body: Reason,
     request: Request,
     user: User = Depends(authenticated),
-    db: Session = Depends(database),
+    db: Session = Depends(database, scope="function"),
 ):
     def command():
         row = owned(db, user, "transaction", identifier)
@@ -114,6 +116,8 @@ def reverse(
                 "date": today(user).isoformat(),
                 "reversal_of": str(row.id),
                 "recurrence_id": None,
+                "scheduled_date": None,
+                "recurrence_superseded": False,
             },
         )
         update(db, user, row, {"status": "cancelled"}, "reversed")
@@ -124,49 +128,21 @@ def reverse(
 
 
 def generate_recurrences(db, user, through_date):
+    from .recurrences import extend_recurrence
+
     if through_date > today(user) + timedelta(days=366):
         problem(422, "Horizonte máximo de 366 dias")
-    existing = {
-        (r.data["recurrence_id"], r.data["date"])
-        for r in rows(db, user, "transaction")
-        if r.data["recurrence_id"]
+    return {
+        "created": sum(
+            extend_recurrence(db, user, rule, through_date) for rule in rows(db, user, "recurrence")
+        )
     }
-    count = 0
-    for recurrence in rows(db, user, "recurrence"):
-        d = recurrence.data
-        if not d["active"]:
-            continue
-        start = date.fromisoformat(d["start_date"])
-        # A bounded extension cannot generate years of forgotten occurrences.
-        if (through_date - start).days > 3660:
-            problem(422, "Recorrência anterior ao horizonte máximo histórico de dez anos")
-        occurrence = month_date(start.year, start.month, d["day_of_month"])
-        if occurrence < start:
-            occurrence = add_months(occurrence, 1, d["day_of_month"])
-        while occurrence <= through_date:
-            key = (str(recurrence.id), occurrence.isoformat())
-            if key not in existing:
-                transaction(
-                    db,
-                    user,
-                    account_id=d["account_id"],
-                    category_id=d["category_id"],
-                    transaction_kind=d["transaction_kind"],
-                    amount=d["amount"],
-                    currency=d["currency"],
-                    description=d["description"],
-                    date=occurrence.isoformat(),
-                    status="planned",
-                    recurrence_id=str(recurrence.id),
-                )
-                count += 1
-                existing.add(key)
-            occurrence = add_months(occurrence, 1, d["day_of_month"])
-    return {"created": count}
 
 
 @router.post("/recurrences/generate", response_model=Generated)
-def generate(body: Horizon, user: User = Depends(authenticated), db: Session = Depends(database)):
+def generate(
+    body: Horizon, user: User = Depends(authenticated), db: Session = Depends(database, scope="function")
+):
     return generate_recurrences(db, user, body.through_date)
 
 
@@ -190,7 +166,10 @@ def preview(card, amount, count, purchased):
 
 @router.post("/cards/{identifier}/preview", response_model=PurchasePreview)
 def purchase_preview(
-    identifier: str, body: Preview, user: User = Depends(authenticated), db: Session = Depends(database)
+    identifier: str,
+    body: Preview,
+    user: User = Depends(authenticated),
+    db: Session = Depends(database, scope="function"),
 ):
     return preview(
         owned(db, user, "card", identifier), body.amount, body.installment_count, body.purchase_date
@@ -248,7 +227,7 @@ def buy(
     body: PurchaseCreate,
     request: Request,
     user: User = Depends(authenticated),
-    db: Session = Depends(database),
+    db: Session = Depends(database, scope="function"),
 ):
     return idempotent(
         db,
@@ -260,12 +239,14 @@ def buy(
 
 
 @router.get("/purchases", response_model=list[PurchaseOut])
-def purchases(user: User = Depends(authenticated), db: Session = Depends(database)):
+def purchases(user: User = Depends(authenticated), db: Session = Depends(database, scope="function")):
     return [purchase_data(db, user, r) for r in rows(db, user, "purchase")]
 
 
 @router.get("/purchases/{identifier}", response_model=PurchaseOut)
-def purchase_detail(identifier: str, user: User = Depends(authenticated), db: Session = Depends(database)):
+def purchase_detail(
+    identifier: str, user: User = Depends(authenticated), db: Session = Depends(database, scope="function")
+):
     return purchase_data(db, user, owned(db, user, "purchase", identifier))
 
 
@@ -341,7 +322,9 @@ def invoice_data(db, user, invoice):
 
 @router.get("/invoices", response_model=list[InvoiceOut])
 def invoices(
-    card_id: str | None = None, user: User = Depends(authenticated), db: Session = Depends(database)
+    card_id: str | None = None,
+    user: User = Depends(authenticated),
+    db: Session = Depends(database, scope="function"),
 ):
     if card_id:
         owned(db, user, "card", card_id)
@@ -356,7 +339,9 @@ def invoices(
 
 
 @router.get("/invoices/{identifier}", response_model=InvoiceOut)
-def invoice_detail(identifier: str, user: User = Depends(authenticated), db: Session = Depends(database)):
+def invoice_detail(
+    identifier: str, user: User = Depends(authenticated), db: Session = Depends(database, scope="function")
+):
     return invoice_data(db, user, owned(db, user, "invoice", identifier))
 
 
@@ -366,7 +351,7 @@ def pay(
     body: PaymentCreate,
     request: Request,
     user: User = Depends(authenticated),
-    db: Session = Depends(database),
+    db: Session = Depends(database, scope="function"),
 ):
     def command():
         invoice = owned(db, user, "invoice", identifier)
@@ -438,7 +423,7 @@ def cancel_purchase(
     body: Reason,
     request: Request,
     user: User = Depends(authenticated),
-    db: Session = Depends(database),
+    db: Session = Depends(database, scope="function"),
 ):
     return idempotent(
         db,
@@ -455,7 +440,7 @@ def refund_purchase(
     body: Reason,
     request: Request,
     user: User = Depends(authenticated),
-    db: Session = Depends(database),
+    db: Session = Depends(database, scope="function"),
 ):
     return idempotent(
         db,
@@ -525,7 +510,7 @@ def report(
     to_date: date | None = None,
     basis: Literal["cash", "accrual"] = "cash",
     user: User = Depends(authenticated),
-    db: Session = Depends(database),
+    db: Session = Depends(database, scope="function"),
 ):
     now = today(user)
     return report_data(
@@ -535,3 +520,80 @@ def report(
         to_date or add_months(now.replace(day=1), 1) - timedelta(days=1),
         basis,
     )
+
+
+@router.patch("/purchases/{identifier}", response_model=PurchaseOut)
+def edit_purchase(
+    identifier: str,
+    body: PurchasePatch,
+    request: Request,
+    user: User = Depends(authenticated),
+    db: Session = Depends(database, scope="function"),
+):
+    def command():
+        purchase = owned(db, user, "purchase", identifier)
+        versioned(purchase, body.version)
+        if purchase.data["status"] != "active":
+            problem(409, "Compra já cancelada ou estornada")
+        original = purchase_data(db, user, purchase)
+        old_items = [
+            item for item in rows(db, user, "installment") if item.data["purchase_id"] == str(purchase.id)
+        ]
+        for item in old_items:
+            invoice = owned(db, user, "invoice", item.data["invoice_id"])
+            if item.data["close_date"] < today(user).isoformat() or invoice_data(db, user, invoice)["paid"]:
+                problem(409, "Compra em ciclo fechado ou com pagamento exige estorno")
+        changes = body.model_dump(mode="json", exclude_unset=True, exclude={"version"})
+        if not changes or any(value is None for key, value in changes.items() if key != "category_id"):
+            problem(422, "Informe campos válidos para editar a compra")
+        merged = {**purchase.data, **changes}
+        validated = PurchaseCreate.model_validate(
+            {key: value for key, value in merged.items() if key != "status"}
+        ).model_dump(mode="json")
+        card = owned(db, user, "card", validated["card_id"])
+        if card.data["archived"]:
+            problem(422, "Cartão arquivado")
+        if validated["category_id"]:
+            category = owned(db, user, "category", validated["category_id"])
+            if category.data["category_kind"] != "expense" or category.data["archived"]:
+                problem(422, "Categoria de despesa inválida")
+        plan = preview(
+            card,
+            validated["amount"],
+            validated["installment_count"],
+            date.fromisoformat(validated["purchase_date"]),
+        )
+        if any(item["close_date"] < today(user).isoformat() for item in plan["installments"]):
+            problem(409, "O novo plano não pode gerar parcelas em ciclos fechados")
+        new_invoices = {}
+        for item in plan["installments"]:
+            invoice = invoice_for(db, user, str(card.id), item["close_date"], item["due_date"])
+            if invoice_data(db, user, invoice)["paid"]:
+                problem(409, "O novo plano não pode usar uma fatura com pagamento")
+            new_invoices[item["close_date"]] = invoice
+        affected = {item.data["invoice_id"] for item in old_items} | {
+            str(invoice.id) for invoice in new_invoices.values()
+        }
+        for item in old_items:
+            db.delete(item)
+        db.flush()
+        update(db, user, purchase, validated, "purchase_edited")
+        for item in plan["installments"]:
+            add(
+                db,
+                user,
+                "installment",
+                {
+                    **item,
+                    "purchase_id": str(purchase.id),
+                    "invoice_id": str(new_invoices[item["close_date"]].id),
+                    "is_refund": False,
+                },
+            )
+        for invoice_id in affected:
+            update(db, user, owned(db, user, "invoice", invoice_id), {}, "invoice_replanned")
+        result = purchase_data(db, user, purchase)
+        audit(db, user, "purchase_plan_regenerated", purchase, {"before": original, "after": result})
+        return result
+
+    return idempotent(db, user, request, body.model_dump(mode="json", exclude_unset=True), command)

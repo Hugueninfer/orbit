@@ -1,5 +1,5 @@
 from copy import deepcopy
-from datetime import timedelta
+from datetime import date, timedelta
 from typing import Literal
 
 from fastapi import APIRouter, Depends, Request
@@ -78,11 +78,21 @@ def prepare(db, user, kind, data):
     if kind == "habit":
         schedule = data.pop("schedule")
         schedule["effective_date"] = today(user).isoformat()
+        schedule["target_quantity"] = data["target_quantity"]
         data.update(schedules=[schedule], created_date=today(user).isoformat())
     if kind == "transaction":
-        data.update(transfer_id=None, invoice_id=None, recurrence_id=None, reversal_of=None)
+        data.update(
+            transfer_id=None,
+            invoice_id=None,
+            recurrence_id=None,
+            scheduled_date=None,
+            recurrence_superseded=False,
+            reversal_of=None,
+        )
     if kind == "recurrence":
         data["active"] = True
+        data["generated_through"] = (today(user) - timedelta(days=1)).isoformat()
+        data["schedule_effective_date"] = data["start_date"]
     if kind == "exercise":
         data["is_global"] = False
     if kind not in {"transaction", "recurrence"}:
@@ -100,7 +110,9 @@ def representation(db, user, row):
         )
     if row.kind == "habit":
         data["schedule"] = {
-            k: v for k, v in schedule_at(data.pop("schedules"), today(user)).items() if k != "effective_date"
+            k: v
+            for k, v in schedule_at(data.pop("schedules"), today(user)).items()
+            if k not in {"effective_date", "target_quantity"}
         }
     if row.kind == "account":
         from .finance import account_balances
@@ -114,6 +126,10 @@ def representation(db, user, row):
 def create_resource(db, user, kind, data):
     row = add(db, user, kind, prepare(db, user, kind, data))
     audit(db, user, "created", row)
+    if kind == "recurrence":
+        from .recurrences import initial_horizon
+
+        initial_horizon(db, user, row)
     return representation(db, user, row)
 
 
@@ -131,6 +147,7 @@ def patch_resource(db, user, kind, identifier, body):
             "category_id",
             "limit_amount",
             "payment_account_id",
+            "end_date",
         }
         for k, v in changes.items()
     ):
@@ -162,13 +179,30 @@ def patch_resource(db, user, kind, identifier, body):
         if changes["status"] not in {"todo", "in_progress", "done", "cancelled"}:
             problem(422, "Estado inválido")
         changes["completed_at"] = clock.now().isoformat() if changes["status"] == "done" else None
-    if kind == "habit" and "schedule" in changes:
-        new_schedule = changes.pop("schedule")
+    if kind == "habit" and ({"schedule", "target_quantity"} & changes.keys()):
         tomorrow = (today(user) + timedelta(days=1)).isoformat()
-        changes["schedules"] = [s for s in row.data["schedules"] if s["effective_date"] < tomorrow] + [
-            {**new_schedule, "effective_date": tomorrow}
+        # Backfill legacy in-memory rules before changing the convenience target.
+        history = [
+            {**rule, "target_quantity": rule.get("target_quantity", row.data["target_quantity"])}
+            for rule in row.data["schedules"]
         ]
-    update(db, user, row, changes)
+        effective = schedule_at(history, date.fromisoformat(tomorrow))
+        new_schedule = changes.pop(
+            "schedule", {k: v for k, v in effective.items() if k not in {"effective_date", "target_quantity"}}
+        )
+        changes["schedules"] = [rule for rule in history if rule["effective_date"] < tomorrow] + [
+            {
+                **new_schedule,
+                "target_quantity": changes.get("target_quantity", effective["target_quantity"]),
+                "effective_date": tomorrow,
+            }
+        ]
+    if kind == "recurrence":
+        from .recurrences import revise_recurrence
+
+        revise_recurrence(db, user, row, changes)
+    else:
+        update(db, user, row, changes)
     return representation(db, user, row)
 
 
@@ -188,7 +222,11 @@ def register(kind, path):
         schema.__name__.replace("Create", "Patch"), __base__=Input, version=(int, ...), **patch_fields
     )
 
-    def listing(request: Request, user: User = Depends(authenticated), db: Session = Depends(database)):
+    def listing(
+        request: Request,
+        user: User = Depends(authenticated),
+        db: Session = Depends(database, scope="function"),
+    ):
         result = []
         filters = request.query_params
         for row in rows(db, user, kind):
@@ -216,17 +254,29 @@ def register(kind, path):
         return sorted(result, key=lambda x: x.get("position", 0))
 
     def creating(
-        body, request: Request, user: User = Depends(authenticated), db: Session = Depends(database)
+        body,
+        request: Request,
+        user: User = Depends(authenticated),
+        db: Session = Depends(database, scope="function"),
     ):
         data = body.model_dump(mode="json")
-        if kind == "transaction":
+        if kind in {"transaction", "recurrence"}:
             return idempotent(db, user, request, data, lambda: create_resource(db, user, kind, data))
         return create_resource(db, user, kind, data)
 
-    def getting(identifier: str, user: User = Depends(authenticated), db: Session = Depends(database)):
+    def getting(
+        identifier: str,
+        user: User = Depends(authenticated),
+        db: Session = Depends(database, scope="function"),
+    ):
         return representation(db, user, owned(db, user, kind, identifier))
 
-    def patching(identifier: str, body, user: User = Depends(authenticated), db: Session = Depends(database)):
+    def patching(
+        identifier: str,
+        body,
+        user: User = Depends(authenticated),
+        db: Session = Depends(database, scope="function"),
+    ):
         return patch_resource(db, user, kind, identifier, body.model_dump(mode="json", exclude_unset=True))
 
     creating.__annotations__["body"] = schema

@@ -7,7 +7,7 @@ import httpx
 import jwt
 from fastapi import APIRouter, Depends, Request, Security
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from sqlalchemy import delete, func, select, text
+from sqlalchemy import delete, func, select, text, update
 from sqlalchemy.orm import Session
 
 from .clock import clock
@@ -62,7 +62,7 @@ def jwks():
 
 def authenticated(
     request: Request,
-    db: Session = Depends(database),
+    db: Session = Depends(database, scope="function"),
     credentials: HTTPAuthorizationCredentials | None = Security(HTTPBearer(auto_error=False)),
 ) -> User:
     header = request.headers.get("Authorization", "")
@@ -156,12 +156,17 @@ def clear_user(db, user):
         db.execute(delete(model).where(model.owner_id == user.id))
     for model in [Audit, Idempotency]:
         db.execute(delete(model).where(model.owner_id == user.id))
-    db.info[f"demo_count:{user.id}"] = 0
+    db.execute(
+        update(User)
+        .where(User.id == user.id)
+        .values(demo_write_count=0)
+        .execution_options(synchronize_session=False)
+    )
     db.flush()
 
 
 @router.post("/auth/demo", status_code=201, response_model=DemoToken)
-def demo(db: Session = Depends(database)):
+def demo(db: Session = Depends(database, scope="function")):
     config = settings()
     if config.app_mode != "demo":
         problem(404, "Demonstração indisponível")
@@ -185,7 +190,7 @@ def demo(db: Session = Depends(database)):
 
 
 @router.post("/auth/demo/reset", response_model=Ok)
-def reset(user: User = Depends(authenticated), db: Session = Depends(database)):
+def reset(user: User = Depends(authenticated), db: Session = Depends(database, scope="function")):
     if settings().app_mode != "demo" or user.expires_at is None:
         problem(404, "Demonstração indisponível")
     clear_user(db, user)
@@ -201,16 +206,18 @@ def me(user: User = Depends(authenticated)):
 
 
 @router.patch("/me", response_model=Profile)
-def edit_me(body: ProfilePatch, user: User = Depends(authenticated), db: Session = Depends(database)):
+def edit_me(
+    body: ProfilePatch, user: User = Depends(authenticated), db: Session = Depends(database, scope="function")
+):
     if body.version != user.version:
         problem(409, "Perfil atualizado em outra aba")
     changes = body.model_dump(exclude={"version"}, exclude_unset=True)
     if any(value is None for value in changes.values()):
         problem(422, "Preferências não podem ser nulas")
-    if changes.get("currency", user.profile["currency"]) != user.profile["currency"] and rows(
-        db, user, "account"
+    if changes.get("currency", user.profile["currency"]) != user.profile["currency"] and any(
+        rows(db, user, kind) for kind in ("account", "card", "transaction", "recurrence", "transfer")
     ):
-        problem(409, "A moeda não pode ser alterada após cadastrar contas")
+        problem(409, "A moeda não pode ser alterada após cadastrar contas, cartões ou movimentos financeiros")
     user.profile = {**user.profile, **changes}
     user.version += 1
     db.flush()
