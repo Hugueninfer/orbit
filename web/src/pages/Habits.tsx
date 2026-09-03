@@ -126,7 +126,14 @@ export default function Habits() {
   });
   return (
     <div className="page">
-      {stats.find(s=>s.error)?.error && <ErrorState error={stats.find(s=>s.error)!.error!} retry={()=>{stats.forEach(s=>s.refetch())}}/>}
+      {stats.find((s) => s.error)?.error && (
+        <ErrorState
+          error={stats.find((s) => s.error)!.error!}
+          retry={() => {
+            stats.forEach((s) => s.refetch());
+          }}
+        />
+      )}
       <div className="stats">
         <Stat
           label="CONCLUSÃO DO DIA"
@@ -501,7 +508,9 @@ function HabitEditor({
   const [target, setTarget] = useState(String(habit?.target_quantity ?? 1));
   const [unit, setUnit] = useState(habit?.unit ?? "vezes");
   const [schedule, setSchedule] = useState<Schedule>(
-    habit ? {...habit.schedule, weekdays: habit.schedule.weekdays ?? []} : { kind: "daily", weekdays: [], times_per_week: 3 },
+    habit
+      ? { ...habit.schedule, weekdays: habit.schedule.weekdays ?? [] }
+      : { kind: "daily", weekdays: [], times_per_week: 3 },
   );
   const [color, setColor] = useState(habit?.color ?? "#44e2cd");
   const [busy, setBusy] = useState(false);

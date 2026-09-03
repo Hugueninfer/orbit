@@ -52,3 +52,17 @@ export const minutes = (seconds: number) =>
     .padStart(2, "0")}:${Math.floor(Math.max(0, seconds) % 60)
     .toString()
     .padStart(2, "0")}`;
+export function displayLoad(
+  kg: string | number,
+  unit: "kg" | "lb" = "kg",
+): string {
+  return String(
+    Math.round(Number(kg) * (unit === "lb" ? 2.20462262185 : 1) * 1000) / 1000,
+  );
+}
+export function canonicalLoad(value: string, unit: "kg" | "lb" = "kg"): string {
+  return String(
+    Math.round((Number(value) / (unit === "lb" ? 2.20462262185 : 1)) * 1000) /
+      1000,
+  );
+}

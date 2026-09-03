@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { parseMoney, localDate, installmentParts } from "./format";
+import {
+  parseMoney,
+  localDate,
+  installmentParts,
+  displayLoad,
+  canonicalLoad,
+} from "./format";
 describe("financial input and local dates", () => {
   it("parses localized money without binary float rounding", () => {
     expect(parseMoney("1.234,56")).toBe(123456);
@@ -15,5 +21,13 @@ describe("financial input and local dates", () => {
     expect(
       localDate("America/Sao_Paulo", new Date("2026-09-04T01:00:00Z")),
     ).toBe("2026-09-03");
+  });
+});
+
+describe("weight display preferences", () => {
+  it("converts pounds while keeping the API canonical kilograms", () => {
+    expect(displayLoad("10", "lb")).toBe("22.046");
+    expect(canonicalLoad("22.046", "lb")).toBe("10");
+    expect(canonicalLoad("32.5", "kg")).toBe("32.5");
   });
 });

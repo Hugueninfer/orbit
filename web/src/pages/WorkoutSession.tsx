@@ -10,7 +10,7 @@ import {
   Trophy,
 } from "lucide-react";
 import { useActions, useApi } from "../api";
-import type { Session, WorkoutSet } from "../types";
+import type { Session, WorkoutSet, Profile } from "../types";
 import {
   Badge,
   Button,
@@ -25,9 +25,11 @@ import {
   Progress,
   useToast,
 } from "../components/ui";
-import { decimal, minutes } from "../format";
+import { decimal, minutes, displayLoad, canonicalLoad } from "../format";
 export default function WorkoutSession() {
   const { id } = useParams();
+  const profile = useApi<Profile>("/me");
+  const unit = profile.data?.weight_unit ?? "kg";
   const query = useApi<Session>(`/sessions/${id}`);
   const [exerciseIndex, setExerciseIndex] = useState(0);
   const [now, setNow] = useState(Date.now());
@@ -121,7 +123,7 @@ export default function WorkoutSession() {
         <div className="set-head">
           <span>Série</span>
           <span>Tipo</span>
-          <span>Carga (kg)</span>
+          <span>Carga ({unit})</span>
           <span>Reps</span>
           <span>OK</span>
         </div>
@@ -131,6 +133,7 @@ export default function WorkoutSession() {
             set={set}
             index={i}
             session={session}
+            unit={unit}
             disabled={busy || session.status === "cancelled"}
             onBusy={setBusy}
           />
@@ -208,7 +211,9 @@ export default function WorkoutSession() {
           </CardTitle>
           <div className="routine-metrics">
             <div>
-              <strong>{decimal(Number(session.volume))} kg</strong>
+              <strong>
+                {decimal(Number(displayLoad(session.volume, unit)))} {unit}
+              </strong>
               <small>volume</small>
             </div>
             <div>
@@ -312,7 +317,8 @@ export default function WorkoutSession() {
       >
         <h1>{completed} séries concluídas</h1>
         <p className="muted" style={{ margin: "12px 0 26px" }}>
-          Volume registrado: {decimal(Number(session.volume))} kg
+          Volume registrado:{" "}
+          {decimal(Number(displayLoad(session.volume, unit)))} {unit}
         </p>
         <Field label="Notas do treino">
           <textarea
@@ -358,14 +364,17 @@ function SetRow({
   session,
   disabled,
   onBusy,
+  unit,
 }: {
+  unit: "kg" | "lb";
   set: WorkoutSet;
   index: number;
   session: Session;
   disabled: boolean;
   onBusy: (b: boolean) => void;
 }) {
-  const [load, setLoad] = useState(set.load);
+  const [load, setLoad] = useState(displayLoad(set.load, unit));
+  const [loadChanged, setLoadChanged] = useState(false);
   const [reps, setReps] = useState(String(set.reps));
   const [type, setType] = useState(set.type);
   const [edit, setEdit] = useState(false);
@@ -373,10 +382,11 @@ function SetRow({
   const actions = useActions();
   const toast = useToast();
   useEffect(() => {
-    setLoad(set.load);
+    setLoad(displayLoad(set.load, unit));
+    setLoadChanged(false);
     setReps(String(set.reps));
     setType(set.type);
-  }, [set.load, set.reps, set.type]);
+  }, [set.load, set.reps, set.type, unit]);
   async function save() {
     onBusy(true);
     try {
@@ -384,7 +394,7 @@ function SetRow({
         `/sessions/${session.id}/sets/${set.id}`,
         {
           version: session.version,
-          load,
+          load: loadChanged ? canonicalLoad(load, unit) : set.load,
           reps: Number(reps),
           type,
           completed: true,
@@ -430,7 +440,10 @@ function SetRow({
           step="0.5"
           value={load}
           disabled={disabled}
-          onChange={(e) => setLoad(e.target.value)}
+          onChange={(e) => {
+            setLoad(e.target.value);
+            setLoadChanged(true);
+          }}
         />
         <input
           aria-label={`Repetições da série ${index + 1}`}
@@ -474,7 +487,7 @@ function SetRow({
         }
       >
         <p className="form-help" style={{ marginBottom: 24 }}>
-          Nova carga: {load} kg · {reps} repetições. O volume e os recordes
+          Nova carga: {load} {unit} · {reps} repetições. O volume e os recordes
           serão recalculados.
         </p>
         <Field label="Motivo da correção">

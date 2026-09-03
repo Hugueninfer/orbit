@@ -1,0 +1,41 @@
+# Two independent ONLINE installations; supply distinct Neon projects/credentials.
+# Free services lack pre-deploy jobs: apply migrations with scripts/migrate-remote.sh first.
+services:
+  - type: web
+    name: orbit-demo
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/v1/health
+    autoDeployTrigger: off
+    envVars:
+      - key: APP_MODE
+        value: demo
+      - key: DATABASE_URL
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+  - type: web
+    name: orbit-personal
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/v1/health
+    autoDeployTrigger: off
+    envVars:
+      - key: APP_MODE
+        value: personal
+      - key: DATABASE_URL
+        sync: false
+      - key: OIDC_AUTHORITY
+        sync: false
+      - key: OIDC_CLIENT_ID
+        sync: false
+      - key: OIDC_AUDIENCE
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false

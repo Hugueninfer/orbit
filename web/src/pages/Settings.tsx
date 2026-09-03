@@ -1,3 +1,4 @@
+import { money, parseMoney } from "../format";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -11,7 +12,7 @@ import {
   History,
 } from "lucide-react";
 import { useApi, useActions, logout } from "../api";
-import type { Profile, Telegram } from "../types";
+import type { Profile, Telegram, Account } from "../types";
 import {
   Badge,
   Button,
@@ -309,7 +310,10 @@ export default function Settings() {
 }
 export function Integrations() {
   const status = useApi<Telegram>("/integrations/telegram");
-  const [capture, setCapture] = useState("");
+  const accounts = useApi<Account[]>("/accounts");
+  const [description, setDescription] = useState("Café da tarde");
+  const [amount, setAmount] = useState("8,50");
+  const [accountId, setAccountId] = useState("");
   const [code, setCode] = useState<{ code: string; expires_at: string } | null>(
     null,
   );
@@ -403,7 +407,7 @@ export function Integrations() {
         )}
       </Card>
       <Card>
-        <CardTitle>Como funciona</CardTitle>
+        <CardTitle>Fluxo previsto para o áudio</CardTitle>
         <div className="stack">
           {[
             [
@@ -441,27 +445,60 @@ export function Integrations() {
             Este cenário usa dados estruturados de teste. Não há transcrição de
             áudio nem inteligência artificial nesta demonstração.
           </p>
-          <Field
-            label="Cenário em JSON"
-            hint="Informe os campos de uma despesa: account_id, description, amount, date e kind."
-          >
-            <textarea
-              value={capture}
-              onChange={(e) => setCapture(e.target.value)}
-              placeholder='{"description":"Café","amount":850,"kind":"expense",...}'
+          <Field label="Despesa de exemplo">
+            <input
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
             />
           </Field>
+          <div className="form-grid">
+            <Field label="Valor (R$)">
+              <input
+                inputMode="decimal"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+              />
+            </Field>
+            <Field label="Conta da demonstração">
+              <select
+                value={accountId || accounts.data?.[0]?.id || ""}
+                onChange={(e) => setAccountId(e.target.value)}
+              >
+                {accounts.data?.map((a) => (
+                  <option value={a.id} key={a.id}>
+                    {a.name}
+                  </option>
+                ))}
+              </select>
+            </Field>
+          </div>
           <Button
-            disabled={busy || !capture}
+            disabled={busy || !description.trim() || !accounts.data?.length}
             onClick={async () => {
               setBusy(true);
               setError("");
               try {
-                const value = await action<{ status: string; result: unknown }>(
-                  "/integrations/telegram/simulate",
-                  { text: capture },
+                const value = await action<{
+                  status: string;
+                  result: {
+                    recorded: boolean;
+                    question?: string;
+                    amount?: number;
+                    description?: string;
+                  };
+                }>("/integrations/telegram/simulate", {
+                  text: JSON.stringify({
+                    description,
+                    amount: parseMoney(amount),
+                    account_id: accountId || accounts.data?.[0]?.id,
+                    kind: "expense",
+                  }),
+                });
+                setResult(
+                  value.result.recorded
+                    ? `${value.result.description}: ${money(value.result.amount ?? 0)} registrado na sua demonstração.`
+                    : (value.result.question ?? "Confira os dados informados."),
                 );
-                setResult(JSON.stringify(value, null, 2));
                 toast("Simulação processada");
               } catch (e) {
                 setError((e as Error).message);
@@ -473,12 +510,12 @@ export function Integrations() {
             Executar simulação
           </Button>
           {result && (
-            <pre
+            <p
               className="form-help"
               style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}
             >
               {result}
-            </pre>
+            </p>
           )}
         </Card>
       )}

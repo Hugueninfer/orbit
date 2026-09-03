@@ -12,7 +12,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useApi, useActions } from "../api";
-import type { Task, TaskList } from "../types";
+import type { Task, TaskList, Profile } from "../types";
 import {
   AddButton,
   Badge,
@@ -101,7 +101,8 @@ export default function Tasks() {
   const [newList, setNewList] = useState(false);
   const [listName, setListName] = useState("");
   const [busy, setBusy] = useState(false);
-  const today = localDate();
+  const profile = useApi<Profile>("/me");
+  const today = localDate(profile.data?.timezone);
   const open = params.has("new") || editing !== null;
   function close() {
     setEditing(null);

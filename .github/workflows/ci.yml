@@ -1,0 +1,65 @@
+name: Verify Orbit
+on:
+  push:
+    branches: ['**']
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: orbit-ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    services:
+      postgres:
+        image: postgres:18-bookworm
+        env:
+          POSTGRES_USER: orbit
+          POSTGRES_PASSWORD: orbit-test
+          POSTGRES_DB: orbit_test
+        ports: ['55432:5432']
+        options: >-
+          --health-cmd "pg_isready -U orbit -d orbit_test"
+          --health-interval 5s --health-timeout 5s --health-retries 12
+    env:
+      APP_MODE: demo
+      DATABASE_URL: postgresql+psycopg://orbit:orbit-test@localhost:55432/orbit_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.8.15'
+          python-version: '3.14'
+      - run: uv sync --frozen
+        working-directory: backend
+      - run: uv run ruff check app tests && uv run mypy app
+        working-directory: backend
+      - run: uv run alembic upgrade head && uv run pytest -q
+        working-directory: backend
+      - run: npm ci && npm run typecheck && npm test && npm run build
+        working-directory: web
+      - run: npm audit --omit=dev --audit-level=high
+        working-directory: web
+      - run: uv tool run pip-audit --path .venv/lib/python3.14/site-packages
+        working-directory: backend
+      - run: ./scripts/generate-api.sh && git diff --exit-code -- backend/openapi.json web/src/generated/api.ts
+      - run: cp .env.example .env && docker compose up -d --build --wait
+      - run: npx playwright install --with-deps chromium
+        working-directory: web
+      - run: npm run e2e
+        working-directory: web
+        env:
+          ORBIT_BASE_URL: http://127.0.0.1:8080
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-failure
+          path: web/test-results
+          retention-days: 3

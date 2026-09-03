@@ -12,7 +12,13 @@ import {
   Search,
 } from "lucide-react";
 import { useApi, useActions } from "../api";
-import type { Routine, RoutineExercise, Session, Exercise } from "../types";
+import type {
+  Routine,
+  RoutineExercise,
+  Session,
+  Exercise,
+  Profile,
+} from "../types";
 import {
   AddButton,
   Badge,
@@ -26,8 +32,10 @@ import {
   Loading,
   useToast,
 } from "../components/ui";
-import { dateLabel, decimal } from "../format";
+import { dateLabel, decimal, displayLoad, canonicalLoad } from "../format";
 export default function Workouts() {
+  const profile = useApi<Profile>("/me");
+  const unit = profile.data?.weight_unit ?? "kg";
   const routines = useApi<Routine[]>("/routines");
   const exercises = useApi<Exercise[]>("/exercises");
   const sessions = useApi<Session[]>("/sessions");
@@ -141,9 +149,16 @@ export default function Workouts() {
             <div>
               <span className="caps muted">Volume total</span>
               <h1 style={{ fontSize: 25 }}>
-                {decimal(finished.reduce((s, w) => s + Number(w.volume), 0))}
+                {decimal(
+                  Number(
+                    displayLoad(
+                      finished.reduce((s, w) => s + Number(w.volume), 0),
+                      unit,
+                    ),
+                  ),
+                )}
               </h1>
-              <small>kg registrados</small>
+              <small>{unit} registrados</small>
             </div>
           </div>
         </div>
@@ -295,7 +310,9 @@ export default function Workouts() {
                   {dateLabel(s.finished_at)} · {s.pr_count} recordes
                 </small>
               </div>
-              <span className="mono teal">{decimal(Number(s.volume))} kg</span>
+              <span className="mono teal">
+                {decimal(Number(displayLoad(s.volume, unit)))} {unit}
+              </span>
             </Link>
           ))}
           {!finished.length && (
@@ -335,7 +352,8 @@ export default function Workouts() {
                 </Badge>
               </div>
               <p className="muted" style={{ marginTop: 12 }}>
-                {dateLabel(s.started_at)} · {decimal(Number(s.volume))} kg
+                {dateLabel(s.started_at)} ·{" "}
+                {decimal(Number(displayLoad(s.volume, unit)))} {unit}
               </p>
             </Link>
           ))}
@@ -357,6 +375,8 @@ function RoutineEditor({
   exercises: Exercise[];
   onClose: () => void;
 }) {
+  const profile = useApi<Profile>("/me");
+  const unit = profile.data?.weight_unit ?? "kg";
   const [name, setName] = useState(routine?.name ?? "");
   const [description, setDescription] = useState(routine?.description ?? "");
   const [items, setItems] = useState<RoutineExercise[]>(
@@ -497,13 +517,15 @@ function RoutineEditor({
                 onChange={(e) => patch(i, { reps: Number(e.target.value) })}
               />
             </Field>
-            <Field label="Carga (kg)">
+            <Field label={`Carga (${unit})`}>
               <input
                 type="number"
                 min={0}
                 step="0.5"
-                value={item.load}
-                onChange={(e) => patch(i, { load: e.target.value })}
+                value={displayLoad(item.load, unit)}
+                onChange={(e) =>
+                  patch(i, { load: canonicalLoad(e.target.value, unit) })
+                }
               />
             </Field>
             <Field label="Descanso (s)">
