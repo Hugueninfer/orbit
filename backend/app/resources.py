@@ -1,6 +1,7 @@
 from copy import deepcopy
 from datetime import date, timedelta
-from typing import Literal
+from types import GenericAlias
+from typing import Any, Literal, cast
 
 from fastapi import APIRouter, Depends, Request
 from pydantic import create_model
@@ -208,8 +209,8 @@ def patch_resource(db, user, kind, identifier, body):
 
 def register(kind, path):
     schema = CREATES[kind]
-    patch_fields = {
-        name: (field.annotation | None, None)
+    patch_fields: dict[str, Any] = {
+        name: (cast(type[Any], field.annotation) | None, None)
         for name, field in schema.model_fields.items()
         if name in PATCH_FIELDS[kind]
     }
@@ -282,7 +283,11 @@ def register(kind, path):
     creating.__annotations__["body"] = schema
     patching.__annotations__["body"] = patch_schema
     router.add_api_route(
-        "/" + path, listing, methods=["GET"], name=f"list_{kind}", response_model=list[RESPONSES[kind]]
+        "/" + path,
+        listing,
+        methods=["GET"],
+        name=f"list_{kind}",
+        response_model=GenericAlias(list, RESPONSES[kind]),
     )
     router.add_api_route(
         "/" + path,

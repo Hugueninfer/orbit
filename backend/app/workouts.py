@@ -26,7 +26,7 @@ def session_data(row):
 
 def recompute_all(db, user):
     """Historical edits recalculate every finished session in chronological order."""
-    best = {}
+    best: dict[str, Decimal] = {}
     sessions = sorted(rows(db, user, "session"), key=lambda r: r.data["started_at"])
     for row in sessions:
         if row.data["status"] == "cancelled":

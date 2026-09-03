@@ -235,7 +235,7 @@ class Reorder(Input):
     items: list[OrderItem] = Field(max_length=5000)
 
 
-CREATES = {
+CREATES: dict[str, type[Input]] = {
     "task_list": TaskListCreate,
     "task": TaskCreate,
     "habit": HabitCreate,

@@ -6,7 +6,7 @@ explicit owner demo reset. Atomic SQL reservations also protect worker writes.
 """
 
 from collections import Counter
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 from fastapi import HTTPException
 from sqlalchemy import event, select, update
@@ -32,7 +32,8 @@ def enforce_demo_budget(session, flush_context, instances):
             if obj.id is None:
                 obj.id = uuid4()
             pending_users[obj.id] = obj
-    counts = Counter()
+    counts: Counter[UUID] = Counter()
+    owner_id: UUID | None
     for obj in changed:
         if isinstance(obj, User):
             owner_id = obj.id

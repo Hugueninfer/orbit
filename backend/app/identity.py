@@ -154,8 +154,8 @@ def clear_user(db, user):
     ]:
         model = MODELS[kind]
         db.execute(delete(model).where(model.owner_id == user.id))
-    for model in [Audit, Idempotency]:
-        db.execute(delete(model).where(model.owner_id == user.id))
+    db.execute(delete(Audit).where(Audit.owner_id == user.id))
+    db.execute(delete(Idempotency).where(Idempotency.owner_id == user.id))
     db.execute(
         update(User)
         .where(User.id == user.id)
