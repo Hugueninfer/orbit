@@ -453,3 +453,28 @@ def test_schedule_edit_preserves_retained_planned_current_cycle_without_duplicat
         post(client, h, "/recurrences/generate", {"through_date": rule["generated_through"]})["created"] == 0
     )
     assert occurrences(client, h, rule) == actual
+
+
+@pytest.mark.parametrize("moved_date", ["2026-09-10", "2026-11-10"])
+def test_moving_retained_bill_after_rule_edit_keeps_original_cycle_occupied(client, frozen, moved_date):
+    h = demo(client)
+    rule = recurring(client, h)
+    original = next(item for item in occurrences(client, h, rule) if item["date"] == "2026-09-03")
+    changed = patch(client, h, "/recurrences/" + rule["id"], {"version": rule["version"], "day_of_month": 5})
+    assert changed.status_code == 200, changed.text
+    moved = patch(
+        client, h, "/transactions/" + original["id"], {"version": original["version"], "date": moved_date}
+    )
+    assert moved.status_code == 200, moved.text
+    assert moved.json()["scheduled_date"] == "2026-09-03"
+    before_generation = occurrences(client, h, rule)
+    for _ in range(2):
+        assert (
+            post(client, h, "/recurrences/generate", {"through_date": rule["generated_through"]})["created"]
+            == 0
+        )
+        assert occurrences(client, h, rule) == before_generation
+    active = [item for item in before_generation if item["status"] == "planned"]
+    assert [item["id"] for item in active if item["scheduled_date"].startswith("2026-09")] == [original["id"]]
+    assert [item["date"] for item in active if item["scheduled_date"].startswith("2026-10")] == ["2026-10-05"]
+    assert [item["date"] for item in active if item["scheduled_date"].startswith("2026-11")] == ["2026-11-05"]

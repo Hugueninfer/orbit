@@ -19,13 +19,24 @@ def cycle_bucket(rule: dict, scheduled: date) -> int:
     return (scheduled - start).days // width
 
 
-def protected_cycles(rule: dict, occurrences: list, as_of: date) -> set[int]:
+def reconciliation_protected_cycles(rule: dict, occurrences: list, as_of: date) -> set[int]:
+    """Rule edits preserve posted/cancelled history and bills due on or before today."""
     return {
         cycle_bucket(rule, date.fromisoformat(item.data["scheduled_date"]))
         for item in occurrences
         if item.data["status"] == "posted"
         or (item.data["status"] == "planned" and item.data["date"] <= as_of.isoformat())
         or (item.data["status"] == "cancelled" and not item.data["recurrence_superseded"])
+    }
+
+
+def occupied_cycles(rule: dict, occurrences: list) -> set[int]:
+    """Generation occupancy follows immutable identity, never the editable due date."""
+    return {
+        cycle_bucket(rule, date.fromisoformat(item.data["scheduled_date"]))
+        for item in occurrences
+        if item.data["status"] == "posted"
+        or (item.data["status"] in {"planned", "cancelled"} and not item.data["recurrence_superseded"])
     }
 
 
@@ -70,10 +81,10 @@ def extend_recurrence(db, user, recurrence, through: date) -> int:
         item for item in rows(db, user, "transaction") if item.data["recurrence_id"] == str(recurrence.id)
     ]
     existing = {item.data["scheduled_date"] for item in occurrences}
-    protected = protected_cycles(d, occurrences, today(user))
+    occupied = occupied_cycles(d, occurrences)
     created = 0
     for scheduled in occurrence_dates(d, through):
-        if scheduled.isoformat() in existing or cycle_bucket(d, scheduled) in protected:
+        if scheduled.isoformat() in existing or cycle_bucket(d, scheduled) in occupied:
             continue
         transaction(
             db,
@@ -89,6 +100,7 @@ def extend_recurrence(db, user, recurrence, through: date) -> int:
             recurrence_id=str(recurrence.id),
             scheduled_date=scheduled.isoformat(),
         )
+        occupied.add(cycle_bucket(d, scheduled))
         created += 1
     if through.isoformat() > d["generated_through"]:
         recurrence.data = {**recurrence.data, "generated_through": through.isoformat()}
@@ -115,7 +127,7 @@ def revise_recurrence(db, user, recurrence, changes):
     occurrences = [
         item for item in rows(db, user, "transaction") if item.data["recurrence_id"] == str(recurrence.id)
     ]
-    protected = protected_cycles(rule, occurrences, today(user))
+    protected = reconciliation_protected_cycles(rule, occurrences, today(user))
     valid = {
         value.isoformat()
         for value in occurrence_dates(rule, horizon)
@@ -158,5 +170,6 @@ def revise_recurrence(db, user, recurrence, changes):
                 {**template, "status": "planned", "recurrence_superseded": False},
                 "recurrence_occurrence_updated",
             )
+    # Complete future cancellations before generation determines cycle occupancy.
     extend_recurrence(db, user, recurrence, horizon)
     return recurrence
