@@ -27,13 +27,13 @@ export default function Login({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const localLogin = config.app_mode === "personal" && !config.oidc_authority;
-  async function enter() {
+  const localLogin = config.app_mode !== "demo" && !config.oidc_authority;
+  async function enter(demo = config.app_mode === "demo") {
     if (busy) return;
     setBusy(true);
     setError("");
     try {
-      if (config.app_mode === "demo") {
+      if (demo) {
         await startDemo();
         onLogin();
       } else if (localLogin) {
@@ -179,6 +179,22 @@ export default function Login({
               {!busy && <ArrowRight size={18} />}
             </Button>
           </form>
+          {config.app_mode !== "personal" && config.app_mode !== "demo" && (
+            <>
+              <div className="login-separator">OU CONHEÇA O ORBIT</div>
+              <Button
+                type="button"
+                disabled={busy}
+                onClick={() => void enter(true)}
+              >
+                <Sparkles size={18} /> Experimentar demonstração
+              </Button>
+              <p className="muted" style={{ fontSize: 12, marginTop: 10 }}>
+                Sem cadastro. Dados fictícios em um espaço exclusivo por 24
+                horas.
+              </p>
+            </>
+          )}
           {error && (
             <p className="form-error" role="alert">
               {error}

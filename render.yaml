@@ -1,10 +1,9 @@
-# Two independent ONLINE installations; supply distinct Neon projects/credentials.
-# Replace BOTH image URLs with the exact digest printed by the verified GitHub release.
-# This placeholder intentionally cannot deploy before a reviewed image is published.
-# Free services lack pre-deploy jobs: apply migrations with scripts/migrate-remote.sh first.
+# One online installation and one Neon database; personal data and demos are owner-scoped.
+# Replace image.url with the exact digest printed by the verified GitHub release.
+# Free services lack pre-deploy jobs: apply scripts/migrate-remote.sh before deployment.
 services:
   - type: web
-    name: orbit-demo
+    name: orbit
     runtime: image
     plan: free
     region: oregon
@@ -14,23 +13,7 @@ services:
     autoDeployTrigger: off
     envVars:
       - key: APP_MODE
-        value: demo
-      - key: DATABASE_URL
-        sync: false
-      - key: ALLOWED_ORIGINS
-        sync: false
-  - type: web
-    name: orbit-personal
-    runtime: image
-    plan: free
-    region: oregon
-    image:
-      url: ghcr.io/replace-owner/orbit:replace-with-verified-digest
-    healthCheckPath: /api/v1/health
-    autoDeployTrigger: off
-    envVars:
-      - key: APP_MODE
-        value: personal
+        value: combined
       - key: DATABASE_URL
         sync: false
       - key: SESSION_COOKIE_SECURE

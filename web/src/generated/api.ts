@@ -74,6 +74,23 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/auth/demo/logout": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Demo Logout */
+    post: operations["demo_logout_api_v1_auth_demo_logout_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/v1/auth/demo/reset": {
     parameters: {
       query?: never;
@@ -2138,7 +2155,7 @@ export interface components {
        * App Mode
        * @enum {string}
        */
-      app_mode: "demo" | "personal";
+      app_mode: "demo" | "personal" | "combined";
       /** Oidc Audience */
       oidc_audience: string;
       /** Oidc Authority */
@@ -2821,6 +2838,26 @@ export interface operations {
         };
         content: {
           "application/json": components["schemas"]["DemoToken"];
+        };
+      };
+    };
+  };
+  demo_logout_api_v1_auth_demo_logout_post: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["Ok"];
         };
       };
     };

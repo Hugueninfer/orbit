@@ -67,13 +67,21 @@ def authenticated(
 ) -> User:
     header = request.headers.get("Authorization", "")
     config = settings()
-    if config.app_mode == "personal" and not config.oidc_authority:
+    access = None
+    if "Authorization" in request.headers:
+        if not header.startswith("Bearer ") or not header[7:].strip():
+            problem(401, "Autenticação necessária")
+        if config.app_mode in {"demo", "combined"}:
+            access = db.get(Token, hashlib.sha256(header[7:].encode()).hexdigest())
+    if config.app_mode != "demo" and not config.oidc_authority and "Authorization" not in request.headers:
         from .accounts import local_user
 
         query = local_user(request, db)
-    elif config.app_mode == "demo":
+    elif config.app_mode == "demo" or access is not None or not config.oidc_authority:
         if not header.startswith("Bearer "):
             problem(401, "Autenticação necessária")
+        if config.app_mode == "personal":
+            problem(401, "Token inválido")
         token = header[7:]
         digest = hashlib.sha256(token.encode()).hexdigest()
         access = db.get(Token, digest)
@@ -175,7 +183,7 @@ def clear_user(db, user):
 @router.post("/auth/demo", status_code=201, response_model=DemoToken)
 def demo(db: Session = Depends(database, scope="function")):
     config = settings()
-    if config.app_mode != "demo":
+    if config.app_mode not in {"demo", "combined"}:
         problem(404, "Demonstração indisponível")
     db.execute(text("SELECT pg_advisory_xact_lock(7789102)"))
     cleanup_demo(db)
@@ -198,12 +206,25 @@ def demo(db: Session = Depends(database, scope="function")):
 
 @router.post("/auth/demo/reset", response_model=Ok)
 def reset(user: User = Depends(authenticated), db: Session = Depends(database, scope="function")):
-    if settings().app_mode != "demo" or user.expires_at is None:
+    if settings().app_mode not in {"demo", "combined"} or user.expires_at is None:
         problem(404, "Demonstração indisponível")
     clear_user(db, user)
     from .seed import seed_demo
 
     seed_demo(db, user)
+    return {"ok": True}
+
+
+@router.post("/auth/demo/logout", response_model=Ok)
+def demo_logout(
+    request: Request,
+    user: User = Depends(authenticated),
+    db: Session = Depends(database, scope="function"),
+):
+    if user.expires_at is None:
+        problem(404, "Demonstração indisponível")
+    digest = hashlib.sha256(request.headers["Authorization"][7:].encode()).hexdigest()
+    db.execute(delete(Token).where(Token.digest == digest, Token.owner_id == user.id))
     return {"ok": True}
 
 

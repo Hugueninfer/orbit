@@ -1,11 +1,11 @@
 # Orbit HTTP API contract
 
-Base `/api/v1`; JSON snake_case; dates ISO YYYY-MM-DD, timestamps UTC ISO; IDs UUID strings; integer money in minor currency units. Every route except config, health, auth/demo, Telegram webhook requires `Authorization: Bearer <access_token>`. Collections return arrays. Creation returns an object (201). PATCH returns object and requires current `version`. Errors RFC9457 `application/problem+json` with `type,title,status,detail`. Unknown and foreign-owned IDs both return 404. Stale versions return 409. Fields marked `?` are optional; null allowed only where stated. Default arrays empty. Responses include all listed fields. DELETE archives where noted and returns `{ok:true}`.
+Base `/api/v1`; JSON snake_case; dates ISO YYYY-MM-DD, timestamps UTC ISO; IDs UUID strings; integer money in minor currency units. Protected routes require a personal session cookie or a demo/OIDC bearer token. Config, health, login, demo creation and the authenticated Telegram webhook are entry points. In combined mode, explicit bearer credentials never fall back to a personal cookie. Collections return arrays. Creation returns an object (201). PATCH returns object and requires current `version`. Errors RFC9457 `application/problem+json` with `type,title,status,detail`. Unknown and foreign-owned IDs both return 404. Stale versions return 409. Fields marked `?` are optional; null allowed only where stated. Default arrays empty. Responses include all listed fields. DELETE archives where noted and returns `{ok:true}`.
 
 ## Identity
-- GET `/config` -> `{app_mode:"demo"|"personal",oidc_authority:string,oidc_client_id:string,oidc_audience:string}`
+- GET `/config` -> `{app_mode:"combined"|"demo"|"personal",oidc_authority:string,oidc_client_id:string,oidc_audience:string}`
 - GET `/health` -> `{status:"ok",database:"ok"}`
-- POST `/auth/demo` body `{}` -> `{access_token,expires_at}`. Independent seeded tenant, 24h expiry. Demo only.
+- POST `/auth/demo` body `{}` -> `{access_token,expires_at}`. Independent seeded tenant, 24h expiry. Available in combined/demo modes.
 - POST `/auth/demo/reset` body `{}` -> `{ok:true}` resets only authenticated demo owner.
 - GET `/me`; PATCH `/me` `{version,name?,timezone?,currency?,locale?,week_start?,weight_unit?}` -> `{id,name,timezone,currency,locale,week_start:0..6,weight_unit:"kg"|"lb",version,is_demo}`.
 
@@ -85,4 +85,4 @@ Not release-validated: live Telegram credentials/provider calls; multi-message c
 
 ## Built-in personal login
 
-POST `/auth/login` accepts `{email,password}` and returns `{ok:true}` with an HttpOnly session cookie. POST `/auth/logout` revokes that session. Both exist only in personal mode without OIDC. Cookie-authenticated writes require an allowed `Origin` and `X-Orbit-CSRF: 1`. Invalid credentials return 401; throttled attempts return 429 with `Retry-After`. Account creation and password recovery are operator CLI commands, not public endpoints.
+POST `/auth/login` accepts `{email,password}` and returns `{ok:true}` with an HttpOnly session cookie. POST `/auth/logout` revokes that session. These personal endpoints exist in combined/personal modes without OIDC. A personal logout rejects an explicit Authorization header. POST `/auth/demo/logout` exists in combined/demo modes and revokes only the authenticated demo token; demo reset/logout cannot operate on a personal account. Cookie-authenticated writes require an allowed `Origin` and `X-Orbit-CSRF: 1`. Invalid credentials return 401; throttled attempts return 429 with `Retry-After`. Account creation and password recovery are operator CLI commands, not public endpoints.

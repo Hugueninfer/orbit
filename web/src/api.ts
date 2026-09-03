@@ -5,10 +5,24 @@ let config: Config | undefined;
 let oidc: UserManager | undefined;
 let token: string | undefined;
 const DEMO_STORAGE = "orbit.demo";
+const INTENT_STORAGE = "orbit.access-intent";
+const intent = () => sessionStorage.getItem(INTENT_STORAGE);
+export function signOutLocally() {
+  token = undefined;
+  sessionStorage.removeItem(DEMO_STORAGE);
+  sessionStorage.setItem(INTENT_STORAGE, "signed-out");
+}
+export function setPersonalToken(value: string) {
+  sessionStorage.removeItem(DEMO_STORAGE);
+  sessionStorage.setItem(INTENT_STORAGE, "personal");
+  token = value;
+}
 export const queryKeys = { all: ["orbit"] as const };
 export function loadToken() {
+  token = undefined;
   const stored = sessionStorage.getItem(DEMO_STORAGE);
   if (stored) {
+    sessionStorage.setItem(INTENT_STORAGE, "demo");
     try {
       const item = JSON.parse(stored);
       if (Date.parse(item.expires_at) > Date.now()) token = item.access_token;
@@ -22,16 +36,37 @@ export function loadToken() {
 export function setToken(value: string | undefined) {
   token = value;
 }
+export class ApiError extends Error {
+  constructor(
+    message: string,
+    public status: number,
+  ) {
+    super(message);
+  }
+}
 export async function request<T>(
   path: string,
   options: RequestInit = {},
 ): Promise<T> {
   const headers = new Headers(options.headers);
-  if (token) headers.set("Authorization", `Bearer ${token}`);
+  const publicPath = ["/config", "/auth/login", "/auth/demo"].includes(path);
+  if (!publicPath && !token && ["demo", "signed-out"].includes(intent() ?? ""))
+    throw new Error("Sua sessão terminou. Entre novamente para continuar.");
+  if (!publicPath && token) headers.set("Authorization", `Bearer ${token}`);
+  else headers.delete("Authorization");
   if (options.body) headers.set("Content-Type", "application/json");
   if (!["GET", "HEAD", "OPTIONS"].includes(options.method ?? "GET"))
     headers.set("X-Orbit-CSRF", "1");
-  const response = await fetch(`/api/v1${path}`, { ...options, headers });
+  const response = await fetch(`/api/v1${path}`, {
+    ...options,
+    headers,
+    credentials:
+      path === "/auth/login"
+        ? "same-origin"
+        : publicPath || token || intent() === "demo"
+          ? "omit"
+          : "same-origin",
+  });
   if (!response.ok) {
     let message = `Não foi possível concluir (${response.status}).`;
     try {
@@ -46,12 +81,11 @@ export async function request<T>(
     if (path === "/auth/login" && response.status === 429)
       message =
         "Muitas tentativas. Aguarde alguns minutos antes de tentar novamente.";
-    if (response.status === 401) {
-      token = undefined;
-      sessionStorage.removeItem(DEMO_STORAGE);
+    if (response.status === 401 && !publicPath) {
+      signOutLocally();
       window.dispatchEvent(new Event("orbit:unauthorized"));
     }
-    throw new Error(message);
+    throw new ApiError(message, response.status);
   }
   if (response.status === 204) return undefined as T;
   return response.json() as Promise<T>;
@@ -79,9 +113,14 @@ export async function getOidc() {
         ? { audience: cfg.oidc_audience }
         : {},
     });
-    oidc.events.addUserLoaded((user) => setToken(user.access_token));
-    oidc.events.addUserUnloaded(() => setToken(undefined));
+    oidc.events.addUserLoaded((user) => {
+      if (intent() === "personal") setToken(user.access_token);
+    });
+    oidc.events.addUserUnloaded(() => {
+      if (intent() === "personal") setToken(undefined);
+    });
     oidc.events.addAccessTokenExpired(() => {
+      if (intent() !== "personal") return;
       window.dispatchEvent(new Event("orbit:unauthorized"));
     });
   }
@@ -89,7 +128,13 @@ export async function getOidc() {
 }
 export async function restoreAuth() {
   const cfg = await getConfig();
-  if (cfg.app_mode === "demo") return !!loadToken();
+  const demoToken = loadToken();
+  if (demoToken) return true;
+  if (
+    ["demo", "signed-out"].includes(intent() ?? "") ||
+    cfg.app_mode === "demo"
+  )
+    return false;
   if (!cfg.oidc_authority) {
     const response = await fetch("/api/v1/me", { credentials: "same-origin" });
     if (response.status === 401) return false;
@@ -97,12 +142,13 @@ export async function restoreAuth() {
       throw new Error(
         "Não foi possível verificar sua sessão. Tente novamente.",
       );
+    sessionStorage.setItem(INTENT_STORAGE, "personal");
     return true;
   }
   const manager = await getOidc();
   const user = await manager.getUser();
   if (user && !user.expired) {
-    setToken(user.access_token);
+    setPersonalToken(user.access_token);
     return true;
   }
   return false;
@@ -113,6 +159,7 @@ export async function startDemo() {
     { method: "POST", body: "{}" },
   );
   sessionStorage.setItem(DEMO_STORAGE, JSON.stringify(data));
+  sessionStorage.setItem(INTENT_STORAGE, "demo");
   setToken(data.access_token);
 }
 export async function startPersonal(email: string, password: string) {
@@ -120,18 +167,32 @@ export async function startPersonal(email: string, password: string) {
     method: "POST",
     body: JSON.stringify({ email, password }),
   });
+  sessionStorage.removeItem(DEMO_STORAGE);
+  sessionStorage.setItem(INTENT_STORAGE, "personal");
+  setToken(undefined);
 }
 export async function logout() {
-  setToken(undefined);
-  sessionStorage.removeItem(DEMO_STORAGE);
-  if ((await getConfig()).app_mode === "personal") {
-    if ((await getConfig()).oidc_authority)
-      await (await getOidc()).signoutRedirect();
-    else {
-      await request("/auth/logout", { method: "POST" });
-      window.location.assign("/");
+  const demo = intent() === "demo" || !!sessionStorage.getItem(DEMO_STORAGE);
+  if (demo) {
+    try {
+      if (token) await request("/auth/demo/logout", { method: "POST" });
+    } catch (error) {
+      if (!(error instanceof ApiError && error.status === 401)) throw error;
+    } finally {
+      signOutLocally();
+      window.dispatchEvent(new Event("orbit:unauthorized"));
     }
-  } else window.location.assign("/");
+    return;
+  }
+  const cfg = await getConfig();
+  if (cfg.oidc_authority) {
+    signOutLocally();
+    await (await getOidc()).signoutRedirect();
+  } else {
+    await request("/auth/logout", { method: "POST" });
+    signOutLocally();
+    window.dispatchEvent(new Event("orbit:unauthorized"));
+  }
 }
 export function useApi<T>(path: string, enabled = true) {
   return useQuery({

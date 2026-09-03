@@ -54,29 +54,26 @@ jobs:
       - run: uv export --frozen --no-dev --no-emit-project --output-file requirements-audit.txt > /dev/null && uv tool run pip-audit -r requirements-audit.txt --no-deps
         working-directory: backend
       - run: ./scripts/generate-api.sh && git diff --exit-code -- backend/openapi.json web/src/generated/api.ts
-      - run: cp .env.example .env && docker compose up -d --build --wait
-      - name: Start isolated personal login test installation
+      - name: Start one installation for personal and demo browser tests
         env:
-          APP_MODE: personal
-          PORT: '8082'
-          POSTGRES_PASSWORD: orbit-ci-personal
-          ALLOWED_ORIGINS: http://127.0.0.1:8082
+          APP_MODE: combined
+          ALLOWED_ORIGINS: http://127.0.0.1:8080
           SESSION_COOKIE_SECURE: 'false'
         run: |
-          docker compose -p orbit-personal-ci up -d --no-build --wait
-          docker compose -p orbit-personal-ci exec -T app python - <<'PY'
+          cp .env.example .env
+          docker compose up -d --build --wait
+          docker compose exec -T app python - <<'PYTHON'
           from app.accounts import provision
           from app.db import SessionLocal
           with SessionLocal.begin() as db:
               provision(db, "browser@example.com", "Orbit browser test password 2026")
-          PY
+          PYTHON
       - run: npx playwright install --with-deps chromium
         working-directory: web
       - run: npm run e2e
         working-directory: web
         env:
           ORBIT_BASE_URL: http://127.0.0.1:8080
-          ORBIT_PERSONAL_URL: http://127.0.0.1:8082
       - name: Preserve the tested release image
         if: github.event_name == 'release'
         run: docker save orbit:local | gzip > orbit-tested.tar.gz

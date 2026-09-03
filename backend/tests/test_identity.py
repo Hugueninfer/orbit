@@ -7,7 +7,8 @@ from cryptography.hazmat.primitives.asymmetric import rsa
 from test_api import demo, get
 
 
-def test_oidc_signed_issuer_audience_expiration_and_personal_rejects_demo(client, monkeypatch):
+@pytest.mark.parametrize("mode", ["personal", "combined"])
+def test_oidc_signed_issuer_audience_expiration_and_personal_rejects_demo(client, monkeypatch, mode):
     from app import identity
     from app.clock import clock
     from app.config import settings
@@ -17,7 +18,7 @@ def test_oidc_signed_issuer_audience_expiration_and_personal_rejects_demo(client
     config = settings()
     private = rsa.generate_private_key(public_exponent=65537, key_size=2048)
     public = private.public_key()
-    monkeypatch.setattr(config, "app_mode", "personal")
+    monkeypatch.setattr(config, "app_mode", mode)
     monkeypatch.setattr(config, "oidc_authority", "https://issuer.example/realms/orbit")
     monkeypatch.setattr(
         identity,
@@ -39,8 +40,11 @@ def test_oidc_signed_issuer_audience_expiration_and_personal_rejects_demo(client
     assert response.status_code == 200, response.text
     c.test_users.append(response.json()["id"])
     assert response.json()["is_demo"] is False
-    assert c.get("/api/v1/me", headers=demo_headers).status_code == 401
-    assert c.post("/api/v1/auth/demo", json={}).status_code == 404
+    assert c.get("/api/v1/me", headers=demo_headers).status_code == (401 if mode == "personal" else 200)
+    if mode == "personal":
+        assert c.post("/api/v1/auth/demo", json={}).status_code == 404
+    else:
+        demo(c)
     for override in [
         {"aud": "wrong"},
         {"iss": "https://attacker.example"},

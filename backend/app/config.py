@@ -7,7 +7,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
-    app_mode: Literal["demo", "personal"] = "personal"
+    app_mode: Literal["demo", "personal", "combined"] = "combined"
     database_url: str = "postgresql+psycopg://orbit:orbit@localhost:5432/orbit"
     oidc_authority: str = ""
     oidc_client_id: str = "orbit-web"

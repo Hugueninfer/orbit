@@ -2,7 +2,7 @@
 
 ## Environments
 
-Use separate Compose project names and private env files to isolate volumes. Do not change a demo deployment into the personal database. The demo expires; personal mode uses built-in email/password with persistent users. OIDC remains optional.
+New deployments use `APP_MODE=combined`: one application and one database. Personal accounts are persistent; each demo visitor has an expiring owner scope in that same database. Keep `OIDC_AUTHORITY` empty for built-in login. Existing single-purpose `personal`/`demo` deployments remain compatible. To upgrade, back up and select the personal database, set combined, then deploy; no merging/deletion of old databases is required. Test installations must still use separate disposable databases.
 
 For optional local OIDC identity:
 
@@ -22,32 +22,34 @@ Keycloak's `start-dev` and HTTP are **local-only**. For public use, use managed 
 
 ## Built-in personal account (default)
 
-Set `APP_MODE=personal`, leave `OIDC_AUTHORITY` empty and set `ALLOWED_ORIGINS` to the application origin. For local HTTP only, set `SESSION_COOKIE_SECURE=false`; online requires `true` and HTTPS. Use a separate Compose project and database. After migrations and startup, run:
+Set `APP_MODE=combined`, leave `OIDC_AUTHORITY` empty and set `ALLOWED_ORIGINS` to the application origin. For local HTTP only, set `SESSION_COOKIE_SECURE=false`; online requires `true` and HTTPS. After migrations and startup, run:
 
 ```sh
-docker compose -p orbit-personal --env-file .env.personal exec app python -m app.accounts create YOUR_EMAIL
+docker compose exec app python -m app.accounts create YOUR_EMAIL
 # Recovery or password change (revokes all sessions):
-docker compose -p orbit-personal --env-file .env.personal exec app python -m app.accounts reset-password YOUR_EMAIL
+docker compose exec app python -m app.accounts reset-password YOUR_EMAIL
 ```
 
-The CLI prompts twice without echoing the password. Choose 15–128 characters. No account, default password, public signup or email recovery is created automatically. Existing OIDC accounts are not silently linked by email. The online equivalent is `bash scripts/account-remote.sh IMAGE PRIVATE_ENV_FILE create YOUR_EMAIL`.
+`/demo` opens the public entry page on the same origin. Demo access is selected per tab; it sends only its bearer credential. Expiry and logout never restore a residual personal cookie. Logout of a demo revokes only that demo token. Demo reset and cleanup filter by expiring owner; real Telegram integration is restricted to personal accounts.
+
+The CLI prompts twice without echoing the password. Choose 15–128 characters. No personal account, default password, public signup or email recovery is created automatically. Existing OIDC accounts are not silently linked by email. The online equivalent is `bash scripts/account-remote.sh IMAGE PRIVATE_ENV_FILE create YOUR_EMAIL`.
 
 Passwords use scrypt N=131072/r=8/p=1 with a random salt. Seven-day session cookies are HttpOnly/SameSite=Strict/Secure online; their random tokens are hashed in PostgreSQL. Login allows 30 attempts/minute globally, with a 15-minute account lock after five failures. Password hashes are serialized using a database advisory lock to bound memory use. Rate-limit state survives restarts. Request origin plus `X-Orbit-CSRF: 1` is required on cookie-authenticated writes.
 
 ## Release
 
-Publish the reviewed GitHub release and retain the verified image digest from its workflow summary. CI tests, saves and publishes that same image; both Render services reference its digest. Back up, apply migrations once via the `migrate` service, then start/recreate app. On a managed free web service, run `scripts/migrate-remote.sh IMAGE PRIVATE_ENV_FILE` from the operator's machine before deploying; no unsupported paid pre-deploy hook is assumed.
+Publish the reviewed GitHub release and retain the verified image digest from its workflow summary. CI tests, saves and publishes that same image; the Render service references its digest. Back up, apply migrations once via the `migrate` service, then start/recreate app. On a managed free web service, run `scripts/migrate-remote.sh IMAGE PRIVATE_ENV_FILE` from the operator's machine before deploying; no unsupported paid pre-deploy hook is assumed.
 
 Application rollback means running the previous compatible image. A database backup restore is a separate reviewed recovery operation. Never automatically downgrade destructive migrations.
 
 ## Backup and restore
 
 ```sh
-./scripts/backup.sh orbit-personal .env.personal /secure/location/orbit-YYYY-MM-DD.dump
-./scripts/restore-check.sh orbit-personal .env.personal /secure/location/orbit-YYYY-MM-DD.dump
+./scripts/backup.sh orbit .env /secure/location/orbit-YYYY-MM-DD.dump
+./scripts/restore-check.sh orbit .env /secure/location/orbit-YYYY-MM-DD.dump
 ```
 
-Project and environment arguments are mandatory; use `orbit .env` for demo. Backups are atomically published with mode 600, refuse existing destinations and should be stored encrypted off-host. The check script creates a new temporary database, restores there, verifies the schema and removes only that temporary database. It never overwrites the live database. To recover production, create a fresh DB, restore a selected backup, verify owner rows and key transactions, and deliberately switch the app's connection string.
+Project and environment arguments are mandatory; `orbit .env` addresses the default combined installation. The dump contains personal and temporary demo tenants. Backups are atomically published with mode 600, refuse existing destinations and should be stored encrypted off-host. The check script creates a new temporary database, restores there, verifies the schema and removes only that temporary database. It never overwrites the live database. To recover production, create a fresh DB, restore a selected backup, verify owner rows and key transactions, and deliberately switch the app's connection string.
 
 For managed PostgreSQL, save a separate private `.env.pg-personal` file with `PGHOST` (direct endpoint), `PGPORT=5432`, `PGUSER`, `PGPASSWORD`, `PGDATABASE`, and `PGSSLROOTCERT=system`, and `PGSSLMODE=verify-full` (or the provider's required verified TLS configuration). Run `./scripts/backup-remote.sh .env.pg-personal /secure/location/personal-YYYY-MM-DD.dump`. The database credential is passed through Docker's env file, not a command-line URL. Restore-check that dump into the local isolated database with the command above before relying on it. Never put backup dumps or private env files in Git.
 
@@ -78,4 +80,4 @@ No hosted tracing/OTLP exporter is configured. Data/control dependencies are loc
 
 ## External publication
 
-The repo and deploy artifacts do not create accounts, register domains or publish URLs. Configure separate personal/demo PostgreSQL, create the personal account and validate HTTPS origins, login/logout and a reload/persistence journey. Keep demo reset disabled in personal mode. Record public URLs only after these checks pass.
+The repo and deploy artifacts do not create accounts, register domains or publish URLs. Configure one PostgreSQL database and combined service, create the personal account and validate the exact HTTPS origin, login/logout and mobile persistence. Verify that a demo in another tab cannot access or reset personal data. Record the public URL only after these checks pass.

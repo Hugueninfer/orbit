@@ -62,9 +62,9 @@ def enabled():
 
 @router.get("/integrations/telegram", response_model=IntegrationStatus)
 def status(user: User = Depends(authenticated), db: Session = Depends(database, scope="function")):
-    demo = settings().app_mode == "demo"
+    demo = user.expires_at is not None
     return {
-        "enabled": enabled(),
+        "enabled": not demo and enabled(),
         "linked": any(r.data["chat_id"] for r in rows(db, user, "telegram_link")),
         "provider_mode": "fixture" if demo else "live" if enabled() else "disabled",
         "status": "Simulação identificada; nenhum áudio é enviado."
@@ -77,7 +77,7 @@ def status(user: User = Depends(authenticated), db: Session = Depends(database, 
 
 @router.post("/integrations/telegram/link", response_model=LinkCode)
 def link(user: User = Depends(authenticated), db: Session = Depends(database, scope="function")):
-    if settings().app_mode != "demo" and not enabled():
+    if user.expires_at is None and not enabled():
         problem(503, "Integração Telegram não configurada")
     for row in rows(db, user, "telegram_link"):
         db.delete(row)
@@ -143,7 +143,7 @@ class Simulation(Input):
 def simulate(
     body: Simulation, user: User = Depends(authenticated), db: Session = Depends(database, scope="function")
 ):
-    if settings().app_mode != "demo":
+    if user.expires_at is None:
         problem(404, "Simulação disponível somente na demonstração")
     try:
         extracted = json.loads(body.text)
@@ -236,6 +236,12 @@ def process_inbox(provider: ExpenseProvider | None = None):
         link = db.scalar(select(TelegramLink).where(TelegramLink.chat_id == chat_id))
         text_body = payload.get("text", "")
         response = "Envie /start CÓDIGO para vincular sua conta Orbit."
+        owner = db.get(User, inbox.owner_id) if inbox.owner_id else None
+        linked_owner = db.get(User, link.owner_id) if link else None
+        if any(candidate and candidate.expires_at is not None for candidate in (owner, linked_owner)):
+            inbox.status = "ignored"
+            inbox.payload = {"mode": "fixture"}
+            return True
         if text_body.startswith("/start "):
             digest = hashlib.sha256(text_body[7:].strip().upper().encode()).hexdigest()
             link = db.scalar(
@@ -247,6 +253,12 @@ def process_inbox(provider: ExpenseProvider | None = None):
                 )
                 .with_for_update()
             )
+            code_owner = db.get(User, link.owner_id) if link else None
+            if code_owner and code_owner.expires_at is not None:
+                inbox.owner_id = code_owner.id
+                inbox.status = "ignored"
+                inbox.payload = {"mode": "fixture"}
+                return True
             if link:
                 link.chat_id = chat_id
                 inbox.owner_id = link.owner_id
@@ -326,6 +338,15 @@ def deliver_outbox():
         )
         if row is None:
             return False
+        inbox = db.get(Inbox, row.inbox_id)
+        owner = db.get(User, inbox.owner_id) if inbox and inbox.owner_id else None
+        link = db.scalar(select(TelegramLink).where(TelegramLink.chat_id == row.payload.get("chat_id")))
+        linked_owner = db.get(User, link.owner_id) if link else None
+        if row.payload.get("mode") == "fixture" or any(
+            candidate and candidate.expires_at is not None for candidate in (owner, linked_owner)
+        ):
+            row.status = "simulated"
+            return True
         row.attempts += 1
         try:
             response = httpx.post(

@@ -30,7 +30,7 @@ class Profile(Entity):
 
 
 class RuntimeConfig(BaseModel):
-    app_mode: Literal["demo", "personal"]
+    app_mode: Literal["demo", "personal", "combined"]
     oidc_authority: str
     oidc_client_id: str
     oidc_audience: str

@@ -173,3 +173,10 @@ def test_password_whitespace_is_preserved(personal):
     with SessionLocal.begin() as db:
         provision(db, EMAIL, password, reset=True)
     assert login(personal, password=password).status_code == 200
+
+
+def test_personal_cookie_does_not_override_explicit_authorization(personal):
+    assert login(personal).status_code == 200
+    for authorization in ["Bearer invalid", "Basic abc", ""]:
+        assert personal.get("/api/v1/me", headers={"Authorization": authorization}).status_code == 401
+    assert personal.get("/api/v1/me").status_code == 200

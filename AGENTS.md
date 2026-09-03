@@ -1,5 +1,7 @@
 # Referências do projeto Orbit
 
+Decisão mais recente aprovada em 2026-09-03: uma instalação/URL e um PostgreSQL com `APP_MODE=combined`, conta pessoal criada somente por CLI e demos temporárias isoladas por visitante. Não criar cadastro público ou CRUD de usuários. Essa decisão substitui as recomendações antigas de bancos/URLs separados; preservar isolamento por `owner_id`, impedir fallback de bearer demo para cookie pessoal e limitar reset/limpeza/integrações reais por tipo de usuário. Ver `docs/plans/2026-09-03-unified-installation.md`.
+
 Atualização autorizada pelo usuário em 2026-09-03: o deploy pessoal deve funcionar sem Auth0. Login local com e-mail/senha é o padrão quando `OIDC_AUTHORITY` está vazio; OIDC permanece opcional para instalações existentes. Seguir `infra/render/DEPLOY-PT-BR.md` e `docs/plans/2026-09-03-local-login.md`. Essa decisão posterior prevalece sobre a exigência OIDC original da v1.1.
 
 O usuário pediu para manter a especificação v1.1 como base funcional e adotar o pacote de telas Stitch como referência visual exata para desenvolvimento futuro.

@@ -1,3 +1,5 @@
+> Decisão mais recente (2026-09-03): uma aplicação/URL e um banco PostgreSQL, conta pessoal somente por CLI e demos temporárias isoladas por visitante. Sem cadastro público ou CRUD de usuários. Ver `plans/2026-09-03-unified-installation.md`.
+
 > Decisão posterior do usuário (2026-09-03): Auth0 não é obrigatório. O padrão pessoal agora é login local com e-mail/senha; OIDC é opcional. Abaixo permanece a consolidação da especificação original. Consulte `plans/2026-09-03-local-login.md` para a alteração.
 
 # Orbit — Base do projeto

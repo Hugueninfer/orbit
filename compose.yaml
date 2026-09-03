@@ -19,7 +19,7 @@ services:
     build: .
     environment: &app-env
       DATABASE_URL: postgresql+psycopg://orbit:${POSTGRES_PASSWORD}@db:5432/orbit
-      APP_MODE: ${APP_MODE:-demo}
+      APP_MODE: ${APP_MODE:-combined}
       OIDC_AUTHORITY: ${OIDC_AUTHORITY:-}
       OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:-orbit-web}
       OIDC_AUDIENCE: ${OIDC_AUDIENCE:-orbit-api}

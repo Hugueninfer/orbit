@@ -548,7 +548,20 @@ def test_telegram_durable_dedup_and_one_use_link(client, monkeypatch):
     from app.models import Inbox, Outbox
 
     c = client
-    h = demo(c)
+    from test_local_auth import ORIGIN, PASSWORD, login
+
+    from app.accounts import provision
+
+    monkeypatch.setattr(settings(), "app_mode", "personal")
+    monkeypatch.setattr(settings(), "allowed_origins", "https://testserver")
+    c.base_url = "https://testserver"
+    with SessionLocal.begin() as db:
+        user = provision(db, "owner@example.com", PASSWORD)
+        c.test_users.append(str(user.id))
+    assert login(c).status_code == 200
+    h = ORIGIN
+    for key in ["telegram_bot_token", "telegram_provider_url", "telegram_provider_key"]:
+        monkeypatch.setattr(settings(), key, "configured")
     monkeypatch.setattr(settings(), "telegram_webhook_secret", "test-webhook-secret")
     code = post(c, h, "/integrations/telegram/link", {})["code"]
     body = {

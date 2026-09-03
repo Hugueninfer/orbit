@@ -2,6 +2,10 @@
 
 Diretriz registrada em 3 de setembro de 2026. Complementa a especificação funcional v1.1 e a referência visual Stitch. Nenhuma infraestrutura foi provisionada; as opções de provedores abaixo são recomendações, não serviços já contratados ou implementados.
 
+## Decisão vigente
+
+Pedido posterior aprovado em 2026-09-03: **um serviço, uma URL e um banco**. Sua conta é criada por CLI, sem CRUD/cadastro público; cada visitante recebe uma demo temporária isolada por `owner_id` no mesmo PostgreSQL. Login local com e-mail/senha dispensa Auth0. O modo padrão é `combined`; as instruções operacionais estão em `../infra/render/DEPLOY-PT-BR.md`. A especificação original e preços consultados abaixo são contexto histórico e devem ser revalidados no deploy.
+
 ## Prioridades estabelecidas pelo usuário
 
 1. O Orbit é, acima de tudo, um projeto de portfólio que demonstra capacidade de desenvolvimento ponta a ponta.
@@ -26,12 +30,12 @@ A imagem deve aceitar configuração em runtime para conexão de banco, OIDC, UR
 
 | Ambiente | Composição proposta | Objetivo e limite |
 |---|---|---|
-| Local/dev | Docker Compose, app, PostgreSQL e Keycloak | Ambiente reproduzível sem contas cloud ou serviços pagos para o núcleo |
-| Uso pessoal online | Mesma imagem Docker em hospedagem online, PostgreSQL persistente e OIDC; instalação separada da demo | Acesso HTTPS pelo celular e computador; plano gratuito sujeito a suspensão/cotas |
-| Demo pública | Imagem Docker no Render Free, PostgreSQL Neon Free e OIDC Auth0 Free | URL para avaliadores; sujeita a cold start e cotas; dados exclusivamente fictícios |
+| Local/dev | Docker Compose, app e PostgreSQL; Keycloak opcional | Ambiente reproduzível sem contas cloud ou serviços pagos para o núcleo |
+| Uso pessoal online | Uma imagem Docker, PostgreSQL persistente e login próprio; mesma instalação da demo | Acesso HTTPS pelo celular e computador; plano gratuito sujeito a suspensão/cotas |
+| Demo pública | Mesmo serviço Render e mesmo PostgreSQL Neon, com sessão temporária por visitante | URL para avaliadores; sujeita a cold start e cotas; dados exclusivamente fictícios |
 | Laboratório AWS | Mesma imagem em EC2, provisionamento Terraform, identidade/permissões e acesso controlados | Evidência de deploy cloud; ativação pontual, custo/eligibilidade conferidos e destruição planejada |
 
-Render + Neon + Auth0 é a proposta inicial para a demo, por preservar Docker, PostgreSQL e OIDC sem hospedar Keycloak em uma instância pequena. Não é compromisso irreversível com fornecedores. Domínios gratuitos dos serviços são suficientes; domínio próprio não é pré-requisito.
+Render + Neon é o caminho atual; login próprio dispensa um terceiro provedor de identidade. Não é compromisso irreversível com fornecedores. Domínios gratuitos dos serviços são suficientes; domínio próprio não é pré-requisito.
 
 Para uso pessoal remoto com disponibilidade contínua, será preciso avaliar a máquina disponível e o acesso seguro ou aceitar as limitações de um plano gratuito. Não prometer disponibilidade 24/7 de produção em serviços gratuitos voltados a hobby/demo.
 
@@ -63,13 +67,13 @@ Terraform validado localmente não equivale a deploy validado na AWS. Se não ho
 
 Recomendação: entrada evidente “Experimentar demonstração”, com dados fictícios coerentes e acesso às jornadas principais. O mecanismo de autenticação da demo será definido junto ao módulo Identity; não introduzir um bypass de autorização no ambiente pessoal.
 
-- Separar a instalação/banco e as credenciais da demo dos dados pessoais. Mesmo na demo, aplicar ownership normalmente.
+- Separar dados por proprietário no mesmo banco; aplicar ownership tanto à conta pessoal quanto às demos.
 - Preferir uma sessão temporária com conjunto de dados por visitante para evitar que avaliadores apaguem ou alterem o trabalho uns dos outros. Uma conta demo compartilhada é uma alternativa mais simples, mas precisa deixar explícito que o estado é compartilhado e pode ser reiniciado.
 - Seed determinístico e versionado: tarefas pendentes/concluídas, hábitos com histórico, compra parcelada, fatura parcialmente paga e treino anterior.
 - Ancorar datas demonstrativas em um relógio/data de referência definido, para que o cenário continue útil meses depois e os testes sejam reproduzíveis.
 - Permitir criar tarefa, fazer check-in, simular compra e registrar treino, sem acesso a integrações reais, segredos, exportação pessoal ou administração.
 - Limitar tamanho e quantidade de registros, duração das sessões e frequência de ações. Expirar dados de demonstração e oferecer reset restrito ao conjunto correto.
-- Reset/seed nunca pode operar no banco pessoal: usar credenciais e configuração separadas e uma verificação explícita do ambiente antes de qualquer exclusão.
+- Reset/seed/limpeza nunca podem afetar usuários pessoais: validar usuário demo e restringir todas as operações ao respectivo owner_id.
 - O botão e os estados demo devem seguir o JSON visual do Orbit, adicionados sem redesenhar as telas existentes.
 
 ## Diferenciais técnicos de maior valor
@@ -135,8 +139,8 @@ Manter relatórios, diagramas e exemplos técnicos no repositório. Informaçõe
 
 Confirmado pelo usuário: prioridade de portfólio, uso diário, simplicidade, preferência por gratuidade, Docker obrigatório e necessidade de demo/consideração de AWS.
 
-Recomendado nesta análise: imagem de app com SPA compilada, Render + Neon + Auth0 para demo, Compose em equipamento próprio para uso pessoal sem mensalidade e laboratório AWS mínimo. Validar compatibilidade, elegibilidade e cotas no bootstrap/deploy. Nenhuma conta, publicação, cobrança ou infraestrutura foi criada.
+Decisão atual: imagem de app com SPA compilada, um serviço Render e um PostgreSQL Neon para pessoal e demo; Compose local permanece disponível e AWS é laboratório opcional. Validar compatibilidade, elegibilidade e cotas no bootstrap/deploy. Nenhuma conta, publicação, cobrança ou infraestrutura foi criada.
 
 ## Requisito posterior confirmado
 
-O uso pessoal também deve ser online, acessível pelo celular. Serão duas instalações/URLs do mesmo projeto (pessoal e demo), com bancos separados. Compose local continua disponível, mas não substitui o requisito online. Desenvolvimento autorizado pelo usuário em 2026-09-03.
+O uso pessoal também deve ser online, acessível pelo celular. A decisão posterior unificou pessoal e demo em uma instalação/URL e um banco, com isolamento por usuário. Compose local continua disponível, mas não substitui o requisito online. Desenvolvimento autorizado pelo usuário em 2026-09-03.

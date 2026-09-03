@@ -9,7 +9,7 @@ Necessary adaptations:
 - Mock identities, version labels, metric values and 2024 dates are replaced with real owner-scoped data or explicitly fictitious seeded records.
 - The user requested login without Auth0 on 2026-09-03. Personal login now restores the original split-panel email/password fields, including password visibility. Sessions last seven days; the mock's 30-day checkbox, passkeys and email recovery are not implemented. Existing OIDC configurations remain optional.
 - Lucide SVG icons replace the external Material Symbols font; Geist/JetBrains fonts are bundled locally.
-- Demo entry/banner/reset are additional approved portfolio flows built from the same components.
+- Demo entry/banner/reset are additional approved portfolio flows built from the same components. The approved single-installation flow now places a secondary “Experimentar demonstração” action beneath personal login, preserving the split panel and existing buttons; session badges reflect the authenticated user, not the deployment mode. `/demo` opens that same entry page.
 - Open Finance, wearables, generic AI insights, biometric claims and nonexistent integration controls are omitted from the original mock copy; they are outside the functional scope.
 - Dashboard uses upcoming invoice commitments instead of the prototype's unimplemented circadian/AI metrics. Charts use actual transactions, which can be sparse.
 - New invoice, recurrence, history and library flows reuse the corresponding finance/workout cards and form recipes.

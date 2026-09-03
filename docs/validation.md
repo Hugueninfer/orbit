@@ -1,6 +1,6 @@
 # Validation evidence
 
-Recorded during development on 2026-09-03. This is actual local evidence, not a claim of a public production deployment.
+Recorded during development on 2026-09-03. This is actual local evidence, not a claim of a public production deployment. Earlier milestones below are historical snapshots; later sections supersede their architecture and account status.
 
 | Check | Evidence / current outcome |
 |---|---|
@@ -14,7 +14,7 @@ Recorded during development on 2026-09-03. This is actual local evidence, not a 
 | Backup | Personal-project custom-format pg_dump restored to new isolated DB; revision4b90d2a724f1 and one personal test owner verified; temporary restore DB removed. Explicit project/env required, output mode600 and overwrite refusal verified |
 | Terraform | fmt, init (AWS6.62.0) and validate passed using Terraform1.13.1; never applied |
 | Resource observation | After core E2E, demo app ~94MiB RAM, DB ~68MiB; image ~435MB uncompressed. One local idle sample, not load-test sizing |
-| External hosting | No Render/Neon/Auth0 resources or public URLs provisioned; user currently has GitHub only |
+| External hosting | No public URL deployed by this work; user has since created provider accounts and Neon projects |
 
 Meaningful failures fixed during integration: API calendar queries must stop at today's local date instead of month end; missing Python module import path in production wrapper; generated response optional schedule fields normalized by the frontend. These were reproduced by real browser/container checks rather than hidden with mock responses.
 
@@ -33,4 +33,13 @@ Final mobile header smoke (after visual polish):390px document/content width, qu
 
 A suíte existente passou com 62 testes antes do último ajuste de revisão; após esse ajuste os 10 testes específicos de login passaram (incluindo o novo caso de espaços na senha). Ruff e mypy passaram em 23 módulos. Os 12 testes Playwright de demo e pessoal passaram em desktop/mobile contra a imagem Docker final `8edc6d008516`. A CLI foi exercitada em terminal com entrada de senha oculta e criou somente `browser@example.com` em banco de teste separado. Alembic upgrade foi aplicado em banco novo e `alembic check` não detectou drift. A revisão independente encerrou seus dois achados; veja `reviews/local-auth.md`.
 
-A configuração de CI agora seleciona Python 3.14 estável pelo setup-python. A tabela de downloads do uv 0.8.15 oferece 3.14.0rc2, enquanto o Docker usa 3.14.7; a execução remota após a alteração ainda precisa ser confirmada.
+A configuração de CI agora seleciona Python 3.14 estável pelo setup-python. A tabela de downloads do uv 0.8.15 oferece 3.14.0rc2, enquanto o Docker usa 3.14.7; a execução remota [33811651796](https://github.com/Hugueninfer/orbit/actions/runs/33811651796) concluiu com sucesso para o commit `68aeafa`, incluindo os testes e auditorias.
+
+
+## Instalação unificada — 2026-09-03
+
+Imagem local final `3cb2ace4383f` construída pelo Dockerfile, com Python 3.14 e SPA compilada. **74 testes backend passaram dentro dessa imagem contra PostgreSQL real** (121,95s); Ruff e mypy passaram sobre o mesmo código (23 módulos); `alembic check` não detectou alterações de schema. **13 testes Vitest** e typecheck/build passaram. **14 jornadas Playwright passaram** (1,7min), em desktop/mobile, contra uma única instalação `APP_MODE=combined` e um único banco contendo conta pessoal fictícia e demos.
+
+As novas verificações cobrem cookie pessoal junto a bearer demo, bearer inválido/expirado sem fallback, leitura entre proprietários, reset/limpeza/cotas sem afetar dados pessoais, logout independente e bloqueio de Telegram real para demos. O navegador exercitou `/demo` em outra aba com cookie pessoal existente, reset, logout, expiração local e token rejeitado pelo servidor; a aba pessoal continuou com o mesmo proprietário. Os cenários anteriores de tarefas, hábitos, finanças e treinos também passaram nessa instalação.
+
+A [revisão independente](reviews/unified-installation.md) não encontrou problemas de severidade alta/média. A entrada foi inspecionada visualmente em [1440px](screenshots/login-unified-desktop.png) e [390px](screenshots/login-unified-mobile.png), sem overflow horizontal. Não houve alteração de schema nesta entrega, nem fusão/exclusão de bancos existentes. Nenhuma conta pessoal real ou senha padrão foi criada. Publicação online continua dependente das etapas do [guia Render](../infra/render/DEPLOY-PT-BR.md).

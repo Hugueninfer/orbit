@@ -55,7 +55,7 @@ def check_password(password: str, encoded: str | None) -> bool:
 
 
 def local_only():
-    if settings().app_mode != "personal" or settings().oidc_authority:
+    if settings().app_mode not in {"personal", "combined"} or settings().oidc_authority:
         problem(404, "Login local indisponível")
 
 
@@ -165,6 +165,8 @@ def login(
 @router.post("/auth/logout", response_model=Ok)
 def logout(request: Request, response: Response, db: Session = Depends(database, scope="function")):
     local_only()
+    if "Authorization" in request.headers:
+        problem(401, "Use a sessão pessoal para sair")
     check_origin(request)
     db.execute(delete(PersonalSession).where(PersonalSession.digest == cookie_digest(request)))
     response.delete_cookie(

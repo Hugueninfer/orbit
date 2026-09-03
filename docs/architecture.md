@@ -2,6 +2,12 @@
 
 A single FastAPI application owns the transactional business rules. React consumes REST resources and generated OpenAPI response types, with TanStack Query invalidation after successful writes. The same compiled SPA and API share one origin in the Docker runtime. PostgreSQL remains the source of truth.
 
+## One database, distinct owners
+
+`APP_MODE=combined` serves personal accounts and temporary demo tenants together. Every business row is scoped to the authenticated owner, backed by owner-aware foreign keys. Personal accounts are created manually and do not expire. Demo creation seeds only its new owner; reset, cleanup and quotas apply only to expiring owners. This is application-enforced tenancy, not separate physical databases or PostgreSQL RLS.
+
+An explicit bearer token takes precedence over a personal cookie. Invalid or expired bearer credentials never fall back to the cookie. The web client also preserves access intent per tab and omits cookies for demo requests; identity changes clear cached queries. Demo logout revokes only its token. Live Telegram paths exclude demo owners even when a personal provider is configured. Legacy `personal` and `demo` modes remain compatible.
+
 ## Backend modules
 
 - `identity`: profile, owner lookup, optional OIDC verification, expiring isolated demo sessions and guarded reset.

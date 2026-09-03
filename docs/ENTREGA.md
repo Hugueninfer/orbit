@@ -1,6 +1,6 @@
 # Orbit — entrega do projeto
 
-O núcleo do Orbit foi implementado como um único projeto: interface React/TypeScript, API Python/FastAPI e PostgreSQL, empacotados para execução por Docker Compose. A instalação demo e a pessoal usam o mesmo código, com bancos e autenticação separados.
+O núcleo do Orbit foi implementado como um único projeto: interface React/TypeScript, API Python/FastAPI e PostgreSQL, empacotados para execução por Docker Compose. A conta pessoal e as demos temporárias usam a mesma instalação/URL e o mesmo banco, com dados isolados por proprietário.
 
 ## Abrir agora
 
@@ -39,7 +39,7 @@ As 19 telas Stitch e o JSON visual estão preservados em [docs/design](design/LE
 
 ## O que ainda depende de configuração externa
 
-O caminho online usa GitHub, Render e Neon. A pedido do usuário, Auth0 deixou de ser necessário; o Orbit oferece login próprio com conta criada por comando administrativo. O [guia de publicação](../infra/render/README.md) descreve os passos para duas instalações online gratuitas dentro das cotas dos provedores. Serviços gratuitos podem dormir e compartilham limites; não há promessa de disponibilidade contínua sem custo.
+O caminho online usa GitHub, Render e Neon. A pedido do usuário, Auth0 deixou de ser necessário; o Orbit oferece login próprio com conta criada por comando administrativo. O [guia de publicação](../infra/render/README.md) descreve os passos para uma instalação online no plano gratuito dentro das cotas dos provedores. Serviços gratuitos podem dormir e compartilham limites; não há promessa de disponibilidade contínua sem custo.
 
 O fluxo completo de Telegram/áudio é uma integração opcional ainda incompleta: há estrutura de captura, processamento e simulação, mas faltam conversas de esclarecimento, ações dos recibos e validação com os serviços reais. Não use essa integração como automação financeira pessoal em produção nesta versão.
 

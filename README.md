@@ -2,7 +2,7 @@
 
 A personal workspace for tasks, habits, finances and workouts. Built for everyday desktop and mobile use, with an isolated, interactive portfolio demo.
 
-**One repository, two online installations:** personal and demo use the same Docker application, with separate databases and authentication policies. Public hosting is prepared, but no public URL has been provisioned yet. See [deployment](infra/render/README.md).
+**One application, one URL, one database:** personal accounts and temporary visitor demos share the Docker application and PostgreSQL, with data isolated by owner. Public hosting is prepared, but no public URL has been provisioned yet. See [deployment](infra/render/README.md).
 
 ![Orbit desktop dashboard](docs/screenshots/dashboard-desktop.png)
 
@@ -15,7 +15,13 @@ cp .env.example .env
 docker compose up -d --build --wait
 ```
 
-Open **http://localhost:8080** and select **Experimentar demonstração**. Each visitor receives an expiring, isolated workspace with fictitious data. Your changes persist in PostgreSQL across page reloads and container restarts until the demo expires. Personal mode has no demo expiry.
+Open **http://localhost:8080** and select **Experimentar demonstração**. Each visitor receives an expiring, isolated workspace with fictitious data. Your changes persist in PostgreSQL across page reloads and container restarts until the demo expires. Personal accounts have no demo expiry. Create yours manually:
+
+```sh
+docker compose exec app python -m app.accounts create YOUR_EMAIL
+```
+
+Then sign in with your email/password on the same page. There is no public registration or user CRUD. The optional `/demo` path opens the public entry even in a browser with a personal session.
 
 ```sh
 docker compose logs -f app
@@ -24,7 +30,7 @@ docker compose stop
 docker compose up -d --wait
 ```
 
-Do not use `docker compose down -v` on data you want to keep. For real data, configure personal mode, create your account and set up backups first.
+Do not use `docker compose down -v` on data you want to keep. For real data, create your account and set up backups first. New deployments default to `APP_MODE=combined`; explicit `personal` and `demo` modes remain supported.
 
 ## Explore in five minutes
 
@@ -36,7 +42,7 @@ Do not use `docker compose down -v` on data you want to keep. For real data, con
 
 ## Implemented core
 
-- Built-in email/password login with scrypt, HttpOnly sessions, CSRF protection and persistent login limits. Operator-only account creation and recovery; optional OIDC PKCE for existing providers. Demo credentials are unavailable in personal mode.
+- Built-in email/password login with scrypt, HttpOnly sessions, CSRF protection and persistent login limits. Operator-only account creation and recovery; optional OIDC PKCE for existing providers. Demo bearer tokens take precedence over personal cookies and never fall back to personal data when expired.
 - Task lists, statuses, deadlines, priorities, tags, checklists, archival/restoration, filtering and version-conflict protection.
 - Habit schedules, quantity check-ins, local dates, calendar, adherence and streaks with future-effective schedule and target edits.
 - Integer-money accounts, categories, cash transactions, planned transactions, atomic transfers and idempotent daily/weekly/monthly/yearly recurring occurrences with automatic initial horizons.
@@ -57,7 +63,7 @@ The optional Telegram adapter includes linking, durable inbox/outbox, provider b
 | Delivery | One non-root multi-stage Docker image with same-origin SPA/API; Compose migration job, persistent DB volume |
 | Quality | Real PostgreSQL integration tests, critical domain tests, Vitest and Playwright desktop/mobile journeys |
 | Operations | Readiness/liveness, structured request logs and request IDs, backups and isolated restoration script |
-| Cloud | Two free-plan Render Blueprint services with external PostgreSQL; optional Terraform EC2/SSM lab |
+| Cloud | One free-plan Render Blueprint service with external PostgreSQL; optional Terraform EC2/SSM lab |
 
 This is a modular monolith. No microservices, Kubernetes, permanent worker or paid observability stack is required for the core.
 
@@ -68,17 +74,14 @@ flowchart LR
   App --> DB[(PostgreSQL)]
   App --> Logs[Request IDs / structured logs]
   Job[One-time migration / scheduled CLI] --> DB
-  subgraph Separate deployment
-    DemoBrowser[Evaluator] --> Demo[Same image: demo mode]
-    Demo --> DemoDB[(Separate demo PostgreSQL)]
-  end
+  Evaluator[Portfolio visitor] -->|Temporary isolated demo| App
 ```
 
 ## Personal mode and online hosting
 
 Personal login setup, optional OIDC testing and free online hosting are documented in [the runbook](docs/runbook.md) and [Render deployment guide](infra/render/README.md). GitHub, Render and Neon are sufficient; Auth0 is not required. No cloud accounts or paid resources are created by `docker compose up`.
 
-Free services can sleep and have shared quotas. Two URLs do not imply two codebases. Render's 750 monthly free instance-hours are shared by all free services in the workspace; do not promise both instances stay online continuously. See the provider links and verified date in the deployment guide.
+Free services can sleep and have shared quotas. The deployment guide uses one service and one database; no always-on guarantee is assumed.
 
 ## Development and validation
 
@@ -94,6 +97,8 @@ cd ../web
 npm ci
 npm test
 npm run build
+# Provision browser@example.com in a DISPOSABLE combined test installation first.
+# Password: Orbit browser test password 2026 (fictitious CI account only).
 ORBIT_BASE_URL=http://127.0.0.1:8080 npm run e2e
 ```
 

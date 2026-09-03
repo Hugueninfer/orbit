@@ -5,7 +5,7 @@ FastAPI / SQLAlchemy 2 / psycopg 3 / PostgreSQL 18. Python 3.14 is the container
 ```sh
 cd backend
 uv sync --frozen
-export APP_MODE=demo
+export APP_MODE=combined
 export DATABASE_URL=postgresql+psycopg://orbit:password@localhost:5432/orbit_demo
 uv run alembic upgrade head
 uv run uvicorn app.main:app --host 0.0.0.0 --port 8000
@@ -13,7 +13,7 @@ uv run uvicorn app.main:app --host 0.0.0.0 --port 8000
 
 Production startup does not create or mutate database schema. Apply Alembic as a separate release step. `GET /health/live` checks the process; `/api/v1/health` checks PostgreSQL. Interactive API docs: `/api/docs`; typed contract: `/api/v1/openapi.json`. The root runtime wraps the API to serve the web artifact.
 
-Personal mode defaults to built-in email/password when `OIDC_AUTHORITY` is empty. Create the account with `python -m app.accounts create EMAIL`; recovery uses `reset-password` and revokes sessions. Passwords use scrypt and seven-day opaque sessions use HttpOnly cookies. Public HTTPS deployments require `SESSION_COOKIE_SECURE=true` and exact `ALLOWED_ORIGINS`. OIDC remains optional with issuer/client/audience settings and standard discovery. Do not use a personal database for demo: deploy the same artifact against separate databases with explicit `APP_MODE`.
+Combined mode (the default) and personal mode use built-in email/password when `OIDC_AUTHORITY` is empty. Create the account with `python -m app.accounts create EMAIL`; recovery uses `reset-password` and revokes sessions. Passwords use scrypt and seven-day opaque sessions use HttpOnly cookies. Public HTTPS deployments require `SESSION_COOKIE_SECURE=true` and exact `ALLOWED_ORIGINS`. OIDC remains optional with issuer/client/audience settings and standard discovery. `APP_MODE=combined` supports personal accounts and temporary demo tenants in one database. Owner-scoped access, role-scoped reset/cleanup and explicit bearer precedence protect personal data. Separate `demo` and `personal` modes remain available for existing installations.
 
 `API.md` describes all commands, response fields, accounting policies, and the optional Telegram milestone's limits.
 

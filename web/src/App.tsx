@@ -21,7 +21,14 @@ import {
   ArrowRight,
   UserRound,
 } from "lucide-react";
-import { getConfig, getOidc, restoreAuth, setToken, useApi } from "./api";
+import {
+  getConfig,
+  getOidc,
+  restoreAuth,
+  setPersonalToken,
+  signOutLocally,
+  useApi,
+} from "./api";
 import type { Config, Dashboard as DashboardData } from "./types";
 import {
   Badge,
@@ -75,11 +82,15 @@ export default function App() {
           const manager = await getOidc();
           callbackPromise ??= manager.signinRedirectCallback();
           const user = await callbackPromise;
-          setToken(user.access_token);
+          setPersonalToken(user.access_token);
           if (mounted) {
             setAuth(true);
             navigate("/", { replace: true });
           }
+        } else if (location.pathname === "/demo") {
+          signOutLocally();
+          queryClient.clear();
+          if (mounted) setAuth(false);
         } else {
           const restored = await restoreAuth();
           if (mounted) setAuth(restored);
@@ -90,7 +101,7 @@ export default function App() {
     }
     void init();
     const expire = () => {
-      setToken(undefined);
+      signOutLocally();
       queryClient.clear();
       setAuth(false);
     };
@@ -117,14 +128,15 @@ export default function App() {
       <Login
         config={config}
         onLogin={() => {
+          queryClient.clear();
           setAuth(true);
           navigate("/");
         }}
       />
     );
-  return <Shell config={config} />;
+  return <Shell />;
 }
-function Shell({ config }: { config: Config }) {
+function Shell() {
   const location = useLocation();
   const d = useApi<DashboardData>("/dashboard");
   const [quick, setQuick] = useState(false);
@@ -220,9 +232,7 @@ function Shell({ config }: { config: Config }) {
             <div>
               <strong>{name}</strong>
               <small>
-                {config.app_mode === "demo"
-                  ? "Demonstração"
-                  : "Central pessoal"}
+                {d.data?.profile.is_demo ? "Demonstração" : "Central pessoal"}
               </small>
             </div>
           </Link>
@@ -263,7 +273,7 @@ function Shell({ config }: { config: Config }) {
             </Button>
           </div>
         </header>
-        {config.app_mode === "demo" && (
+        {d.data?.profile.is_demo && (
           <div className="demo-banner">
             Demonstração · seus dados fictícios ficam neste espaço por 24 horas.
             <Link
