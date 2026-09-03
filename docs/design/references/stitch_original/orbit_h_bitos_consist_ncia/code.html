@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Orbit — Hábitos &amp; Consistência</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-primary-fixed": "#001552",
+            "on-surface-variant": "#c4c5d5",
+            "on-secondary-container": "#004d44",
+            "on-secondary-fixed": "#00201c",
+            "outline": "#8e909e",
+            "on-primary": "#002682",
+            "tertiary-container": "#7992ff",
+            "secondary-fixed-dim": "#3cddc7",
+            "surface-variant": "#2c3545",
+            "on-error": "#690005",
+            "primary-fixed": "#dde1ff",
+            "background": "#0a1422",
+            "secondary-fixed": "#62fae3",
+            "on-error-container": "#ffdad6",
+            "inverse-surface": "#d9e3f7",
+            "secondary": "#44e2cd",
+            "surface-container": "#16202f",
+            "on-tertiary-fixed-variant": "#0136bb",
+            "inverse-on-surface": "#273140",
+            "on-primary-container": "#002683",
+            "on-tertiary-fixed": "#001354",
+            "surface-container-lowest": "#050e1c",
+            "surface-bright": "#303a49",
+            "primary-container": "#7692ff",
+            "on-primary-fixed-variant": "#193ca7",
+            "surface-container-low": "#121c2a",
+            "on-surface": "#d9e3f7",
+            "on-tertiary-container": "#002588",
+            "surface": "#0a1422",
+            "tertiary-fixed-dim": "#b8c4ff",
+            "on-secondary-fixed-variant": "#005047",
+            "on-tertiary": "#002486",
+            "surface-tint": "#b7c4ff",
+            "tertiary-fixed": "#dde1ff",
+            "primary-fixed-dim": "#b7c4ff",
+            "on-secondary": "#003731",
+            "on-background": "#d9e3f7",
+            "error": "#ffb4ab",
+            "primary": "#b7c4ff",
+            "surface-container-highest": "#2c3545",
+            "surface-container-high": "#212a39",
+            "error-container": "#93000a",
+            "inverse-primary": "#3856bf",
+            "outline-variant": "#444653",
+            "surface-dim": "#0a1422",
+            "secondary-container": "#03c6b2",
+            "tertiary": "#b8c4ff"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "space-16": "1rem",
+            "margin-desktop": "2rem",
+            "space-48": "3rem",
+            "gutter-desktop": "1.5rem",
+            "space-8": "0.5rem",
+            "space-2": "0.125rem",
+            "space-12": "0.75rem",
+            "margin-tablet": "1.5rem",
+            "space-4": "0.25rem",
+            "space-40": "2.5rem",
+            "space-64": "4rem",
+            "space-24": "1.5rem",
+            "space-20": "1.25rem",
+            "gutter-mobile": "1rem",
+            "space-32": "2rem",
+            "margin-mobile": "1rem"
+          },
+          fontFamily: {
+            "body-sm": ["Geist", "sans-serif"],
+            "code-md": ["JetBrains Mono", "monospace"],
+            "headline-xl": ["Geist", "sans-serif"],
+            "display-lg-mobile": ["Geist", "sans-serif"],
+            "headline-xl-mobile": ["Geist", "sans-serif"],
+            "body-lg": ["Geist", "sans-serif"],
+            "body-md": ["Geist", "sans-serif"],
+            "headline-sm": ["Geist", "sans-serif"],
+            "label-caps": ["JetBrains Mono", "monospace"],
+            "display-lg": ["Geist", "sans-serif"],
+            "headline-md": ["Geist", "sans-serif"],
+            "label-regular": ["Geist", "sans-serif"]
+          },
+          fontSize: {
+            "body-sm": ["12px", { lineHeight: "18px", letterSpacing: "0.005em", fontWeight: "400" }],
+            "code-md": ["13px", { lineHeight: "20px", letterSpacing: "0em", fontWeight: "400" }],
+            "headline-xl": ["28px", { lineHeight: "36px", letterSpacing: "-0.02em", fontWeight: "600" }],
+            "display-lg-mobile": ["30px", { lineHeight: "38px", letterSpacing: "-0.02em", fontWeight: "600" }],
+            "headline-xl-mobile": ["24px", { lineHeight: "32px", letterSpacing: "-0.015em", fontWeight: "600" }],
+            "body-lg": ["16px", { lineHeight: "26px", letterSpacing: "0em", fontWeight: "400" }],
+            "body-md": ["14px", { lineHeight: "22px", letterSpacing: "0em", fontWeight: "400" }],
+            "headline-sm": ["16px", { lineHeight: "24px", letterSpacing: "-0.01em", fontWeight: "600" }],
+            "label-caps": ["11px", { lineHeight: "16px", letterSpacing: "0.06em", fontWeight: "500" }],
+            "display-lg": ["40px", { lineHeight: "48px", letterSpacing: "-0.025em", fontWeight: "600" }],
+            "headline-md": ["20px", { lineHeight: "28px", letterSpacing: "-0.015em", fontWeight: "500" }],
+            "label-regular": ["12px", { lineHeight: "16px", letterSpacing: "0.01em", fontWeight: "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .orbital-ring {
+      background: radial-gradient(circle, rgba(118, 146, 255, 0.08) 0%, rgba(10, 20, 34, 0) 70%);
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: rgba(10, 20, 34, 0.5);
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #253653;
+      border-radius: 4px;
+    }
+    .pulse-glow {
+      box-shadow: 0 0 16px 2px rgba(68, 226, 205, 0.25);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased font-body-md selection:bg-primary-container selection:text-on-primary-container min-h-screen flex overflow-x-hidden">
+<!-- ================= SIDEBAR DESKTOP (Source of Truth JSON) ================= -->
+<aside class="fixed top-0 left-0 h-screen w-64 z-40 bg-surface-container-low border-r border-outline-variant/30 flex flex-col justify-between p-space-16 select-none">
+<!-- Top Brand & Core Navigation -->
+<div class="flex flex-col gap-space-24">
+<!-- Brand Logo / Orbit Symbol -->
+<div class="flex items-center gap-space-12 px-space-8 pt-space-4">
+<div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-surface-container border border-outline-variant/40 shadow-inner">
+<div class="absolute w-7 h-7 rounded-full border border-primary/40"></div>
+<div class="absolute w-4 h-4 rounded-full border border-secondary/70 animate-pulse"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-secondary shadow-[0_0_8px_#44e2cd]"></div>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-8">
+<span class="text-headline-md font-headline-md font-semibold text-on-surface tracking-tight">Orbit</span>
+<span class="font-label-caps text-label-caps px-1.5 py-0.5 rounded bg-surface-container-high text-secondary border border-secondary/30">PRO</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Personal Operations Hub</span>
+</div>
+</div>
+<!-- Main CTA Button -->
+<button class="flex items-center justify-center gap-space-8 w-full py-2.5 px-space-16 rounded-xl bg-primary-container hover:bg-inverse-primary text-on-primary font-body-md font-medium shadow-[0_0_16px_rgba(118,146,255,0.25)] transition-all duration-150 active:scale-[0.98]">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>+ Adicionar</span>
+</button>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-outline px-space-12 pb-1 uppercase tracking-wider">Módulos</span>
+<!-- Tab 0: Visão geral -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant font-normal hover:bg-surface-container transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="font-body-md text-body-md">Visão geral</span>
+</a>
+<!-- Tab 1: Tarefas -->
+<a class="flex items-center justify-between px-space-12 py-space-8 rounded-lg text-on-surface-variant font-normal hover:bg-surface-container transition-colors duration-150" href="#">
+<div class="flex items-center gap-space-12">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span class="font-body-md text-body-md">Tarefas</span>
+</div>
+<span class="font-code-md text-body-sm text-outline">8</span>
+</a>
+<!-- Tab 2: Hábitos (ACTIVE MATCH according to Source of Truth Logic) -->
+<a class="flex items-center justify-between px-space-12 py-space-8 rounded-lg bg-surface-container-high text-secondary-fixed font-medium border-l-2 border-secondary shadow-sm" href="#">
+<div class="flex items-center gap-space-12">
+<span class="material-symbols-outlined text-[20px] text-secondary">repeat</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Hábitos</span>
+</div>
+<span class="font-label-caps text-[10px] px-2 py-0.5 rounded-full bg-secondary/15 text-secondary border border-secondary/30">14 dias</span>
+</a>
+<!-- Tab 3: Finanças -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant font-normal hover:bg-surface-container transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+<span class="font-body-md text-body-md">Finanças</span>
+</a>
+<!-- Tab 4: Treinos -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant font-normal hover:bg-surface-container transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">fitness_center</span>
+<span class="font-body-md text-body-md">Treinos</span>
+</a>
+</nav>
+</div>
+<!-- Sidebar Footer -->
+<div class="flex flex-col gap-1 border-t border-outline-variant/30 pt-space-16">
+<span class="font-label-caps text-label-caps text-outline px-space-12 pb-1 uppercase tracking-wider">Sistema</span>
+<a class="flex items-center justify-between px-space-12 py-space-8 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors duration-150" href="#">
+<div class="flex items-center gap-space-12">
+<span class="material-symbols-outlined text-[20px]">hub</span>
+<span class="font-body-md text-body-md">Integrações</span>
+</div>
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse" title="Telegram Áudio Ativo"></span>
+</a>
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="font-body-md text-body-md">Configurações</span>
+</a>
+<!-- User Profile Row -->
+<div class="flex items-center gap-space-12 px-space-12 py-space-12 mt-2 rounded-xl bg-surface-container/60 border border-outline-variant/20 hover:border-outline-variant/50 transition-all cursor-pointer">
+<div class="relative w-8 h-8 rounded-full bg-surface-variant border border-secondary/60 flex items-center justify-center text-primary-fixed font-headline-sm text-sm">
+          PM
+          <span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-secondary ring-2 ring-surface-container-low"></span>
+</div>
+<div class="flex flex-col overflow-hidden">
+<span class="font-body-md text-body-md font-medium text-on-surface truncate">Pedro Martins</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate text-[11px]">Software Architect</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- ================= MAIN VIEWPORT ================= -->
+<div class="flex-1 ml-64 flex flex-col min-h-screen bg-background">
+<!-- TopBar Técnica (Source of Truth JSON aligned) -->
+<header class="sticky top-0 w-full z-30 bg-surface/80 backdrop-blur-md flex justify-between items-center h-16 px-space-24 border-b border-outline-variant/30">
+<!-- Context Header -->
+<div class="flex items-center gap-space-16">
+<div>
+<h1 class="font-headline-md text-headline-md font-semibold text-on-surface tracking-tight">Hábitos &amp; Consistência</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Quinta-feira, 24 de Outubro de 2024</p>
+</div>
+<div class="h-6 w-px bg-outline-variant/30 mx-1 hidden sm:block"></div>
+<div class="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full bg-surface-container border border-outline-variant/30">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-code-md text-[11px] text-on-surface-variant">Sincronizado há 2m</span>
+</div>
+</div>
+<!-- Right Action Cluster -->
+<div class="flex items-center gap-space-12">
+<!-- Search Bar with KBD ⌘K -->
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span>
+<input class="bg-surface-container-low text-on-surface placeholder:text-outline border border-outline-variant/40 rounded-lg pl-9 pr-14 py-1.5 text-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-48 lg:w-64 transition-all" placeholder="Buscar hábito..." type="text"/>
+<div class="absolute right-2.5 flex items-center gap-0.5">
+<kbd class="font-code-md text-[10px] px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant border border-outline-variant/40">⌘K</kbd>
+</div>
+</div>
+<!-- Notification Bell -->
+<button class="w-9 h-9 flex items-center justify-center rounded-lg bg-surface-container border border-outline-variant/30 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors relative">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</button>
+<!-- Filter Action -->
+<button class="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container border border-outline-variant/30 text-on-surface hover:border-outline-variant/60 font-body-sm transition-colors">
+<span class="material-symbols-outlined text-[18px] text-outline">tune</span>
+<span>Filtrar</span>
+</button>
+<!-- Primary CTA: + Novo Hábito -->
+<button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-primary-container hover:bg-inverse-primary text-on-primary font-headline-sm text-body-sm shadow-[0_0_12px_rgba(118,146,255,0.3)] transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>+ Novo Hábito</span>
+</button>
+</div>
+</header>
+<!-- ================= MAIN CONTENT CANVAS ================= -->
+<main class="p-space-24 lg:p-space-32 flex flex-col gap-space-24 max-w-[1600px] mx-auto w-full">
+<!-- 1. TELEMETRY & ORBITAL STREAK PODS (4 Bento Cards) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-16">
+<!-- Pod 1: Taxa de Conclusão Hoje -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded-2xl p-space-20 relative overflow-hidden flex flex-col justify-between hover:border-outline-variant/60 transition-colors">
+<div class="flex items-center justify-between mb-space-12">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Conclusão de Hoje</span>
+<span class="font-label-caps text-[11px] px-2 py-0.5 rounded-full bg-secondary/15 text-secondary border border-secondary/30">Em ritmo</span>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<div class="flex items-baseline gap-1">
+<span class="font-display-lg text-display-lg font-bold text-on-surface tracking-tight">83%</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline mt-0.5">5 de 6 hábitos cumpridos</p>
+</div>
+<!-- Concentric Progress Ring SVG -->
+<div class="relative w-16 h-16 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 44 44">
+<circle cx="22" cy="22" fill="none" r="18" stroke="#253653" stroke-width="4"></circle>
+<circle class="transition-all duration-1000" cx="22" cy="22" fill="none" r="18" stroke="#44e2cd" stroke-dasharray="113.1" stroke-dashoffset="19.2" stroke-linecap="round" stroke-width="4"></circle>
+</svg>
+<span class="absolute font-code-md text-[11px] text-secondary font-semibold">5/6</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-full mt-space-16 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 83.3%"></div>
+</div>
+</div>
+<!-- Pod 2: Sequência Ativa (Streak) -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded-2xl p-space-20 relative overflow-hidden flex flex-col justify-between hover:border-outline-variant/60 transition-colors">
+<div class="flex items-center justify-between mb-space-12">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Sequência Ativa</span>
+<span class="font-label-caps text-[11px] px-2 py-0.5 rounded-full bg-primary/15 text-primary border border-primary/30">Órbita Estável</span>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-display-lg text-display-lg font-bold text-primary-fixed tracking-tight">14</span>
+<span class="font-headline-md text-headline-md text-on-surface-variant">dias</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline mt-0.5">Melhor marca: <span class="text-on-surface font-code-md">28 dias</span></p>
+</div>
+<!-- Orbital Streak Symbol -->
+<div class="w-14 h-14 rounded-2xl bg-surface-container border border-primary/30 flex items-center justify-center shadow-[0_0_20px_rgba(118,146,255,0.15)]">
+<span class="material-symbols-outlined text-[30px] text-primary" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 mt-space-16 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-secondary text-[16px]">trending_up</span>
+<span>Próximo marco orbital em 7 dias (21d)</span>
+</div>
+</div>
+<!-- Pod 3: Aderência Semanal -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded-2xl p-space-20 relative overflow-hidden flex flex-col justify-between hover:border-outline-variant/60 transition-colors">
+<div class="flex items-center justify-between mb-space-12">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Aderência Semanal</span>
+<span class="font-code-md text-[11px] text-secondary font-medium">92.0%</span>
+</div>
+<div>
+<div class="flex items-end justify-between gap-1.5 h-14 pt-2">
+<div class="flex-1 flex flex-col items-center gap-1">
+<div class="w-full bg-secondary/80 rounded-t h-10"></div>
+<span class="font-code-md text-[9px] text-outline">S</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1">
+<div class="w-full bg-secondary rounded-t h-12"></div>
+<span class="font-code-md text-[9px] text-outline">T</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1">
+<div class="w-full bg-secondary/90 rounded-t h-11"></div>
+<span class="font-code-md text-[9px] text-outline">Q</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1">
+<div class="w-full bg-secondary rounded-t h-12"></div>
+<span class="font-code-md text-[9px] text-outline">Q</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1">
+<div class="w-full bg-secondary/70 rounded-t h-8"></div>
+<span class="font-code-md text-[9px] text-outline">S</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1">
+<div class="w-full bg-secondary rounded-t h-12"></div>
+<span class="font-code-md text-[9px] text-outline">S</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1">
+<div class="w-full bg-primary/90 rounded-t h-10 border-t-2 border-secondary"></div>
+<span class="font-code-md text-[9px] text-secondary font-semibold">D</span>
+</div>
+</div>
+</div>
+<p class="font-body-sm text-[11px] text-outline mt-space-12">+4.2% superior à semana anterior</p>
+</div>
+<!-- Pod 4: Foco & Ritmo Circadiano -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded-2xl p-space-20 relative overflow-hidden flex flex-col justify-between hover:border-outline-variant/60 transition-colors">
+<div class="flex items-center justify-between mb-space-12">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Janelas de Ritmo</span>
+<span class="font-label-caps text-[11px] px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant border border-outline-variant/30">Circadiano</span>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[16px]">wb_sunny</span>
+                Manhã
+              </span>
+<span class="font-code-md text-xs text-secondary font-medium">100% (2/2)</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 100%"></div>
+</div>
+<div class="flex items-center justify-between mt-1">
+<span class="font-body-sm text-body-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[16px]">light_mode</span>
+                Tarde
+              </span>
+<span class="font-code-md text-xs text-secondary font-medium">100% (2/2)</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 100%"></div>
+</div>
+<div class="flex items-center justify-between mt-1">
+<span class="font-body-sm text-body-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[16px]">bedtime</span>
+                Noite
+              </span>
+<span class="font-code-md text-xs text-outline font-medium">50% (1/2)</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-full overflow-hidden">
+<div class="bg-primary/50 h-full rounded-full" style="width: 50%"></div>
+</div>
+</div>
+<p class="font-body-sm text-[11px] text-outline mt-space-8">1 hábito pendente para fechar o ciclo</p>
+</div>
+</section>
+<!-- 2. MAIN WORKSPACE: 2-COLUMN SPLIT (Habits Stream on Left, Orbital Heatmap on Right) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-24">
+<!-- ================= LEFT COLUMN: CHECK-IN DIÁRIO (8 COLS) ================= -->
+<section class="lg:col-span-7 xl:col-span-8 flex flex-col gap-space-20">
+<!-- Horizon Track: Weekday Selector (S T Q Q S S D) -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded-2xl p-space-16 flex flex-col gap-space-12">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Horizonte Semanal</span>
+<span class="text-xs text-on-surface-variant font-medium">• Semana 43</span>
+</div>
+<div class="flex items-center gap-1 text-xs text-outline">
+<span>Clique em um dia para auditar</span>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-2">
+<!-- Segunda 21 -->
+<button class="flex flex-col items-center py-2.5 px-1 rounded-xl bg-surface-container/50 border border-outline-variant/20 hover:border-outline-variant/50 transition-all">
+<span class="font-code-md text-[11px] text-outline">SEG</span>
+<span class="font-headline-sm text-body-md text-on-surface font-semibold mt-0.5">21</span>
+<div class="mt-2 w-4 h-4 rounded-full bg-secondary/20 flex items-center justify-center">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+</button>
+<!-- Terça 22 -->
+<button class="flex flex-col items-center py-2.5 px-1 rounded-xl bg-surface-container/50 border border-outline-variant/20 hover:border-outline-variant/50 transition-all">
+<span class="font-code-md text-[11px] text-outline">TER</span>
+<span class="font-headline-sm text-body-md text-on-surface font-semibold mt-0.5">22</span>
+<div class="mt-2 w-4 h-4 rounded-full bg-secondary/20 flex items-center justify-center">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+</button>
+<!-- Quarta 23 -->
+<button class="flex flex-col items-center py-2.5 px-1 rounded-xl bg-surface-container/50 border border-outline-variant/20 hover:border-outline-variant/50 transition-all">
+<span class="font-code-md text-[11px] text-outline">QUA</span>
+<span class="font-headline-sm text-body-md text-on-surface font-semibold mt-0.5">23</span>
+<div class="mt-2 w-4 h-4 rounded-full bg-secondary/20 flex items-center justify-center">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+</button>
+<!-- Quinta 24 (HOJE - ATIVO) -->
+<button class="flex flex-col items-center py-2.5 px-1 rounded-xl bg-surface-container-high border-2 border-secondary pulse-glow transition-all relative">
+<span class="absolute -top-2 px-1.5 py-0.2 rounded bg-secondary text-surface font-label-caps text-[9px] font-bold">HOJE</span>
+<span class="font-code-md text-[11px] text-secondary font-bold">QUI</span>
+<span class="font-headline-sm text-body-md text-secondary-fixed font-bold mt-0.5">24</span>
+<div class="mt-2 w-4 h-4 rounded-full bg-secondary flex items-center justify-center shadow-[0_0_8px_#44e2cd]">
+<span class="material-symbols-outlined text-[12px] text-surface font-bold">check</span>
+</div>
+</button>
+<!-- Sexta 25 -->
+<button class="flex flex-col items-center py-2.5 px-1 rounded-xl bg-surface-container/20 border border-outline-variant/10 text-outline hover:border-outline-variant/30 transition-all">
+<span class="font-code-md text-[11px]">SEX</span>
+<span class="font-headline-sm text-body-md font-medium mt-0.5">25</span>
+<div class="mt-2 w-4 h-4 rounded-full border border-outline-variant/40"></div>
+</button>
+<!-- Sábado 26 -->
+<button class="flex flex-col items-center py-2.5 px-1 rounded-xl bg-surface-container/20 border border-outline-variant/10 text-outline hover:border-outline-variant/30 transition-all">
+<span class="font-code-md text-[11px]">SÁB</span>
+<span class="font-headline-sm text-body-md font-medium mt-0.5">26</span>
+<div class="mt-2 w-4 h-4 rounded-full border border-outline-variant/40"></div>
+</button>
+<!-- Domingo 27 -->
+<button class="flex flex-col items-center py-2.5 px-1 rounded-xl bg-surface-container/20 border border-outline-variant/10 text-outline hover:border-outline-variant/30 transition-all">
+<span class="font-code-md text-[11px]">DOM</span>
+<span class="font-headline-sm text-body-md font-medium mt-0.5">27</span>
+<div class="mt-2 w-4 h-4 rounded-full border border-outline-variant/40"></div>
+</button>
+</div>
+</div>
+<!-- HABITS LIST GROUPED BY PERIOD -->
+<div class="flex flex-col gap-space-20">
+<!-- ================= ROTINA MATINAL ================= -->
+<div class="flex flex-col gap-space-12">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">lightbulb</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Rotina Matinal &amp; Cognição</h2>
+</div>
+<span class="font-code-md text-xs text-secondary font-medium">2/2 completos</span>
+</div>
+<!-- Habit 1: Hidratação 3L -->
+<div class="group bg-surface-container-low border border-outline-variant/30 hover:border-secondary/50 rounded-2xl p-space-16 transition-all duration-200 flex items-center justify-between gap-space-16">
+<div class="flex items-center gap-space-16">
+<!-- Checkbox Checked -->
+<button class="w-8 h-8 rounded-xl bg-secondary flex items-center justify-center text-surface shadow-[0_0_12px_rgba(68,226,205,0.4)] transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[20px] font-bold">check</span>
+</button>
+<!-- Icon Container -->
+<div class="w-11 h-11 rounded-xl bg-surface-container border border-secondary/30 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[22px]">water_drop</span>
+</div>
+<!-- Details -->
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-body-md text-body-md font-medium text-on-surface">Hidratação Estruturada</span>
+<span class="font-code-md text-[11px] text-secondary font-semibold">🔥 24 dias</span>
+</div>
+<div class="flex items-center gap-3 text-body-sm text-outline mt-0.5">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                        Ao acordar
+                      </span>
+<span>•</span>
+<span>Meta: 3.000ml</span>
+<span>•</span>
+<span>Todos os dias</span>
+</div>
+</div>
+</div>
+<!-- Right Action & Micro Consistency Bar -->
+<div class="flex items-center gap-space-16">
+<!-- 7-day mini pills -->
+<div class="hidden sm:flex items-center gap-1">
+<span class="w-2 h-5 rounded-full bg-secondary" title="Seg"></span>
+<span class="w-2 h-5 rounded-full bg-secondary" title="Ter"></span>
+<span class="w-2 h-5 rounded-full bg-secondary" title="Qua"></span>
+<span class="w-2 h-5 rounded-full bg-secondary" title="Qui"></span>
+<span class="w-2 h-5 rounded-full bg-surface-container-highest" title="Sex"></span>
+<span class="w-2 h-5 rounded-full bg-surface-container-highest" title="Sáb"></span>
+<span class="w-2 h-5 rounded-full bg-surface-container-highest" title="Dom"></span>
+</div>
+<button class="w-8 h-8 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Habit 2: Meditação & Órbita Mental -->
+<div class="group bg-surface-container-low border border-outline-variant/30 hover:border-secondary/50 rounded-2xl p-space-16 transition-all duration-200 flex items-center justify-between gap-space-16">
+<div class="flex items-center gap-space-16">
+<!-- Checkbox Checked -->
+<button class="w-8 h-8 rounded-xl bg-secondary flex items-center justify-center text-surface shadow-[0_0_12px_rgba(68,226,205,0.4)] transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[20px] font-bold">check</span>
+</button>
+<!-- Icon Container -->
+<div class="w-11 h-11 rounded-xl bg-surface-container border border-primary/30 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">self_improvement</span>
+</div>
+<!-- Details -->
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-body-md text-body-md font-medium text-on-surface">Meditação &amp; Presença</span>
+<span class="font-code-md text-[11px] text-secondary font-semibold">🔥 14 dias</span>
+</div>
+<div class="flex items-center gap-3 text-body-sm text-outline mt-0.5">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                        07:30
+                      </span>
+<span>•</span>
+<span>15 min Mindfulness</span>
+<span>•</span>
+<span>Todos os dias</span>
+</div>
+</div>
+</div>
+<!-- Right Action & Micro Consistency Bar -->
+<div class="flex items-center gap-space-16">
+<div class="hidden sm:flex items-center gap-1">
+<span class="w-2 h-5 rounded-full bg-secondary"></span>
+<span class="w-2 h-5 rounded-full bg-secondary"></span>
+<span class="w-2 h-5 rounded-full bg-secondary"></span>
+<span class="w-2 h-5 rounded-full bg-secondary"></span>
+<span class="w-2 h-5 rounded-full bg-surface-container-highest"></span>
+<span class="w-2 h-5 rounded-full bg-surface-container-highest"></span>
+<span class="w-2 h-5 rounded-full bg-surface-container-highest"></span>
+</div>
+<button class="w-8 h-8 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- ================= PRODUTIVIDADE & FOCO ================= -->
+<div class="flex flex-col gap-space-12">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">psychology</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Produtividade &amp; Engenharia</h2>
+</div>
+<span class="font-code-md text-xs text-secondary font-medium">1/1 completo</span>
+</div>
+<!-- Habit 3: Leitura Técnica -->
+<div class="group bg-surface-container-low border border-outline-variant/30 hover:border-secondary/50 rounded-2xl p-space-16 transition-all duration-200 flex items-center justify-between gap-space-16">
+<div class="flex items-center gap-space-16">
+<!-- Checkbox Checked -->
+<button class="w-8 h-8 rounded-xl bg-secondary flex items-center justify-center text-surface shadow-[0_0_12px_rgba(68,226,205,0.4)] transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[20px] font-bold">check</span>
+</button>
+<!-- Icon Container -->
+<div class="w-11 h-11 rounded-xl bg-surface-container border border-secondary/30 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[22px]">menu_book</span>
+</div>
+<!-- Details -->
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-body-md text-body-md font-medium text-on-surface">Leitura Técnica de Arquitetura</span>
+<span class="font-code-md text-[11px] text-secondary font-semibold">🔥 42 dias</span>
+</div>
+<div class="flex items-center gap-3 text-body-sm text-outline mt-0.5">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                        13:30
+                      </span>
+<span>•</span>
+<span>30 páginas (DDIA / Rust)</span>
+<span>•</span>
+<span>Seg a Sex</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-16">
+<div class="hidden sm:flex items-center gap-1">
+<span class="w-2 h-5 rounded-full bg-secondary"></span>
+<span class="w-2 h-5 rounded-full bg-secondary"></span>
+<span class="w-2 h-5 rounded-full bg-secondary"></span>
+<span class="w-2 h-5 rounded-full bg-secondary"></span>
+<span class="w-2 h-5 rounded-full bg-surface-container-highest"></span>
+<span class="w-2 h-5 rounded-full bg-surface-container-highest"></span>
+<span class="w-2 h-5 rounded-full bg-surface-container-highest"></span>
+</div>
+<button class="w-8 h-8 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- ================= SAÚDE & CORPO ================= -->
+<div class="flex flex-col gap-space-12">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">fitness_center</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Saúde &amp; Físico</h2>
+</div>
+<span class="font-code-md text-xs text-secondary font-medium">2/2 completos</span>
+</div>
+<!-- Habit 4: Treino de Força -->
+<div class="group bg-surface-container-low border border-outline-variant/30 hover:border-secondary/50 rounded-2xl p-space-16 transition-all duration-200 flex items-center justify-between gap-space-16">
+<div class="flex items-center gap-space-16">
+<button class="w-8 h-8 rounded-xl bg-secondary flex items-center justify-center text-surface shadow-[0_0_12px_rgba(68,226,205,0.4)] transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[20px] font-bold">check</span>
+</button>
+<div class="w-11 h-11 rounded-xl bg-surface-container border border-primary/30 flex items-center justify-center text-primary-fixed">
+<span class="material-symbols-outlined text-[22px]">exercise</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-body-md text-body-md font-medium text-on-surface">Treino de Força (Hipertrofia A)</span>
+<span class="font-code-md text-[11px] text-secondary font-semibold">🔥 19 dias</span>
+</div>
+<div class="flex items-center gap-3 text-body-sm text-outline mt-0.5">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                        17:00
+                      </span>
+<span>•</span>
+<span>60 min • Peito e Tríceps</span>
+<span>•</span>
+<span>4x / semana</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-16">
+<div class="hidden sm:flex items-center gap-1">
+<span class="w-2 h-5 rounded-full bg-secondary"></span>
+<span class="w-2 h-5 rounded-full bg-secondary"></span>
+<span class="w-2 h-5 rounded-full bg-secondary"></span>
+<span class="w-2 h-5 rounded-full bg-secondary"></span>
+<span class="w-2 h-5 rounded-full bg-surface-container-highest"></span>
+<span class="w-2 h-5 rounded-full bg-surface-container-highest"></span>
+<span class="w-2 h-5 rounded-full bg-surface-container-highest"></span>
+</div>
+<button class="w-8 h-8 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Habit 5: Sem Açúcar Refinado -->
+<div class="group bg-surface-container-low border border-outline-variant/30 hover:border-secondary/50 rounded-2xl p-space-16 transition-all duration-200 flex items-center justify-between gap-space-16">
+<div class="flex items-center gap-space-16">
+<button class="w-8 h-8 rounded-xl bg-secondary flex items-center justify-center text-surface shadow-[0_0_12px_rgba(68,226,205,0.4)] transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[20px] font-bold">check</span>
+</button>
+<div class="w-11 h-11 rounded-xl bg-surface-container border border-secondary/30 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[22px]">shield</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-body-md text-body-md font-medium text-on-surface">Alimentação Limpa (Zero Açúcar)</span>
+<span class="font-code-md text-[11px] text-secondary font-semibold">🔥 31 dias</span>
+</div>
+<div class="flex items-center gap-3 text-body-sm text-outline mt-0.5">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                        Dia todo
+                      </span>
+<span>•</span>
+<span>Dieta Cetogênica Controlada</span>
+<span>•</span>
+<span>Todos os dias</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-16">
+<div class="hidden sm:flex items-center gap-1">
+<span class="w-2 h-5 rounded-full bg-secondary"></span>
+<span class="w-2 h-5 rounded-full bg-secondary"></span>
+<span class="w-2 h-5 rounded-full bg-secondary"></span>
+<span class="w-2 h-5 rounded-full bg-secondary"></span>
+<span class="w-2 h-5 rounded-full bg-surface-container-highest"></span>
+<span class="w-2 h-5 rounded-full bg-surface-container-highest"></span>
+<span class="w-2 h-5 rounded-full bg-surface-container-highest"></span>
+</div>
+<button class="w-8 h-8 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- ================= ROTINA NOTURNA (PENDENTE) ================= -->
+<div class="flex flex-col gap-space-12">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-fixed text-[20px]">bedtime</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Higiene do Sono &amp; Noite</h2>
+</div>
+<span class="font-code-md text-xs text-outline font-medium">0/1 completo</span>
+</div>
+<!-- Habit 6: Desconexão de Telas (Pendente) -->
+<div class="group bg-surface-container-low border border-outline-variant/30 hover:border-primary/50 rounded-2xl p-space-16 transition-all duration-200 flex items-center justify-between gap-space-16">
+<div class="flex items-center gap-space-16">
+<!-- Checkbox Pending / Inviting -->
+<button class="w-8 h-8 rounded-xl bg-surface-container border-2 border-outline-variant/60 hover:border-secondary flex items-center justify-center transition-all group-hover:scale-105">
+<div class="w-2.5 h-2.5 rounded-full bg-transparent group-hover:bg-secondary/40 transition-colors"></div>
+</button>
+<div class="w-11 h-11 rounded-xl bg-surface-container border border-primary/30 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">phonelink_erase</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-body-md text-body-md font-medium text-on-surface">Desconexão de Telas às 23h</span>
+<span class="font-code-md text-[11px] text-outline">Pendente hoje</span>
+</div>
+<div class="flex items-center gap-3 text-body-sm text-outline mt-0.5">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                        23:00
+                      </span>
+<span>•</span>
+<span>Bloqueio de Luz Azul &amp; Kindle</span>
+<span>•</span>
+<span>Todos os dias</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-16">
+<div class="hidden sm:flex items-center gap-1">
+<span class="w-2 h-5 rounded-full bg-secondary"></span>
+<span class="w-2 h-5 rounded-full bg-secondary"></span>
+<span class="w-2 h-5 rounded-full bg-secondary"></span>
+<span class="w-2 h-5 rounded-full border border-secondary/50 bg-transparent animate-pulse"></span>
+<span class="w-2 h-5 rounded-full bg-surface-container-highest"></span>
+<span class="w-2 h-5 rounded-full bg-surface-container-highest"></span>
+<span class="w-2 h-5 rounded-full bg-surface-container-highest"></span>
+</div>
+<button class="w-8 h-8 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ================= RIGHT COLUMN: HEATMAP & RADAR DE CONSISTÊNCIA (4-5 COLS) ================= -->
+<aside class="lg:col-span-5 xl:col-span-4 flex flex-col gap-space-20">
+<!-- Heatmap Orbital Calendar Panel -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded-2xl p-space-20 flex flex-col gap-space-16">
+<!-- Heatmap Header with Month Selector -->
+<div class="flex items-center justify-between">
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Matriz de Consistência</span>
+<div class="flex items-center gap-2 mt-0.5">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Outubro 2024</h3>
+<span class="font-label-caps text-[10px] px-1.5 py-0.5 rounded bg-surface-container text-secondary border border-secondary/20">31 dias</span>
+</div>
+</div>
+<!-- Month Prev/Next -->
+<div class="flex items-center gap-1">
+<button class="w-7 h-7 rounded-lg bg-surface-container border border-outline-variant/30 hover:border-outline-variant/60 flex items-center justify-center text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+</button>
+<button class="w-7 h-7 rounded-lg bg-surface-container border border-outline-variant/30 hover:border-outline-variant/60 flex items-center justify-center text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Filter Switcher -->
+<div class="flex items-center justify-between bg-surface-container p-1 rounded-xl border border-outline-variant/20">
+<button class="flex-1 py-1 text-center font-body-sm text-[12px] font-medium rounded-lg bg-surface-container-high text-secondary border border-secondary/20 shadow-sm">
+                Todos os Hábitos
+              </button>
+<button class="flex-1 py-1 text-center font-body-sm text-[12px] text-outline hover:text-on-surface transition-colors">
+                Foco &amp; Mente
+              </button>
+<button class="flex-1 py-1 text-center font-body-sm text-[12px] text-outline hover:text-on-surface transition-colors">
+                Físico
+              </button>
+</div>
+<!-- HEATMAP 31-DAY MATRIX (GitHub / Orbital Heatmap Style) -->
+<div class="flex flex-col gap-2 pt-1">
+<!-- Weekday Header Letters -->
+<div class="grid grid-cols-7 gap-1.5 text-center">
+<span class="font-code-md text-[10px] text-outline">D</span>
+<span class="font-code-md text-[10px] text-outline">S</span>
+<span class="font-code-md text-[10px] text-outline">T</span>
+<span class="font-code-md text-[10px] text-outline">Q</span>
+<span class="font-code-md text-[10px] text-outline">Q</span>
+<span class="font-code-md text-[10px] text-outline">S</span>
+<span class="font-code-md text-[10px] text-outline">S</span>
+</div>
+<!-- Matrix Cells (Outubro começa em uma Terça-feira no calendário normal ou organizado) -->
+<div class="grid grid-cols-7 gap-1.5">
+<!-- Vazio D (dia 29 set) -->
+<div class="aspect-square rounded-md bg-surface-container/20 border border-outline-variant/10 opacity-30"></div>
+<!-- Vazio S (dia 30 set) -->
+<div class="aspect-square rounded-md bg-surface-container/20 border border-outline-variant/10 opacity-30"></div>
+<!-- 01 Out - 100% -->
+<div class="aspect-square rounded-md bg-secondary flex items-center justify-center font-code-md text-[10px] text-surface font-bold" title="01 Out: 100% (6/6)">1</div>
+<!-- 02 Out - 100% -->
+<div class="aspect-square rounded-md bg-secondary flex items-center justify-center font-code-md text-[10px] text-surface font-bold" title="02 Out: 100% (6/6)">2</div>
+<!-- 03 Out - 83% -->
+<div class="aspect-square rounded-md bg-secondary/80 flex items-center justify-center font-code-md text-[10px] text-surface font-medium" title="03 Out: 83% (5/6)">3</div>
+<!-- 04 Out - 100% -->
+<div class="aspect-square rounded-md bg-secondary flex items-center justify-center font-code-md text-[10px] text-surface font-bold" title="04 Out: 100% (6/6)">4</div>
+<!-- 05 Out - 66% -->
+<div class="aspect-square rounded-md bg-primary/70 flex items-center justify-center font-code-md text-[10px] text-on-surface font-medium" title="05 Out: 66% (4/6)">5</div>
+<!-- Semana 2 -->
+<div class="aspect-square rounded-md bg-secondary/90 flex items-center justify-center font-code-md text-[10px] text-surface font-bold">6</div>
+<div class="aspect-square rounded-md bg-secondary flex items-center justify-center font-code-md text-[10px] text-surface font-bold">7</div>
+<div class="aspect-square rounded-md bg-secondary flex items-center justify-center font-code-md text-[10px] text-surface font-bold">8</div>
+<div class="aspect-square rounded-md bg-secondary flex items-center justify-center font-code-md text-[10px] text-surface font-bold">9</div>
+<div class="aspect-square rounded-md bg-secondary flex items-center justify-center font-code-md text-[10px] text-surface font-bold">10</div>
+<div class="aspect-square rounded-md bg-secondary/80 flex items-center justify-center font-code-md text-[10px] text-surface font-bold">11</div>
+<div class="aspect-square rounded-md bg-primary/80 flex items-center justify-center font-code-md text-[10px] text-on-surface font-bold">12</div>
+<!-- Semana 3 -->
+<div class="aspect-square rounded-md bg-secondary flex items-center justify-center font-code-md text-[10px] text-surface font-bold">13</div>
+<div class="aspect-square rounded-md bg-secondary flex items-center justify-center font-code-md text-[10px] text-surface font-bold">14</div>
+<div class="aspect-square rounded-md bg-secondary flex items-center justify-center font-code-md text-[10px] text-surface font-bold">15</div>
+<div class="aspect-square rounded-md bg-secondary flex items-center justify-center font-code-md text-[10px] text-surface font-bold">16</div>
+<div class="aspect-square rounded-md bg-secondary flex items-center justify-center font-code-md text-[10px] text-surface font-bold">17</div>
+<div class="aspect-square rounded-md bg-secondary flex items-center justify-center font-code-md text-[10px] text-surface font-bold">18</div>
+<div class="aspect-square rounded-md bg-secondary/90 flex items-center justify-center font-code-md text-[10px] text-surface font-bold">19</div>
+<!-- Semana 4 -->
+<div class="aspect-square rounded-md bg-secondary flex items-center justify-center font-code-md text-[10px] text-surface font-bold">20</div>
+<div class="aspect-square rounded-md bg-secondary flex items-center justify-center font-code-md text-[10px] text-surface font-bold">21</div>
+<div class="aspect-square rounded-md bg-secondary flex items-center justify-center font-code-md text-[10px] text-surface font-bold">22</div>
+<div class="aspect-square rounded-md bg-secondary flex items-center justify-center font-code-md text-[10px] text-surface font-bold">23</div>
+<!-- DIA 24 (HOJE - DESTAQUE PULSANTE) -->
+<div class="aspect-square rounded-md bg-secondary/90 border-2 border-secondary shadow-[0_0_12px_#44e2cd] flex items-center justify-center font-code-md text-[10px] text-surface font-black ring-2 ring-secondary/30 relative" title="Hoje (24 Out): 83% em andamento">
+                  24
+                  <span class="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-secondary border border-surface"></span>
+</div>
+<!-- Dias Futuros -->
+<div class="aspect-square rounded-md bg-surface-container/50 border border-outline-variant/30 flex items-center justify-center font-code-md text-[10px] text-outline">25</div>
+<div class="aspect-square rounded-md bg-surface-container/50 border border-outline-variant/30 flex items-center justify-center font-code-md text-[10px] text-outline">26</div>
+<!-- Semana 5 -->
+<div class="aspect-square rounded-md bg-surface-container/50 border border-outline-variant/30 flex items-center justify-center font-code-md text-[10px] text-outline">27</div>
+<div class="aspect-square rounded-md bg-surface-container/50 border border-outline-variant/30 flex items-center justify-center font-code-md text-[10px] text-outline">28</div>
+<div class="aspect-square rounded-md bg-surface-container/50 border border-outline-variant/30 flex items-center justify-center font-code-md text-[10px] text-outline">29</div>
+<div class="aspect-square rounded-md bg-surface-container/50 border border-outline-variant/30 flex items-center justify-center font-code-md text-[10px] text-outline">30</div>
+<div class="aspect-square rounded-md bg-surface-container/50 border border-outline-variant/30 flex items-center justify-center font-code-md text-[10px] text-outline">31</div>
+<div class="aspect-square rounded-md bg-surface-container/20 border border-outline-variant/10 opacity-30"></div>
+<div class="aspect-square rounded-md bg-surface-container/20 border border-outline-variant/10 opacity-30"></div>
+</div>
+</div>
+<!-- Heatmap Scale Legend -->
+<div class="flex items-center justify-between border-t border-outline-variant/20 pt-3 text-xs text-outline">
+<span class="font-body-sm text-[11px]">Menos</span>
+<div class="flex items-center gap-1">
+<span class="w-3 h-3 rounded-sm bg-surface-container border border-outline-variant/40" title="0%"></span>
+<span class="w-3 h-3 rounded-sm bg-primary/40" title="1-49%"></span>
+<span class="w-3 h-3 rounded-sm bg-primary/80" title="50-79%"></span>
+<span class="w-3 h-3 rounded-sm bg-secondary/70" title="80-99%"></span>
+<span class="w-3 h-3 rounded-sm bg-secondary shadow-[0_0_6px_rgba(68,226,205,0.4)]" title="100%"></span>
+</div>
+<span class="font-body-sm text-[11px] text-secondary">Mais consistente</span>
+</div>
+<!-- Monthly Metrics Summary -->
+<div class="grid grid-cols-3 gap-2 bg-surface-container p-3 rounded-xl border border-outline-variant/20 mt-1 text-center">
+<div class="flex flex-col">
+<span class="font-display-lg text-lg font-bold text-secondary">22</span>
+<span class="font-body-sm text-[10px] text-outline leading-tight">Dias perfeitos</span>
+</div>
+<div class="flex flex-col border-x border-outline-variant/30">
+<span class="font-display-lg text-lg font-bold text-on-surface">88.4%</span>
+<span class="font-body-sm text-[10px] text-outline leading-tight">Taxa mensal</span>
+</div>
+<div class="flex flex-col">
+<span class="font-display-lg text-lg font-bold text-secondary">0</span>
+<span class="font-body-sm text-[10px] text-outline leading-tight">Quebras graves</span>
+</div>
+</div>
+</div>
+<!-- Radar de Consistência por Categoria -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded-2xl p-space-20 flex flex-col gap-space-16">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Distribuição Operacional</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold mt-0.5">Aderência por Categoria</h3>
+</div>
+<span class="material-symbols-outlined text-outline text-[20px]">donut_large</span>
+</div>
+<div class="flex flex-col gap-space-16">
+<!-- Categoria 1: Mente & Atenção -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between text-body-sm">
+<span class="font-body-md text-on-surface font-medium flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                    Mente &amp; Atenção
+                  </span>
+<span class="font-code-md text-secondary font-semibold">94.2%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 94.2%"></div>
+</div>
+<span class="font-body-sm text-[11px] text-outline">Meditação, reflexão e leitura matinal</span>
+</div>
+<!-- Categoria 2: Físico & Vitalidade -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between text-body-sm">
+<span class="font-body-md text-on-surface font-medium flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+                    Físico &amp; Vitalidade
+                  </span>
+<span class="font-code-md text-primary font-semibold">91.0%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full rounded-full" style="width: 91.0%"></div>
+</div>
+<span class="font-body-sm text-[11px] text-outline">Treino resistido, hidratação e sono 8h</span>
+</div>
+<!-- Categoria 3: Engenharia & Foco Profundo -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between text-body-sm">
+<span class="font-body-md text-on-surface font-medium flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+                    Engenharia &amp; Deep Work
+                  </span>
+<span class="font-code-md text-on-surface font-semibold">86.5%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-tertiary/80 h-full rounded-full" style="width: 86.5%"></div>
+</div>
+<span class="font-body-sm text-[11px] text-outline">Estudo de compiladores e prática em Rust</span>
+</div>
+</div>
+<!-- Operational Insight Note -->
+<div class="p-3 rounded-xl bg-surface-container/60 border border-outline-variant/20 flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[18px] shrink-0 mt-0.5">auto_awesome</span>
+<p class="font-body-sm text-xs text-on-surface-variant leading-relaxed">
+<strong class="text-on-surface font-semibold">Insight Orbital:</strong> Sua taxa de conclusão matinal aumentou 18% após a fixação da hidratação estruturada como primeiro gatilho do dia.
+              </p>
+</div>
+</div>
+</aside>
+</div>
+</main>
+</div>
+</body></html>

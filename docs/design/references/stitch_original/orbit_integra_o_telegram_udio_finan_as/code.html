@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Orbit — Telegram Voice Engine &amp; NLP Financeiro</title>
+<!-- Fonts: Geist & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "on-surface-variant": "#c4c5d5",
+                "surface-container": "#16202f",
+                "on-primary-container": "#002683",
+                "tertiary-fixed": "#dde1ff",
+                "on-primary-fixed-variant": "#193ca7",
+                "on-secondary-container": "#004d44",
+                "primary-fixed": "#dde1ff",
+                "inverse-surface": "#d9e3f7",
+                "inverse-primary": "#3856bf",
+                "primary-fixed-dim": "#b7c4ff",
+                "on-error-container": "#ffdad6",
+                "tertiary-container": "#7992ff",
+                "secondary-container": "#03c6b2",
+                "on-tertiary-fixed-variant": "#0136bb",
+                "surface-variant": "#2c3545",
+                "surface-dim": "#0a1422",
+                "on-tertiary": "#002486",
+                "secondary-fixed-dim": "#3cddc7",
+                "on-secondary-fixed": "#00201c",
+                "on-primary": "#002682",
+                "outline-variant": "#444653",
+                "on-primary-fixed": "#001552",
+                "on-error": "#690005",
+                "on-secondary-fixed-variant": "#005047",
+                "surface-container-highest": "#2c3545",
+                "secondary": "#44e2cd",
+                "on-surface": "#d9e3f7",
+                "on-tertiary-container": "#002588",
+                "surface-bright": "#303a49",
+                "inverse-on-surface": "#273140",
+                "outline": "#8e909e",
+                "secondary-fixed": "#62fae3",
+                "surface": "#0a1422",
+                "error": "#ffb4ab",
+                "background": "#0a1422",
+                "on-secondary": "#003731",
+                "surface-container-lowest": "#050e1c",
+                "tertiary-fixed-dim": "#b8c4ff",
+                "on-background": "#d9e3f7",
+                "error-container": "#93000a",
+                "surface-container-high": "#212a39",
+                "surface-container-low": "#121c2a",
+                "surface-tint": "#b7c4ff",
+                "primary": "#b7c4ff",
+                "primary-container": "#7692ff",
+                "tertiary": "#b8c4ff",
+                "on-tertiary-fixed": "#001354"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "space-20": "1.25rem",
+                "space-32": "2rem",
+                "space-16": "1rem",
+                "space-8": "0.5rem",
+                "space-24": "1.5rem",
+                "space-48": "3rem",
+                "gutter-mobile": "1rem",
+                "margin-tablet": "1.5rem",
+                "margin-desktop": "2rem",
+                "space-4": "0.25rem",
+                "space-40": "2.5rem",
+                "space-2": "0.125rem",
+                "space-64": "4rem",
+                "space-12": "0.75rem",
+                "gutter-desktop": "1.5rem",
+                "margin-mobile": "1rem"
+        },
+        "fontFamily": {
+                "label-regular": ["Geist"],
+                "body-sm": ["Geist"],
+                "label-caps": ["JetBrains Mono"],
+                "body-md": ["Geist"],
+                "display-lg": ["Geist"],
+                "headline-md": ["Geist"],
+                "headline-sm": ["Geist"],
+                "headline-xl": ["Geist"],
+                "display-lg-mobile": ["Geist"],
+                "code-md": ["JetBrains Mono"],
+                "body-lg": ["Geist"],
+                "headline-xl-mobile": ["Geist"]
+        },
+        "fontSize": {
+                "label-regular": ["12px", {"lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                "body-sm": ["12px", {"lineHeight": "18px", "letterSpacing": "0.005em", "fontWeight": "400"}],
+                "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "500"}],
+                "body-md": ["14px", {"lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400"}],
+                "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.025em", "fontWeight": "600"}],
+                "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "500"}],
+                "headline-sm": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "headline-xl": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                "display-lg-mobile": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                "code-md": ["13px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
+                "body-lg": ["16px", {"lineHeight": "26px", "letterSpacing": "0em", "fontWeight": "400"}],
+                "headline-xl-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600"}]
+        }
+      }
+    }
+  }
+  </script>
+<style>
+    /* Technical & Orbital Custom Stylings */
+    .orbital-ring {
+      border: 1px solid rgba(118, 146, 255, 0.18);
+      box-shadow: 0 0 24px -2px rgba(118, 146, 255, 0.12);
+    }
+    .pulsing-teal {
+      box-shadow: 0 0 16px 2px rgba(45, 212, 191, 0.28);
+    }
+    .pulsing-blue {
+      box-shadow: 0 0 20px 3px rgba(118, 146, 255, 0.25);
+    }
+    .waveform-bar {
+      transition: height 0.2s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen selection:bg-primary-container selection:text-on-primary">
+<!-- ========================================================================= -->
+<!-- SIDE NAVIGATION (Shared Component: SideNavBar)                            -->
+<!-- ========================================================================= -->
+<aside class="fixed top-0 left-0 h-screen w-64 z-40 bg-surface-container-low border-r border-outline-variant/30 flex flex-col justify-between p-space-16 select-none">
+<!-- Top Rail / Brand & Navigation -->
+<div class="flex flex-col gap-space-24">
+<!-- Orbit Brand Anchor -->
+<div class="flex items-center gap-space-12 px-space-8 pt-space-4">
+<div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-surface-container-high border border-outline-variant/40 text-primary shadow-sm">
+<span class="material-symbols-outlined text-[24px]">trip_origin</span>
+<div class="absolute inset-0 rounded-xl border border-primary/30 animate-pulse"></div>
+</div>
+<div class="flex flex-col">
+<span class="text-headline-md font-headline-md font-semibold text-on-surface tracking-tight leading-none">Orbit</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant text-[10px] tracking-wider mt-space-4">Personal Operations Hub</span>
+</div>
+</div>
+<!-- Main Action CTA -->
+<button class="w-full flex items-center justify-center gap-space-8 py-space-8 px-space-16 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm font-semibold hover:bg-primary-fixed-dim active:scale-[0.98] transition-all duration-150 shadow-sm">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>+ Adicionar</span>
+</button>
+<!-- Primary Navigation Tabs -->
+<nav aria-label="Navegação Principal" class="flex flex-col gap-space-4">
+<!-- Visão Geral -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="text-body-md font-body-md">Visão geral</span>
+</a>
+<!-- Tarefas -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span class="text-body-md font-body-md">Tarefas</span>
+</a>
+<!-- Hábitos -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-[20px]">repeat</span>
+<span class="text-body-md font-body-md">Hábitos</span>
+</a>
+<!-- Finanças -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+<span class="text-body-md font-body-md">Finanças</span>
+</a>
+<!-- Treinos -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-[20px]">fitness_center</span>
+<span class="text-body-md font-body-md">Treinos</span>
+</a>
+</nav>
+</div>
+<!-- Footer Rail (Integrações ACTIVE, Configurações, Perfil) -->
+<div class="flex flex-col gap-space-4 border-t border-outline-variant/30 pt-space-16">
+<div class="px-space-8 pb-space-4">
+<span class="text-label-caps font-label-caps text-outline text-[10px] uppercase tracking-wider">Sistema &amp; Contexto</span>
+</div>
+<!-- ACTIVE TAB: Integrações -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg bg-surface-container-high text-secondary-fixed font-medium border-l-2 border-secondary transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[20px] text-secondary">hub</span>
+<span class="text-body-md font-body-md">Integrações</span>
+<span class="ml-auto w-2 h-2 rounded-full bg-secondary pulsing-teal"></span>
+</a>
+<!-- Configurações -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="text-body-md font-body-md">Configurações</span>
+</a>
+<!-- Pedro Martins (User profile) -->
+<div class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg bg-surface-container/50 border border-outline-variant/30 mt-space-8">
+<div class="relative w-8 h-8 rounded-full bg-primary-container/20 border border-primary/40 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px] text-primary">account_circle</span>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-secondary border-2 border-surface-container-low"></span>
+</div>
+<div class="flex flex-col overflow-hidden">
+<span class="text-body-sm font-body-sm font-medium text-on-surface truncate">Pedro Martins</span>
+<span class="text-label-caps font-label-caps text-[10px] text-on-surface-variant truncate">Superadmin</span>
+</div>
+<button class="ml-auto text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- ========================================================================= -->
+<!-- MAIN VIEWPORT CONTAINER (Plugs into SideNav at 64 = w-64 / 256px)          -->
+<!-- ========================================================================= -->
+<div class="ml-64 flex flex-col min-h-screen">
+<!-- TOP NAVIGATION BAR (Shared Component: TopNavBar) -->
+<header class="sticky top-0 w-full z-30 bg-surface/80 backdrop-blur-md flex justify-between items-center h-16 px-space-24 border-b border-outline-variant/30 select-none">
+<!-- Left: Context Title & Quick Status -->
+<div class="flex items-center gap-space-16">
+<div class="flex items-center gap-space-8 text-on-surface-variant">
+<span class="text-body-sm font-body-sm hover:text-on-surface cursor-pointer">Integrações</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-headline-sm font-headline-sm font-semibold text-on-surface">Telegram Voice &amp; NLP Financeiro</span>
+</div>
+<div class="hidden xl:flex items-center gap-space-8 px-space-12 py-space-4 rounded-full bg-secondary/10 border border-secondary/25">
+<span class="w-2 h-2 rounded-full bg-secondary pulsing-teal animate-pulse"></span>
+<span class="text-label-caps font-label-caps text-secondary text-[11px]">Webhook v2.4 Operacional</span>
+</div>
+</div>
+<!-- Right: Search Command, Notifications & Actions -->
+<div class="flex items-center gap-space-16">
+<!-- Search with Shortcut -->
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-space-12 text-outline-variant text-[18px]">search</span>
+<input class="w-72 h-9 pl-9 pr-12 rounded-lg bg-surface-container-low border border-outline-variant/40 text-body-sm font-body-sm text-on-surface placeholder:text-outline focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all" placeholder="Buscar despesas transcritas, logs..." type="text"/>
+<div class="absolute right-space-8 px-1.5 py-0.5 rounded bg-surface-container-high border border-outline-variant/50 text-label-caps font-label-caps text-[10px] text-outline">
+            ⌘K
+          </div>
+</div>
+<!-- Notification Icon -->
+<button class="relative p-space-8 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors duration-150">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-primary pulsing-blue"></span>
+</button>
+<div class="h-5 w-px bg-outline-variant/40"></div>
+<!-- Header Primary Action -->
+<button class="flex items-center gap-space-8 px-space-16 py-space-8 rounded-lg bg-primary-container text-on-primary font-headline-sm text-headline-sm font-medium hover:bg-primary active:scale-[0.98] transition-all shadow-sm">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>+ Adicionar</span>
+</button>
+</div>
+</header>
+<!-- ======================================================================= -->
+<!-- MAIN CONTENT AREA                                                       -->
+<!-- ======================================================================= -->
+<main class="flex-1 p-space-32 max-w-[1600px] w-full mx-auto space-y-space-32">
+<!-- Breadcrumbs, Title & Control Hub Header -->
+<section class="flex flex-col md:flex-row md:items-center justify-between gap-space-16 pb-space-8 border-b border-outline-variant/20">
+<div>
+<div class="flex items-center gap-space-8 text-label-caps font-label-caps text-on-surface-variant text-[11px] mb-space-4">
+<span>PLATAFORMA</span>
+<span>/</span>
+<span>HUB DE INGESTÃO AUTOMATIZADA</span>
+<span>/</span>
+<span class="text-primary font-semibold">BOT VOICE SYNC</span>
+</div>
+<h1 class="text-headline-xl font-headline-xl text-on-surface tracking-tight flex items-center gap-space-12">
+            Telegram Voice Engine &amp; NLP Financeiro
+          </h1>
+<p class="text-body-md font-body-md text-on-surface-variant mt-space-4">
+            Ingestão passiva de áudios via Telegram com transcrição Whisper Large v3 e extração semântica para conciliação contínua.
+          </p>
+</div>
+<div class="flex items-center gap-space-12 self-start md:self-auto">
+<button class="flex items-center gap-space-8 px-space-16 py-space-8 rounded-lg bg-surface-container-high border border-outline-variant/50 text-on-surface font-body-md hover:border-primary transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-[18px] text-secondary">refresh</span>
+<span>Testar Webhook</span>
+</button>
+<button class="flex items-center gap-space-8 px-space-16 py-space-8 rounded-lg bg-surface-container-low border border-outline-variant/40 text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-[18px]">key</span>
+<span>Regenerar Token</span>
+</button>
+</div>
+</section>
+<!-- SECTION 1: Status de Pareamento e Configuração do Bot -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-24">
+<!-- Left: Bot Connection Identity Card (8 Cols) -->
+<div class="lg:col-span-8 p-space-24 rounded-2xl bg-surface-container-low border border-outline-variant/40 relative overflow-hidden flex flex-col justify-between">
+<!-- Background Atmospheric Glow -->
+<div class="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-primary/5 blur-3xl pointer-events-none"></div>
+<div>
+<div class="flex items-start justify-between gap-space-16 mb-space-20">
+<div class="flex items-center gap-space-16">
+<!-- Bot Avatar with Orbital Halo -->
+<div class="relative w-14 h-14 rounded-2xl bg-surface-container-high border border-primary/40 flex items-center justify-center p-2 orbital-ring">
+<span class="material-symbols-outlined text-[32px] text-primary">send</span>
+<div class="absolute -inset-1 rounded-2xl border border-secondary/30 animate-pulse pointer-events-none"></div>
+</div>
+<div>
+<div class="flex items-center gap-space-8">
+<h2 class="text-headline-sm font-headline-sm font-semibold text-on-surface">@OrbitOpsMasterBot</h2>
+<span class="px-space-8 py-0.5 rounded-full bg-secondary/10 border border-secondary/30 text-secondary text-label-caps font-label-caps text-[10px]">VERIFICADO</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">Daemon de Mensageria Dedicado • Criptografia E2E em Repouso</p>
+</div>
+</div>
+<a class="flex items-center gap-space-6 px-space-12 py-space-6 rounded-lg bg-surface-container text-primary hover:bg-surface-container-high text-body-sm font-body-sm border border-outline-variant/30 transition-colors" href="https://t.me" target="_blank">
+<span>Abrir no Telegram</span>
+<span class="material-symbols-outlined text-[16px]">open_in_new</span>
+</a>
+</div>
+<!-- Param Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-16 py-space-16 border-y border-outline-variant/20">
+<div class="space-y-1">
+<span class="text-label-caps font-label-caps text-outline text-[11px]">CHAT ID AUTORIZADO</span>
+<div class="text-code-md font-code-md text-on-surface flex items-center gap-1.5">
+<span>482910482</span>
+<span class="material-symbols-outlined text-[14px] text-secondary" title="Superadmin Binded">verified_user</span>
+</div>
+<span class="text-label-regular font-label-regular text-[11px] text-on-surface-variant">Pedro Martins (Superadmin)</span>
+</div>
+<div class="space-y-1">
+<span class="text-label-caps font-label-caps text-outline text-[11px]">VAULT DE CRIPTOGRAFIA</span>
+<div class="text-code-md font-code-md text-on-surface flex items-center gap-1.5">
+<span>aes-256-gcm:orbit_v2</span>
+<span class="material-symbols-outlined text-[14px] text-outline">lock</span>
+</div>
+<span class="text-label-regular font-label-regular text-[11px] text-secondary">Chave Local Carregada</span>
+</div>
+<div class="space-y-1">
+<span class="text-label-caps font-label-caps text-outline text-[11px]">LATÊNCIA TELEMETRIA</span>
+<div class="text-code-md font-code-md text-secondary flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>118ms</span>
+</div>
+<span class="text-label-regular font-label-regular text-[11px] text-on-surface-variant">Edge Frankfurt Gateway</span>
+</div>
+</div>
+</div>
+<!-- Processing Switch Control -->
+<div class="mt-space-20 flex items-center justify-between p-space-16 rounded-xl bg-surface-container/60 border border-outline-variant/30">
+<div class="flex items-center gap-space-12">
+<div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">graphic_eq</span>
+</div>
+<div>
+<h4 class="text-body-md font-body-md font-medium text-on-surface">Processamento de Áudio em Tempo Real</h4>
+<p class="text-label-regular font-label-regular text-on-surface-variant text-[12px]">Whisper Large v3 + LLM Financeiro Local (Ollama/Llama 3 8B)</p>
+</div>
+</div>
+<!-- Custom Visual Toggle -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-surface after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-on-surface after:border-surface after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</div>
+</div>
+<!-- Right: Quick Sync QR & Direct Token Link (4 Cols) -->
+<div class="lg:col-span-4 p-space-24 rounded-2xl bg-surface-container-low border border-outline-variant/40 flex flex-col items-center text-center justify-between">
+<div class="w-full">
+<div class="flex items-center justify-between w-full mb-space-12">
+<span class="text-label-caps font-label-caps text-outline text-[11px]">PARING INSTANTÂNEO</span>
+<span class="px-space-8 py-0.5 rounded bg-surface-container text-primary text-label-caps font-label-caps text-[10px]">FAST-LINK</span>
+</div>
+<!-- Stylized QR Code Frame with Orbital Borders -->
+<div class="relative p-4 mx-auto w-44 h-44 rounded-xl bg-surface-container-high border border-outline-variant/60 flex items-center justify-center shadow-inner group">
+<!-- Concentric subtle corners -->
+<div class="absolute top-1 left-1 w-2 h-2 border-t-2 border-l-2 border-primary"></div>
+<div class="absolute top-1 right-1 w-2 h-2 border-t-2 border-r-2 border-primary"></div>
+<div class="absolute bottom-1 left-1 w-2 h-2 border-b-2 border-l-2 border-primary"></div>
+<div class="absolute bottom-1 right-1 w-2 h-2 border-b-2 border-r-2 border-primary"></div>
+<!-- QR Visualization Grid Mockup -->
+<div class="w-full h-full bg-background p-2 rounded-lg grid grid-cols-6 grid-rows-6 gap-1">
+<div class="col-span-2 row-span-2 bg-primary rounded-sm"></div>
+<div class="col-span-2 bg-surface-container-highest rounded-sm"></div>
+<div class="col-span-2 row-span-2 bg-primary rounded-sm"></div>
+<div class="col-span-1 bg-secondary rounded-sm"></div>
+<div class="col-span-1 bg-outline-variant rounded-sm"></div>
+<div class="col-span-2 bg-primary rounded-sm"></div>
+<div class="col-span-2 bg-outline-variant rounded-sm"></div>
+<div class="col-span-2 bg-primary rounded-sm"></div>
+<div class="col-span-1 bg-secondary rounded-sm"></div>
+<div class="col-span-1 bg-primary rounded-sm"></div>
+<div class="col-span-2 row-span-2 bg-primary rounded-sm"></div>
+<div class="col-span-2 bg-outline-variant rounded-sm"></div>
+<div class="col-span-2 row-span-2 bg-secondary rounded-sm"></div>
+</div>
+<div class="absolute inset-0 flex items-center justify-center bg-background/60 opacity-0 group-hover:opacity-100 backdrop-blur-sm transition-all rounded-xl cursor-pointer">
+<span class="material-symbols-outlined text-[32px] text-primary">qr_code_scanner</span>
+</div>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-space-12">
+              Escaneie com a câmera do Telegram para autenticar dispositivo móvel secundário.
+            </p>
+</div>
+<div class="w-full mt-space-16 pt-space-12 border-t border-outline-variant/20">
+<div class="flex items-center justify-between p-space-8 rounded-lg bg-surface-container text-left">
+<span class="text-code-md font-code-md text-on-surface-variant text-[11px] truncate">t.me/OrbitOpsMasterBot?start=vault_sync</span>
+<button class="text-primary hover:text-on-surface transition-colors p-1" title="Copiar link direto">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 2: Pipeline de Processamento de Áudio & IA (Etapas Orbitais) -->
+<section class="space-y-space-16">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-8">
+<span class="material-symbols-outlined text-primary text-[22px]">schema</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface font-semibold">Pipeline de Ingestão de Áudio &amp; Inferência NLP</h2>
+</div>
+<span class="text-label-caps font-label-caps text-outline text-[11px]">TEMPO MÉDIO DE EXECUÇÃO: ~840ms</span>
+</div>
+<!-- 4 Step Orbital Sequence Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-16">
+<!-- Etapa 1 -->
+<div class="p-space-20 rounded-xl bg-surface-container-low border border-outline-variant/40 relative group hover:border-primary/50 transition-all">
+<div class="flex items-center justify-between mb-space-12">
+<span class="w-7 h-7 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center text-label-caps font-label-caps text-secondary text-[12px]">01</span>
+<span class="px-space-8 py-0.5 rounded bg-secondary/10 text-secondary text-label-caps font-label-caps text-[10px]">TELEGRAM RAW</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Recepção Telegram</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-space-4">
+              Buffer de stream direto em formato <code class="text-code-md text-primary font-code-md">.oga / .ogg</code> via bot webhook listener.
+            </p>
+<div class="mt-space-16 pt-space-12 border-t border-outline-variant/20 flex items-center justify-between text-label-caps font-label-caps text-[11px] text-outline">
+<span>Latência Ingress:</span>
+<span class="text-secondary font-code-md">~120ms</span>
+</div>
+</div>
+<!-- Etapa 2 -->
+<div class="p-space-20 rounded-xl bg-surface-container-low border border-outline-variant/40 relative group hover:border-primary/50 transition-all">
+<div class="flex items-center justify-between mb-space-12">
+<span class="w-7 h-7 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center text-label-caps font-label-caps text-primary text-[12px]">02</span>
+<span class="px-space-8 py-0.5 rounded bg-primary/10 text-primary text-label-caps font-label-caps text-[10px]">ASR ENGINE</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Whisper Large v3</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-space-4">
+              Decodificação fonética local com normalização numérica e filtragem de ruído de fundo.
+            </p>
+<div class="mt-space-16 pt-space-12 border-t border-outline-variant/20 flex items-center justify-between text-label-caps font-label-caps text-[11px] text-outline">
+<span>Acurácia pt-BR:</span>
+<span class="text-primary font-code-md">99.4% F1</span>
+</div>
+</div>
+<!-- Etapa 3 -->
+<div class="p-space-20 rounded-xl bg-surface-container-low border border-outline-variant/40 relative group hover:border-primary/50 transition-all">
+<div class="flex items-center justify-between mb-space-12">
+<span class="w-7 h-7 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center text-label-caps font-label-caps text-secondary text-[12px]">03</span>
+<span class="px-space-8 py-0.5 rounded bg-secondary/10 text-secondary text-label-caps font-label-caps text-[10px]">SEMANTIC PARSER</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Parser Semântico NLP</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-space-4">
+              Extração atômica de entidade: Montante, Categoria, Método de Pagamento e Condição de Parcelamento.
+            </p>
+<div class="mt-space-16 pt-space-12 border-t border-outline-variant/20 flex items-center justify-between text-label-caps font-label-caps text-[11px] text-outline">
+<span>Confidence:</span>
+<span class="text-secondary font-code-md">0.982</span>
+</div>
+</div>
+<!-- Etapa 4 -->
+<div class="p-space-20 rounded-xl bg-surface-container-low border border-outline-variant/40 relative group hover:border-primary/50 transition-all">
+<div class="flex items-center justify-between mb-space-12">
+<span class="w-7 h-7 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center text-label-caps font-label-caps text-primary text-[12px]">04</span>
+<span class="px-space-8 py-0.5 rounded bg-primary/10 text-primary text-label-caps font-label-caps text-[10px]">LEDGER COMMIT</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Inserção no Hub</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-space-4">
+              Auto-conciliação bancária, registro contábil e disparo de callback de confirmação no Telegram.
+            </p>
+<div class="mt-space-16 pt-space-12 border-t border-outline-variant/20 flex items-center justify-between text-label-caps font-label-caps text-[11px] text-outline">
+<span>Destino:</span>
+<span class="text-primary font-code-md">Finanças / Ledger</span>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 3: Simulador de Teste Interativo (Live Audio & Text Playground) -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-24">
+<!-- Left: Input Simulator (7 Cols) -->
+<div class="lg:col-span-7 p-space-24 rounded-2xl bg-surface-container-low border border-outline-variant/40 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-16">
+<div class="flex items-center gap-space-8">
+<span class="material-symbols-outlined text-secondary text-[20px]">science</span>
+<h3 class="text-headline-sm font-headline-sm text-on-surface font-semibold">Simulador de Teste Interativo</h3>
+</div>
+<span class="text-label-caps font-label-caps text-outline text-[11px]">RECEPTOR DE TESTE</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mb-space-16">
+              Digite uma transcrição ou simule a fala exatamente como enviada pelo microfone do Telegram para validar a inferência JSON em tempo real.
+            </p>
+<!-- Test Input Area -->
+<div class="space-y-space-12">
+<label class="text-label-caps font-label-caps text-outline text-[11px]">TEXTO DE SIMULAÇÃO DE VOZ</label>
+<div class="relative">
+<textarea class="w-full p-space-16 rounded-xl bg-surface-container text-body-md font-body-md text-on-surface border border-outline-variant/50 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all resize-none" placeholder="Ex: Almoço executivo no restaurante do hotel, 68 reais no Nubank" rows="3">Almoço executivo no restaurante do hotel, 68 reais no Nubank</textarea>
+<button class="absolute bottom-3 right-3 p-2 rounded-lg bg-surface-container-high border border-outline-variant/40 text-primary hover:text-on-surface transition-colors" title="Simular Gravação de Microfone">
+<span class="material-symbols-outlined text-[18px]">mic</span>
+</button>
+</div>
+<!-- Quick Prompt Presets -->
+<div class="flex items-center gap-space-8 flex-wrap pt-space-4">
+<span class="text-label-caps font-label-caps text-outline text-[10px]">PRESETS:</span>
+<button class="px-space-8 py-1 rounded bg-surface-container text-on-surface-variant hover:text-on-surface text-label-caps font-label-caps text-[10px] border border-outline-variant/30">
+                  "Uber até o escritório 32 reais no pix"
+                </button>
+<button class="px-space-8 py-1 rounded bg-surface-container text-on-surface-variant hover:text-on-surface text-label-caps font-label-caps text-[10px] border border-outline-variant/30">
+                  "Compra do mês 540 no Visa em 3 vezes"
+                </button>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-20 mt-space-16 border-t border-outline-variant/20">
+<span class="text-label-caps font-label-caps text-outline text-[11px]">MODELO: LLAMA-3-ORBIT-FINANCE-8B</span>
+<button class="flex items-center gap-space-8 px-space-20 py-space-8 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm font-semibold hover:bg-primary-fixed-dim transition-all shadow-sm">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+<span>Executar Parser NLP</span>
+</button>
+</div>
+</div>
+<!-- Right: Realtime Parsed Output JSON & Expense Preview Card (5 Cols) -->
+<div class="lg:col-span-5 p-space-24 rounded-2xl bg-surface-container-low border border-outline-variant/40 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-12">
+<span class="text-label-caps font-label-caps text-secondary text-[11px]">SAÍDA ESTRUTURADA (JSON SCHEMATICS)</span>
+<span class="text-label-caps font-label-caps text-outline text-[10px]">STATUS: 200 OK</span>
+</div>
+<!-- JSON Output Preview -->
+<pre class="p-space-12 rounded-xl bg-surface-container-lowest border border-outline-variant/30 font-code-md text-code-md text-[11px] text-on-surface-variant leading-relaxed overflow-x-auto"><code>{
+  <span class="text-primary">"status"</span>: <span class="text-secondary">"parsed_success"</span>,
+  <span class="text-primary">"entidades"</span>: {
+    <span class="text-primary">"descricao"</span>: <span class="text-on-surface">"Almoço executivo no restaurante do hotel"</span>,
+    <span class="text-primary">"valor_brl"</span>: <span class="text-secondary font-semibold">68.00</span>,
+    <span class="text-primary">"categoria"</span>: <span class="text-on-surface">"Alimentação"</span>,
+    <span class="text-primary">"metodo"</span>: <span class="text-on-surface">"Cartão de Crédito"</span>,
+    <span class="text-primary">"conta_alias"</span>: <span class="text-secondary">"Nubank Ultravioleta"</span>,
+    <span class="text-primary">"parcelas"</span>: 1,
+    <span class="text-primary">"confianca_nlp"</span>: 0.994
+  }
+}</code></pre>
+<!-- Expense Card Ready for Confirmation -->
+<div class="mt-space-16 p-space-16 rounded-xl bg-surface-container border border-secondary/30 relative">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-12">
+<div class="w-9 h-9 rounded-lg bg-secondary/15 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">restaurant</span>
+</div>
+<div>
+<h5 class="text-body-md font-body-md font-semibold text-on-surface">Almoço executivo hotel</h5>
+<p class="text-label-regular font-label-regular text-on-surface-variant text-[11px]">Nubank Ultravioleta • Alimentação</p>
+</div>
+</div>
+<div class="text-right">
+<span class="text-headline-sm font-headline-sm font-semibold text-secondary">R$ 68,00</span>
+<span class="block text-label-caps font-label-caps text-outline text-[10px]">1x À VISTA</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-end gap-space-12 mt-space-16 pt-space-12 border-t border-outline-variant/20">
+<button class="px-space-12 py-space-6 rounded-lg text-body-sm font-body-sm text-on-surface-variant hover:text-on-surface transition-colors">
+              Descartar
+            </button>
+<button class="px-space-16 py-space-6 rounded-lg bg-secondary text-on-secondary-container font-headline-sm text-headline-sm font-semibold hover:bg-secondary-fixed transition-all flex items-center gap-space-6">
+<span class="material-symbols-outlined text-[16px]">check</span>
+<span>Confirmar Inserção</span>
+</button>
+</div>
+</div>
+</section>
+<!-- SECTION 4: Log de Áudios Recentes & Transcrições -->
+<section class="space-y-space-16">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="text-headline-sm font-headline-sm text-on-surface font-semibold">Log de Áudios Recentes &amp; Transcrições</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Últimas 24 horas de ingestão de voz via Telegram com status contábil.</p>
+</div>
+<div class="flex items-center gap-space-8">
+<button class="flex items-center gap-space-6 px-space-12 py-space-6 rounded-lg bg-surface-container-low border border-outline-variant/30 text-label-caps font-label-caps text-[11px] text-on-surface hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]">filter_list</span>
+<span>Filtrar Logs</span>
+</button>
+<button class="flex items-center gap-space-6 px-space-12 py-space-6 rounded-lg bg-surface-container-low border border-outline-variant/30 text-label-caps font-label-caps text-[11px] text-on-surface hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]">download</span>
+<span>Exportar JSON</span>
+</button>
+</div>
+</div>
+<!-- Log Items Table / Feed -->
+<div class="rounded-2xl bg-surface-container-low border border-outline-variant/40 overflow-hidden divide-y divide-outline-variant/20">
+<!-- Item 1: 13:12 Bistrô com a equipe -->
+<div class="p-space-20 flex flex-col xl:flex-row xl:items-center justify-between gap-space-16 hover:bg-surface-container/40 transition-colors">
+<div class="flex items-start gap-space-16 flex-1">
+<!-- Audio Player Mockup Mini -->
+<div class="flex items-center gap-space-8 px-space-12 py-space-6 rounded-lg bg-surface-container border border-outline-variant/40 self-start">
+<button class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[14px]">play_arrow</span>
+</button>
+<!-- Compact Waveform Graphic -->
+<div class="flex items-center gap-0.5 h-5 px-1">
+<span class="w-0.5 h-2 bg-secondary rounded"></span>
+<span class="w-0.5 h-4 bg-secondary rounded"></span>
+<span class="w-0.5 h-5 bg-secondary rounded"></span>
+<span class="w-0.5 h-3 bg-secondary rounded"></span>
+<span class="w-0.5 h-4 bg-primary rounded"></span>
+<span class="w-0.5 h-2 bg-outline-variant rounded"></span>
+<span class="w-0.5 h-1 bg-outline-variant rounded"></span>
+</div>
+<span class="text-label-caps font-label-caps text-on-surface-variant text-[10px]">0:04</span>
+</div>
+<!-- Content details -->
+<div class="space-y-1">
+<div class="flex items-center gap-space-8">
+<span class="text-label-caps font-label-caps text-outline text-[11px]">HOJE 13:12</span>
+<span class="text-on-surface-variant text-[11px]">•</span>
+<span class="text-label-caps font-label-caps text-primary text-[11px]">TELEGRAM VOICE</span>
+</div>
+<p class="text-body-md font-body-md text-on-surface font-medium">
+                  "Almoço Executivo no bistrô com a equipe, 48 reais e 50 centavos no Nubank"
+                </p>
+<div class="flex items-center gap-space-12 text-label-regular font-label-regular text-[12px] text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">category</span> Alimentação</span>
+<span>•</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">credit_card</span> Nubank Ultravioleta</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-24 self-end xl:self-auto">
+<div class="text-right">
+<span class="text-headline-sm font-headline-sm font-semibold text-on-surface">R$ 48,50</span>
+<span class="block text-label-caps font-label-caps text-outline text-[10px]">DÉBITO IMEDIATO</span>
+</div>
+<span class="px-space-12 py-space-4 rounded-full bg-secondary/12 text-secondary border border-secondary/30 text-label-caps font-label-caps text-[11px] flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                Registrado com sucesso
+              </span>
+</div>
+</div>
+<!-- Item 2: 10:45 Café da manhã padaria -->
+<div class="p-space-20 flex flex-col xl:flex-row xl:items-center justify-between gap-space-16 hover:bg-surface-container/40 transition-colors">
+<div class="flex items-start gap-space-16 flex-1">
+<!-- Audio Player Mockup Mini -->
+<div class="flex items-center gap-space-8 px-space-12 py-space-6 rounded-lg bg-surface-container border border-outline-variant/40 self-start">
+<button class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[14px]">play_arrow</span>
+</button>
+<div class="flex items-center gap-0.5 h-5 px-1">
+<span class="w-0.5 h-3 bg-secondary rounded"></span>
+<span class="w-0.5 h-4 bg-secondary rounded"></span>
+<span class="w-0.5 h-2 bg-secondary rounded"></span>
+<span class="w-0.5 h-5 bg-primary rounded"></span>
+<span class="w-0.5 h-1 bg-outline-variant rounded"></span>
+</div>
+<span class="text-label-caps font-label-caps text-on-surface-variant text-[10px]">0:03</span>
+</div>
+<!-- Content details -->
+<div class="space-y-1">
+<div class="flex items-center gap-space-8">
+<span class="text-label-caps font-label-caps text-outline text-[11px]">HOJE 10:45</span>
+<span class="text-on-surface-variant text-[11px]">•</span>
+<span class="text-label-caps font-label-caps text-primary text-[11px]">TELEGRAM VOICE</span>
+</div>
+<p class="text-body-md font-body-md text-on-surface font-medium">
+                  "Café da manhã padaria 14 reais no pix Itaú"
+                </p>
+<div class="flex items-center gap-space-12 text-label-regular font-label-regular text-[12px] text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">category</span> Alimentação</span>
+<span>•</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">account_balance</span> Itaú Corrente (PIX)</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-24 self-end xl:self-auto">
+<div class="text-right">
+<span class="text-headline-sm font-headline-sm font-semibold text-on-surface">R$ 14,00</span>
+<span class="block text-label-caps font-label-caps text-outline text-[10px]">PIX TRANSFER</span>
+</div>
+<span class="px-space-12 py-space-4 rounded-full bg-secondary/12 text-secondary border border-secondary/30 text-label-caps font-label-caps text-[11px] flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                Registrado
+              </span>
+</div>
+</div>
+<!-- Item 3: Ontem 21:30 Gasolina posto Shell -->
+<div class="p-space-20 flex flex-col xl:flex-row xl:items-center justify-between gap-space-16 hover:bg-surface-container/40 transition-colors">
+<div class="flex items-start gap-space-16 flex-1">
+<!-- Audio Player Mockup Mini -->
+<div class="flex items-center gap-space-8 px-space-12 py-space-6 rounded-lg bg-surface-container border border-outline-variant/40 self-start">
+<button class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[14px]">play_arrow</span>
+</button>
+<div class="flex items-center gap-0.5 h-5 px-1">
+<span class="w-0.5 h-2 bg-secondary rounded"></span>
+<span class="w-0.5 h-5 bg-secondary rounded"></span>
+<span class="w-0.5 h-4 bg-secondary rounded"></span>
+<span class="w-0.5 h-3 bg-secondary rounded"></span>
+<span class="w-0.5 h-2 bg-outline-variant rounded"></span>
+</div>
+<span class="text-label-caps font-label-caps text-on-surface-variant text-[10px]">0:05</span>
+</div>
+<!-- Content details -->
+<div class="space-y-1">
+<div class="flex items-center gap-space-8">
+<span class="text-label-caps font-label-caps text-outline text-[11px]">ONTEM 21:30</span>
+<span class="text-on-surface-variant text-[11px]">•</span>
+<span class="text-label-caps font-label-caps text-primary text-[11px]">TELEGRAM VOICE</span>
+</div>
+<p class="text-body-md font-body-md text-on-surface font-medium">
+                  "Gasolina posto Shell 220 reais no crédito em 2x"
+                </p>
+<div class="flex items-center gap-space-12 text-label-regular font-label-regular text-[12px] text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">local_gas_station</span> Transporte</span>
+<span>•</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">credit_card</span> Itaú Visa Infinite</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-24 self-end xl:self-auto">
+<div class="text-right">
+<span class="text-headline-sm font-headline-sm font-semibold text-on-surface">2x R$ 110,00</span>
+<span class="block text-label-caps font-label-caps text-outline text-[10px]">TOTAL: R$ 220,00</span>
+</div>
+<span class="px-space-12 py-space-4 rounded-full bg-secondary/12 text-secondary border border-secondary/30 text-label-caps font-label-caps text-[11px] flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                Registrado
+              </span>
+</div>
+</div>
+<!-- Item 4: Ontem 18:05 ChatGPT Plus -->
+<div class="p-space-20 flex flex-col xl:flex-row xl:items-center justify-between gap-space-16 hover:bg-surface-container/40 transition-colors">
+<div class="flex items-start gap-space-16 flex-1">
+<!-- Audio Player Mockup Mini -->
+<div class="flex items-center gap-space-8 px-space-12 py-space-6 rounded-lg bg-surface-container border border-outline-variant/40 self-start">
+<button class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[14px]">play_arrow</span>
+</button>
+<div class="flex items-center gap-0.5 h-5 px-1">
+<span class="w-0.5 h-4 bg-secondary rounded"></span>
+<span class="w-0.5 h-2 bg-secondary rounded"></span>
+<span class="w-0.5 h-5 bg-secondary rounded"></span>
+<span class="w-0.5 h-3 bg-outline-variant rounded"></span>
+</div>
+<span class="text-label-caps font-label-caps text-on-surface-variant text-[10px]">0:04</span>
+</div>
+<!-- Content details -->
+<div class="space-y-1">
+<div class="flex items-center gap-space-8">
+<span class="text-label-caps font-label-caps text-outline text-[11px]">ONTEM 18:05</span>
+<span class="text-on-surface-variant text-[11px]">•</span>
+<span class="text-label-caps font-label-caps text-primary text-[11px]">TELEGRAM VOICE</span>
+</div>
+<p class="text-body-md font-body-md text-on-surface font-medium">
+                  "Assinatura ChatGPT Plus 20 dólares no Nubank"
+                </p>
+<div class="flex items-center gap-space-12 text-label-regular font-label-regular text-[12px] text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">memory</span> Tecnologia / IA</span>
+<span>•</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">currency_exchange</span> USD 20,00 @ 5.75</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-24 self-end xl:self-auto">
+<div class="text-right">
+<span class="text-headline-sm font-headline-sm font-semibold text-on-surface">R$ 115,00</span>
+<span class="block text-label-caps font-label-caps text-outline text-[10px]">IOF CONVERTIDO</span>
+</div>
+<span class="px-space-12 py-space-4 rounded-full bg-secondary/12 text-secondary border border-secondary/30 text-label-caps font-label-caps text-[11px] flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                Registrado
+              </span>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 5: Regras de Inteligência & Configurações de NLP -->
+<section class="space-y-space-16 pb-space-32">
+<div class="flex items-center gap-space-8">
+<span class="material-symbols-outlined text-primary text-[22px]">tune</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface font-semibold">Regras de Inferência &amp; Mapeamentos de NLP</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-24">
+<!-- Rule 1: Apelidos de Cartões e Contas -->
+<div class="p-space-20 rounded-xl bg-surface-container-low border border-outline-variant/40 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-8">
+<h4 class="text-body-md font-body-md font-semibold text-on-surface">Mapeamento de Apelidos</h4>
+<span class="material-symbols-outlined text-secondary text-[18px]">credit_card</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant">
+                Relaciona jargões e apelidos falados aos cartões e contas cadastradas no Hub.
+              </p>
+<!-- Aliases List -->
+<div class="mt-space-12 space-y-2">
+<div class="flex items-center justify-between p-2 rounded bg-surface-container text-[12px]">
+<span class="text-primary font-code-md">"Roxinho"</span>
+<span class="text-outline">→</span>
+<span class="text-on-surface">Nubank Ultravioleta</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded bg-surface-container text-[12px]">
+<span class="text-primary font-code-md">"Black" / "Person"</span>
+<span class="text-outline">→</span>
+<span class="text-on-surface">Itaú Personnalité</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded bg-surface-container text-[12px]">
+<span class="text-primary font-code-md">"C6"</span>
+<span class="text-outline">→</span>
+<span class="text-on-surface">C6 Carbon Global</span>
+</div>
+</div>
+</div>
+<button class="mt-space-16 text-body-sm font-body-sm text-primary hover:text-on-surface flex items-center gap-1">
+<span>+ Adicionar novo apelido</span>
+</button>
+</div>
+<!-- Rule 2: Confirmação Automática por Limiar -->
+<div class="p-space-20 rounded-xl bg-surface-container-low border border-outline-variant/40 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-8">
+<h4 class="text-body-md font-body-md font-semibold text-on-surface">Limiar de Auto-Inserção</h4>
+<span class="material-symbols-outlined text-primary text-[18px]">auto_mode</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant">
+                Despesas abaixo do teto de confiança são inseridas sem necessidade de confirmação manual.
+              </p>
+<div class="mt-space-16 p-space-12 rounded-lg bg-surface-container border border-outline-variant/30 space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-label-caps font-label-caps text-outline text-[11px]">LIMITE MÁXIMO AUTO-COMMIT</span>
+<span class="text-headline-sm font-headline-sm text-secondary font-semibold">R$ 300,00</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-1.5">
+<div class="bg-secondary h-1.5 rounded-full" style="width: 45%"></div>
+</div>
+<span class="block text-label-regular font-label-regular text-[11px] text-on-surface-variant">Acima deste valor, o bot solicita clique de confirmação.</span>
+</div>
+</div>
+<button class="mt-space-16 text-body-sm font-body-sm text-primary hover:text-on-surface flex items-center gap-1">
+<span>Ajustar limites de governança</span>
+</button>
+</div>
+<!-- Rule 3: Resposta e Callbacks no Telegram -->
+<div class="p-space-20 rounded-xl bg-surface-container-low border border-outline-variant/40 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-8">
+<h4 class="text-body-md font-body-md font-semibold text-on-surface">Notificações no Telegram</h4>
+<span class="material-symbols-outlined text-secondary text-[18px]">chat</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant">
+                Formato de confirmação retornado no chat privado após a gravação de áudio ser processada.
+              </p>
+<div class="mt-space-12 space-y-2">
+<label class="flex items-center gap-space-8 text-body-sm font-body-sm text-on-surface cursor-pointer">
+<input checked="" class="text-primary bg-surface-container border-outline-variant focus:ring-0" name="reply_mode" type="radio"/>
+<span>Mensagem rica com botões inline</span>
+</label>
+<label class="flex items-center gap-space-8 text-body-sm font-body-sm text-on-surface cursor-pointer">
+<input class="text-primary bg-surface-container border-outline-variant focus:ring-0" name="reply_mode" type="radio"/>
+<span>Áudio sintetizado TTS de confirmação</span>
+</label>
+<label class="flex items-center gap-space-8 text-body-sm font-body-sm text-on-surface cursor-pointer">
+<input class="text-primary bg-surface-container border-outline-variant focus:ring-0" name="reply_mode" type="radio"/>
+<span>Silencioso (apenas reação 👍 de emoji)</span>
+</label>
+</div>
+</div>
+<button class="mt-space-16 text-body-sm font-body-sm text-primary hover:text-on-surface flex items-center gap-1">
+<span>Personalizar template de mensagem</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+</div>
+</body></html>

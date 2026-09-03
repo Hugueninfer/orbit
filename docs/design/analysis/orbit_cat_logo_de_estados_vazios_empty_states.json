@@ -1,0 +1,706 @@
+{
+  "screen_id": "orbit_cat_logo_de_estados_vazios_empty_states",
+  "tailwind_config": {
+    "darkMode": "class",
+    "theme": {
+      "extend": {
+        "colors": {
+          "surface": "#0a1422",
+          "surface-dim": "#0a1422",
+          "on-primary-fixed": "#001552",
+          "inverse-surface": "#d9e3f7",
+          "error-container": "#93000a",
+          "surface-tint": "#b7c4ff",
+          "surface-container-low": "#121c2a",
+          "surface-container": "#16202f",
+          "surface-container-highest": "#2c3545",
+          "outline-variant": "#444653",
+          "tertiary-fixed-dim": "#b8c4ff",
+          "surface-container-high": "#212a39",
+          "on-secondary-fixed": "#00201c",
+          "primary-fixed-dim": "#b7c4ff",
+          "tertiary-container": "#7992ff",
+          "background": "#0a1422",
+          "on-primary-container": "#002683",
+          "secondary": "#44e2cd",
+          "on-tertiary": "#002486",
+          "surface-bright": "#303a49",
+          "secondary-fixed": "#62fae3",
+          "primary-fixed": "#dde1ff",
+          "surface-variant": "#2c3545",
+          "on-error-container": "#ffdad6",
+          "on-primary": "#002682",
+          "on-primary-fixed-variant": "#193ca7",
+          "on-tertiary-fixed": "#001354",
+          "inverse-on-surface": "#273140",
+          "on-background": "#d9e3f7",
+          "secondary-fixed-dim": "#3cddc7",
+          "on-tertiary-fixed-variant": "#0136bb",
+          "tertiary-fixed": "#dde1ff",
+          "on-secondary": "#003731",
+          "secondary-container": "#03c6b2",
+          "on-secondary-fixed-variant": "#005047",
+          "on-surface-variant": "#c4c5d5",
+          "on-surface": "#d9e3f7",
+          "inverse-primary": "#3856bf",
+          "primary": "#b7c4ff",
+          "surface-container-lowest": "#050e1c",
+          "on-secondary-container": "#004d44",
+          "outline": "#8e909e",
+          "tertiary": "#b8c4ff",
+          "on-tertiary-container": "#002588",
+          "error": "#ffb4ab",
+          "primary-container": "#7692ff",
+          "on-error": "#690005"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "margin-desktop": "2rem",
+          "space-64": "4rem",
+          "margin-tablet": "1.5rem",
+          "space-24": "1.5rem",
+          "space-32": "2rem",
+          "space-16": "1rem",
+          "margin-mobile": "1rem",
+          "space-20": "1.25rem",
+          "space-12": "0.75rem",
+          "space-8": "0.5rem",
+          "gutter-desktop": "1.5rem",
+          "gutter-mobile": "1rem",
+          "space-4": "0.25rem",
+          "space-48": "3rem",
+          "space-2": "0.125rem",
+          "space-40": "2.5rem"
+        },
+        "fontFamily": {
+          "label-regular": [
+            "Geist"
+          ],
+          "code-md": [
+            "JetBrains Mono"
+          ],
+          "label-caps": [
+            "JetBrains Mono"
+          ],
+          "body-sm": [
+            "Geist"
+          ],
+          "display-lg": [
+            "Geist"
+          ],
+          "headline-sm": [
+            "Geist"
+          ],
+          "body-md": [
+            "Geist"
+          ],
+          "body-lg": [
+            "Geist"
+          ],
+          "headline-md": [
+            "Geist"
+          ],
+          "headline-xl": [
+            "Geist"
+          ],
+          "display-lg-mobile": [
+            "Geist"
+          ],
+          "headline-xl-mobile": [
+            "Geist"
+          ]
+        },
+        "fontSize": {
+          "label-regular": [
+            "12px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.01em",
+              "fontWeight": "500"
+            }
+          ],
+          "code-md": [
+            "13px",
+            {
+              "lineHeight": "20px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "label-caps": [
+            "11px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.06em",
+              "fontWeight": "500"
+            }
+          ],
+          "body-sm": [
+            "12px",
+            {
+              "lineHeight": "18px",
+              "letterSpacing": "0.005em",
+              "fontWeight": "400"
+            }
+          ],
+          "display-lg": [
+            "40px",
+            {
+              "lineHeight": "48px",
+              "letterSpacing": "-0.025em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-sm": [
+            "16px",
+            {
+              "lineHeight": "24px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-md": [
+            "14px",
+            {
+              "lineHeight": "22px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "body-lg": [
+            "16px",
+            {
+              "lineHeight": "26px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-md": [
+            "20px",
+            {
+              "lineHeight": "28px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "500"
+            }
+          ],
+          "headline-xl": [
+            "28px",
+            {
+              "lineHeight": "36px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "600"
+            }
+          ],
+          "display-lg-mobile": [
+            "30px",
+            {
+              "lineHeight": "38px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-xl-mobile": [
+            "24px",
+            {
+              "lineHeight": "32px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "600"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "inline_css": [
+    "\n    .material-symbols-outlined {\n      font-family: 'Material Symbols Outlined';\n      font-weight: normal;\n      font-style: normal;\n      font-size: 20px;\n      line-height: 1;\n      letter-spacing: normal;\n      text-transform: none;\n      display: inline-block;\n      white-space: nowrap;\n      word-wrap: normal;\n      direction: ltr;\n      -webkit-font-feature-settings: 'liga';\n      -webkit-font-smoothing: antialiased;\n    }\n    \n    /* Subtle orbital radar rotation */\n    @keyframes orbitRadar {\n      from { transform: rotate(0deg); }\n      to { transform: rotate(360deg); }\n    }\n    .animate-radar-sweep {\n      animation: orbitRadar 6s linear infinite;\n    }\n    \n    /* Ethereal node pulse */\n    @keyframes nodePulse {\n      0%, 100% { opacity: 0.25; transform: scale(1); }\n      50% { opacity: 0.65; transform: scale(1.18); }\n    }\n    .animate-node-pulse {\n      animation: nodePulse 3.5s ease-in-out infinite;\n    }\n  "
+  ],
+  "class_frequency": {
+    "bg-surface": 1,
+    "text-on-surface": 30,
+    "font-body-md": 18,
+    "antialiased": 1,
+    "min-h-screen": 1,
+    "flex": 117,
+    "selection:bg-primary-container": 1,
+    "selection:text-on-primary-container": 1,
+    "fixed": 1,
+    "top-0": 3,
+    "left-0": 1,
+    "h-screen": 1,
+    "w-64": 3,
+    "z-40": 1,
+    "bg-surface-container-low": 11,
+    "dark:bg-surface-container-low": 1,
+    "border-r": 1,
+    "border-outline-variant/30": 14,
+    "flex-col": 22,
+    "justify-between": 31,
+    "p-space-16": 6,
+    "select-none": 2,
+    "items-center": 105,
+    "gap-space-12": 16,
+    "px-space-8": 3,
+    "py-space-12": 1,
+    "mb-space-16": 9,
+    "w-9": 1,
+    "h-9": 3,
+    "rounded-lg": 38,
+    "bg-surface-container-high": 26,
+    "border": 56,
+    "border-outline-variant/50": 2,
+    "justify-center": 32,
+    "relative": 13,
+    "w-5": 2,
+    "h-5": 2,
+    "rounded-full": 34,
+    "border-secondary/50": 3,
+    "w-2": 4,
+    "h-2": 4,
+    "bg-secondary": 9,
+    "shadow-[0_0_10px_#44e2cd]": 1,
+    "sr-only": 1,
+    "text-headline-sm": 12,
+    "font-headline-sm": 20,
+    "font-semibold": 29,
+    "tracking-tight": 2,
+    "leading-none": 1,
+    "text-label-caps": 20,
+    "font-label-caps": 26,
+    "text-on-surface-variant": 40,
+    "text-[10px]": 16,
+    "tracking-wider": 2,
+    "mt-1": 1,
+    "w-full": 10,
+    "h-10": 12,
+    "px-space-16": 14,
+    "bg-primary-container": 6,
+    "text-on-primary-container": 6,
+    "text-sm": 12,
+    "gap-space-8": 8,
+    "hover:brightness-110": 6,
+    "active:scale-[0.98]": 7,
+    "transition-all": 12,
+    "duration-150": 9,
+    "shadow-[0_0_16px_rgba(118,146,255,0.25)]": 1,
+    "space-y-space-4": 2,
+    "px-space-12": 16,
+    "py-space-8": 15,
+    "dark:text-on-surface-variant": 6,
+    "font-normal": 7,
+    "hover:bg-surface-container": 13,
+    "dark:hover:bg-surface-container": 6,
+    "transition-colors": 25,
+    "material-symbols-outlined": 46,
+    "text-outline": 17,
+    "text-body-md": 12,
+    "pt-space-16": 4,
+    "border-t": 9,
+    "dark:bg-surface-container-high": 1,
+    "text-secondary-fixed": 2,
+    "dark:text-secondary-fixed": 1,
+    "font-medium": 5,
+    "border-l-2": 1,
+    "border-secondary": 2,
+    "text-secondary": 22,
+    "pt-space-8": 1,
+    "bg-surface-container/50": 6,
+    "border-outline-variant/20": 13,
+    "w-8": 1,
+    "h-8": 4,
+    "bg-surface-container-highest": 4,
+    "border-secondary/40": 2,
+    "absolute": 15,
+    "bottom-0": 1,
+    "right-0": 1,
+    "ring-2": 1,
+    "ring-surface-container-low": 1,
+    "leading-tight": 1,
+    "text-xs": 30,
+    "truncate": 1,
+    "w-24": 1,
+    "text-[9px]": 1,
+    "uppercase": 1,
+    "text-outline-variant": 7,
+    "text-base": 19,
+    "pl-64": 1,
+    "flex-1": 6,
+    "min-w-0": 1,
+    "sticky": 1,
+    "z-30": 1,
+    "bg-surface/80": 1,
+    "dark:bg-surface/80": 1,
+    "backdrop-blur-md": 1,
+    "border-b": 4,
+    "h-16": 4,
+    "px-space-24": 2,
+    "gap-space-16": 5,
+    "dark:text-on-surface": 1,
+    "gap-2": 18,
+    "font-body-sm": 15,
+    "py-0.5": 9,
+    "border-outline-variant/40": 22,
+    "left-space-12": 1,
+    "placeholder-outline": 1,
+    "text-body-sm": 11,
+    "pl-9": 1,
+    "pr-12": 1,
+    "focus:border-primary-container": 1,
+    "focus:ring-1": 1,
+    "focus:ring-primary-container": 1,
+    "right-space-8": 1,
+    "font-code-md": 9,
+    "px-1.5": 2,
+    "rounded": 9,
+    "p-space-8": 1,
+    "hover:text-on-surface": 7,
+    "top-1.5": 1,
+    "right-1.5": 1,
+    "hover:border-primary-container": 1,
+    "p-space-32": 1,
+    "max-w-7xl": 1,
+    "mx-auto": 1,
+    "space-y-space-32": 1,
+    "space-y-space-20": 2,
+    "lg:flex-row": 1,
+    "lg:items-end": 1,
+    "pb-space-16": 2,
+    "space-y-1": 1,
+    "max-w-3xl": 1,
+    "text-headline-xl": 1,
+    "font-headline-xl": 1,
+    "leading-relaxed": 1,
+    "shrink-0": 1,
+    "hover:border-outline": 4,
+    "shadow-[0_0_20px_rgba(118,146,255,0.25)]": 1,
+    "text-lg": 1,
+    "overflow-x-auto": 1,
+    "pb-1": 1,
+    "scrollbar-none": 1,
+    "whitespace-nowrap": 7,
+    "shadow-[0_0_12px_rgba(68,226,205,0.12)]": 1,
+    "w-1.5": 5,
+    "h-1.5": 5,
+    "ml-1": 1,
+    "py-0.2": 1,
+    "space-y-space-16": 2,
+    "text-primary": 12,
+    "grid": 3,
+    "grid-cols-1": 3,
+    "md:grid-cols-2": 1,
+    "gap-space-24": 1,
+    "hover:border-primary/50": 2,
+    "duration-200": 4,
+    "rounded-xl": 9,
+    "p-space-24": 5,
+    "overflow-hidden": 4,
+    "group": 4,
+    "-right-16": 1,
+    "-top-16": 1,
+    "h-64": 1,
+    "pointer-events-none": 5,
+    "group-hover:border-primary/20": 1,
+    "-right-8": 1,
+    "-top-8": 1,
+    "w-48": 3,
+    "h-48": 2,
+    "border-outline-variant/15": 1,
+    "mb-space-20": 4,
+    "px-2.5": 4,
+    "py-1": 5,
+    "text-[11px]": 5,
+    "gap-1.5": 13,
+    "px-2": 7,
+    "bg-secondary/10": 2,
+    "border-secondary/20": 1,
+    "my-space-24": 4,
+    "text-center": 7,
+    "w-20": 4,
+    "h-20": 4,
+    "inset-0": 2,
+    "border-primary/30": 1,
+    "animate-node-pulse": 2,
+    "w-14": 4,
+    "h-14": 4,
+    "border-primary/50": 1,
+    "shadow-[0_0_20px_rgba(118,146,255,0.2)]": 1,
+    "text-2xl": 4,
+    "-top-1": 2,
+    "right-2": 1,
+    "w-3": 2,
+    "h-3": 2,
+    "border-2": 1,
+    "border-surface": 2,
+    "shadow-[0_0_8px_#44e2cd]": 1,
+    "text-headline-md": 5,
+    "font-headline-md": 5,
+    "mb-space-8": 4,
+    "max-w-md": 4,
+    "pt-space-20": 4,
+    "sm:flex-row": 5,
+    "sm:w-auto": 4,
+    "sm:flex-initial": 4,
+    "hover:text-primary-fixed": 2,
+    "underline": 1,
+    "decoration-primary/40": 1,
+    "gap-1": 3,
+    "hover:border-secondary/50": 2,
+    "right-4": 1,
+    "top-4": 1,
+    "opacity-20": 1,
+    "bg-primary": 2,
+    "w-16": 3,
+    "border-secondary/30": 2,
+    "w-12": 2,
+    "h-12": 2,
+    "shadow-[0_0_18px_rgba(68,226,205,0.2)]": 1,
+    "bottom-1": 1,
+    "left-2": 1,
+    "w-2.5": 1,
+    "h-2.5": 1,
+    "shadow-[0_0_8px_#7692ff]": 1,
+    "hover:border-secondary": 2,
+    "-right-10": 1,
+    "bottom-2": 1,
+    "h-32": 1,
+    "rotate-12": 1,
+    "bg-surface-container/20": 1,
+    "rounded-2xl": 1,
+    "border-outline-variant/60": 2,
+    "rotate-3": 1,
+    "shadow-[0_12px_24px_rgba(0,0,0,0.5)]": 1,
+    "-right-1": 1,
+    "font-bold": 1,
+    "hover:text-secondary-fixed": 1,
+    "-left-12": 1,
+    "-bottom-12": 1,
+    "bg-primary/10": 1,
+    "border-primary/20": 2,
+    "shadow-[0_0_16px_rgba(68,226,205,0.2)]": 1,
+    "right-1": 1,
+    "bg-primary/80": 1,
+    "md:grid-cols-3": 1,
+    "gap-space-20": 1,
+    "p-space-20": 3,
+    "hover:border-outline-variant/60": 3,
+    "my-space-12": 3,
+    "border-dashed": 1,
+    "mb-space-12": 3,
+    "animate-radar-sweep": 1,
+    "origin-center": 1,
+    "mb-1": 3,
+    "hover:border-primary": 1,
+    "text-[#FBBF24]": 3,
+    "bg-[#FBBF24]/10": 2,
+    "border-[#FBBF24]/20": 1,
+    "border-[#FBBF24]/30": 1,
+    "hover:border-[#FBBF24]": 1,
+    "sm:items-center": 1,
+    "text-xl": 1,
+    "mt-0.5": 1,
+    "md:grid-cols-5": 1,
+    "space-y-2": 5,
+    "text-[12px]": 5,
+    "leading-snug": 5,
+    "animate-ping": 1
+  },
+  "controls": [
+    {
+      "tag": "button",
+      "type": null,
+      "text": "+ Adicionar",
+      "placeholder": null,
+      "class": "w-full mb-space-16 h-10 px-space-16 rounded-lg bg-primary-container text-on-primary-container font-headline-sm text-sm font-semibold flex items-center justify-center gap-space-8 hover:brightness-110 active:scale-[0.98] transition-all duration-150 shadow-[0_0_16px_rgba(118,146,255,0.25)]",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "text": "",
+      "placeholder": "Pesquisar componentes ou telas...",
+      "class": "bg-surface-container-low text-on-surface placeholder-outline text-body-sm font-body-sm pl-9 pr-12 h-9 rounded-lg border border-outline-variant/40 focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all w-64",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "notifications",
+      "placeholder": null,
+      "class": "relative p-space-8 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors duration-150",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "tune Inspetor de Estados",
+      "placeholder": null,
+      "class": "h-9 px-space-12 rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-primary-container text-on-surface font-headline-sm text-xs font-medium flex items-center gap-space-8 transition-colors duration-150",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "file_download Exportar Diretrizes UI",
+      "placeholder": null,
+      "class": "h-10 px-space-16 rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-outline text-on-surface font-body-md text-sm font-medium flex items-center gap-2 active:scale-[0.98] transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "add_circle + Simular Novo Módulo",
+      "placeholder": null,
+      "class": "h-10 px-space-16 rounded-lg bg-primary-container text-on-primary-container font-headline-sm text-sm font-semibold flex items-center gap-2 hover:brightness-110 active:scale-[0.98] transition-all shadow-[0_0_20px_rgba(118,146,255,0.25)]",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Todos os Módulos 7",
+      "placeholder": null,
+      "class": "px-space-16 py-space-8 rounded-lg bg-surface-container-high border border-secondary/40 text-secondary-fixed font-medium flex items-center gap-2 whitespace-nowrap shadow-[0_0_12px_rgba(68,226,205,0.12)]",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "check_circle Tarefas",
+      "placeholder": null,
+      "class": "px-space-16 py-space-8 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap flex items-center gap-2",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "repeat Hábitos",
+      "placeholder": null,
+      "class": "px-space-16 py-space-8 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap flex items-center gap-2",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "account_balance_wallet Finanças",
+      "placeholder": null,
+      "class": "px-space-16 py-space-8 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap flex items-center gap-2",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "fitness_center Treinos",
+      "placeholder": null,
+      "class": "px-space-16 py-space-8 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap flex items-center gap-2",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "hub Integrações & Logs",
+      "placeholder": null,
+      "class": "px-space-16 py-space-8 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap flex items-center gap-2",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "search_off Busca Sem Resultados",
+      "placeholder": null,
+      "class": "px-space-16 py-space-8 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap flex items-center gap-2",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "add Criar Primeira Tarefa",
+      "placeholder": null,
+      "class": "flex-1 sm:flex-initial h-10 px-space-16 rounded-lg bg-primary-container text-on-primary-container font-headline-sm text-xs font-semibold hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "🎙️ Ditar via Áudio IA",
+      "placeholder": null,
+      "class": "h-10 px-space-12 rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-outline text-on-surface text-xs font-body-md flex items-center justify-center gap-1.5 transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "play_arrow Ativar Primeiro Hábito",
+      "placeholder": null,
+      "class": "flex-1 sm:flex-initial h-10 px-space-16 rounded-lg bg-primary-container text-on-primary-container font-headline-sm text-xs font-semibold hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "✨ Sugerir Rotina (IA)",
+      "placeholder": null,
+      "class": "h-10 px-space-12 rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-secondary text-on-surface text-xs font-body-md flex items-center justify-center gap-1.5 transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "add Registrar Despesa Manual",
+      "placeholder": null,
+      "class": "flex-1 sm:flex-initial h-10 px-space-16 rounded-lg bg-primary-container text-on-primary-container font-headline-sm text-xs font-semibold hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "🔗 Vincular Telegram Bot",
+      "placeholder": null,
+      "class": "h-10 px-space-12 rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-outline text-on-surface text-xs font-body-md flex items-center justify-center gap-1.5 transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "add Montar Primeira Rotina",
+      "placeholder": null,
+      "class": "flex-1 sm:flex-initial h-10 px-space-16 rounded-lg bg-primary-container text-on-primary-container font-headline-sm text-xs font-semibold hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "🏋️ Importar Treino PPL",
+      "placeholder": null,
+      "class": "h-10 px-space-12 rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-outline text-on-surface text-xs font-body-md flex items-center justify-center gap-1.5 transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "clear_all Limpar Filtros de Busca",
+      "placeholder": null,
+      "class": "w-full h-8 px-space-12 rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-primary text-xs font-body-sm text-on-surface flex items-center justify-center gap-1.5 transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "send Enviar Áudio de Teste",
+      "placeholder": null,
+      "class": "w-full h-8 px-space-12 rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-secondary text-xs font-body-sm text-secondary flex items-center justify-center gap-1.5 transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "refresh Tentar Reconexão",
+      "placeholder": null,
+      "class": "w-full h-8 px-space-12 rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-[#FBBF24] text-xs font-body-sm text-on-surface flex items-center justify-center gap-1.5 transition-colors",
+      "id": null
+    }
+  ],
+  "reading_note": "Extração estática. Os scripts e handlers do HTML original foram preservados, mas não executados nem considerados implementação funcional."
+}

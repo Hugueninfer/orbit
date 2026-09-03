@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Orbit — Criar Novo Hábito</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container-highest": "#2c3545",
+            "inverse-on-surface": "#273140",
+            "on-primary-container": "#002683",
+            "tertiary-fixed-dim": "#b8c4ff",
+            "on-background": "#d9e3f7",
+            "tertiary-container": "#7992ff",
+            "on-primary-fixed": "#001552",
+            "surface-bright": "#303a49",
+            "on-secondary": "#003731",
+            "outline": "#8e909e",
+            "surface-container-low": "#121c2a",
+            "on-surface-variant": "#c4c5d5",
+            "background": "#0a1422",
+            "surface-variant": "#2c3545",
+            "outline-variant": "#444653",
+            "surface-container-lowest": "#050e1c",
+            "tertiary": "#b8c4ff",
+            "secondary-fixed": "#62fae3",
+            "primary-fixed-dim": "#b7c4ff",
+            "on-tertiary-fixed-variant": "#0136bb",
+            "primary-fixed": "#dde1ff",
+            "surface-container": "#16202f",
+            "primary-container": "#7692ff",
+            "tertiary-fixed": "#dde1ff",
+            "on-secondary-fixed-variant": "#005047",
+            "surface": "#0a1422",
+            "inverse-surface": "#d9e3f7",
+            "secondary-fixed-dim": "#3cddc7",
+            "surface-tint": "#b7c4ff",
+            "surface-container-high": "#212a39",
+            "on-primary": "#002682",
+            "on-secondary-fixed": "#00201c",
+            "on-secondary-container": "#004d44",
+            "on-tertiary-container": "#002588",
+            "on-error-container": "#ffdad6",
+            "secondary": "#44e2cd",
+            "secondary-container": "#03c6b2",
+            "on-tertiary-fixed": "#001354",
+            "surface-dim": "#0a1422",
+            "inverse-primary": "#3856bf",
+            "on-surface": "#d9e3f7",
+            "on-tertiary": "#002486",
+            "on-primary-fixed-variant": "#193ca7",
+            "error-container": "#93000a",
+            "error": "#ffb4ab",
+            "on-error": "#690005",
+            "primary": "#b7c4ff"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "space-8": "0.5rem",
+            "space-24": "1.5rem",
+            "margin-desktop": "2rem",
+            "space-20": "1.25rem",
+            "space-64": "4rem",
+            "space-48": "3rem",
+            "space-40": "2.5rem",
+            "space-12": "0.75rem",
+            "margin-mobile": "1rem",
+            "space-16": "1rem",
+            "space-2": "0.125rem",
+            "gutter-mobile": "1rem",
+            "space-32": "2rem",
+            "gutter-desktop": "1.5rem",
+            "space-4": "0.25rem",
+            "margin-tablet": "1.5rem"
+          },
+          fontFamily: {
+            "label-regular": ["Geist"],
+            "label-caps": ["JetBrains Mono"],
+            "display-lg-mobile": ["Geist"],
+            "headline-xl": ["Geist"],
+            "body-sm": ["Geist"],
+            "display-lg": ["Geist"],
+            "body-lg": ["Geist"],
+            "headline-md": ["Geist"],
+            "code-md": ["JetBrains Mono"],
+            "body-md": ["Geist"],
+            "headline-sm": ["Geist"],
+            "headline-xl-mobile": ["Geist"]
+          },
+          fontSize: {
+            "label-regular": ["12px", { lineHeight: "16px", letterSpacing: "0.01em", fontWeight: "500" }],
+            "label-caps": ["11px", { lineHeight: "16px", letterSpacing: "0.06em", fontWeight: "500" }],
+            "display-lg-mobile": ["30px", { lineHeight: "38px", letterSpacing: "-0.02em", fontWeight: "600" }],
+            "headline-xl": ["28px", { lineHeight: "36px", letterSpacing: "-0.02em", fontWeight: "600" }],
+            "body-sm": ["12px", { lineHeight: "18px", letterSpacing: "0.005em", fontWeight: "400" }],
+            "display-lg": ["40px", { lineHeight: "48px", letterSpacing: "-0.025em", fontWeight: "600" }],
+            "body-lg": ["16px", { lineHeight: "26px", letterSpacing: "0em", fontWeight: "400" }],
+            "headline-md": ["20px", { lineHeight: "28px", letterSpacing: "-0.015em", fontWeight: "500" }],
+            "code-md": ["13px", { lineHeight: "20px", letterSpacing: "0em", fontWeight: "400" }],
+            "body-md": ["14px", { lineHeight: "22px", letterSpacing: "0em", fontWeight: "400" }],
+            "headline-sm": ["16px", { lineHeight: "24px", letterSpacing: "-0.01em", fontWeight: "600" }],
+            "headline-xl-mobile": ["24px", { lineHeight: "32px", letterSpacing: "-0.015em", fontWeight: "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Material Icons Utility */
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    
+    /* Smooth Scrollbar for bottom sheet */
+    .custom-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #253653;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased overflow-x-hidden min-h-screen flex justify-center items-end selection:bg-primary-container selection:text-on-primary">
+<!-- ========================================================================= -->
+<!-- SIMULATED BACKGROUND APP VIEW: Orbit — Hábitos & Consistência (Mobile) -->
+<!-- ========================================================================= -->
+<div class="fixed inset-0 w-full h-full flex flex-col justify-start items-center overflow-hidden pointer-events-none select-none filter blur-[5px] opacity-35 scale-[0.98] transition-transform duration-300">
+<!-- Top Bar Simulation -->
+<div class="w-full max-w-md h-16 border-b border-outline-variant/30 flex items-center justify-between px-space-20">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-secondary"></span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight">Orbit</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant/40 flex items-center justify-center text-on-surface">
+<span class="material-symbols-outlined text-[18px]">notifications</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest border border-secondary flex items-center justify-center font-label-caps text-label-caps text-secondary-fixed">
+          PM
+        </div>
+</div>
+</div>
+<!-- Background Habit Canvas Content -->
+<div class="w-full max-w-md px-space-20 pt-space-24 space-y-space-16">
+<div class="flex justify-between items-center">
+<div>
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-wider">TELEMETRIA DIÁRIA</span>
+<h2 class="font-headline-xl-mobile text-headline-xl-mobile text-on-surface">Hábitos &amp; Consistência</h2>
+</div>
+<span class="px-space-8 py-space-4 rounded-full bg-surface-container-high border border-outline-variant/50 font-code-md text-code-md text-primary">87% Loop</span>
+</div>
+<!-- Background Habit Item 1 -->
+<div class="p-space-16 rounded-xl bg-surface-container border border-outline-variant/30 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">water_drop</span>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm text-on-surface">Hidratação Estruturada</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">2.000 / 2.500 ml • Janela Matinal</p>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-secondary">check</span>
+</div>
+</div>
+<!-- Background Habit Item 2 -->
+<div class="p-space-16 rounded-xl bg-surface-container border border-outline-variant/30 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">self_improvement</span>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm text-on-surface">Meditação &amp; Foco Matinal</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">15 min • 14 dias em sequência</p>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-outline-variant"></div>
+</div>
+</div>
+</div>
+<!-- ========================================================================= -->
+<!-- MOBILE DRAWER BACKDROP & OVERLAY CONTAINER -->
+<!-- ========================================================================= -->
+<div class="fixed inset-0 z-50 flex items-end justify-center bg-surface-container-lowest/80 backdrop-blur-md transition-all">
+<!-- BOTTOM SHEET CONTAINER -->
+<div aria-labelledby="modal-habit-title" aria-modal="true" class="w-full max-w-lg bg-surface-container-low border-t border-x border-outline-variant/50 rounded-t-[28px] shadow-[0_-16px_40px_-8px_rgba(3,8,16,0.85),0_0_0_1px_rgba(118,146,255,0.15)] max-h-[92vh] flex flex-col overflow-hidden animate-in slide-in-from-bottom duration-300" role="dialog">
+<!-- TOP DRAG HANDLE -->
+<div class="w-full pt-space-12 pb-space-4 flex justify-center items-center cursor-grab active:cursor-grabbing">
+<div class="w-12 h-1.5 rounded-full bg-outline-variant hover:bg-on-surface-variant transition-colors"></div>
+</div>
+<!-- DRAWER HEADER (Sticky) -->
+<header class="px-space-20 py-space-12 border-b border-outline-variant/30 flex items-start justify-between bg-surface-container-low/95 backdrop-blur-sm shrink-0">
+<div class="space-y-space-2 pr-4">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-space-8 py-0.5 rounded-full bg-secondary/10 border border-secondary/30 font-label-caps text-label-caps text-secondary tracking-wider uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-ping"></span>
+              Loop de Consistência
+            </span>
+<span class="inline-flex items-center px-space-8 py-0.5 rounded-full bg-primary-container/20 border border-primary/30 font-label-caps text-label-caps text-primary tracking-wider">
+              ÓRBITA v2.4
+            </span>
+</div>
+<h1 class="font-headline-xl-mobile text-headline-xl-mobile text-on-surface font-semibold tracking-tight" id="modal-habit-title">
+            Novo Hábito
+          </h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Arquitetura de Rotina &amp; Hábitos Operacionais
+          </p>
+</div>
+<!-- Accessible Close Button (>44px touch target) -->
+<button aria-label="Fechar" class="w-11 h-11 -mr-2 rounded-full bg-surface-container hover:bg-surface-container-high active:scale-95 border border-outline-variant/40 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</header>
+<!-- SCROLLABLE FORM BODY -->
+<form class="flex-1 overflow-y-auto custom-scroll px-space-20 py-space-16 space-y-space-24" id="habit-form">
+<!-- SEÇÃO 1: NOME DO HÁBITO & ÍCONE VISUAL -->
+<div class="space-y-space-12">
+<div class="flex justify-between items-center">
+<label class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-1.5" for="habit-name">
+<span>Nome do Hábito</span>
+<span class="text-secondary font-bold">*</span>
+</label>
+<!-- Áudio IA Shortcut -->
+<button class="h-8 px-space-12 rounded-lg bg-surface-container hover:bg-surface-container-high border border-outline-variant/40 flex items-center gap-1.5 text-primary active:scale-95 transition-all text-label-caps font-label-caps" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">mic</span>
+<span>Áudio IA</span>
+</button>
+</div>
+<div class="relative">
+<input class="w-full h-12 px-space-16 rounded-xl bg-surface-container-lowest border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary text-on-surface font-body-md text-body-md placeholder:text-outline outline-none transition-all" id="habit-name" placeholder="Ex: Hidratação Estruturada, Leitura Analítica..." type="text" value="Meditação Mindfulness &amp; Respiração"/>
+</div>
+<!-- Seletor Rápido de Ícone / Categoria -->
+<div class="space-y-space-4">
+<span class="font-label-caps text-label-caps text-on-surface-variant">SÍMBOLO OU CATEGORIA RÁPIDA</span>
+<div class="grid grid-cols-6 gap-2 pt-1">
+<!-- Ícone 1 (Meditação - Selecionado) -->
+<button class="h-11 rounded-xl bg-primary/20 border-2 border-primary text-primary flex flex-col items-center justify-center transition-all shadow-[0_0_12px_rgba(118,146,255,0.25)]" type="button">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">self_improvement</span>
+</button>
+<!-- Ícone 2 -->
+<button class="h-11 rounded-xl bg-surface-container hover:bg-surface-container-high border border-outline-variant/40 text-on-surface-variant hover:text-on-surface flex flex-col items-center justify-center active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">water_drop</span>
+</button>
+<!-- Ícone 3 -->
+<button class="h-11 rounded-xl bg-surface-container hover:bg-surface-container-high border border-outline-variant/40 text-on-surface-variant hover:text-on-surface flex flex-col items-center justify-center active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">menu_book</span>
+</button>
+<!-- Ícone 4 -->
+<button class="h-11 rounded-xl bg-surface-container hover:bg-surface-container-high border border-outline-variant/40 text-on-surface-variant hover:text-on-surface flex flex-col items-center justify-center active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">bolt</span>
+</button>
+<!-- Ícone 5 -->
+<button class="h-11 rounded-xl bg-surface-container hover:bg-surface-container-high border border-outline-variant/40 text-on-surface-variant hover:text-on-surface flex flex-col items-center justify-center active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">fitness_center</span>
+</button>
+<!-- Ícone 6 -->
+<button class="h-11 rounded-xl bg-surface-container hover:bg-surface-container-high border border-outline-variant/40 text-on-surface-variant hover:text-on-surface flex flex-col items-center justify-center active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">bedtime</span>
+</button>
+</div>
+</div>
+</div>
+<div class="h-px w-full bg-outline-variant/20"></div>
+<!-- SEÇÃO 2: JANELA CIRCADIANA (HORIZONTE DO DIA) -->
+<div class="space-y-space-8">
+<div class="flex justify-between items-center">
+<label class="font-headline-sm text-headline-sm text-on-surface">Janela Circadiana</label>
+<span class="font-label-caps text-label-caps text-secondary">HORIZONTE DIÁRIO</span>
+</div>
+<div class="grid grid-cols-2 gap-2.5">
+<!-- Matinal (Selecionado) -->
+<button class="min-h-[48px] p-space-12 rounded-xl bg-surface-container-high border-2 border-secondary flex items-center gap-3 text-left transition-all shadow-[0_0_14px_rgba(45,212,191,0.18)]" type="button">
+<span class="material-symbols-outlined text-secondary text-[22px]">wb_twilight</span>
+<div>
+<p class="font-headline-sm text-headline-sm text-on-surface leading-tight">Matinal</p>
+<p class="font-label-caps text-[10px] text-secondary font-medium">05:00 — 11:59</p>
+</div>
+</button>
+<!-- Tarde / Foco -->
+<button class="min-h-[48px] p-space-12 rounded-xl bg-surface-container hover:bg-surface-container-high border border-outline-variant/40 flex items-center gap-3 text-left active:scale-[0.98] transition-all" type="button">
+<span class="material-symbols-outlined text-on-surface-variant text-[22px]">light_mode</span>
+<div>
+<p class="font-headline-sm text-headline-sm text-on-surface-variant leading-tight">Tarde / Foco</p>
+<p class="font-label-caps text-[10px] text-outline font-medium">12:00 — 17:59</p>
+</div>
+</button>
+<!-- Noturno & Sono -->
+<button class="min-h-[48px] p-space-12 rounded-xl bg-surface-container hover:bg-surface-container-high border border-outline-variant/40 flex items-center gap-3 text-left active:scale-[0.98] transition-all" type="button">
+<span class="material-symbols-outlined text-on-surface-variant text-[22px]">dark_mode</span>
+<div>
+<p class="font-headline-sm text-headline-sm text-on-surface-variant leading-tight">Noturno &amp; Sono</p>
+<p class="font-label-caps text-[10px] text-outline font-medium">18:00 — 23:59</p>
+</div>
+</button>
+<!-- Qualquer Momento -->
+<button class="min-h-[48px] p-space-12 rounded-xl bg-surface-container hover:bg-surface-container-high border border-outline-variant/40 flex items-center gap-3 text-left active:scale-[0.98] transition-all" type="button">
+<span class="material-symbols-outlined text-on-surface-variant text-[22px]">all_inclusive</span>
+<div>
+<p class="font-headline-sm text-headline-sm text-on-surface-variant leading-tight">Qualquer Hora</p>
+<p class="font-label-caps text-[10px] text-outline font-medium">Ritmo Flexível</p>
+</div>
+</button>
+</div>
+</div>
+<div class="h-px w-full bg-outline-variant/20"></div>
+<!-- SEÇÃO 3: CONFIGURAÇÃO DE FREQUÊNCIA SEMANAL -->
+<div class="space-y-space-12">
+<div class="flex justify-between items-center">
+<label class="font-headline-sm text-headline-sm text-on-surface">Frequência Operacional</label>
+<span class="font-label-caps text-label-caps text-primary">CADÊNCIA</span>
+</div>
+<!-- Tabs de Modo -->
+<div class="grid grid-cols-3 p-1 rounded-xl bg-surface-container border border-outline-variant/40">
+<button class="py-space-8 rounded-lg bg-primary-container text-on-primary font-headline-sm text-[13px] font-semibold text-center transition-all shadow-sm" type="button">
+              Diário
+            </button>
+<button class="py-space-8 rounded-lg text-on-surface-variant hover:text-on-surface font-body-md text-[13px] text-center transition-all" type="button">
+              Específico
+            </button>
+<button class="py-space-8 rounded-lg text-on-surface-variant hover:text-on-surface font-body-md text-[13px] text-center transition-all" type="button">
+              X por Semana
+            </button>
+</div>
+<!-- Dias da Semana Táteis (>44px) -->
+<div class="space-y-2">
+<div class="flex justify-between items-center font-label-caps text-label-caps text-on-surface-variant">
+<span>DIAS DA CONSTELAÇÃO</span>
+<span class="text-secondary font-medium">7 de 7 selecionados</span>
+</div>
+<div class="grid grid-cols-7 gap-1.5">
+<!-- Seg (Ativo) -->
+<button class="h-12 rounded-xl bg-secondary text-on-secondary font-headline-sm text-headline-sm font-semibold flex flex-col items-center justify-center shadow-[0_0_10px_rgba(68,226,205,0.3)]" type="button">
+<span>S</span>
+<span class="w-1 h-1 rounded-full bg-on-secondary mt-0.5"></span>
+</button>
+<!-- Ter (Ativo) -->
+<button class="h-12 rounded-xl bg-secondary text-on-secondary font-headline-sm text-headline-sm font-semibold flex flex-col items-center justify-center shadow-[0_0_10px_rgba(68,226,205,0.3)]" type="button">
+<span>T</span>
+<span class="w-1 h-1 rounded-full bg-on-secondary mt-0.5"></span>
+</button>
+<!-- Qua (Ativo) -->
+<button class="h-12 rounded-xl bg-secondary text-on-secondary font-headline-sm text-headline-sm font-semibold flex flex-col items-center justify-center shadow-[0_0_10px_rgba(68,226,205,0.3)]" type="button">
+<span>Q</span>
+<span class="w-1 h-1 rounded-full bg-on-secondary mt-0.5"></span>
+</button>
+<!-- Qui (Ativo) -->
+<button class="h-12 rounded-xl bg-secondary text-on-secondary font-headline-sm text-headline-sm font-semibold flex flex-col items-center justify-center shadow-[0_0_10px_rgba(68,226,205,0.3)]" type="button">
+<span>Q</span>
+<span class="w-1 h-1 rounded-full bg-on-secondary mt-0.5"></span>
+</button>
+<!-- Sex (Ativo) -->
+<button class="h-12 rounded-xl bg-secondary text-on-secondary font-headline-sm text-headline-sm font-semibold flex flex-col items-center justify-center shadow-[0_0_10px_rgba(68,226,205,0.3)]" type="button">
+<span>S</span>
+<span class="w-1 h-1 rounded-full bg-on-secondary mt-0.5"></span>
+</button>
+<!-- Sáb (Ativo) -->
+<button class="h-12 rounded-xl bg-primary-container text-on-primary font-headline-sm text-headline-sm font-semibold flex flex-col items-center justify-center shadow-[0_0_10px_rgba(118,146,255,0.3)]" type="button">
+<span>S</span>
+<span class="w-1 h-1 rounded-full bg-on-primary mt-0.5"></span>
+</button>
+<!-- Dom (Ativo) -->
+<button class="h-12 rounded-xl bg-primary-container text-on-primary font-headline-sm text-headline-sm font-semibold flex flex-col items-center justify-center shadow-[0_0_10px_rgba(118,146,255,0.3)]" type="button">
+<span>D</span>
+<span class="w-1 h-1 rounded-full bg-on-primary mt-0.5"></span>
+</button>
+</div>
+</div>
+</div>
+<div class="h-px w-full bg-outline-variant/20"></div>
+<!-- SEÇÃO 4: META & UNIDADE DE MEDIDA -->
+<div class="space-y-space-12">
+<div class="flex justify-between items-center">
+<label class="font-headline-sm text-headline-sm text-on-surface">Métrica &amp; Meta</label>
+<div class="flex items-center gap-1 bg-surface-container p-1 rounded-lg border border-outline-variant/40">
+<button class="px-2.5 py-1 rounded text-body-sm font-body-sm text-on-surface-variant hover:text-on-surface" type="button">Simples</button>
+<button class="px-2.5 py-1 rounded bg-surface-container-highest text-secondary-fixed text-body-sm font-body-sm font-medium border border-secondary/30" type="button">Quantitativa</button>
+</div>
+</div>
+<!-- Stepper Numérico Ergonômico -->
+<div class="p-space-16 rounded-xl bg-surface-container border border-outline-variant/40 flex items-center justify-between">
+<div class="space-y-0.5">
+<span class="font-label-caps text-label-caps text-on-surface-variant">VOLUME ALVO</span>
+<div class="flex items-baseline gap-1.5">
+<span class="font-display-lg text-[32px] leading-none text-on-surface font-semibold tracking-tight">15</span>
+<span class="font-headline-sm text-headline-sm text-primary">minutos</span>
+</div>
+</div>
+<!-- Botões +/- de Toque Confortável (>44px) -->
+<div class="flex items-center gap-2">
+<button aria-label="Diminuir" class="w-12 h-12 rounded-xl bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/50 text-on-surface flex items-center justify-center active:scale-90 transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">remove</span>
+</button>
+<button aria-label="Aumentar" class="w-12 h-12 rounded-xl bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/50 text-secondary flex items-center justify-center active:scale-90 transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+</div>
+<!-- Pílulas Rápidas de Unidades -->
+<div class="flex items-center gap-2 overflow-x-auto pb-1 custom-scroll">
+<button class="h-8 px-3.5 rounded-full bg-primary/20 border border-primary text-primary font-code-md text-[12px] whitespace-nowrap" type="button">
+              min
+            </button>
+<button class="h-8 px-3.5 rounded-full bg-surface-container hover:bg-surface-container-high border border-outline-variant/40 text-on-surface-variant font-code-md text-[12px] whitespace-nowrap" type="button">
+              vezes
+            </button>
+<button class="h-8 px-3.5 rounded-full bg-surface-container hover:bg-surface-container-high border border-outline-variant/40 text-on-surface-variant font-code-md text-[12px] whitespace-nowrap" type="button">
+              páginas
+            </button>
+<button class="h-8 px-3.5 rounded-full bg-surface-container hover:bg-surface-container-high border border-outline-variant/40 text-on-surface-variant font-code-md text-[12px] whitespace-nowrap" type="button">
+              ml
+            </button>
+<button class="h-8 px-3.5 rounded-full bg-surface-container hover:bg-surface-container-high border border-outline-variant/40 text-on-surface-variant font-code-md text-[12px] whitespace-nowrap" type="button">
+              litros
+            </button>
+</div>
+</div>
+<div class="h-px w-full bg-outline-variant/20"></div>
+<!-- SEÇÃO 5: GATILHO & HORÁRIO / LEMBRETE -->
+<div class="space-y-space-12">
+<div class="flex justify-between items-center">
+<label class="font-headline-sm text-headline-sm text-on-surface">Gatilho &amp; Horário</label>
+<span class="font-label-caps text-label-caps text-secondary">NOTIFICAÇÃO</span>
+</div>
+<div class="p-space-16 rounded-xl bg-surface-container border border-outline-variant/40 space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-primary text-[22px]">alarm</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface font-medium">Horário sugerido</p>
+<p class="font-code-md text-code-md text-primary">07:30 BRT</p>
+</div>
+</div>
+<!-- Custom Switch Toggle -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-12 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-on-primary-fixed after:border-surface-container-highest after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</div>
+<div class="pt-2 border-t border-outline-variant/20">
+<label class="font-label-caps text-[11px] text-on-surface-variant block mb-1" for="trigger-text">GATILHO COMPORTAMENTAL (ÂNCORA)</label>
+<input class="w-full h-10 px-3 rounded-lg bg-surface-container-lowest border border-outline-variant/40 focus:border-secondary focus:ring-1 focus:ring-secondary text-body-sm font-body-sm text-on-surface outline-none" id="trigger-text" type="text" value="Logo após tomar o primeiro copo de água"/>
+</div>
+</div>
+</div>
+<!-- SEÇÃO 6: INTEGRAÇÃO ORBITAL & ESTIMATIVA DE STREAK -->
+<div class="p-space-16 rounded-xl bg-gradient-to-br from-surface-container to-surface-container-high border border-outline-variant/50 space-y-space-12 relative overflow-hidden">
+<div class="absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-primary/10 blur-xl pointer-events-none"></div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-primary-container/20 border border-primary/30 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">orbit</span>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm text-on-surface">Órbita de Prioridades</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Fixar na telemetria central</p>
+</div>
+</div>
+<!-- Custom Switch Toggle -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-12 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-on-primary-fixed after:border-surface-container-highest after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+<!-- Card de incentivo / estimativa neural -->
+<div class="p-2.5 rounded-lg bg-surface-container-lowest/70 border border-outline-variant/30 flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[18px] shrink-0 mt-0.5">psychology</span>
+<p class="font-body-sm text-[12px] text-on-surface-variant leading-relaxed">
+<span class="text-secondary font-medium">Meta inicial de órbita:</span> 21 dias para consolidação neural e ancoragem fisiológica permanente.
+            </p>
+</div>
+</div>
+<div class="h-4"></div>
+</form>
+<!-- RODAPÉ FIXO (ZONEAMENTO ERGONÔMICO DO POLEGAR) -->
+<footer class="p-space-20 border-t border-outline-variant/30 bg-surface-container-low/95 backdrop-blur-md shrink-0">
+<button class="w-full h-14 rounded-2xl bg-gradient-to-r from-secondary via-secondary-fixed to-primary-container text-on-primary-fixed font-headline-sm text-headline-sm font-semibold flex items-center justify-center gap-2.5 shadow-[0_0_24px_rgba(68,226,205,0.35)] active:scale-[0.98] transition-transform duration-150" onclick="this.classList.add('scale-[0.98]'); setTimeout(() =&gt; alert('Hábito ativado com sucesso no Orbit!'), 100);" type="button">
+<span class="material-symbols-outlined text-[22px] text-on-primary-fixed font-bold">check_circle</span>
+<span>Ativar Hábito Operacional</span>
+</button>
+</footer>
+</div>
+</div>
+</body></html>

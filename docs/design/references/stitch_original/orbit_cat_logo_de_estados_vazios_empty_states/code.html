@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Orbit — Estados Vazios (Empty States Catalog &amp; System States)</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface": "#0a1422",
+            "surface-dim": "#0a1422",
+            "on-primary-fixed": "#001552",
+            "inverse-surface": "#d9e3f7",
+            "error-container": "#93000a",
+            "surface-tint": "#b7c4ff",
+            "surface-container-low": "#121c2a",
+            "surface-container": "#16202f",
+            "surface-container-highest": "#2c3545",
+            "outline-variant": "#444653",
+            "tertiary-fixed-dim": "#b8c4ff",
+            "surface-container-high": "#212a39",
+            "on-secondary-fixed": "#00201c",
+            "primary-fixed-dim": "#b7c4ff",
+            "tertiary-container": "#7992ff",
+            "background": "#0a1422",
+            "on-primary-container": "#002683",
+            "secondary": "#44e2cd",
+            "on-tertiary": "#002486",
+            "surface-bright": "#303a49",
+            "secondary-fixed": "#62fae3",
+            "primary-fixed": "#dde1ff",
+            "surface-variant": "#2c3545",
+            "on-error-container": "#ffdad6",
+            "on-primary": "#002682",
+            "on-primary-fixed-variant": "#193ca7",
+            "on-tertiary-fixed": "#001354",
+            "inverse-on-surface": "#273140",
+            "on-background": "#d9e3f7",
+            "secondary-fixed-dim": "#3cddc7",
+            "on-tertiary-fixed-variant": "#0136bb",
+            "tertiary-fixed": "#dde1ff",
+            "on-secondary": "#003731",
+            "secondary-container": "#03c6b2",
+            "on-secondary-fixed-variant": "#005047",
+            "on-surface-variant": "#c4c5d5",
+            "on-surface": "#d9e3f7",
+            "inverse-primary": "#3856bf",
+            "primary": "#b7c4ff",
+            "surface-container-lowest": "#050e1c",
+            "on-secondary-container": "#004d44",
+            "outline": "#8e909e",
+            "tertiary": "#b8c4ff",
+            "on-tertiary-container": "#002588",
+            "error": "#ffb4ab",
+            "primary-container": "#7692ff",
+            "on-error": "#690005"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin-desktop": "2rem",
+            "space-64": "4rem",
+            "margin-tablet": "1.5rem",
+            "space-24": "1.5rem",
+            "space-32": "2rem",
+            "space-16": "1rem",
+            "margin-mobile": "1rem",
+            "space-20": "1.25rem",
+            "space-12": "0.75rem",
+            "space-8": "0.5rem",
+            "gutter-desktop": "1.5rem",
+            "gutter-mobile": "1rem",
+            "space-4": "0.25rem",
+            "space-48": "3rem",
+            "space-2": "0.125rem",
+            "space-40": "2.5rem"
+          },
+          "fontFamily": {
+            "label-regular": ["Geist"],
+            "code-md": ["JetBrains Mono"],
+            "label-caps": ["JetBrains Mono"],
+            "body-sm": ["Geist"],
+            "display-lg": ["Geist"],
+            "headline-sm": ["Geist"],
+            "body-md": ["Geist"],
+            "body-lg": ["Geist"],
+            "headline-md": ["Geist"],
+            "headline-xl": ["Geist"],
+            "display-lg-mobile": ["Geist"],
+            "headline-xl-mobile": ["Geist"]
+          },
+          "fontSize": {
+            "label-regular": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "code-md": ["13px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "500" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "letterSpacing": "0.005em", "fontWeight": "400" }],
+            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.025em", "fontWeight": "600" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "body-lg": ["16px", { "lineHeight": "26px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "500" }],
+            "headline-xl": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "display-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "headline-xl-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    /* Subtle orbital radar rotation */
+    @keyframes orbitRadar {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .animate-radar-sweep {
+      animation: orbitRadar 6s linear infinite;
+    }
+    
+    /* Ethereal node pulse */
+    @keyframes nodePulse {
+      0%, 100% { opacity: 0.25; transform: scale(1); }
+      50% { opacity: 0.65; transform: scale(1.18); }
+    }
+    .animate-node-pulse {
+      animation: nodePulse 3.5s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased min-h-screen flex selection:bg-primary-container selection:text-on-primary-container">
+<!-- ==================== SHARED COMPONENT: SideNavBar ==================== -->
+<aside class="fixed top-0 left-0 h-screen w-64 z-40 bg-surface-container-low dark:bg-surface-container-low border-r border-outline-variant/30 flex flex-col justify-between p-space-16 select-none">
+<!-- Header / Brand Logo -->
+<div>
+<div class="flex items-center gap-space-12 px-space-8 py-space-12 mb-space-16">
+<div class="w-9 h-9 rounded-lg bg-surface-container-high border border-outline-variant/50 flex items-center justify-center relative">
+<div class="w-5 h-5 rounded-full border border-secondary/50 flex items-center justify-center">
+<div class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_10px_#44e2cd]"></div>
+</div>
+<span class="sr-only">Símbolo circular de órbita concêntrica</span>
+</div>
+<div>
+<h1 class="text-headline-sm font-headline-sm font-semibold text-on-surface tracking-tight leading-none">Orbit</h1>
+<p class="text-label-caps font-label-caps text-on-surface-variant text-[10px] tracking-wider mt-1">Personal Operations Hub</p>
+</div>
+</div>
+<!-- Quick Action CTA -->
+<button class="w-full mb-space-16 h-10 px-space-16 rounded-lg bg-primary-container text-on-primary-container font-headline-sm text-sm font-semibold flex items-center justify-center gap-space-8 hover:brightness-110 active:scale-[0.98] transition-all duration-150 shadow-[0_0_16px_rgba(118,146,255,0.25)]">
+<span>+ Adicionar</span>
+</button>
+<!-- Main Navigation Tabs -->
+<nav class="space-y-space-4">
+<!-- Visão geral (Overview) -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant dark:text-on-surface-variant font-normal hover:bg-surface-container dark:hover:bg-surface-container transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-outline">dashboard</span>
+<span class="font-body-md text-body-md">Visão geral</span>
+</a>
+<!-- Tarefas -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant dark:text-on-surface-variant font-normal hover:bg-surface-container dark:hover:bg-surface-container transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-outline">check_circle</span>
+<span class="font-body-md text-body-md">Tarefas</span>
+</a>
+<!-- Hábitos -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant dark:text-on-surface-variant font-normal hover:bg-surface-container dark:hover:bg-surface-container transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-outline">repeat</span>
+<span class="font-body-md text-body-md">Hábitos</span>
+</a>
+<!-- Finanças -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant dark:text-on-surface-variant font-normal hover:bg-surface-container dark:hover:bg-surface-container transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-outline">account_balance_wallet</span>
+<span class="font-body-md text-body-md">Finanças</span>
+</a>
+<!-- Treinos -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant dark:text-on-surface-variant font-normal hover:bg-surface-container dark:hover:bg-surface-container transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-outline">fitness_center</span>
+<span class="font-body-md text-body-md">Treinos</span>
+</a>
+</nav>
+</div>
+<!-- Footer Tabs / System & Profile -->
+<div class="pt-space-16 border-t border-outline-variant/30 space-y-space-4">
+<!-- Active Governance state (System Catalog) -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg bg-surface-container-high dark:bg-surface-container-high text-secondary-fixed dark:text-secondary-fixed font-medium border-l-2 border-secondary" href="#">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">hub</span>
+<span class="font-body-md text-body-md">Integrações</span>
+</a>
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant dark:text-on-surface-variant font-normal hover:bg-surface-container dark:hover:bg-surface-container transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-outline">settings</span>
+<span class="font-body-md text-body-md">Configurações</span>
+</a>
+<!-- User Profile -->
+<div class="pt-space-8 flex items-center justify-between px-space-8 py-space-8 rounded-lg bg-surface-container/50 border border-outline-variant/20">
+<div class="flex items-center gap-space-8">
+<div class="relative w-8 h-8 rounded-full bg-surface-container-highest border border-secondary/40 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+<div class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-secondary ring-2 ring-surface-container-low" title="Status: Online Sync"></div>
+</div>
+<div class="leading-tight">
+<p class="font-headline-sm text-xs font-semibold text-on-surface truncate w-24">Pedro Martins</p>
+<p class="font-label-caps text-label-caps text-secondary text-[9px] uppercase tracking-wider">Superadmin</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-base">unfold_more</span>
+</div>
+</div>
+</aside>
+<!-- ==================== MAIN VIEWPORT & TOPBAR ==================== -->
+<div class="pl-64 flex-1 flex flex-col min-w-0">
+<!-- TopNavBar -->
+<header class="sticky top-0 w-full z-30 bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 h-16 px-space-24 flex justify-between items-center">
+<div class="flex items-center gap-space-16">
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface dark:text-on-surface flex items-center gap-2">
+<span>Orbit</span>
+<span class="text-outline-variant font-normal text-xs">/</span>
+<span class="text-on-surface-variant font-body-sm text-xs">Design System Telemetry</span>
+</span>
+<span class="px-space-8 py-0.5 rounded-full bg-surface-container-high border border-outline-variant/40 text-secondary text-label-caps font-label-caps text-[10px]">
+          v2.4 Core States
+        </span>
+</div>
+<!-- Right cluster -->
+<div class="flex items-center gap-space-16">
+<!-- Quick search simulation input -->
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-space-12 text-outline text-base">search</span>
+<input class="bg-surface-container-low text-on-surface placeholder-outline text-body-sm font-body-sm pl-9 pr-12 h-9 rounded-lg border border-outline-variant/40 focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all w-64" placeholder="Pesquisar componentes ou telas..." type="text"/>
+<kbd class="absolute right-space-8 bg-surface-container-high border border-outline-variant/50 text-outline-variant font-code-md text-[10px] px-1.5 py-0.5 rounded">⌘K</kbd>
+</div>
+<!-- Notification action -->
+<button aria-label="Notificações" class="relative p-space-8 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors duration-150">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-secondary"></span>
+</button>
+<!-- CTA Header -->
+<button class="h-9 px-space-12 rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-primary-container text-on-surface font-headline-sm text-xs font-medium flex items-center gap-space-8 transition-colors duration-150">
+<span class="material-symbols-outlined text-secondary text-sm">tune</span>
+<span>Inspetor de Estados</span>
+</button>
+</div>
+</header>
+<!-- Content Workspace -->
+<main class="flex-1 p-space-32 max-w-7xl w-full mx-auto space-y-space-32">
+<!-- ==================== 1. INTRO HEADER & MODULE SELECTOR ==================== -->
+<section class="space-y-space-20">
+<!-- Breadcrumb -->
+<div class="flex items-center gap-2 text-label-caps font-label-caps text-on-surface-variant text-xs">
+<span>Sistema &amp; Governança</span>
+<span class="material-symbols-outlined text-xs text-outline-variant">chevron_right</span>
+<span class="text-secondary font-medium">Catálogo de Estados Vazios &amp; Onboarding</span>
+</div>
+<!-- Title & Subtitle + Telemetry Action Buttons -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-16 pb-space-16 border-b border-outline-variant/30">
+<div class="space-y-1 max-w-3xl">
+<h2 class="text-headline-xl font-headline-xl text-on-surface tracking-tight flex items-center gap-space-12">
+<span>Estados Vazios &amp; Guias de Primeiro Uso (Empty States)</span>
+</h2>
+<p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">
+              Padronização visual e comportamental para ausência de dados, início de ciclo ou filtros sem correspondência em toda a constelação Orbit.
+            </p>
+</div>
+<div class="flex items-center gap-space-12 shrink-0">
+<button class="h-10 px-space-16 rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-outline text-on-surface font-body-md text-sm font-medium flex items-center gap-2 active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined text-outline">file_download</span>
+<span>Exportar Diretrizes UI</span>
+</button>
+<button class="h-10 px-space-16 rounded-lg bg-primary-container text-on-primary-container font-headline-sm text-sm font-semibold flex items-center gap-2 hover:brightness-110 active:scale-[0.98] transition-all shadow-[0_0_20px_rgba(118,146,255,0.25)]">
+<span class="material-symbols-outlined text-lg">add_circle</span>
+<span>+ Simular Novo Módulo</span>
+</button>
+</div>
+</div>
+<!-- Interactive Module Tabs -->
+<div class="flex items-center gap-space-8 overflow-x-auto pb-1 scrollbar-none border-b border-outline-variant/20 text-body-sm font-body-sm">
+<button class="px-space-16 py-space-8 rounded-lg bg-surface-container-high border border-secondary/40 text-secondary-fixed font-medium flex items-center gap-2 whitespace-nowrap shadow-[0_0_12px_rgba(68,226,205,0.12)]">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Todos os Módulos</span>
+<span class="ml-1 px-1.5 py-0.2 rounded bg-surface-container-highest text-label-caps font-label-caps text-[10px] text-on-surface-variant">7</span>
+</button>
+<button class="px-space-16 py-space-8 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap flex items-center gap-2">
+<span class="material-symbols-outlined text-base text-outline">check_circle</span>
+<span>Tarefas</span>
+</button>
+<button class="px-space-16 py-space-8 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap flex items-center gap-2">
+<span class="material-symbols-outlined text-base text-outline">repeat</span>
+<span>Hábitos</span>
+</button>
+<button class="px-space-16 py-space-8 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap flex items-center gap-2">
+<span class="material-symbols-outlined text-base text-outline">account_balance_wallet</span>
+<span>Finanças</span>
+</button>
+<button class="px-space-16 py-space-8 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap flex items-center gap-2">
+<span class="material-symbols-outlined text-base text-outline">fitness_center</span>
+<span>Treinos</span>
+</button>
+<button class="px-space-16 py-space-8 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap flex items-center gap-2">
+<span class="material-symbols-outlined text-base text-outline">hub</span>
+<span>Integrações &amp; Logs</span>
+</button>
+<button class="px-space-16 py-space-8 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap flex items-center gap-2">
+<span class="material-symbols-outlined text-base text-outline">search_off</span>
+<span>Busca Sem Resultados</span>
+</button>
+</div>
+</section>
+<!-- ==================== 2. PRIMARY MODULE EMPTY STATES (Bento Showcase) ==================== -->
+<section class="space-y-space-16">
+<div class="flex items-center justify-between">
+<h3 class="text-headline-sm font-headline-sm font-semibold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-base">widgets</span>
+<span>Módulos Centrais — Estados de Inicialização e Vazio</span>
+</h3>
+<span class="text-label-caps font-label-caps text-on-surface-variant text-xs">Padrão Tonal Level 2 (#101D31)</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-24">
+<!-- CARD A: TAREFAS -->
+<div class="bg-surface-container-low border border-outline-variant/40 hover:border-primary/50 transition-all duration-200 rounded-xl p-space-24 flex flex-col justify-between relative overflow-hidden group">
+<!-- Background orbital ring motif -->
+<div class="absolute -right-16 -top-16 w-64 h-64 border border-outline-variant/20 rounded-full pointer-events-none group-hover:border-primary/20 transition-colors"></div>
+<div class="absolute -right-8 -top-8 w-48 h-48 border border-outline-variant/15 rounded-full pointer-events-none"></div>
+<div>
+<!-- Top Pill -->
+<div class="flex items-center justify-between mb-space-20">
+<span class="px-2.5 py-1 rounded-full bg-surface-container-high border border-outline-variant/40 text-on-surface-variant font-label-caps text-[11px] flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  Módulo: Tarefas Operacionais
+                </span>
+<span class="px-2 py-0.5 rounded font-label-caps text-[10px] bg-secondary/10 text-secondary border border-secondary/20">
+                  Status: 100% Limpo • Órbita Livre
+                </span>
+</div>
+<!-- Center Graphic -->
+<div class="my-space-24 flex flex-col items-center text-center">
+<div class="relative w-20 h-20 mb-space-16 flex items-center justify-center">
+<!-- Orbital pulse halos -->
+<div class="absolute inset-0 rounded-full border border-primary/30 animate-node-pulse"></div>
+<div class="w-14 h-14 rounded-full bg-surface-container-high border border-primary/50 flex items-center justify-center shadow-[0_0_20px_rgba(118,146,255,0.2)]">
+<span class="material-symbols-outlined text-primary text-2xl">check_circle</span>
+</div>
+<!-- Satellite pip -->
+<div class="absolute -top-1 right-2 w-3 h-3 rounded-full bg-secondary border-2 border-surface shadow-[0_0_8px_#44e2cd]"></div>
+</div>
+<h4 class="text-headline-md font-headline-md font-semibold text-on-surface mb-space-8">
+                  Seu backlog operacional está zerado
+                </h4>
+<p class="text-body-md font-body-md text-on-surface-variant max-w-md">
+                  Não há pendências com SLA ativo para hoje. Aproveite o foco profundo ou inicie um novo ciclo operacional inserindo tarefas ou importando do Jira/GitHub.
+                </p>
+</div>
+</div>
+<!-- Actions Container -->
+<div class="pt-space-20 border-t border-outline-variant/30 flex flex-col sm:flex-row items-center justify-between gap-space-12">
+<div class="flex items-center gap-space-8 w-full sm:w-auto">
+<button class="flex-1 sm:flex-initial h-10 px-space-16 rounded-lg bg-primary-container text-on-primary-container font-headline-sm text-xs font-semibold hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-base">add</span>
+<span>Criar Primeira Tarefa</span>
+</button>
+<button class="h-10 px-space-12 rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-outline text-on-surface text-xs font-body-md flex items-center justify-center gap-1.5 transition-colors" title="Gravar comando vocal">
+<span>🎙️</span>
+<span>Ditar via Áudio IA</span>
+</button>
+</div>
+<a class="text-label-caps font-label-caps text-xs text-primary hover:text-primary-fixed underline decoration-primary/40 flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-sm">sync_alt</span>
+<span>Importar do GitHub</span>
+</a>
+</div>
+</div>
+<!-- CARD B: HÁBITOS -->
+<div class="bg-surface-container-low border border-outline-variant/40 hover:border-secondary/50 transition-all duration-200 rounded-xl p-space-24 flex flex-col justify-between relative overflow-hidden group">
+<!-- Circadian node diagram representation in BG -->
+<div class="absolute right-4 top-4 opacity-20 pointer-events-none">
+<svg fill="none" height="120" viewbox="0 0 120 120" width="120">
+<circle cx="60" cy="60" r="50" stroke="#44e2cd" stroke-dasharray="4 4" stroke-width="1"></circle>
+<circle cx="60" cy="60" r="30" stroke="#7692ff" stroke-width="1"></circle>
+<circle cx="60" cy="10" fill="#44e2cd" r="4"></circle>
+<circle cx="110" cy="60" fill="#253653" r="3"></circle>
+<circle cx="60" cy="110" fill="#253653" r="3"></circle>
+<circle cx="10" cy="60" fill="#253653" r="3"></circle>
+</svg>
+</div>
+<div>
+<!-- Top Pill -->
+<div class="flex items-center justify-between mb-space-20">
+<span class="px-2.5 py-1 rounded-full bg-surface-container-high border border-outline-variant/40 text-on-surface-variant font-label-caps text-[11px] flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  Módulo: Hábitos &amp; Bio-Ritmo
+                </span>
+<span class="px-2 py-0.5 rounded font-label-caps text-[10px] bg-surface-container-high text-outline-variant border border-outline-variant/30">
+                  Heatmap: Inativo
+                </span>
+</div>
+<!-- Center Graphic -->
+<div class="my-space-24 flex flex-col items-center text-center">
+<div class="relative w-20 h-20 mb-space-16 flex items-center justify-center">
+<div class="w-16 h-16 rounded-full border border-secondary/30 flex items-center justify-center animate-node-pulse">
+<div class="w-12 h-12 rounded-full bg-surface-container-high border border-secondary/50 flex items-center justify-center shadow-[0_0_18px_rgba(68,226,205,0.2)]">
+<span class="material-symbols-outlined text-secondary text-2xl">repeat</span>
+</div>
+</div>
+<div class="absolute bottom-1 left-2 w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_8px_#7692ff]"></div>
+</div>
+<h4 class="text-headline-md font-headline-md font-semibold text-on-surface mb-space-8">
+                  Inicie seu primeiro Loop de Consistência
+                </h4>
+<p class="text-body-md font-body-md text-on-surface-variant max-w-md">
+                  Rotinas sólidas nascem de pequenas repetições diárias. Configure hábitos matinais, de foco ou noturnos e visualize seu mapa de calor se iluminar.
+                </p>
+</div>
+</div>
+<!-- Actions Container -->
+<div class="pt-space-20 border-t border-outline-variant/30 flex flex-col sm:flex-row items-center justify-between gap-space-12">
+<div class="flex items-center gap-space-8 w-full sm:w-auto">
+<button class="flex-1 sm:flex-initial h-10 px-space-16 rounded-lg bg-primary-container text-on-primary-container font-headline-sm text-xs font-semibold hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-base">play_arrow</span>
+<span>Ativar Primeiro Hábito</span>
+</button>
+<button class="h-10 px-space-12 rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-secondary text-on-surface text-xs font-body-md flex items-center justify-center gap-1.5 transition-colors">
+<span>✨</span>
+<span>Sugerir Rotina (IA)</span>
+</button>
+</div>
+<div class="flex items-center gap-1.5 text-label-caps font-label-caps text-[10px] text-on-surface-variant">
+<span>Packs: Hidratação • Leitura • Foco</span>
+</div>
+</div>
+</div>
+<!-- CARD C: FINANÇAS -->
+<div class="bg-surface-container-low border border-outline-variant/40 hover:border-primary/50 transition-all duration-200 rounded-xl p-space-24 flex flex-col justify-between relative overflow-hidden group">
+<!-- Translucent card background motif -->
+<div class="absolute -right-10 bottom-2 w-48 h-32 border border-outline-variant/20 rounded-xl rotate-12 pointer-events-none bg-surface-container/20"></div>
+<div>
+<!-- Top Pill -->
+<div class="flex items-center justify-between mb-space-20">
+<span class="px-2.5 py-1 rounded-full bg-surface-container-high border border-outline-variant/40 text-on-surface-variant font-label-caps text-[11px] flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  Módulo: Finanças Pessoais &amp; Ledger
+                </span>
+<span class="px-2 py-0.5 rounded font-label-caps text-[10px] bg-surface-container-high text-outline font-code-md">
+                  R$ 0,00 • Sem Lançamentos
+                </span>
+</div>
+<!-- Center Graphic -->
+<div class="my-space-24 flex flex-col items-center text-center">
+<div class="relative w-20 h-20 mb-space-16 flex items-center justify-center">
+<div class="w-16 h-16 rounded-2xl bg-surface-container-high border border-outline-variant/60 flex items-center justify-center rotate-3 shadow-[0_12px_24px_rgba(0,0,0,0.5)]">
+<span class="material-symbols-outlined text-primary text-2xl">account_balance_wallet</span>
+</div>
+<div class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-surface-container-highest border border-secondary flex items-center justify-center">
+<span class="text-[10px] text-secondary font-bold">$</span>
+</div>
+</div>
+<h4 class="text-headline-md font-headline-md font-semibold text-on-surface mb-space-8">
+                  Nenhuma transação financeira registrada neste período
+                </h4>
+<p class="text-body-md font-body-md text-on-surface-variant max-w-md">
+                  Seu ledger está sem lançamentos este mês. Conecte sua conta bancária via Open Finance, sincronize o bot do Telegram ou registre despesas manualmente.
+                </p>
+</div>
+</div>
+<!-- Actions Container -->
+<div class="pt-space-20 border-t border-outline-variant/30 flex flex-col sm:flex-row items-center justify-between gap-space-12">
+<div class="flex items-center gap-space-8 w-full sm:w-auto">
+<button class="flex-1 sm:flex-initial h-10 px-space-16 rounded-lg bg-primary-container text-on-primary-container font-headline-sm text-xs font-semibold hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-base">add</span>
+<span>Registrar Despesa Manual</span>
+</button>
+<button class="h-10 px-space-12 rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-outline text-on-surface text-xs font-body-md flex items-center justify-center gap-1.5 transition-colors">
+<span>🔗</span>
+<span>Vincular Telegram Bot</span>
+</button>
+</div>
+<a class="text-label-caps font-label-caps text-xs text-secondary hover:text-secondary-fixed flex items-center gap-1" href="#">
+<span>Open Finance (Nubank/Itaú)</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- CARD D: TREINOS -->
+<div class="bg-surface-container-low border border-outline-variant/40 hover:border-secondary/50 transition-all duration-200 rounded-xl p-space-24 flex flex-col justify-between relative overflow-hidden group">
+<!-- Concentric track backdrop -->
+<div class="absolute -left-12 -bottom-12 w-48 h-48 border border-outline-variant/20 rounded-full pointer-events-none"></div>
+<div>
+<!-- Top Pill -->
+<div class="flex items-center justify-between mb-space-20">
+<span class="px-2.5 py-1 rounded-full bg-surface-container-high border border-outline-variant/40 text-on-surface-variant font-label-caps text-[11px] flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  Módulo: Treinos &amp; Biomecânica
+                </span>
+<span class="px-2 py-0.5 rounded font-label-caps text-[10px] bg-primary/10 text-primary border border-primary/20">
+                  Ciclo Semanal: Não Configurado
+                </span>
+</div>
+<!-- Center Graphic -->
+<div class="my-space-24 flex flex-col items-center text-center">
+<div class="relative w-20 h-20 mb-space-16 flex items-center justify-center">
+<div class="w-16 h-16 rounded-full border border-outline-variant/40 flex items-center justify-center">
+<div class="w-12 h-12 rounded-full bg-surface-container-high border border-secondary/50 flex items-center justify-center shadow-[0_0_16px_rgba(68,226,205,0.2)]">
+<span class="material-symbols-outlined text-secondary text-2xl">fitness_center</span>
+</div>
+</div>
+<div class="absolute top-0 right-1 w-3 h-3 rounded-full bg-primary/80 border border-surface"></div>
+</div>
+<h4 class="text-headline-md font-headline-md font-semibold text-on-surface mb-space-8">
+                  Nenhuma rotina de treino programada
+                </h4>
+<p class="text-body-md font-body-md text-on-surface-variant max-w-md">
+                  Monte sua periodização semanal (Upper/Lower ou ABC), defina séries, cargas de trabalho e acesse o cronômetro tátil no modo mobile durante a execução.
+                </p>
+</div>
+</div>
+<!-- Actions Container -->
+<div class="pt-space-20 border-t border-outline-variant/30 flex flex-col sm:flex-row items-center justify-between gap-space-12">
+<div class="flex items-center gap-space-8 w-full sm:w-auto">
+<button class="flex-1 sm:flex-initial h-10 px-space-16 rounded-lg bg-primary-container text-on-primary-container font-headline-sm text-xs font-semibold hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-base">add</span>
+<span>Montar Primeira Rotina</span>
+</button>
+<button class="h-10 px-space-12 rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-outline text-on-surface text-xs font-body-md flex items-center justify-center gap-1.5 transition-colors">
+<span>🏋️</span>
+<span>Importar Treino PPL</span>
+</button>
+</div>
+<a class="text-label-caps font-label-caps text-xs text-primary hover:text-primary-fixed flex items-center gap-1" href="#">
+<span>Ativar Sugestão por IA</span>
+<span class="material-symbols-outlined text-xs">auto_awesome</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- ==================== 3. CASOS ESPECIAIS & VARIAÇÕES OPERACIONAIS ==================== -->
+<section class="space-y-space-16">
+<div class="flex items-center justify-between">
+<h3 class="text-headline-sm font-headline-sm font-semibold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-base">radar</span>
+<span>Variações Operacionais &amp; Estados de Filtro / Falha Suave</span>
+</h3>
+<span class="text-label-caps font-label-caps text-on-surface-variant text-xs">Micro-Estados de Interface</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-20">
+<!-- Variação 1: Busca Sem Resultados -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded-xl p-space-20 flex flex-col justify-between hover:border-outline-variant/60 transition-colors">
+<div>
+<div class="flex items-center justify-between mb-space-16">
+<span class="text-label-caps font-label-caps text-[10px] text-on-surface-variant">Filtro Contextual</span>
+<span class="px-2 py-0.5 rounded font-label-caps text-[10px] bg-surface-container-highest text-outline">0 Resultados</span>
+</div>
+<!-- Radar animation placeholder -->
+<div class="flex flex-col items-center text-center my-space-12">
+<div class="w-14 h-14 rounded-full border border-dashed border-outline-variant/60 flex items-center justify-center mb-space-12 relative">
+<div class="absolute inset-0 rounded-full border border-primary/20 animate-radar-sweep origin-center"></div>
+<span class="material-symbols-outlined text-outline">search_off</span>
+</div>
+<h5 class="text-headline-sm font-headline-sm text-sm font-semibold text-on-surface mb-1">
+                  Nenhum item para "bitcoin 2023"
+                </h5>
+<p class="text-body-sm font-body-sm text-on-surface-variant">
+                  Não encontramos transações, notas ou tarefas associadas a estes termos nesta pasta.
+                </p>
+</div>
+</div>
+<div class="pt-space-16 border-t border-outline-variant/20 flex items-center justify-center">
+<button class="w-full h-8 px-space-12 rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-primary text-xs font-body-sm text-on-surface flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-sm">clear_all</span>
+<span>Limpar Filtros de Busca</span>
+</button>
+</div>
+</div>
+<!-- Variação 2: Telegram Webhook / Log Vazio -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded-xl p-space-20 flex flex-col justify-between hover:border-outline-variant/60 transition-colors">
+<div>
+<div class="flex items-center justify-between mb-space-16">
+<span class="text-label-caps font-label-caps text-[10px] text-secondary">Pipeline Telegram Bot</span>
+<span class="px-2 py-0.5 rounded font-label-caps text-[10px] bg-secondary/10 text-secondary">Webhook Ativo</span>
+</div>
+<div class="flex flex-col items-center text-center my-space-12">
+<div class="w-14 h-14 rounded-full bg-surface-container-high border border-secondary/30 flex items-center justify-center mb-space-12">
+<span class="material-symbols-outlined text-secondary">mic_none</span>
+</div>
+<h5 class="text-headline-sm font-headline-sm text-sm font-semibold text-on-surface mb-1">
+                  Sem áudios recebidos em 24h
+                </h5>
+<p class="text-body-sm font-body-sm text-on-surface-variant">
+                  O bot @OrbitOpsMasterBot está ouvindo, mas não recebeu mensagens para transcrição hoje.
+                </p>
+</div>
+</div>
+<div class="pt-space-16 border-t border-outline-variant/20 flex items-center justify-center">
+<button class="w-full h-8 px-space-12 rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-secondary text-xs font-body-sm text-secondary flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-sm">send</span>
+<span>Enviar Áudio de Teste</span>
+</button>
+</div>
+</div>
+<!-- Variação 3: Offline Vault / Conexão -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded-xl p-space-20 flex flex-col justify-between hover:border-outline-variant/60 transition-colors">
+<div>
+<div class="flex items-center justify-between mb-space-16">
+<span class="text-label-caps font-label-caps text-[10px] text-[#FBBF24]">Sincronização Nuvem</span>
+<span class="px-2 py-0.5 rounded font-label-caps text-[10px] bg-[#FBBF24]/10 text-[#FBBF24] border border-[#FBBF24]/20">Modo Local</span>
+</div>
+<div class="flex flex-col items-center text-center my-space-12">
+<div class="w-14 h-14 rounded-full bg-[#FBBF24]/10 border border-[#FBBF24]/30 flex items-center justify-center mb-space-12">
+<span class="material-symbols-outlined text-[#FBBF24]">cloud_off</span>
+</div>
+<h5 class="text-headline-sm font-headline-sm text-sm font-semibold text-on-surface mb-1">
+                  Vault Operando em Cache Local
+                </h5>
+<p class="text-body-sm font-body-sm text-on-surface-variant">
+                  Os dados estão salvos em IndexedDB. Conectividade com o cluster Orbit será retomada automaticamente.
+                </p>
+</div>
+</div>
+<div class="pt-space-16 border-t border-outline-variant/20 flex items-center justify-center">
+<button class="w-full h-8 px-space-12 rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-[#FBBF24] text-xs font-body-sm text-on-surface flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-sm">refresh</span>
+<span>Tentar Reconexão</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- ==================== 4. ANATOMIA DO EMPTY STATE & DIRETRIZES UI ==================== -->
+<section class="bg-surface-container-low border border-outline-variant/40 rounded-xl p-space-24 space-y-space-20">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-12 border-b border-outline-variant/30 pb-space-16">
+<div>
+<h3 class="text-headline-md font-headline-md font-semibold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">architecture</span>
+<span>Anatomia Padrão do Componente Empty State</span>
+</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">
+              Diretrizes formais de UX/UI para desenhar novos fluxos de boas-vindas e estados zerados.
+            </p>
+</div>
+<span class="px-space-12 py-1 rounded-full bg-surface-container-high border border-outline-variant/40 text-on-surface font-code-md text-xs">
+            Component: &lt;OrbitEmptyCard /&gt;
+          </span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-5 gap-space-16">
+<!-- Step 1 -->
+<div class="p-space-16 rounded-lg bg-surface-container/50 border border-outline-variant/20 space-y-2">
+<div class="flex items-center justify-between">
+<span class="font-code-md text-label-caps text-secondary font-semibold">01</span>
+<span class="material-symbols-outlined text-primary text-base">radio_button_checked</span>
+</div>
+<h5 class="text-headline-sm font-headline-sm text-xs font-semibold text-on-surface">Pictograma Orbital</h5>
+<p class="text-body-sm font-body-sm text-[12px] text-on-surface-variant leading-snug">
+              Dimensões 48-64px, container concêntrico com aura difusa (#7692FF / #44E2CD) sem ruído 3D excessivo.
+            </p>
+</div>
+<!-- Step 2 -->
+<div class="p-space-16 rounded-lg bg-surface-container/50 border border-outline-variant/20 space-y-2">
+<div class="flex items-center justify-between">
+<span class="font-code-md text-label-caps text-secondary font-semibold">02</span>
+<span class="material-symbols-outlined text-primary text-base">title</span>
+</div>
+<h5 class="text-headline-sm font-headline-sm text-xs font-semibold text-on-surface">Título Direto &amp; Neutro</h5>
+<p class="text-body-sm font-body-sm text-[12px] text-on-surface-variant leading-snug">
+              Nunca culpar o operador. Afirmar clareza sobre o estado do sistema ("Backlog zerado" vs "Você não tem nada").
+            </p>
+</div>
+<!-- Step 3 -->
+<div class="p-space-16 rounded-lg bg-surface-container/50 border border-outline-variant/20 space-y-2">
+<div class="flex items-center justify-between">
+<span class="font-code-md text-label-caps text-secondary font-semibold">03</span>
+<span class="material-symbols-outlined text-primary text-base">description</span>
+</div>
+<h5 class="text-headline-sm font-headline-sm text-xs font-semibold text-on-surface">Orientação à Ação</h5>
+<p class="text-body-sm font-body-sm text-[12px] text-on-surface-variant leading-snug">
+              Explicação concisa (2 a 3 linhas) instruindo os métodos disponíveis para iniciar a telemetria do módulo.
+            </p>
+</div>
+<!-- Step 4 -->
+<div class="p-space-16 rounded-lg bg-surface-container/50 border border-outline-variant/20 space-y-2">
+<div class="flex items-center justify-between">
+<span class="font-code-md text-label-caps text-secondary font-semibold">04</span>
+<span class="material-symbols-outlined text-primary text-base">touch_app</span>
+</div>
+<h5 class="text-headline-sm font-headline-sm text-xs font-semibold text-on-surface">CTA Duplo (Manual/IA)</h5>
+<p class="text-body-sm font-body-sm text-[12px] text-on-surface-variant leading-snug">
+              Sempre oferecer caminho tradicional primário e assistência cognitiva secundária (áudio, templates, automação).
+            </p>
+</div>
+<!-- Step 5 -->
+<div class="p-space-16 rounded-lg bg-surface-container/50 border border-outline-variant/20 space-y-2">
+<div class="flex items-center justify-between">
+<span class="font-code-md text-label-caps text-secondary font-semibold">05</span>
+<span class="material-symbols-outlined text-primary text-base">cable</span>
+</div>
+<h5 class="text-headline-sm font-headline-sm text-xs font-semibold text-on-surface">Atalhos Externos</h5>
+<p class="text-body-sm font-body-sm text-[12px] text-on-surface-variant leading-snug">
+              Links rápidos para conectores (GitHub, Open Finance, Telegram bot) reduzindo o atrito de digitação manual.
+            </p>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Telemetry Status Bar -->
+<footer class="h-10 px-space-24 bg-surface-container-low border-t border-outline-variant/30 flex items-center justify-between text-label-caps font-label-caps text-[11px] text-on-surface-variant select-none">
+<div class="flex items-center gap-space-16">
+<span class="flex items-center gap-1.5 text-secondary">
+<span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
+          Cluster Orbit Online
+        </span>
+<span class="text-outline-variant">•</span>
+<span>Latência UI: 14ms</span>
+<span class="text-outline-variant">•</span>
+<span>5/5 Módulos em Conformidade</span>
+</div>
+<div class="flex items-center gap-space-12 font-code-md">
+<span>Encoding: UTF-8</span>
+<span>Design Token: Level 2 Dark</span>
+</div>
+</footer>
+</div>
+</body></html>

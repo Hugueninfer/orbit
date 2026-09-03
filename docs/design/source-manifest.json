@@ -1,0 +1,207 @@
+{
+  "algorithm": "SHA-256",
+  "source": "/home/huguenin/Downloads/stitch_orbit_personal_operations_hub-20260903T195803Z-1-001/stitch_orbit_personal_operations_hub",
+  "file_count": 40,
+  "files": [
+    {
+      "path": "references/stitch_original/especifica_o_orbit_operations_hub.md",
+      "bytes": 2731,
+      "sha256": "1ba0a58c2e85e4987154d5465800d29bcc084ee63f15fa9fbc538c538e760c76"
+    },
+    {
+      "path": "references/stitch_original/orbit_cat_logo_de_estados_vazios_empty_states/code.html",
+      "bytes": 44267,
+      "sha256": "eb7913b97c7596d2b9c901d1c6c9ba3c2a4db619ee9f4798b8207136e2ec6658"
+    },
+    {
+      "path": "references/stitch_original/orbit_cat_logo_de_estados_vazios_empty_states/screen.png",
+      "bytes": 530864,
+      "sha256": "9bdf3fafc7a099d4d4f8671b0a70b4b0ef830f5b3eb70d0b7ce3c6e1b799beae"
+    },
+    {
+      "path": "references/stitch_original/orbit_configura_es_perfil/code.html",
+      "bytes": 48192,
+      "sha256": "f4bc10eec4bc63552288a05667d51efb6db691089ad6b8d03e368c4d9896091a"
+    },
+    {
+      "path": "references/stitch_original/orbit_configura_es_perfil/screen.png",
+      "bytes": 334422,
+      "sha256": "c796ae97b42fbebf4b39fef394b910d4d8bc74e2ccca58cd59952dccb1e657df"
+    },
+    {
+      "path": "references/stitch_original/orbit_dashboard_vis_o_geral/code.html",
+      "bytes": 46349,
+      "sha256": "fa41e78a610966920e9b61a80111c210fb50fd7ef93931840f0100fb29f087d6"
+    },
+    {
+      "path": "references/stitch_original/orbit_dashboard_vis_o_geral/screen.png",
+      "bytes": 523123,
+      "sha256": "6803daecfd6c26feaa4ecbb75098a5d766b4a9fc498a4b2e423f9f2dbe48c28c"
+    },
+    {
+      "path": "references/stitch_original/orbit_dashboard_vis_o_geral_mobile/code.html",
+      "bytes": 35364,
+      "sha256": "e1bdd9c221db830db9b9a0b251f17dd92cef94de2d36cef017ab104b6dc7f86a"
+    },
+    {
+      "path": "references/stitch_original/orbit_dashboard_vis_o_geral_mobile/screen.png",
+      "bytes": 182254,
+      "sha256": "b18acd99c27900c3c5a46fa23efd62f3925eb22e0a6ee311707dd634d1757c6e"
+    },
+    {
+      "path": "references/stitch_original/orbit_estados_de_erro_404_recupera_o_de_falhas/code.html",
+      "bytes": 35696,
+      "sha256": "bed00a6a793ecfb03d930f33d5f5bc23e6a04d48bf83155ed6c6c8e7b1c8e610"
+    },
+    {
+      "path": "references/stitch_original/orbit_estados_de_erro_404_recupera_o_de_falhas/screen.png",
+      "bytes": 596605,
+      "sha256": "54c1b25a408b7385812490863c98b4f1f4bddecd62c86ec395dfd968959db219"
+    },
+    {
+      "path": "references/stitch_original/orbit_finan_as_transa_es/code.html",
+      "bytes": 61465,
+      "sha256": "311e564840bceafa9308182d11f5299582d367b202698a27806bfe538ad15a05"
+    },
+    {
+      "path": "references/stitch_original/orbit_finan_as_transa_es/screen.png",
+      "bytes": 493711,
+      "sha256": "cbb9785e858b4b9d518413ab836a6615d078bea36bf936f5c5f8bc0ba60eb695"
+    },
+    {
+      "path": "references/stitch_original/orbit_finan_as_transa_es_mobile/code.html",
+      "bytes": 35913,
+      "sha256": "70b4af19d6718d0eff4e00a36e782c79735825bd384047f873230ffaa793b99c"
+    },
+    {
+      "path": "references/stitch_original/orbit_finan_as_transa_es_mobile/screen.png",
+      "bytes": 218442,
+      "sha256": "c87757ea43744bf8086bbfda9993b84ff0c0723a0c2f1e18c5084d563c648a31"
+    },
+    {
+      "path": "references/stitch_original/orbit_h_bitos_consist_ncia/code.html",
+      "bytes": 56505,
+      "sha256": "d131774c2739e383cacca8ac9f0ab9f78e2f3190a01c5e0f2e425614aa720386"
+    },
+    {
+      "path": "references/stitch_original/orbit_h_bitos_consist_ncia/screen.png",
+      "bytes": 391242,
+      "sha256": "3602791c02bb401057c57dee203f9d14880edab3690fece25c1c81e71edd6831"
+    },
+    {
+      "path": "references/stitch_original/orbit_h_bitos_consist_ncia_mobile/code.html",
+      "bytes": 39956,
+      "sha256": "f48dcb814ff962d711800e39d8cd46f9db185d23a0578f9f1a77387b9229f8a2"
+    },
+    {
+      "path": "references/stitch_original/orbit_h_bitos_consist_ncia_mobile/screen.png",
+      "bytes": 188451,
+      "sha256": "8a0138359a51a84cb49ec06252b855467526303a0a3e778b6d3a39f211753540"
+    },
+    {
+      "path": "references/stitch_original/orbit_integra_o_telegram_udio_finan_as/code.html",
+      "bytes": 53244,
+      "sha256": "3ea6ee97c4e2b4c13012e1205b93661d81581c1865bb07075a36d09ade1bdb36"
+    },
+    {
+      "path": "references/stitch_original/orbit_integra_o_telegram_udio_finan_as/screen.png",
+      "bytes": 448252,
+      "sha256": "80cf80a6193c2b92aaf6853f0b03d954779252aa81fcd3ec6bc3f972850c926a"
+    },
+    {
+      "path": "references/stitch_original/orbit_login_split_panel/code.html",
+      "bytes": 19574,
+      "sha256": "1762c0d6c086963d9c1225a72f70f0b30f28c2cfad2b17935cfbe7f20e283951"
+    },
+    {
+      "path": "references/stitch_original/orbit_login_split_panel/screen.png",
+      "bytes": 226185,
+      "sha256": "a41e3560e7585dfa28cb901742c10bc22b790a57ec500c9a88668b89553db018"
+    },
+    {
+      "path": "references/stitch_original/orbit_nova_tarefa_drawer_mobile/code.html",
+      "bytes": 23433,
+      "sha256": "d7bec012138e9c1f4b25c2c91f24ba83f493a507395d5f48ca73d5673b3bf651"
+    },
+    {
+      "path": "references/stitch_original/orbit_nova_tarefa_drawer_mobile/screen.png",
+      "bytes": 467516,
+      "sha256": "e078c9e4182538cb27aacc0b36b33ad5cc7af98c51e18af9d80debf46908f8a8"
+    },
+    {
+      "path": "references/stitch_original/orbit_nova_transa_o_drawer_mobile/code.html",
+      "bytes": 26516,
+      "sha256": "5600de32917316e6942e483ea241b30e7877a7dd2c696ceb071685e0ec1bf598"
+    },
+    {
+      "path": "references/stitch_original/orbit_nova_transa_o_drawer_mobile/screen.png",
+      "bytes": 300946,
+      "sha256": "88e53ffe3294c83468f82f93c798f1afd0ee1c79b6f25fffc90460fe0af4abf3"
+    },
+    {
+      "path": "references/stitch_original/orbit_novo_h_bito_drawer_mobile/code.html",
+      "bytes": 30200,
+      "sha256": "b364dc046c4f6d1ba5886340a512864e36377e865841251c436c435965be4cb5"
+    },
+    {
+      "path": "references/stitch_original/orbit_novo_h_bito_drawer_mobile/screen.png",
+      "bytes": 311986,
+      "sha256": "15c24bbfa2025c74c5c0b6b80b24b21a64b97141a828fe79658968c61cd1d965"
+    },
+    {
+      "path": "references/stitch_original/orbit_novo_treino_drawer_mobile/code.html",
+      "bytes": 25264,
+      "sha256": "f0c0caa807875a0f544c712064491ae0a49edc55c0de1888f00648e9beaacd46"
+    },
+    {
+      "path": "references/stitch_original/orbit_novo_treino_drawer_mobile/screen.png",
+      "bytes": 298939,
+      "sha256": "aeec1f81b15f8eac2389ad8b4b0bbd804a73659cbad4d983e5ac1d11a91d7bb3"
+    },
+    {
+      "path": "references/stitch_original/orbit_tarefas_backlog_mobile/code.html",
+      "bytes": 28983,
+      "sha256": "f797fe90264fafa82929832b7c6fd2026afe120282966c64f1c339243833418d"
+    },
+    {
+      "path": "references/stitch_original/orbit_tarefas_backlog_mobile/screen.png",
+      "bytes": 157174,
+      "sha256": "e6a567eacc4ea174673f245099046c6df8e8f721ae21b63f863c6678849e80d8"
+    },
+    {
+      "path": "references/stitch_original/orbit_tarefas_drawer/code.html",
+      "bytes": 56236,
+      "sha256": "232316e06cbc00c70235cc67a968ec44edfa2fccc244226ea1a1bee689332228"
+    },
+    {
+      "path": "references/stitch_original/orbit_tarefas_drawer/screen.png",
+      "bytes": 551268,
+      "sha256": "3bc11ef85b07244535b39eb15b8b2d1833ff103347b7239d7b11f3adc55245da"
+    },
+    {
+      "path": "references/stitch_original/orbit_treino_em_andamento_mobile/code.html",
+      "bytes": 26310,
+      "sha256": "2a6b29875036377e1cf4093ed817a647a8a3ed05435efd8fdd97374d8982bd35"
+    },
+    {
+      "path": "references/stitch_original/orbit_treino_em_andamento_mobile/screen.png",
+      "bytes": 211860,
+      "sha256": "2cce725a75fcfbb707580d50a08226c4dc3ff0324f185e7f0711cc75ff875a9e"
+    },
+    {
+      "path": "references/stitch_original/orbit_treinos_rotinas/code.html",
+      "bytes": 43757,
+      "sha256": "d5895de5d001329d7a9d4903e96364d66442d7abff16b3c9466abf01cc403d32"
+    },
+    {
+      "path": "references/stitch_original/orbit_treinos_rotinas/screen.png",
+      "bytes": 575958,
+      "sha256": "0231273383388a42270e693811da497f968bab050fe2a091945b856fb21a1954"
+    },
+    {
+      "path": "references/stitch_original/orbital_ops/DESIGN.md",
+      "bytes": 12324,
+      "sha256": "d20497a9cc678a5a9e6668bb0724060a853dd327999bb49bae6f0f545a1b7e72"
+    }
+  ]
+}

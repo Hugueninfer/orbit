@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Orbit — Módulo de Treinos &amp; Rotinas</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary": "#b8c4ff",
+            "on-surface": "#d9e3f7",
+            "surface-variant": "#2c3545",
+            "primary-fixed-dim": "#b7c4ff",
+            "error-container": "#93000a",
+            "surface-container-high": "#212a39",
+            "on-primary": "#002682",
+            "surface-container": "#16202f",
+            "secondary-container": "#03c6b2",
+            "surface-dim": "#0a1422",
+            "surface-bright": "#303a49",
+            "secondary-fixed": "#62fae3",
+            "secondary": "#44e2cd",
+            "primary": "#b7c4ff",
+            "on-secondary-fixed-variant": "#005047",
+            "surface-container-low": "#121c2a",
+            "outline": "#8e909e",
+            "inverse-surface": "#d9e3f7",
+            "surface": "#0a1422",
+            "on-secondary": "#003731",
+            "on-primary-fixed": "#001552",
+            "inverse-primary": "#3856bf",
+            "on-tertiary-container": "#002588",
+            "on-secondary-fixed": "#00201c",
+            "background": "#0a1422",
+            "on-tertiary-fixed": "#001354",
+            "on-surface-variant": "#c4c5d5",
+            "surface-container-lowest": "#050e1c",
+            "tertiary-fixed": "#dde1ff",
+            "on-primary-fixed-variant": "#193ca7",
+            "surface-container-highest": "#2c3545",
+            "secondary-fixed-dim": "#3cddc7",
+            "tertiary-fixed-dim": "#b8c4ff",
+            "outline-variant": "#444653",
+            "primary-container": "#7692ff",
+            "on-error": "#690005",
+            "error": "#ffb4ab",
+            "tertiary-container": "#7992ff",
+            "primary-fixed": "#dde1ff",
+            "surface-tint": "#b7c4ff",
+            "on-tertiary-fixed-variant": "#0136bb",
+            "on-secondary-container": "#004d44",
+            "inverse-on-surface": "#273140",
+            "on-background": "#d9e3f7",
+            "on-error-container": "#ffdad6",
+            "on-tertiary": "#002486",
+            "on-primary-container": "#002683"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin-mobile": "1rem",
+            "gutter-desktop": "1.5rem",
+            "space-64": "4rem",
+            "space-2": "0.125rem",
+            "space-32": "2rem",
+            "space-48": "3rem",
+            "space-12": "0.75rem",
+            "space-4": "0.25rem",
+            "space-40": "2.5rem",
+            "margin-desktop": "2rem",
+            "space-20": "1.25rem",
+            "space-16": "1rem",
+            "space-24": "1.5rem",
+            "gutter-mobile": "1rem",
+            "margin-tablet": "1.5rem",
+            "space-8": "0.5rem"
+          },
+          "fontFamily": {
+            "label-caps": ["JetBrains Mono"],
+            "headline-md": ["Geist"],
+            "body-md": ["Geist"],
+            "headline-xl-mobile": ["Geist"],
+            "display-lg": ["Geist"],
+            "body-sm": ["Geist"],
+            "code-md": ["JetBrains Mono"],
+            "display-lg-mobile": ["Geist"],
+            "label-regular": ["Geist"],
+            "headline-sm": ["Geist"],
+            "headline-xl": ["Geist"],
+            "body-lg": ["Geist"]
+          },
+          "fontSize": {
+            "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "500" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "500" }],
+            "body-md": ["14px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-xl-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.025em", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "letterSpacing": "0.005em", "fontWeight": "400" }],
+            "code-md": ["13px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "display-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "label-regular": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-xl": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "26px", "letterSpacing": "0em", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .orbital-glow {
+      box-shadow: 0 0 24px 2px rgba(118, 146, 255, 0.14);
+    }
+    .teal-glow {
+      box-shadow: 0 0 16px 1px rgba(68, 226, 205, 0.2);
+    }
+    .orbital-ring {
+      background-image: radial-gradient(circle at 50% 50%, rgba(118, 146, 255, 0.05) 0%, transparent 70%);
+    }
+  </style>
+</head>
+<body class="bg-[#07111F] text-on-surface font-body-md text-body-md antialiased min-h-screen selection:bg-primary-container selection:text-on-primary-container">
+<!-- ================================================================= -->
+<!-- SHARED COMPONENT: SideNavBar (Strict Source of Truth)              -->
+<!-- ================================================================= -->
+<aside class="fixed top-0 left-0 h-screen w-64 z-40 bg-surface-container-low dark:bg-surface-container-low border-r border-outline-variant/30 flex flex-col justify-between p-space-16 select-none">
+<!-- Top Brand & Hub Identifier -->
+<div class="space-y-space-24">
+<div class="flex items-center gap-space-12 px-space-8 py-space-4">
+<div class="w-9 h-9 rounded-xl bg-surface-container-highest flex items-center justify-center relative orbital-ring border border-outline-variant/40">
+<span class="w-3.5 h-3.5 rounded-full border-2 border-secondary bg-surface-container-low flex items-center justify-center">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</span>
+<span class="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+</div>
+<div>
+<div class="text-headline-md font-headline-md font-semibold text-on-surface dark:text-on-surface tracking-tight leading-none">Orbit</div>
+<div class="text-label-caps font-label-caps text-on-surface-variant/70 mt-1">Personal Operations Hub</div>
+</div>
+</div>
+<!-- Quick Action CTA from JSON -->
+<button class="w-full flex items-center justify-center gap-space-8 py-2 px-space-12 rounded-lg bg-surface-container text-primary border border-outline-variant/40 hover:bg-surface-container-high dark:hover:bg-surface-container-high hover:text-on-surface transition-colors duration-150 active:scale-[0.98]">
+<span class="text-label-caps font-label-caps font-medium">+ Adicionar</span>
+</button>
+<!-- Primary Navigation Cluster -->
+<nav class="space-y-1">
+<!-- 1. Visão geral -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant dark:text-on-surface-variant font-normal hover:bg-surface-container dark:hover:bg-surface-container hover:text-on-surface transition-colors duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+<span class="font-body-md text-body-md">Visão geral</span>
+</a>
+<!-- 2. Tarefas -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant dark:text-on-surface-variant font-normal hover:bg-surface-container dark:hover:bg-surface-container hover:text-on-surface transition-colors duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="font-body-md text-body-md">Tarefas</span>
+</a>
+<!-- 3. Hábitos -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant dark:text-on-surface-variant font-normal hover:bg-surface-container dark:hover:bg-surface-container hover:text-on-surface transition-colors duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="repeat">repeat</span>
+<span class="font-body-md text-body-md">Hábitos</span>
+</a>
+<!-- 4. Finanças -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant dark:text-on-surface-variant font-normal hover:bg-surface-container dark:hover:bg-surface-container hover:text-on-surface transition-colors duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="font-body-md text-body-md">Finanças</span>
+</a>
+<!-- 5. Treinos (ACTIVE ITEM) -->
+<a class="flex items-center justify-between px-space-12 py-space-8 rounded-lg bg-surface-container-high dark:bg-surface-container-high text-secondary-fixed dark:text-secondary-fixed font-medium border-l-2 border-secondary teal-glow" href="#">
+<div class="flex items-center gap-space-12">
+<span class="material-symbols-outlined text-[20px] text-secondary" data-icon="fitness_center">fitness_center</span>
+<span class="font-body-md text-body-md font-medium text-on-surface">Treinos</span>
+</div>
+<span class="text-label-caps font-label-caps text-[10px] px-1.5 py-0.5 rounded bg-secondary/15 text-secondary border border-secondary/30">Push A</span>
+</a>
+</nav>
+</div>
+<!-- Footer Cluster from JSON -->
+<div class="space-y-1 pt-space-16 border-t border-outline-variant/30">
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant dark:text-on-surface-variant font-normal hover:bg-surface-container dark:hover:bg-surface-container transition-colors duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="hub">hub</span>
+<span class="font-body-md text-body-md">Integrações</span>
+</a>
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant dark:text-on-surface-variant font-normal hover:bg-surface-container dark:hover:bg-surface-container transition-colors duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+<span class="font-body-md text-body-md">Configurações</span>
+</a>
+<div class="flex items-center justify-between px-space-12 py-space-8 rounded-lg text-on-surface hover:bg-surface-container dark:hover:bg-surface-container transition-colors duration-150 cursor-pointer">
+<div class="flex items-center gap-space-12">
+<div class="w-7 h-7 rounded-full bg-surface-container-highest border border-secondary/50 flex items-center justify-center text-secondary font-label-caps text-xs font-semibold">
+            PM
+          </div>
+<span class="font-body-md text-body-md text-on-surface truncate">Pedro Martins</span>
+</div>
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+</div>
+</div>
+</aside>
+<!-- ================================================================= -->
+<!-- MAIN WORKSPACE VIEWPORT                                           -->
+<!-- ================================================================= -->
+<div class="pl-64 flex flex-col min-h-screen">
+<!-- ================================================================= -->
+<!-- SHARED COMPONENT: TopNavBar                                       -->
+<!-- ================================================================= -->
+<header class="sticky top-0 w-full z-30 bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 flex justify-between items-center h-16 px-space-24">
+<div class="flex items-center gap-space-16">
+<div>
+<h1 class="font-headline-md text-headline-md font-semibold text-on-surface tracking-tight">Treinos &amp; Rotinas</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant/80">Quinta-feira, 24 de Outubro</p>
+</div>
+</div>
+<!-- Trailing Elements -->
+<div class="flex items-center gap-space-16">
+<!-- Search Input with KBD Hotkey -->
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-[18px]" data-icon="search">search</span>
+<input class="bg-[#0B1728] text-on-surface placeholder:text-outline/70 border border-outline-variant/40 rounded-lg pl-9 pr-14 py-1.5 font-body-sm text-body-sm w-72 focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all" placeholder="Buscar rotinas, exercícios..." type="text"/>
+<span class="absolute right-2.5 font-label-caps text-label-caps px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant/80 border border-outline-variant/30">⌘K</span>
+</div>
+<!-- Notifications Action -->
+<button class="w-9 h-9 rounded-lg border border-outline-variant/30 flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors relative active:scale-[0.98]">
+<span class="material-symbols-outlined text-[20px]" data-icon="notifications">notifications</span>
+<span class="w-2 h-2 bg-primary rounded-full absolute top-2 right-2 ring-2 ring-[#07111F]"></span>
+</button>
+<div class="h-5 w-px bg-outline-variant/30"></div>
+<!-- Trailing Contextual Actions -->
+<button class="flex items-center gap-1.5 px-space-12 py-2 rounded-lg bg-surface-container-high border border-outline-variant/40 text-on-surface hover:border-primary/50 text-body-sm font-label-regular transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+<span>Nova Rotina</span>
+</button>
+<button class="flex items-center gap-2 px-space-16 py-2 rounded-lg bg-primary-container text-[#07111F] font-semibold text-body-sm hover:brightness-110 active:scale-[0.98] transition-all shadow-[0_0_16px_rgba(118,146,255,0.35)]">
+<span class="material-symbols-outlined text-[18px]" data-icon="play_arrow" data-weight="fill">play_arrow</span>
+<span>Iniciar Treino</span>
+</button>
+</div>
+</header>
+<!-- ================================================================= -->
+<!-- CONTENT CANVAS                                                    -->
+<!-- ================================================================= -->
+<main class="p-space-24 space-y-space-24 max-w-[1600px] w-full">
+<!-- SECTION 1: Próximo Treino Recomendado (Status Banner & Telemetry Hub) -->
+<section class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#101D31] to-[#0B1728] border border-outline-variant/40 p-space-24 orbital-glow">
+<!-- Subtle Orbital Arc Graphic Background -->
+<div class="absolute -right-20 -top-32 w-96 h-96 rounded-full border border-primary/10 pointer-events-none"></div>
+<div class="absolute -right-10 -top-20 w-80 h-80 rounded-full border border-secondary/15 pointer-events-none"></div>
+<div class="absolute right-32 top-10 w-2 h-2 rounded-full bg-secondary shadow-[0_0_12px_#44e2cd]"></div>
+<div class="relative z-10 grid grid-cols-12 gap-space-24 items-center">
+<!-- Main Prompt Action Details -->
+<div class="col-span-7 space-y-space-16 border-r border-outline-variant/30 pr-space-24">
+<div class="flex items-center gap-space-12">
+<span class="px-space-8 py-0.5 rounded-full text-label-caps font-label-caps bg-secondary/15 text-secondary border border-secondary/30 flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-ping"></span>
+                Recomendado para Hoje
+              </span>
+<span class="text-label-caps font-label-caps text-on-surface-variant/70 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="history">history</span>
+                Último registro há 3 dias
+              </span>
+</div>
+<div>
+<h2 class="font-headline-xl text-headline-xl text-on-surface tracking-tight font-semibold">
+                Push Day A — Hipertrofia &amp; Força
+              </h2>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">
+                Foco em peitoral superior, feixe anterior de ombros e cabeça lateral do tríceps com progressão de carga.
+              </p>
+</div>
+<!-- Parameters Cluster -->
+<div class="flex items-center gap-space-24 text-body-sm font-label-regular text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]" data-icon="schedule">schedule</span>
+<span class="text-on-surface font-medium">65 min</span>
+<span class="text-outline">estimados</span>
+</div>
+<div class="w-1 h-1 rounded-full bg-outline-variant"></div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]" data-icon="format_list_bulleted">format_list_bulleted</span>
+<span class="text-on-surface font-medium">6</span>
+<span class="text-outline">exercícios programados</span>
+</div>
+<div class="w-1 h-1 rounded-full bg-outline-variant"></div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[18px]" data-icon="target">target</span>
+<span class="text-on-surface font-medium">18</span>
+<span class="text-outline">séries totais</span>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center gap-space-12 pt-2">
+<button class="flex items-center gap-2 px-space-20 py-2.5 rounded-xl bg-primary-container text-[#07111F] font-semibold text-body-md hover:bg-[#5575F6] transition-all duration-150 active:scale-[0.98] shadow-[0_0_20px_rgba(118,146,255,0.35)]">
+<span class="material-symbols-outlined text-[20px]" data-icon="play_arrow" data-weight="fill">play_arrow</span>
+<span>Iniciar Treino Agora</span>
+</button>
+<button class="flex items-center gap-2 px-space-16 py-2.5 rounded-xl bg-[#15243A]/60 text-on-surface border border-outline-variant/40 hover:border-primary/50 hover:bg-[#15243A] transition-all duration-150 text-body-md font-medium active:scale-[0.98]">
+<span class="material-symbols-outlined text-[18px]" data-icon="calendar_month">calendar_month</span>
+<span>Ver Histórico</span>
+</button>
+</div>
+</div>
+<!-- Weekly Telemetry Stream Stats (Col 5) -->
+<div class="col-span-5 pl-space-8 space-y-space-16">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Estatísticas Semanais</span>
+<span class="font-label-caps text-label-caps text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="check_circle">check_circle</span>
+                No ritmo planejado
+              </span>
+</div>
+<div class="grid grid-cols-2 gap-space-12">
+<!-- Metric 1: Volume -->
+<div class="bg-[#0B1728]/80 border border-outline-variant/30 rounded-xl p-3.5 space-y-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant/70">Volume Semanal</span>
+<div class="flex items-baseline gap-1.5">
+<span class="font-code-md text-[20px] font-semibold text-on-surface">24.850</span>
+<span class="font-code-md text-xs text-outline">kg</span>
+</div>
+<div class="w-full bg-surface-container-high h-1 rounded-full overflow-hidden mt-2">
+<div class="bg-primary h-full rounded-full" style="width: 78%;"></div>
+</div>
+</div>
+<!-- Metric 2: Frequência -->
+<div class="bg-[#0B1728]/80 border border-outline-variant/30 rounded-xl p-3.5 space-y-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant/70">Frequência</span>
+<div class="flex items-baseline gap-1.5">
+<span class="font-code-md text-[20px] font-semibold text-secondary">3/4</span>
+<span class="font-code-md text-xs text-outline">sessões</span>
+</div>
+<div class="flex gap-1 mt-2">
+<span class="h-1 flex-1 bg-secondary rounded-full"></span>
+<span class="h-1 flex-1 bg-secondary rounded-full"></span>
+<span class="h-1 flex-1 bg-secondary rounded-full"></span>
+<span class="h-1 flex-1 bg-surface-container-highest rounded-full"></span>
+</div>
+</div>
+<!-- Metric 3: Duração Média -->
+<div class="bg-[#0B1728]/80 border border-outline-variant/30 rounded-xl p-3.5 space-y-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant/70">Duração Média</span>
+<div class="flex items-baseline gap-1.5">
+<span class="font-code-md text-[20px] font-semibold text-on-surface">58</span>
+<span class="font-code-md text-xs text-outline">min/sessão</span>
+</div>
+<span class="font-label-caps text-[10px] text-secondary flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]" data-icon="trending_down">trending_down</span>
+                  -4min vs semana anterior
+                </span>
+</div>
+<!-- Metric 4: Novos PRs -->
+<div class="bg-[#0B1728]/80 border border-secondary/30 rounded-xl p-3.5 space-y-1 relative overflow-hidden">
+<span class="font-label-caps text-label-caps text-on-surface-variant/70">Recordes Pessoais</span>
+<div class="flex items-baseline gap-1.5">
+<span class="font-code-md text-[20px] font-semibold text-secondary-fixed">+2</span>
+<span class="font-code-md text-xs text-on-surface">novos PRs</span>
+</div>
+<span class="font-label-caps text-[10px] text-primary flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]" data-icon="bolt">bolt</span>
+                  Supino e Levantamento
+                </span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 2: Grid de Rotinas de Treino Ativas -->
+<section class="space-y-space-16">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-12">
+<h3 class="font-headline-md text-headline-md font-semibold text-on-surface">Rotinas Operacionais</h3>
+<span class="font-label-caps text-label-caps px-2 py-0.5 rounded-full bg-surface-container-high border border-outline-variant/30 text-on-surface-variant">4 ativas</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 text-label-caps font-label-caps rounded-lg bg-surface-container-high text-on-surface border border-outline-variant/40">Todas</button>
+<button class="px-2.5 py-1 text-label-caps font-label-caps rounded-lg text-on-surface-variant hover:text-on-surface">Hipertrofia</button>
+<button class="px-2.5 py-1 text-label-caps font-label-caps rounded-lg text-on-surface-variant hover:text-on-surface">Força</button>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-space-16">
+<!-- Card Rotina 1 -->
+<div class="rounded-xl bg-[#101D31] border border-outline-variant/40 p-space-20 hover:border-primary-container/60 hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between space-y-space-16 relative group">
+<div class="space-y-space-12">
+<div class="flex items-start justify-between">
+<span class="font-label-caps text-label-caps px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/25">Hipertrofia</span>
+<div class="flex items-center gap-1 opacity-60 group-hover:opacity-100 transition-opacity">
+<button class="p-1 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface" title="Editar">
+<span class="material-symbols-outlined text-[18px]" data-icon="edit">edit</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface" title="Duplicar">
+<span class="material-symbols-outlined text-[18px]" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Push Day A</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Peito, Ombros e Tríceps</p>
+</div>
+<div class="grid grid-cols-3 gap-2 py-2 border-y border-outline-variant/20 text-center">
+<div>
+<div class="font-code-md text-sm font-semibold text-on-surface">6</div>
+<div class="font-label-caps text-[10px] text-outline">exercícios</div>
+</div>
+<div>
+<div class="font-code-md text-sm font-semibold text-on-surface">18</div>
+<div class="font-label-caps text-[10px] text-outline">séries</div>
+</div>
+<div>
+<div class="font-code-md text-sm font-semibold text-on-surface">65m</div>
+<div class="font-label-caps text-[10px] text-outline">duração</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-caps text-label-caps text-outline">Última: 21 Out</span>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-container/20 text-primary hover:bg-primary-container hover:text-[#07111F] transition-all font-label-regular text-xs font-semibold">
+<span class="material-symbols-outlined text-[16px]" data-icon="play_arrow">play_arrow</span>
+                Iniciar
+              </button>
+</div>
+</div>
+<!-- Card Rotina 2 -->
+<div class="rounded-xl bg-[#101D31] border border-outline-variant/40 p-space-20 hover:border-primary-container/60 hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between space-y-space-16 relative group">
+<div class="space-y-space-12">
+<div class="flex items-start justify-between">
+<span class="font-label-caps text-label-caps px-2 py-0.5 rounded-full bg-secondary/10 text-secondary border border-secondary/25">Força</span>
+<div class="flex items-center gap-1 opacity-60 group-hover:opacity-100 transition-opacity">
+<button class="p-1 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface" title="Editar">
+<span class="material-symbols-outlined text-[18px]" data-icon="edit">edit</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface" title="Duplicar">
+<span class="material-symbols-outlined text-[18px]" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Pull Day B</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Costas, Posterior e Bíceps</p>
+</div>
+<div class="grid grid-cols-3 gap-2 py-2 border-y border-outline-variant/20 text-center">
+<div>
+<div class="font-code-md text-sm font-semibold text-on-surface">6</div>
+<div class="font-label-caps text-[10px] text-outline">exercícios</div>
+</div>
+<div>
+<div class="font-code-md text-sm font-semibold text-on-surface">20</div>
+<div class="font-label-caps text-[10px] text-outline">séries</div>
+</div>
+<div>
+<div class="font-code-md text-sm font-semibold text-on-surface">60m</div>
+<div class="font-label-caps text-[10px] text-outline">duração</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-caps text-label-caps text-outline">Última: 19 Out</span>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-high text-on-surface hover:bg-primary-container hover:text-[#07111F] transition-all font-label-regular text-xs font-semibold border border-outline-variant/30">
+<span class="material-symbols-outlined text-[16px]" data-icon="play_arrow">play_arrow</span>
+                Iniciar
+              </button>
+</div>
+</div>
+<!-- Card Rotina 3 -->
+<div class="rounded-xl bg-[#101D31] border border-outline-variant/40 p-space-20 hover:border-primary-container/60 hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between space-y-space-16 relative group">
+<div class="space-y-space-12">
+<div class="flex items-start justify-between">
+<span class="font-label-caps text-label-caps px-2 py-0.5 rounded-full bg-tertiary/10 text-tertiary border border-tertiary/25">Volume</span>
+<div class="flex items-center gap-1 opacity-60 group-hover:opacity-100 transition-opacity">
+<button class="p-1 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface" title="Editar">
+<span class="material-symbols-outlined text-[18px]" data-icon="edit">edit</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface" title="Duplicar">
+<span class="material-symbols-outlined text-[18px]" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Legs &amp; Core C</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Quadríceps e Panturrilha</p>
+</div>
+<div class="grid grid-cols-3 gap-2 py-2 border-y border-outline-variant/20 text-center">
+<div>
+<div class="font-code-md text-sm font-semibold text-on-surface">5</div>
+<div class="font-label-caps text-[10px] text-outline">exercícios</div>
+</div>
+<div>
+<div class="font-code-md text-sm font-semibold text-on-surface">16</div>
+<div class="font-label-caps text-[10px] text-outline">séries</div>
+</div>
+<div>
+<div class="font-code-md text-sm font-semibold text-on-surface">70m</div>
+<div class="font-label-caps text-[10px] text-outline">duração</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-caps text-label-caps text-outline">Última: 17 Out</span>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-high text-on-surface hover:bg-primary-container hover:text-[#07111F] transition-all font-label-regular text-xs font-semibold border border-outline-variant/30">
+<span class="material-symbols-outlined text-[16px]" data-icon="play_arrow">play_arrow</span>
+                Iniciar
+              </button>
+</div>
+</div>
+<!-- Card Rotina 4 (Em Pausa) -->
+<div class="rounded-xl bg-[#101D31]/70 border border-outline-variant/30 p-space-20 opacity-85 hover:opacity-100 hover:border-outline-variant/60 transition-all duration-200 flex flex-col justify-between space-y-space-16">
+<div class="space-y-space-12">
+<div class="flex items-start justify-between">
+<span class="font-label-caps text-label-caps px-2 py-0.5 rounded-full bg-outline-variant/20 text-on-surface-variant border border-outline-variant/30">Recuperação Ativa</span>
+<span class="font-label-caps text-[10px] text-outline flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+                  Em pausa
+                </span>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Upper Body Focus</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Alta Intensidade</p>
+</div>
+<div class="grid grid-cols-3 gap-2 py-2 border-y border-outline-variant/20 text-center">
+<div>
+<div class="font-code-md text-sm font-semibold text-on-surface">6</div>
+<div class="font-label-caps text-[10px] text-outline">exercícios</div>
+</div>
+<div>
+<div class="font-code-md text-sm font-semibold text-on-surface">18</div>
+<div class="font-label-caps text-[10px] text-outline">séries</div>
+</div>
+<div>
+<div class="font-code-md text-sm font-semibold text-on-surface">55m</div>
+<div class="font-label-caps text-[10px] text-outline">duração</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-caps text-label-caps text-outline">Ciclo B</span>
+<button class="text-xs font-label-regular text-primary hover:underline">Reativar</button>
+</div>
+</div>
+<!-- Card de Ação: Criar Nova Rotina com Borda Pontilhada Orbital -->
+<div class="rounded-xl border-2 border-dashed border-[#253653] hover:border-primary/60 bg-[#0B1728]/50 p-space-20 flex flex-col items-center justify-center text-center cursor-pointer group transition-all duration-200 min-h-[220px]">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high border border-outline-variant/30 flex items-center justify-center text-primary group-hover:scale-110 group-hover:bg-primary-container group-hover:text-[#07111F] transition-all duration-150">
+<span class="material-symbols-outlined text-[24px]" data-icon="add">add</span>
+</div>
+<span class="font-headline-sm text-headline-sm font-medium text-on-surface mt-3">+ Criar Nova Rotina</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant/70 mt-1 max-w-[200px]">
+              Defina divisões musculares, contagem de séries e metas de carga
+            </p>
+</div>
+<!-- Card de Integração: Relógio / Wearable -->
+<div class="rounded-xl bg-[#0B1728] border border-outline-variant/30 p-space-20 flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-secondary flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                Sensor Conectado
+              </span>
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="watch">watch</span>
+</div>
+<div>
+<div class="font-label-caps text-[10px] text-outline">Frequência Cardíaca em Repouso</div>
+<div class="font-code-md text-lg text-on-surface font-semibold">54 bpm <span class="text-xs text-secondary font-normal">● Zona Ótima</span></div>
+</div>
+<div class="text-body-sm font-label-regular text-on-surface-variant/80 border-t border-outline-variant/20 pt-2 flex justify-between items-center">
+<span>Prontidão para Treino</span>
+<span class="font-code-md text-xs font-semibold text-secondary">92%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 3: Biblioteca de Exercícios & Recordes Pessoais (Duas Colunas) -->
+<section class="grid grid-cols-12 gap-space-24">
+<!-- Coluna Esquerda: Recordes Pessoais (PRs) (5 colunas) -->
+<div class="col-span-5 rounded-xl bg-[#101D31] border border-outline-variant/40 p-space-20 space-y-space-16">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]" data-icon="military_tech">military_tech</span>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Recordes Pessoais (PRs)</h3>
+</div>
+<span class="font-label-caps text-label-caps text-outline">Outubro 2024</span>
+</div>
+<div class="space-y-space-12">
+<!-- PR 1: Supino -->
+<div class="p-3 rounded-lg bg-[#0B1728] border border-outline-variant/30 flex items-center justify-between hover:border-outline-variant/60 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary font-code-md text-xs font-semibold">
+                  01
+                </div>
+<div>
+<h5 class="font-body-md text-body-md font-medium text-on-surface">Supino Reto com Barra</h5>
+<span class="font-label-caps text-[10px] text-outline">1RM Estimado • 3 repetições</span>
+</div>
+</div>
+<div class="text-right flex items-center gap-3">
+<div>
+<div class="font-code-md text-sm font-semibold text-on-surface">110 kg</div>
+<div class="font-label-caps text-[10px] text-secondary">+5kg este mês</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-secondary/15 text-secondary font-code-md text-xs border border-secondary/30">+4.7%</span>
+</div>
+</div>
+<!-- PR 2: Levantamento Terra -->
+<div class="p-3 rounded-lg bg-[#0B1728] border border-outline-variant/30 flex items-center justify-between hover:border-outline-variant/60 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary font-code-md text-xs font-semibold">
+                  02
+                </div>
+<div>
+<h5 class="font-body-md text-body-md font-medium text-on-surface">Levantamento Terra</h5>
+<span class="font-label-caps text-[10px] text-outline">1RM Verificado • 1 repetição</span>
+</div>
+</div>
+<div class="text-right flex items-center gap-3">
+<div>
+<div class="font-code-md text-sm font-semibold text-on-surface">170 kg</div>
+<div class="font-label-caps text-[10px] text-secondary">+10kg este mês</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-secondary/15 text-secondary font-code-md text-xs border border-secondary/30">+6.2%</span>
+</div>
+</div>
+<!-- PR 3: Agachamento Livre -->
+<div class="p-3 rounded-lg bg-[#0B1728] border border-outline-variant/30 flex items-center justify-between hover:border-outline-variant/60 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary font-code-md text-xs font-semibold">
+                  03
+                </div>
+<div>
+<h5 class="font-body-md text-body-md font-medium text-on-surface">Agachamento Livre</h5>
+<span class="font-label-caps text-[10px] text-outline">5 repetições limpas</span>
+</div>
+</div>
+<div class="text-right flex items-center gap-3">
+<div>
+<div class="font-code-md text-sm font-semibold text-on-surface">140 kg</div>
+<div class="font-label-caps text-[10px] text-primary">Consolidado</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-primary/15 text-primary font-code-md text-xs border border-primary/30">PR Ativo</span>
+</div>
+</div>
+</div>
+<!-- Bottom Micro Chart Indicator -->
+<div class="p-3 rounded-lg bg-surface-container-low border border-outline-variant/20 flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant font-label-regular text-xs">Taxa de Supercompensação</span>
+<div class="flex items-center gap-2">
+<div class="w-24 bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 84%;"></div>
+</div>
+<span class="font-code-md text-xs text-secondary font-medium">Alta</span>
+</div>
+</div>
+</div>
+<!-- Coluna Direita: Biblioteca de Exercícios Rápida (7 colunas) -->
+<div class="col-span-7 rounded-xl bg-[#101D31] border border-outline-variant/40 p-space-20 space-y-space-16">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="menu_book">menu_book</span>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Biblioteca de Exercícios</h3>
+</div>
+<span class="font-label-caps text-label-caps text-outline">84 movimentos catalogados</span>
+</div>
+<!-- Filter Group & Search Bar -->
+<div class="flex items-center gap-2 flex-wrap">
+<button class="px-3 py-1 rounded-lg text-label-caps font-label-caps bg-primary text-[#07111F] font-semibold">Peito</button>
+<button class="px-3 py-1 rounded-lg text-label-caps font-label-caps bg-surface-container-high text-on-surface-variant hover:text-on-surface border border-outline-variant/30">Costas</button>
+<button class="px-3 py-1 rounded-lg text-label-caps font-label-caps bg-surface-container-high text-on-surface-variant hover:text-on-surface border border-outline-variant/30">Pernas</button>
+<button class="px-3 py-1 rounded-lg text-label-caps font-label-caps bg-surface-container-high text-on-surface-variant hover:text-on-surface border border-outline-variant/30">Ombros</button>
+<button class="px-3 py-1 rounded-lg text-label-caps font-label-caps bg-surface-container-high text-on-surface-variant hover:text-on-surface border border-outline-variant/30">Braços</button>
+<div class="ml-auto relative">
+<input class="bg-[#0B1728] border border-outline-variant/30 rounded-md py-0.5 px-2 text-xs text-on-surface placeholder:text-outline w-32 focus:w-44 transition-all focus:outline-none focus:border-primary" placeholder="Filtrar..." type="text"/>
+</div>
+</div>
+<!-- Exercise List -->
+<div class="divide-y divide-outline-variant/20 border border-outline-variant/20 rounded-lg overflow-hidden bg-[#0B1728]">
+<!-- Item 1 -->
+<div class="p-3 flex items-center justify-between hover:bg-surface-container-high/40 transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="fitness_center">fitness_center</span>
+<div>
+<div class="font-body-md text-body-md font-medium text-on-surface">Supino Reto</div>
+<div class="font-label-caps text-[10px] text-outline">Peitoral Maior • Tríceps • Deltoide Anterior</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-label-caps text-[10px] px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant border border-outline-variant/30">Barra</span>
+<button class="text-primary hover:text-white p-1" title="Ver detalhes e histórico">
+<span class="material-symbols-outlined text-[18px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="p-3 flex items-center justify-between hover:bg-surface-container-high/40 transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="fitness_center">fitness_center</span>
+<div>
+<div class="font-body-md text-body-md font-medium text-on-surface">Puxada Alta Pronada</div>
+<div class="font-label-caps text-[10px] text-outline">Grande Dorsal • Redondo Maior • Bíceps</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-label-caps text-[10px] px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant border border-outline-variant/30">Polia</span>
+<button class="text-primary hover:text-white p-1" title="Ver detalhes e histórico">
+<span class="material-symbols-outlined text-[18px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="p-3 flex items-center justify-between hover:bg-surface-container-high/40 transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="fitness_center">fitness_center</span>
+<div>
+<div class="font-body-md text-body-md font-medium text-on-surface">Elevação Lateral</div>
+<div class="font-label-caps text-[10px] text-outline">Deltoide Lateral (Isolamento)</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-label-caps text-[10px] px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant border border-outline-variant/30">Halteres</span>
+<button class="text-primary hover:text-white p-1" title="Ver detalhes e histórico">
+<span class="material-symbols-outlined text-[18px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="p-3 flex items-center justify-between hover:bg-surface-container-high/40 transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="fitness_center">fitness_center</span>
+<div>
+<div class="font-body-md text-body-md font-medium text-on-surface">Tríceps Corda</div>
+<div class="font-label-caps text-[10px] text-outline">Tríceps Braquial (Cabeça Lateral)</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-label-caps text-[10px] px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant border border-outline-variant/30">Polia</span>
+<button class="text-primary hover:text-white p-1" title="Ver detalhes e histórico">
+<span class="material-symbols-outlined text-[18px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+</body></html>

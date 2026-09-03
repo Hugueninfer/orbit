@@ -1,0 +1,945 @@
+{
+  "screen_id": "orbit_finan_as_transa_es",
+  "tailwind_config": {
+    "darkMode": "class",
+    "theme": {
+      "extend": {
+        "colors": {
+          "primary-fixed": "#dde1ff",
+          "surface-container-low": "#121c2a",
+          "surface": "#0a1422",
+          "outline": "#8e909e",
+          "secondary-container": "#03c6b2",
+          "tertiary-container": "#7992ff",
+          "on-error-container": "#ffdad6",
+          "surface-tint": "#b7c4ff",
+          "inverse-primary": "#3856bf",
+          "on-surface-variant": "#c4c5d5",
+          "surface-container-lowest": "#050e1c",
+          "inverse-surface": "#d9e3f7",
+          "surface-container-high": "#212a39",
+          "surface-container-highest": "#2c3545",
+          "on-secondary-fixed-variant": "#005047",
+          "on-secondary": "#003731",
+          "surface-container": "#16202f",
+          "surface-variant": "#2c3545",
+          "on-tertiary-container": "#002588",
+          "surface-bright": "#303a49",
+          "secondary-fixed-dim": "#3cddc7",
+          "on-secondary-fixed": "#00201c",
+          "background": "#0a1422",
+          "secondary": "#44e2cd",
+          "primary": "#b7c4ff",
+          "on-surface": "#d9e3f7",
+          "primary-fixed-dim": "#b7c4ff",
+          "outline-variant": "#444653",
+          "on-primary-fixed-variant": "#193ca7",
+          "tertiary-fixed-dim": "#b8c4ff",
+          "on-primary": "#002682",
+          "secondary-fixed": "#62fae3",
+          "on-tertiary-fixed-variant": "#0136bb",
+          "on-error": "#690005",
+          "on-background": "#d9e3f7",
+          "primary-container": "#7692ff",
+          "on-tertiary": "#002486",
+          "on-tertiary-fixed": "#001354",
+          "surface-dim": "#0a1422",
+          "inverse-on-surface": "#273140",
+          "on-primary-container": "#002683",
+          "error-container": "#93000a",
+          "tertiary-fixed": "#dde1ff",
+          "tertiary": "#b8c4ff",
+          "error": "#ffb4ab",
+          "on-secondary-container": "#004d44",
+          "on-primary-fixed": "#001552"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "margin-tablet": "1.5rem",
+          "gutter-mobile": "1rem",
+          "space-2": "0.125rem",
+          "space-12": "0.75rem",
+          "space-64": "4rem",
+          "space-40": "2.5rem",
+          "gutter-desktop": "1.5rem",
+          "margin-mobile": "1rem",
+          "space-48": "3rem",
+          "space-24": "1.5rem",
+          "space-4": "0.25rem",
+          "space-16": "1rem",
+          "space-32": "2rem",
+          "space-8": "0.5rem",
+          "space-20": "1.25rem",
+          "margin-desktop": "2rem"
+        },
+        "fontFamily": {
+          "headline-xl": [
+            "Geist"
+          ],
+          "label-regular": [
+            "Geist"
+          ],
+          "body-sm": [
+            "Geist"
+          ],
+          "headline-sm": [
+            "Geist"
+          ],
+          "body-md": [
+            "Geist"
+          ],
+          "headline-xl-mobile": [
+            "Geist"
+          ],
+          "headline-md": [
+            "Geist"
+          ],
+          "code-md": [
+            "JetBrains Mono"
+          ],
+          "display-lg": [
+            "Geist"
+          ],
+          "label-caps": [
+            "JetBrains Mono"
+          ],
+          "display-lg-mobile": [
+            "Geist"
+          ],
+          "body-lg": [
+            "Geist"
+          ]
+        },
+        "fontSize": {
+          "headline-xl": [
+            "28px",
+            {
+              "lineHeight": "36px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "600"
+            }
+          ],
+          "label-regular": [
+            "12px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.01em",
+              "fontWeight": "500"
+            }
+          ],
+          "body-sm": [
+            "12px",
+            {
+              "lineHeight": "18px",
+              "letterSpacing": "0.005em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-sm": [
+            "16px",
+            {
+              "lineHeight": "24px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-md": [
+            "14px",
+            {
+              "lineHeight": "22px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-xl-mobile": [
+            "24px",
+            {
+              "lineHeight": "32px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-md": [
+            "20px",
+            {
+              "lineHeight": "28px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "500"
+            }
+          ],
+          "code-md": [
+            "13px",
+            {
+              "lineHeight": "20px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "display-lg": [
+            "40px",
+            {
+              "lineHeight": "48px",
+              "letterSpacing": "-0.025em",
+              "fontWeight": "600"
+            }
+          ],
+          "label-caps": [
+            "11px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.06em",
+              "fontWeight": "500"
+            }
+          ],
+          "display-lg-mobile": [
+            "30px",
+            {
+              "lineHeight": "38px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-lg": [
+            "16px",
+            {
+              "lineHeight": "26px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "inline_css": [
+    "\n    body {\n      background-color: #07111F;\n      color: #d9e3f7;\n      font-family: 'Geist', sans-serif;\n      overflow-x: hidden;\n    }\n    \n    .material-symbols-outlined {\n      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;\n      display: inline-block;\n      vertical-align: middle;\n      line-height: 1;\n    }\n    \n    .custom-scrollbar::-webkit-scrollbar {\n      width: 5px;\n      height: 5px;\n    }\n    .custom-scrollbar::-webkit-scrollbar-track {\n      background: #0a1422;\n    }\n    .custom-scrollbar::-webkit-scrollbar-thumb {\n      background: #253653;\n      border-radius: 4px;\n    }\n    .custom-scrollbar::-webkit-scrollbar-thumb:hover {\n      background: #444653;\n    }\n\n    /* Subtle orbital ambient backglow */\n    .orbital-glow {\n      box-shadow: 0 0 24px -2px rgba(118, 146, 255, 0.12);\n    }\n    .teal-glow {\n      box-shadow: 0 0 16px 1px rgba(45, 212, 191, 0.15);\n    }\n  "
+  ],
+  "class_frequency": {
+    "bg-surface-container-lowest": 2,
+    "text-on-surface": 57,
+    "antialiased": 1,
+    "min-h-screen": 2,
+    "flex": 170,
+    "selection:bg-primary-container": 1,
+    "selection:text-on-primary-container": 1,
+    "fixed": 2,
+    "top-0": 3,
+    "left-0": 1,
+    "h-screen": 2,
+    "w-64": 1,
+    "z-40": 1,
+    "bg-surface-container-low": 8,
+    "border-r": 1,
+    "border-outline-variant/30": 30,
+    "flex-col": 15,
+    "justify-between": 54,
+    "p-space-16": 3,
+    "select-none": 1,
+    "space-y-space-20": 2,
+    "items-center": 136,
+    "gap-space-12": 15,
+    "px-space-4": 1,
+    "relative": 16,
+    "w-9": 1,
+    "h-9": 2,
+    "rounded-xl": 13,
+    "bg-surface-container": 31,
+    "justify-center": 22,
+    "border": 73,
+    "border-outline-variant/40": 23,
+    "shadow-inner": 1,
+    "w-5": 1,
+    "h-5": 1,
+    "rounded-full": 38,
+    "border-secondary/60": 1,
+    "animate-[spin_12s_linear_infinite]": 1,
+    "w-2": 10,
+    "h-2": 13,
+    "bg-primary": 2,
+    "shadow-[0_0_8px_#7692ff]": 2,
+    "absolute": 12,
+    "w-1.5": 3,
+    "h-1.5": 4,
+    "bg-secondary-fixed": 1,
+    "bottom-1": 1,
+    "right-1": 1,
+    "gap-space-8": 11,
+    "text-headline-sm": 6,
+    "font-headline-sm": 6,
+    "font-semibold": 28,
+    "tracking-tight": 3,
+    "text-label-caps": 107,
+    "font-label-caps": 107,
+    "text-secondary-fixed": 10,
+    "bg-surface-container-high": 20,
+    "px-1.5": 7,
+    "py-0.5": 17,
+    "rounded": 39,
+    "text-on-surface-variant": 41,
+    "text-[10px]": 41,
+    "w-full": 22,
+    "py-2": 7,
+    "px-space-12": 10,
+    "bg-primary-container": 6,
+    "text-on-primary-container": 3,
+    "rounded-lg": 44,
+    "font-body-md": 24,
+    "font-medium": 25,
+    "shadow-sm": 4,
+    "hover:brightness-110": 3,
+    "active:scale-[0.98]": 3,
+    "transition-all": 11,
+    "duration-150": 7,
+    "material-symbols-outlined": 56,
+    "text-[18px]": 27,
+    "space-y-1": 8,
+    "py-space-8": 5,
+    "font-normal": 4,
+    "hover:bg-surface-container": 10,
+    "hover:text-on-surface": 17,
+    "transition-colors": 23,
+    "text-outline": 71,
+    "text-primary": 18,
+    "text-secondary": 32,
+    "border-l-2": 2,
+    "border-secondary": 2,
+    "bg-secondary": 7,
+    "shadow-[0_0_8px_#44e2cd]": 2,
+    "px-1": 1,
+    "space-y-space-12": 4,
+    "pt-space-16": 1,
+    "border-t": 6,
+    "bg-surface-container/60": 1,
+    "border-outline-variant/20": 9,
+    "text-[16px]": 7,
+    "gap-1.5": 18,
+    "bg-secondary-container": 2,
+    "animate-pulse": 1,
+    "space-y-0.5": 1,
+    "text-body-sm": 16,
+    "font-body-sm": 16,
+    "px-space-8": 1,
+    "bg-surface-container-high/60": 1,
+    "w-8": 5,
+    "h-8": 6,
+    "bg-surface-variant": 1,
+    "border-secondary/40": 3,
+    "text-[20px]": 9,
+    "bottom-0": 1,
+    "right-0": 2,
+    "border-surface-container-high": 1,
+    "flex-1": 10,
+    "min-w-0": 1,
+    "truncate": 2,
+    "leading-tight": 1,
+    "p-1": 15,
+    "pl-64": 1,
+    "pr-[440px]": 1,
+    "sticky": 1,
+    "z-30": 1,
+    "bg-surface/80": 1,
+    "backdrop-blur-md": 1,
+    "border-b": 4,
+    "h-16": 1,
+    "px-space-24": 1,
+    "gap-space-24": 7,
+    "text-headline-md": 5,
+    "font-headline-md": 5,
+    "text-[11px]": 15,
+    "inline-block": 1,
+    "w-1": 7,
+    "h-1": 7,
+    "bg-outline-variant": 7,
+    "font-code-md": 25,
+    "px-3": 11,
+    "py-1": 10,
+    "border-secondary/30": 5,
+    "gap-space-16": 13,
+    "w-80": 1,
+    "left-3": 1,
+    "top-2.5": 1,
+    "pl-9": 3,
+    "pr-12": 1,
+    "placeholder:text-outline/70": 1,
+    "focus:outline-none": 8,
+    "focus:border-primary": 7,
+    "focus:ring-1": 1,
+    "focus:ring-primary/20": 2,
+    "right-2.5": 3,
+    "top-2": 2,
+    "gap-2": 21,
+    "px-2.5": 2,
+    "animate-ping": 1,
+    "p-2": 4,
+    "hover:bg-surface-container-high": 3,
+    "top-1.5": 1,
+    "right-1.5": 1,
+    "px-space-16": 3,
+    "shadow-[0_0_16px_rgba(118,146,255,0.25)]": 1,
+    "p-space-24": 4,
+    "space-y-space-24": 1,
+    "overflow-y-auto": 2,
+    "custom-scrollbar": 2,
+    "grid": 7,
+    "grid-cols-4": 2,
+    "p-space-20": 10,
+    "overflow-hidden": 12,
+    "group": 13,
+    "hover:border-primary/50": 1,
+    "duration-200": 4,
+    "-right-6": 1,
+    "-bottom-6": 1,
+    "w-24": 1,
+    "h-24": 1,
+    "bg-primary/5": 1,
+    "blur-xl": 1,
+    "pointer-events-none": 3,
+    "mb-space-8": 4,
+    "tracking-wider": 4,
+    "items-baseline": 7,
+    "text-headline-xl": 4,
+    "font-headline-xl": 4,
+    "mt-space-8": 4,
+    "gap-1": 19,
+    "text-[14px]": 6,
+    "hover:border-secondary/50": 1,
+    "border-secondary/20": 3,
+    "hover:border-outline": 1,
+    "text-error": 1,
+    "bg-surface-container-highest": 5,
+    "h-full": 15,
+    "hover:border-secondary-fixed/50": 1,
+    "text-secondary-fixed-dim": 1,
+    "px-2": 20,
+    "hover:text-primary-fixed": 2,
+    "grid-cols-3": 2,
+    "hover:border-primary/60": 3,
+    "items-start": 3,
+    "text-body-lg": 3,
+    "font-body-lg": 3,
+    "bg-secondary/10": 6,
+    "my-space-16": 3,
+    "mb-1": 3,
+    "mt-1.5": 3,
+    "pt-space-12": 3,
+    "bg-primary/10": 3,
+    "border-primary/20": 2,
+    "mt-space-12": 3,
+    "py-1.5": 10,
+    "hover:bg-surface-variant": 4,
+    "text-center": 10,
+    "hover:bg-primary/20": 1,
+    "border-primary/30": 1,
+    "opacity-90": 1,
+    "bg-outline": 1,
+    "grid-cols-12": 1,
+    "col-span-4": 1,
+    "mb-space-16": 2,
+    "p-space-12": 3,
+    "bg-[#ec7000]/15": 1,
+    "text-orange-400": 1,
+    "font-bold": 3,
+    "text-xs": 3,
+    "border-orange-500/20": 1,
+    "text-right": 15,
+    "text-body-md": 18,
+    "bg-[#820ad1]/20": 1,
+    "text-purple-300": 1,
+    "border-purple-500/20": 1,
+    "bg-white/10": 1,
+    "text-white": 1,
+    "border-white/20": 1,
+    "mt-space-16": 2,
+    "border-dashed": 1,
+    "border-outline-variant/60": 1,
+    "hover:border-primary": 1,
+    "hover:text-primary": 9,
+    "col-span-8": 1,
+    "gap-4": 1,
+    "w-2.5": 2,
+    "h-2.5": 2,
+    "grid-cols-6": 1,
+    "h-36": 1,
+    "items-end": 7,
+    "pb-2": 1,
+    "pt-4": 1,
+    "justify-end": 6,
+    "h-28": 6,
+    "w-3": 12,
+    "bg-secondary/80": 5,
+    "rounded-t": 12,
+    "bg-primary-container/80": 5,
+    "bg-surface-container/40": 1,
+    "space-y-2": 1,
+    "h-3": 1,
+    "gap-0.5": 1,
+    "bg-[#7692ff]": 2,
+    "bg-[#44e2cd]": 2,
+    "bg-[#3856bf]": 2,
+    "bg-[#b8c4ff]": 2,
+    "bg-[#444653]": 2,
+    "flex-wrap": 1,
+    "pt-1": 2,
+    "space-y-space-16": 1,
+    "pb-3": 1,
+    "hover:bg-secondary/10": 1,
+    "left-2.5": 4,
+    "pl-8": 2,
+    "pr-8": 1,
+    "divide-y": 1,
+    "divide-outline-variant/20": 1,
+    "py-space-12": 6,
+    "hover:bg-surface-container/50": 5,
+    "min-w-[280px]": 6,
+    "w-10": 6,
+    "h-10": 7,
+    "mt-0.5": 6,
+    "w-32": 6,
+    "opacity-0": 6,
+    "group-hover:opacity-100": 6,
+    "transition-opacity": 6,
+    "hover:text-error": 3,
+    "bg-surface-container/30": 1,
+    "hover:bg-surface-container/60": 1,
+    "text-[12px]": 1,
+    "bg-secondary/15": 1,
+    "pt-space-8": 1,
+    "w-[440px]": 1,
+    "z-50": 1,
+    "bg-[#0B1728]": 1,
+    "border-l": 1,
+    "border-[#253653]": 1,
+    "shadow-[-16px_0_40px_rgba(3,8,16,0.85)]": 1,
+    "bg-surface-container-low/40": 1,
+    "text-[22px]": 1,
+    "space-y-1.5": 1,
+    "bg-error-container": 1,
+    "text-on-error-container": 1,
+    "border-error/30": 1,
+    "border-primary/50": 1,
+    "focus-within:ring-2": 1,
+    "focus-within:ring-primary/20": 1,
+    "mr-2": 1,
+    "bg-transparent": 1,
+    "text-display-lg": 1,
+    "font-display-lg": 1,
+    "h-11": 4,
+    "grid-cols-2": 1,
+    "pr-3": 3,
+    "appearance-none": 2,
+    "top-3": 3,
+    "top-3.5": 2,
+    "w-4": 2,
+    "h-4": 2,
+    "border-outline-variant": 2,
+    "focus:ring-secondary/20": 1,
+    "space-y-space-8": 1,
+    "pt-2": 1,
+    "block": 3,
+    "text-[9px]": 3,
+    "p-3": 1,
+    "bg-surface-container-low/80": 1,
+    "py-2.5": 2,
+    "shadow-[0_0_16px_rgba(118,146,255,0.3)]": 1
+  },
+  "controls": [
+    {
+      "tag": "button",
+      "type": null,
+      "text": "add + Adicionar",
+      "placeholder": null,
+      "class": "w-full flex items-center justify-center gap-space-8 py-2 px-space-12 bg-primary-container text-on-primary-container rounded-lg font-body-md font-medium shadow-sm hover:brightness-110 active:scale-[0.98] transition-all duration-150",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "more_vert",
+      "placeholder": null,
+      "class": "text-outline hover:text-on-surface p-1",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Visão de Caixa",
+      "placeholder": null,
+      "class": "px-3 py-1 rounded bg-surface-container-high text-secondary-fixed border border-secondary/30 shadow-sm font-medium",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Competência",
+      "placeholder": null,
+      "class": "px-3 py-1 rounded text-on-surface-variant hover:text-on-surface transition-colors",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "text": "",
+      "placeholder": "Buscar transações, cartões, faturas... (⌘K)",
+      "class": "w-full h-9 pl-9 pr-12 text-body-sm font-body-sm bg-surface-container text-on-surface rounded-lg border border-outline-variant/40 placeholder:text-outline/70 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "notifications",
+      "placeholder": null,
+      "class": "relative p-2 rounded-lg bg-surface-container text-outline hover:text-on-surface border border-outline-variant/30 hover:bg-surface-container-high transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "add_circle + Nova Transação",
+      "placeholder": null,
+      "class": "flex items-center gap-space-8 px-space-16 py-2 rounded-lg bg-primary-container text-on-primary-container font-body-md font-medium shadow-[0_0_16px_rgba(118,146,255,0.25)] hover:brightness-110 active:scale-[0.98] transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Antecipar Parcelas chevron_right",
+      "placeholder": null,
+      "class": "text-label-caps font-label-caps text-primary hover:text-primary-fixed flex items-center gap-1",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Ver Fatura",
+      "placeholder": null,
+      "class": "flex-1 py-1.5 px-2 bg-surface-container-high hover:bg-surface-variant text-on-surface rounded text-label-caps font-label-caps border border-outline-variant/30 text-center",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Pagar Fatura",
+      "placeholder": null,
+      "class": "flex-1 py-1.5 px-2 bg-primary/10 hover:bg-primary/20 text-primary rounded text-label-caps font-label-caps border border-primary/30 text-center",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Ver Fatura",
+      "placeholder": null,
+      "class": "flex-1 py-1.5 px-2 bg-surface-container-high hover:bg-surface-variant text-on-surface rounded text-label-caps font-label-caps border border-outline-variant/30 text-center",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Configurar Débito",
+      "placeholder": null,
+      "class": "flex-1 py-1.5 px-2 bg-surface-container-high hover:bg-surface-variant text-on-surface-variant rounded text-label-caps font-label-caps border border-outline-variant/30 text-center",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Ver Comprovante",
+      "placeholder": null,
+      "class": "w-full py-1.5 px-2 bg-surface-container-high hover:bg-surface-variant text-on-surface rounded text-label-caps font-label-caps border border-outline-variant/30 text-center",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "add_link + Conectar Conta / Open Finance",
+      "placeholder": null,
+      "class": "w-full mt-space-16 py-2 px-space-12 rounded-lg border border-dashed border-outline-variant/60 hover:border-primary text-on-surface-variant hover:text-primary text-label-caps font-label-caps flex items-center justify-center gap-2 transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "file_download Exportar CSV",
+      "placeholder": null,
+      "class": "flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high border border-outline-variant/30 text-on-surface-variant text-label-caps font-label-caps transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Todas (48)",
+      "placeholder": null,
+      "class": "px-3 py-1 rounded bg-surface-container-high text-secondary-fixed border border-secondary/30 text-label-caps font-label-caps font-medium",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Despesas",
+      "placeholder": null,
+      "class": "px-3 py-1 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface text-label-caps font-label-caps transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Receitas",
+      "placeholder": null,
+      "class": "px-3 py-1 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface text-label-caps font-label-caps transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Cartão",
+      "placeholder": null,
+      "class": "px-3 py-1 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface text-label-caps font-label-caps transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Fixas & Recorrentes",
+      "placeholder": null,
+      "class": "px-3 py-1 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface text-label-caps font-label-caps transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "mic Transcrições Telegram",
+      "placeholder": null,
+      "class": "px-3 py-1 rounded text-secondary hover:bg-secondary/10 text-label-caps font-label-caps transition-colors flex items-center gap-1",
+      "id": null
+    },
+    {
+      "tag": "select",
+      "type": null,
+      "text": "Todas as Contas Itaú CC Nubank Ultra Inter Black",
+      "placeholder": null,
+      "class": "h-8 pl-8 pr-8 bg-surface-container border border-outline-variant/30 rounded text-label-caps font-label-caps text-on-surface focus:outline-none focus:border-primary",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "edit",
+      "placeholder": null,
+      "class": "p-1 hover:text-primary",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "delete",
+      "placeholder": null,
+      "class": "p-1 hover:text-error",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "edit",
+      "placeholder": null,
+      "class": "p-1 hover:text-primary",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "delete",
+      "placeholder": null,
+      "class": "p-1 hover:text-error",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "volume_up",
+      "placeholder": null,
+      "class": "p-1 hover:text-primary",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "edit",
+      "placeholder": null,
+      "class": "p-1 hover:text-primary",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "receipt_long",
+      "placeholder": null,
+      "class": "p-1 hover:text-primary",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "event_repeat",
+      "placeholder": null,
+      "class": "p-1 hover:text-primary",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "edit",
+      "placeholder": null,
+      "class": "p-1 hover:text-primary",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "edit",
+      "placeholder": null,
+      "class": "p-1 hover:text-primary",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "delete",
+      "placeholder": null,
+      "class": "p-1 hover:text-error",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Carregar histórico completo expand_more",
+      "placeholder": null,
+      "class": "text-primary hover:text-primary-fixed flex items-center gap-1 font-medium",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "close",
+      "placeholder": null,
+      "class": "w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-outline hover:text-on-surface border border-outline-variant/30 transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Despesa",
+      "placeholder": null,
+      "class": "py-1.5 rounded bg-error-container text-on-error-container font-medium border border-error/30 shadow-sm text-center",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Receita",
+      "placeholder": null,
+      "class": "py-1.5 rounded text-on-surface-variant hover:text-on-surface text-center",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Transf.",
+      "placeholder": null,
+      "class": "py-1.5 rounded text-on-surface-variant hover:text-on-surface text-center",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Cartão",
+      "placeholder": null,
+      "class": "py-1.5 rounded text-on-surface-variant hover:text-on-surface text-center",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "text": "",
+      "placeholder": "0,00",
+      "class": "w-full bg-transparent text-display-lg font-display-lg font-semibold text-on-surface focus:outline-none font-code-md tracking-tight",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "text": "",
+      "placeholder": null,
+      "class": "w-full h-11 px-3 bg-surface-container border border-outline-variant/40 rounded-lg text-body-md font-body-md text-on-surface focus:outline-none focus:border-primary",
+      "id": null
+    },
+    {
+      "tag": "select",
+      "type": null,
+      "text": "Alimentação & Rest. Habitação & Contas Tecnologia & Infra Lazer & Viagens",
+      "placeholder": null,
+      "class": "w-full h-11 pl-9 pr-3 bg-surface-container border border-outline-variant/40 rounded-lg text-body-sm font-body-sm text-on-surface focus:outline-none focus:border-primary appearance-none",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "text": "",
+      "placeholder": null,
+      "class": "w-full h-11 pl-8 pr-3 bg-surface-container border border-outline-variant/40 rounded-lg text-body-sm font-body-sm text-on-surface font-code-md focus:outline-none focus:border-primary",
+      "id": null
+    },
+    {
+      "tag": "select",
+      "type": null,
+      "text": "Nubank Ultravioleta (••8842) Itaú Conta Corrente Itaú Visa Infinite (••1904) Inter Black (••4021)",
+      "placeholder": null,
+      "class": "w-full h-11 pl-9 pr-3 bg-surface-container border border-outline-variant/40 rounded-lg text-body-sm font-body-sm text-on-surface focus:outline-none focus:border-primary appearance-none",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "text": "",
+      "placeholder": null,
+      "class": "w-4 h-4 rounded bg-surface-container-high border-outline-variant text-secondary focus:ring-secondary/20",
+      "id": "parcelado"
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "text": "",
+      "placeholder": null,
+      "class": "w-4 h-4 rounded bg-surface-container-high border-outline-variant text-primary focus:ring-primary/20",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "text": "",
+      "placeholder": null,
+      "class": "w-full h-10 px-3 bg-surface-container border border-outline-variant/40 rounded-lg text-body-sm font-body-sm text-primary font-code-md focus:outline-none focus:border-primary",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Cancelar",
+      "placeholder": null,
+      "class": "flex-1 py-2.5 px-space-16 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant border border-outline-variant/40 text-body-md font-body-md font-medium transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "check_circle Confirmar Transação",
+      "placeholder": null,
+      "class": "flex-1 py-2.5 px-space-16 rounded-lg bg-primary-container text-on-primary-container hover:brightness-110 active:scale-[0.98] text-body-md font-body-md font-semibold flex items-center justify-center gap-2 shadow-[0_0_16px_rgba(118,146,255,0.3)] transition-all",
+      "id": null
+    }
+  ],
+  "reading_note": "Extração estática. Os scripts e handlers do HTML original foram preservados, mas não executados nem considerados implementação funcional."
+}

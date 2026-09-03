@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Orbit - Módulo de Tarefas</title>
+<!-- Google Fonts: Geist & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with Forms and Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "inverse-on-surface": "#273140",
+                  "tertiary-container": "#7992ff",
+                  "surface-container": "#16202f",
+                  "secondary-fixed-dim": "#3cddc7",
+                  "secondary-fixed": "#62fae3",
+                  "on-tertiary-fixed-variant": "#0136bb",
+                  "on-primary": "#002682",
+                  "on-surface": "#d9e3f7",
+                  "on-primary-fixed": "#001552",
+                  "on-secondary": "#003731",
+                  "on-surface-variant": "#c4c5d5",
+                  "on-background": "#d9e3f7",
+                  "on-primary-container": "#002683",
+                  "surface-bright": "#303a49",
+                  "on-secondary-fixed-variant": "#005047",
+                  "surface-variant": "#2c3545",
+                  "background": "#0a1422",
+                  "on-tertiary-fixed": "#001354",
+                  "secondary-container": "#03c6b2",
+                  "surface": "#0a1422",
+                  "on-tertiary": "#002486",
+                  "on-tertiary-container": "#002588",
+                  "surface-tint": "#b7c4ff",
+                  "error": "#ffb4ab",
+                  "on-primary-fixed-variant": "#193ca7",
+                  "error-container": "#93000a",
+                  "tertiary-fixed-dim": "#b8c4ff",
+                  "primary-container": "#7692ff",
+                  "primary-fixed-dim": "#b7c4ff",
+                  "primary-fixed": "#dde1ff",
+                  "secondary": "#44e2cd",
+                  "inverse-primary": "#3856bf",
+                  "on-secondary-fixed": "#00201c",
+                  "outline": "#8e909e",
+                  "surface-container-lowest": "#050e1c",
+                  "outline-variant": "#444653",
+                  "surface-container-high": "#212a39",
+                  "tertiary-fixed": "#dde1ff",
+                  "on-secondary-container": "#004d44",
+                  "on-error-container": "#ffdad6",
+                  "tertiary": "#b8c4ff",
+                  "on-error": "#690005",
+                  "surface-container-highest": "#2c3545",
+                  "primary": "#b7c4ff",
+                  "surface-dim": "#0a1422",
+                  "inverse-surface": "#d9e3f7",
+                  "surface-container-low": "#121c2a"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.25rem",
+                  "lg": "0.5rem",
+                  "xl": "0.75rem",
+                  "full": "9999px"
+          },
+          "spacing": {
+                  "space-2": "0.125rem",
+                  "space-4": "0.25rem",
+                  "space-12": "0.75rem",
+                  "space-16": "1rem",
+                  "space-48": "3rem",
+                  "space-32": "2rem",
+                  "margin-tablet": "1.5rem",
+                  "margin-mobile": "1rem",
+                  "space-24": "1.5rem",
+                  "margin-desktop": "2rem",
+                  "space-20": "1.25rem",
+                  "space-8": "0.5rem",
+                  "gutter-mobile": "1rem",
+                  "space-64": "4rem",
+                  "gutter-desktop": "1.5rem",
+                  "space-40": "2.5rem"
+          },
+          "fontFamily": {
+                  "display-lg": ["Geist", "sans-serif"],
+                  "code-md": ["JetBrains Mono", "monospace"],
+                  "headline-xl-mobile": ["Geist", "sans-serif"],
+                  "display-lg-mobile": ["Geist", "sans-serif"],
+                  "headline-xl": ["Geist", "sans-serif"],
+                  "headline-sm": ["Geist", "sans-serif"],
+                  "body-lg": ["Geist", "sans-serif"],
+                  "label-regular": ["Geist", "sans-serif"],
+                  "headline-md": ["Geist", "sans-serif"],
+                  "body-md": ["Geist", "sans-serif"],
+                  "label-caps": ["JetBrains Mono", "monospace"],
+                  "body-sm": ["Geist", "sans-serif"]
+          },
+          "fontSize": {
+                  "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.025em", "fontWeight": "600" }],
+                  "code-md": ["13px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+                  "headline-xl-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+                  "display-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                  "headline-xl": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                  "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                  "body-lg": ["16px", { "lineHeight": "26px", "letterSpacing": "0em", "fontWeight": "400" }],
+                  "label-regular": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                  "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "500" }],
+                  "body-md": ["14px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400" }],
+                  "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "500" }],
+                  "body-sm": ["12px", { "lineHeight": "18px", "letterSpacing": "0.005em", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      background-color: #07111F;
+      color: #d9e3f7;
+      font-family: 'Geist', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    }
+    .material-symbols-fill {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 20;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .custom-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    /* Concentric orbital glow */
+    .orbital-glow {
+      box-shadow: 0 0 24px -4px rgba(45, 212, 191, 0.18), inset 0 0 12px 0 rgba(118, 146, 255, 0.08);
+    }
+  </style>
+</head>
+<body class="bg-[#07111F] text-on-surface min-h-screen flex justify-center pb-28 antialiased selection:bg-primary selection:text-on-primary">
+<div class="w-full max-w-md mx-auto relative flex flex-col min-h-screen bg-[#07111F] border-x border-[#1B2A43]/40">
+<!-- TopBar Mobile Shell -->
+<header class="sticky top-0 z-30 w-full bg-[#07111F]/90 backdrop-blur-md px-space-16 pt-space-12 pb-space-12 border-b border-[#1B2A43]/60 flex flex-col gap-space-8">
+<div class="flex items-center justify-between">
+<!-- Brand & Subtext -->
+<div class="flex items-center gap-space-8">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high border border-[#253653] flex items-center justify-center relative">
+<span class="material-symbols-outlined text-secondary text-[18px]">radio_button_checked</span>
+<span class="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-secondary animate-ping opacity-60"></span>
+</div>
+<div class="flex items-center gap-space-8">
+<span class="font-headline-sm text-headline-sm font-semibold tracking-tight text-on-surface">Orbit</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-[#94A3B8] border border-[#253653] font-code-md text-[10px] leading-none">v2.4</span>
+</div>
+</div>
+<!-- Top Right Actions -->
+<div class="flex items-center gap-space-8">
+<button class="w-9 h-9 rounded-lg bg-surface-container-low border border-[#253653] flex items-center justify-center text-on-surface-variant hover:text-on-surface active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+<button class="h-9 px-space-12 rounded-lg bg-primary-container hover:bg-[#5575F6] text-[#07111F] font-label-regular text-[13px] font-semibold flex items-center gap-1.5 shadow-[0_0_14px_rgba(118,146,255,0.3)] active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[16px] font-bold">add</span>
+<span>+ Tarefa</span>
+</button>
+</div>
+</div>
+<!-- Sync Status Bar Indicator -->
+<div class="flex items-center justify-between pt-1 text-[11px] font-label-caps text-on-surface-variant">
+<div class="flex items-center gap-space-8">
+<span class="flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
+</span>
+<span class="text-[#2DD4BF] font-code-md tracking-wider">Sincronizado há 1m</span>
+</div>
+<span class="text-[#596A82] font-code-md">EU-CENTRAL (AWS)</span>
+</div>
+</header>
+<!-- Main Viewport Canvas -->
+<main class="flex-1 px-space-16 pt-space-16 flex flex-col gap-space-16">
+<!-- Header de Página -->
+<section class="flex flex-col gap-space-4">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-[#596A82] uppercase">Visão do Operador</span>
+<div class="flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary/10 border border-secondary/25 text-secondary text-[11px] font-code-md">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>4 prioridades hoje</span>
+</div>
+</div>
+<h1 class="font-headline-xl-mobile text-headline-xl-mobile text-on-surface font-semibold tracking-tight">Tarefas Operacionais</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-[#7692FF]">event</span>
+          Quinta-feira, 24 de Outubro
+        </p>
+</section>
+<!-- Resumo de Produtividade (Grid 3 Cards Compactos) -->
+<section class="grid grid-cols-3 gap-space-8">
+<!-- Card 1: Tarefas Ativas -->
+<div class="bg-surface-container-low border border-[#253653] rounded-xl p-space-12 flex flex-col justify-between relative overflow-hidden">
+<div class="absolute -right-3 -top-3 w-12 h-12 bg-primary/5 rounded-full blur-sm"></div>
+<span class="font-label-caps text-[10px] text-[#8e909e] uppercase leading-tight">Tarefas Ativas</span>
+<div class="my-space-4">
+<div class="font-headline-xl-mobile text-headline-xl-mobile text-primary font-bold tracking-tight">4</div>
+</div>
+<span class="font-body-sm text-[10px] text-[#FB7185] flex items-center gap-1 font-medium">
+<span class="w-1 h-1 rounded-full bg-[#FB7185]"></span>
+            Críticas &amp; Altas
+          </span>
+</div>
+<!-- Card 2: Concluídas Hoje -->
+<div class="bg-surface-container-low border border-[#253653] rounded-xl p-space-12 flex flex-col justify-between relative overflow-hidden">
+<span class="font-label-caps text-[10px] text-[#8e909e] uppercase leading-tight">Concluídas</span>
+<div class="my-space-4 flex items-baseline gap-1">
+<span class="font-headline-xl-mobile text-headline-xl-mobile text-secondary font-bold tracking-tight">3</span>
+<span class="font-body-sm text-[12px] text-[#596A82]">/ 7</span>
+</div>
+<div class="w-full bg-[#050e1c] rounded-full h-1.5 overflow-hidden border border-[#1B2A43]">
+<div class="bg-secondary h-full rounded-full shadow-[0_0_8px_rgba(45,212,191,0.5)]" style="width: 43%"></div>
+</div>
+</div>
+<!-- Card 3: Foco Alocado -->
+<div class="bg-surface-container-low border border-[#253653] rounded-xl p-space-12 flex flex-col justify-between relative overflow-hidden">
+<span class="font-label-caps text-[10px] text-[#8e909e] uppercase leading-tight">Foco Alocado</span>
+<div class="my-space-4">
+<span class="font-headline-sm text-[15px] text-on-surface font-semibold tracking-tight">3h 45m</span>
+</div>
+<span class="font-body-sm text-[10px] text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">schedule</span>
+            Deep Work
+          </span>
+</div>
+</section>
+<!-- Segmented Control / Tabs Deslizáveis -->
+<section class="flex flex-col gap-space-8 pt-space-4">
+<div class="flex items-center gap-space-8 overflow-x-auto custom-scrollbar pb-1 -mx-space-16 px-space-16">
+<button class="shrink-0 px-space-16 py-space-8 rounded-xl bg-surface-container-high text-secondary border border-secondary/40 font-body-sm text-body-sm font-medium flex items-center gap-1.5 orbital-glow transition-all">
+<span>Hoje</span>
+<span class="px-1.5 py-0.2 rounded-full bg-secondary/20 text-secondary text-[10px] font-code-md">4</span>
+</button>
+<button class="shrink-0 px-space-16 py-space-8 rounded-xl bg-surface-container-low text-on-surface-variant hover:text-on-surface border border-[#253653] font-body-sm text-body-sm transition-all flex items-center gap-1.5">
+<span>Próximas</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container text-[#8e909e] text-[10px] font-code-md">6</span>
+</button>
+<button class="shrink-0 px-space-16 py-space-8 rounded-xl bg-surface-container-low text-on-surface-variant hover:text-on-surface border border-[#253653] font-body-sm text-body-sm transition-all flex items-center gap-1.5">
+<span>Todas</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container text-[#8e909e] text-[10px] font-code-md">18</span>
+</button>
+<button class="shrink-0 px-space-16 py-space-8 rounded-xl bg-surface-container-low text-on-surface-variant hover:text-on-surface border border-[#253653] font-body-sm text-body-sm transition-all flex items-center gap-1.5">
+<span>Concluídas</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container text-[#8e909e] text-[10px] font-code-md">42</span>
+</button>
+</div>
+<!-- Chips de Filtro Rápido -->
+<div class="flex items-center gap-1.5 overflow-x-auto custom-scrollbar pt-1 -mx-space-16 px-space-16">
+<button class="shrink-0 px-2.5 py-1 rounded-lg bg-primary-container/20 text-primary border border-primary/40 font-code-md text-[11px] font-medium flex items-center gap-1">
+<span>Todas</span>
+</button>
+<button class="shrink-0 px-2.5 py-1 rounded-lg bg-[#0B1728] text-on-surface-variant hover:text-on-surface border border-[#253653] font-code-md text-[11px] flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Infra / AWS</span>
+</button>
+<button class="shrink-0 px-2.5 py-1 rounded-lg bg-[#0B1728] text-on-surface-variant hover:text-on-surface border border-[#253653] font-code-md text-[11px] flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>Engenharia Core</span>
+</button>
+<button class="shrink-0 px-2.5 py-1 rounded-lg bg-[#0B1728] text-on-surface-variant hover:text-on-surface border border-[#253653] font-code-md text-[11px] flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span>Finanças</span>
+</button>
+</div>
+</section>
+<!-- Lista de Tarefas de Hoje -->
+<section class="flex flex-col gap-space-12 pt-space-4">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-[#8e909e] uppercase">Trilha de Execução</span>
+<span class="text-[11px] font-code-md text-[#596A82]">3/7 Concluídos</span>
+</div>
+<!-- Card 1: Crítica -->
+<div class="bg-[#101D31] border border-[#253653] hover:border-primary rounded-2xl p-space-16 transition-all duration-200 shadow-[0_4px_20px_rgba(0,0,0,0.3)] relative group">
+<div class="flex items-start gap-space-12">
+<!-- Circular Tactile Checkbox -->
+<button class="mt-0.5 w-6 h-6 rounded-full border-2 border-[#FB7185]/70 flex items-center justify-center shrink-0 hover:border-[#FB7185] active:scale-90 transition-all bg-[#07111F]">
+<span class="w-2.5 h-2.5 rounded-full bg-transparent group-hover:bg-[#FB7185]/20"></span>
+</button>
+<!-- Card Content -->
+<div class="flex-1 min-w-0 flex flex-col gap-space-8">
+<div class="flex items-start justify-between gap-space-8">
+<h3 class="font-body-lg text-[15px] font-semibold text-on-surface leading-snug">
+                  Deploy da versão v2.4 no cluster Staging
+                </h3>
+</div>
+<!-- Meta: Prioridade e Horário -->
+<div class="flex flex-wrap items-center gap-space-8">
+<span class="px-2 py-0.5 rounded-md bg-[rgba(251,113,133,0.15)] text-[#FB7185] border border-[rgba(251,113,133,0.3)] font-label-caps text-[10px] font-semibold">
+                  Crítica
+                </span>
+<div class="flex items-center gap-1 text-[12px] font-code-md text-[#FB7185]">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>15:30 (em 45 min)</span>
+</div>
+</div>
+<!-- Subtarefas Progress Bar -->
+<div class="flex flex-col gap-1.5 pt-1">
+<div class="flex items-center justify-between text-[11px] font-body-sm text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-secondary">checklist</span>
+                    3/4 subtarefas
+                  </span>
+<span class="font-code-md text-secondary">75%</span>
+</div>
+<div class="w-full bg-[#07111F] h-1.5 rounded-full overflow-hidden border border-[#1B2A43]">
+<div class="bg-secondary h-full rounded-full" style="width: 75%"></div>
+</div>
+</div>
+<!-- Tags -->
+<div class="flex items-center gap-1.5 pt-1">
+<span class="px-2 py-0.5 rounded bg-surface-container-high border border-[#253653] text-[11px] font-code-md text-[#8e909e]">#AWS</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high border border-[#253653] text-[11px] font-code-md text-[#8e909e]">#Infra</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: Alta -->
+<div class="bg-[#101D31] border border-[#253653] hover:border-primary rounded-2xl p-space-16 transition-all duration-200 shadow-[0_4px_20px_rgba(0,0,0,0.3)] relative group">
+<div class="flex items-start gap-space-12">
+<!-- Circular Tactile Checkbox -->
+<button class="mt-0.5 w-6 h-6 rounded-full border-2 border-[#FBBF24]/70 flex items-center justify-center shrink-0 hover:border-[#FBBF24] active:scale-90 transition-all bg-[#07111F]">
+<span class="w-2.5 h-2.5 rounded-full bg-transparent group-hover:bg-[#FBBF24]/20"></span>
+</button>
+<!-- Card Content -->
+<div class="flex-1 min-w-0 flex flex-col gap-space-8">
+<div class="flex items-start justify-between gap-space-8">
+<h3 class="font-body-lg text-[15px] font-semibold text-on-surface leading-snug">
+                  Code Review da PR #142 (Webhooks Stripe)
+                </h3>
+</div>
+<!-- Meta: Prioridade e Horário -->
+<div class="flex flex-wrap items-center gap-space-8">
+<span class="px-2 py-0.5 rounded-md bg-[rgba(251,191,36,0.15)] text-[#FBBF24] border border-[rgba(251,191,36,0.3)] font-label-caps text-[10px] font-semibold">
+                  Alta
+                </span>
+<div class="flex items-center gap-1 text-[12px] font-code-md text-[#94A3B8]">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>16:45</span>
+</div>
+</div>
+<!-- Subtarefas Progress Bar -->
+<div class="flex flex-col gap-1.5 pt-1">
+<div class="flex items-center justify-between text-[11px] font-body-sm text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-secondary">checklist</span>
+                    1/2 subtarefas
+                  </span>
+<span class="font-code-md text-[#FBBF24]">50%</span>
+</div>
+<div class="w-full bg-[#07111F] h-1.5 rounded-full overflow-hidden border border-[#1B2A43]">
+<div class="bg-[#FBBF24] h-full rounded-full" style="width: 50%"></div>
+</div>
+</div>
+<!-- Tags -->
+<div class="flex items-center gap-1.5 pt-1">
+<span class="px-2 py-0.5 rounded bg-surface-container-high border border-[#253653] text-[11px] font-code-md text-[#8e909e]">#Rust</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high border border-[#253653] text-[11px] font-code-md text-[#8e909e]">#Backend</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3: Média -->
+<div class="bg-[#101D31] border border-[#253653] hover:border-primary rounded-2xl p-space-16 transition-all duration-200 shadow-[0_4px_20px_rgba(0,0,0,0.3)] relative group">
+<div class="flex items-start gap-space-12">
+<!-- Circular Tactile Checkbox -->
+<button class="mt-0.5 w-6 h-6 rounded-full border-2 border-[#7692FF]/60 flex items-center justify-center shrink-0 hover:border-[#7692FF] active:scale-90 transition-all bg-[#07111F]">
+<span class="w-2.5 h-2.5 rounded-full bg-transparent group-hover:bg-[#7692FF]/20"></span>
+</button>
+<!-- Card Content -->
+<div class="flex-1 min-w-0 flex flex-col gap-space-8">
+<div class="flex items-start justify-between gap-space-8">
+<h3 class="font-body-lg text-[15px] font-medium text-on-surface leading-snug">
+                  Conciliação de cartões e export de invoices
+                </h3>
+</div>
+<!-- Meta: Prioridade e Horário -->
+<div class="flex flex-wrap items-center gap-space-8">
+<span class="px-2 py-0.5 rounded-md bg-[rgba(118,146,255,0.15)] text-[#7692FF] border border-[rgba(118,146,255,0.3)] font-label-caps text-[10px] font-semibold">
+                  Média
+                </span>
+<div class="flex items-center gap-1 text-[12px] font-code-md text-[#94A3B8]">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>18:00</span>
+</div>
+</div>
+<!-- Tags -->
+<div class="flex items-center gap-1.5 pt-1">
+<span class="px-2 py-0.5 rounded bg-surface-container-high border border-[#253653] text-[11px] font-code-md text-[#8e909e]">#Finanças</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Accordion: Tarefas Concluídas Hoje -->
+<section class="mt-space-8">
+<details class="group bg-surface-container-low border border-[#1B2A43] rounded-2xl overflow-hidden transition-all" open="">
+<summary class="p-space-16 flex items-center justify-between cursor-pointer list-none select-none hover:bg-surface-container">
+<div class="flex items-center gap-space-8">
+<span class="material-symbols-outlined text-secondary text-[18px]">task_alt</span>
+<span class="font-headline-sm text-[14px] font-medium text-on-surface">Tarefas Concluídas Hoje</span>
+<span class="px-2 py-0.5 rounded-full bg-[#1B2A43] text-secondary font-code-md text-[11px]">3</span>
+</div>
+<span class="material-symbols-outlined text-[#8e909e] text-[20px] transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-space-16 pb-space-16 flex flex-col gap-space-12 border-t border-[#1B2A43]/60 pt-space-12">
+<!-- Item Concluído 1 -->
+<div class="flex items-start gap-space-12 opacity-65 hover:opacity-100 transition-opacity">
+<div class="mt-0.5 w-5 h-5 rounded-full bg-secondary/20 border border-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-[14px] font-bold">check</span>
+</div>
+<div class="flex-1 min-w-0 flex items-center justify-between gap-space-8">
+<span class="font-body-md text-[13px] text-on-surface line-through text-[#8e909e] truncate">
+                  Alinhamento diário de arquitetura
+                </span>
+<span class="font-code-md text-[11px] text-[#596A82] shrink-0">10:30</span>
+</div>
+</div>
+<!-- Item Concluído 2 -->
+<div class="flex items-start gap-space-12 opacity-65 hover:opacity-100 transition-opacity">
+<div class="mt-0.5 w-5 h-5 rounded-full bg-secondary/20 border border-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-[14px] font-bold">check</span>
+</div>
+<div class="flex-1 min-w-0 flex items-center justify-between gap-space-8">
+<span class="font-body-md text-[13px] text-on-surface line-through text-[#8e909e] truncate">
+                  Revisão de logs do worker de áudio
+                </span>
+<span class="font-code-md text-[11px] text-[#596A82] shrink-0">11:45</span>
+</div>
+</div>
+<!-- Item Concluído 3 -->
+<div class="flex items-start gap-space-12 opacity-65 hover:opacity-100 transition-opacity">
+<div class="mt-0.5 w-5 h-5 rounded-full bg-secondary/20 border border-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-[14px] font-bold">check</span>
+</div>
+<div class="flex-1 min-w-0 flex items-center justify-between gap-space-8">
+<span class="font-body-md text-[13px] text-on-surface line-through text-[#8e909e] truncate">
+                  Sincronização de segredos no Vault
+                </span>
+<span class="font-code-md text-[11px] text-[#596A82] shrink-0">13:10</span>
+</div>
+</div>
+</div>
+</details>
+</section>
+<!-- Bottom Sheet Drawer Preview Prompt / Micro Telemetry Rail -->
+<section class="mt-space-4 p-space-12 rounded-xl bg-surface-container-high/40 border border-[#253653]/70 flex items-center justify-between">
+<div class="flex items-center gap-space-8">
+<span class="material-symbols-outlined text-primary text-[18px]">terminal</span>
+<div class="flex flex-col">
+<span class="font-code-md text-[11px] text-on-surface">Orbit CLI integrado</span>
+<span class="font-body-sm text-[10px] text-[#596A82]">Pressione ⌘K ou deslize para ações rápidas</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[#8e909e] text-[18px]">chevron_right</span>
+</section>
+</main>
+<!-- Contextual Floating Action Button -->
+<div class="fixed bottom-20 right-4 z-40 md:hidden">
+<button class="w-13 h-13 p-3.5 rounded-full bg-primary-container hover:bg-[#5575F6] text-[#07111F] shadow-[0_8px_24px_rgba(118,146,255,0.4),0_0_12px_rgba(118,146,255,0.3)] flex items-center justify-center active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[24px] font-bold">add_task</span>
+</button>
+</div>
+<!-- Mobile Persistent Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 bg-[#07111F]/90 backdrop-blur-xl border-t border-[#1B2A43]/80 px-space-12 py-space-8 flex justify-around items-center max-w-md mx-auto shadow-[0_-8px_30px_rgba(0,0,0,0.6)]">
+<!-- Início -->
+<button class="flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[22px]">dashboard</span>
+<span class="font-label-regular text-[10px]">Visão geral</span>
+</button>
+<!-- Tarefas (ATIVO) -->
+<button class="flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-[#2DD4BF] relative transition-transform active:scale-95">
+<div class="relative">
+<span class="material-symbols-outlined text-[22px] material-symbols-fill text-secondary">check_circle</span>
+<span class="absolute -top-1 -right-2 px-1 py-0.2 bg-secondary text-[#07111F] text-[9px] font-code-md font-bold rounded-full leading-none shadow-[0_0_8px_rgba(45,212,191,0.6)]">
+            4
+          </span>
+</div>
+<span class="font-label-regular text-[10px] font-semibold text-secondary">Tarefas</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary shadow-[0_0_6px_#2DD4BF]"></span>
+</button>
+<!-- Hábitos -->
+<button class="flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-on-surface-variant hover:text-on-surface transition-colors relative">
+<div class="relative">
+<span class="material-symbols-outlined text-[22px]">repeat</span>
+<span class="absolute -top-1 -right-2 text-[10px]">🔥</span>
+</div>
+<span class="font-label-regular text-[10px]">Hábitos</span>
+</button>
+<!-- Finanças -->
+<button class="flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[22px]">account_balance_wallet</span>
+<span class="font-label-regular text-[10px]">Finanças</span>
+</button>
+<!-- Treinos -->
+<button class="flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[22px]">fitness_center</span>
+<span class="font-label-regular text-[10px]">Treinos</span>
+</button>
+</nav>
+</div>
+<!-- Micro-interactions Script -->
+<script>
+    // Lightweight tactile feedback toggle for task items
+    document.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        // Simple subtle vibration if supported
+        if (navigator.vibrate) {
+          navigator.vibrate(12);
+        }
+      });
+    });
+  </script>
+</body></html>

@@ -1,0 +1,592 @@
+{
+  "screen_id": "orbit_nova_tarefa_drawer_mobile",
+  "tailwind_config": {
+    "darkMode": "class",
+    "theme": {
+      "extend": {
+        "colors": {
+          "surface-bright": "#303a49",
+          "on-secondary-container": "#004d44",
+          "primary-fixed": "#dde1ff",
+          "surface-container-high": "#212a39",
+          "error-container": "#93000a",
+          "tertiary": "#b8c4ff",
+          "inverse-on-surface": "#273140",
+          "on-primary-fixed-variant": "#193ca7",
+          "on-primary-fixed": "#001552",
+          "primary-container": "#7692ff",
+          "secondary-container": "#03c6b2",
+          "outline-variant": "#444653",
+          "error": "#ffb4ab",
+          "background": "#0a1422",
+          "secondary-fixed": "#62fae3",
+          "on-secondary": "#003731",
+          "primary-fixed-dim": "#b7c4ff",
+          "outline": "#8e909e",
+          "on-tertiary-container": "#002588",
+          "surface-dim": "#0a1422",
+          "surface-container-low": "#121c2a",
+          "surface-container-highest": "#2c3545",
+          "surface-variant": "#2c3545",
+          "surface-tint": "#b7c4ff",
+          "primary": "#b7c4ff",
+          "inverse-primary": "#3856bf",
+          "tertiary-fixed": "#dde1ff",
+          "surface-container": "#16202f",
+          "surface": "#0a1422",
+          "on-surface-variant": "#c4c5d5",
+          "on-secondary-fixed": "#00201c",
+          "on-primary": "#002682",
+          "on-primary-container": "#002683",
+          "on-tertiary-fixed-variant": "#0136bb",
+          "on-background": "#d9e3f7",
+          "tertiary-container": "#7992ff",
+          "on-surface": "#d9e3f7",
+          "on-tertiary-fixed": "#001354",
+          "secondary": "#44e2cd",
+          "on-secondary-fixed-variant": "#005047",
+          "inverse-surface": "#d9e3f7",
+          "secondary-fixed-dim": "#3cddc7",
+          "on-error-container": "#ffdad6",
+          "on-tertiary": "#002486",
+          "surface-container-lowest": "#050e1c",
+          "on-error": "#690005",
+          "tertiary-fixed-dim": "#b8c4ff"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "space-12": "0.75rem",
+          "space-4": "0.25rem",
+          "space-32": "2rem",
+          "margin-desktop": "2rem",
+          "space-48": "3rem",
+          "gutter-mobile": "1rem",
+          "margin-mobile": "1rem",
+          "space-16": "1rem",
+          "space-40": "2.5rem",
+          "gutter-desktop": "1.5rem",
+          "space-24": "1.5rem",
+          "space-2": "0.125rem",
+          "space-64": "4rem",
+          "space-20": "1.25rem",
+          "space-8": "0.5rem",
+          "margin-tablet": "1.5rem"
+        },
+        "fontFamily": {
+          "code-md": [
+            "JetBrains Mono"
+          ],
+          "display-lg-mobile": [
+            "Geist"
+          ],
+          "body-sm": [
+            "Geist"
+          ],
+          "label-regular": [
+            "Geist"
+          ],
+          "headline-xl-mobile": [
+            "Geist"
+          ],
+          "body-lg": [
+            "Geist"
+          ],
+          "headline-sm": [
+            "Geist"
+          ],
+          "headline-xl": [
+            "Geist"
+          ],
+          "body-md": [
+            "Geist"
+          ],
+          "label-caps": [
+            "JetBrains Mono"
+          ],
+          "headline-md": [
+            "Geist"
+          ],
+          "display-lg": [
+            "Geist"
+          ]
+        },
+        "fontSize": {
+          "code-md": [
+            "13px",
+            {
+              "lineHeight": "20px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "display-lg-mobile": [
+            "30px",
+            {
+              "lineHeight": "38px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-sm": [
+            "12px",
+            {
+              "lineHeight": "18px",
+              "letterSpacing": "0.005em",
+              "fontWeight": "400"
+            }
+          ],
+          "label-regular": [
+            "12px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.01em",
+              "fontWeight": "500"
+            }
+          ],
+          "headline-xl-mobile": [
+            "24px",
+            {
+              "lineHeight": "32px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-lg": [
+            "16px",
+            {
+              "lineHeight": "26px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-sm": [
+            "16px",
+            {
+              "lineHeight": "24px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-xl": [
+            "28px",
+            {
+              "lineHeight": "36px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-md": [
+            "14px",
+            {
+              "lineHeight": "22px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "label-caps": [
+            "11px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.06em",
+              "fontWeight": "500"
+            }
+          ],
+          "headline-md": [
+            "20px",
+            {
+              "lineHeight": "28px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "500"
+            }
+          ],
+          "display-lg": [
+            "40px",
+            {
+              "lineHeight": "48px",
+              "letterSpacing": "-0.025em",
+              "fontWeight": "600"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "inline_css": [
+    "\n    .material-symbols-outlined {\n      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;\n      display: inline-block;\n      vertical-align: middle;\n      line-height: 1;\n    }\n    .custom-scrollbar::-webkit-scrollbar {\n      width: 4px;\n    }\n    .custom-scrollbar::-webkit-scrollbar-track {\n      background: transparent;\n    }\n    .custom-scrollbar::-webkit-scrollbar-thumb {\n      background: #253653;\n      border-radius: 4px;\n    }\n    /* Orbital glow utility */\n    .orbital-ring {\n      background-image: radial-gradient(circle at top center, rgba(118, 146, 255, 0.08) 0%, transparent 70%);\n    }\n  "
+  ],
+  "class_frequency": {
+    "bg-surface-container-lowest": 5,
+    "text-on-surface": 12,
+    "font-body-md": 3,
+    "antialiased": 1,
+    "overflow-hidden": 4,
+    "select-none": 1,
+    "relative": 4,
+    "w-full": 8,
+    "h-screen": 1,
+    "max-w-md": 1,
+    "mx-auto": 1,
+    "bg-surface-dim": 1,
+    "flex": 46,
+    "flex-col": 8,
+    "justify-end": 1,
+    "absolute": 2,
+    "inset-0": 2,
+    "opacity-40": 1,
+    "filter": 1,
+    "blur-[2px]": 1,
+    "pointer-events-none": 1,
+    "p-space-16": 2,
+    "space-y-space-16": 1,
+    "items-center": 40,
+    "justify-between": 10,
+    "pt-space-8": 2,
+    "gap-space-8": 5,
+    "w-8": 3,
+    "h-8": 3,
+    "rounded-lg": 8,
+    "bg-surface-container-high": 8,
+    "border": 26,
+    "border-outline-variant/30": 11,
+    "justify-center": 11,
+    "text-primary": 6,
+    "font-headline-sm": 4,
+    "text-headline-sm": 2,
+    "block": 1,
+    "font-label-caps": 17,
+    "text-label-caps": 11,
+    "text-on-surface-variant": 18,
+    "rounded-full": 19,
+    "material-symbols-outlined": 16,
+    "text-outline": 7,
+    "rounded-xl": 12,
+    "bg-surface-container-low": 2,
+    "border-outline-variant/20": 8,
+    "space-y-space-8": 4,
+    "text-secondary-fixed": 3,
+    "font-code-md": 13,
+    "text-code-md": 7,
+    "h-2": 5,
+    "bg-surface-container-highest": 2,
+    "h-full": 2,
+    "bg-secondary": 4,
+    "w-3/4": 1,
+    "grid": 3,
+    "grid-cols-2": 2,
+    "p-space-12": 5,
+    "bg-surface-container": 12,
+    "font-headline-md": 2,
+    "text-headline-md": 2,
+    "mt-space-4": 2,
+    "text-secondary": 4,
+    "bg-surface-container-lowest/80": 1,
+    "backdrop-blur-md": 1,
+    "transition-opacity": 1,
+    "duration-200": 1,
+    "z-20": 1,
+    "max-h-[92vh]": 1,
+    "border-t": 4,
+    "border-outline-variant/40": 7,
+    "rounded-t-[28px]": 1,
+    "shadow-[0_-12px_40px_rgba(3,8,16,0.85)]": 1,
+    "orbital-ring": 1,
+    "pt-3": 1,
+    "pb-1": 2,
+    "cursor-grab": 1,
+    "active:cursor-grabbing": 1,
+    "w-12": 1,
+    "h-1.5": 3,
+    "bg-outline-variant/60": 1,
+    "hover:bg-outline": 1,
+    "transition-colors": 7,
+    "px-space-20": 4,
+    "pb-space-12": 1,
+    "border-b": 1,
+    "items-start": 5,
+    "space-y-space-2": 1,
+    "font-headline-xl-mobile": 1,
+    "text-headline-xl-mobile": 1,
+    "font-semibold": 3,
+    "tracking-tight": 1,
+    "inline-flex": 4,
+    "px-2": 1,
+    "py-0.5": 1,
+    "bg-primary-container/20": 1,
+    "border-primary-container/40": 1,
+    "text-[10px]": 4,
+    "tracking-wider": 1,
+    "uppercase": 1,
+    "gap-1.5": 8,
+    "w-1.5": 1,
+    "bg-secondary-container": 1,
+    "animate-pulse": 1,
+    "w-9": 1,
+    "h-9": 1,
+    "-mr-1": 1,
+    "-mt-1": 1,
+    "bg-surface-container-high/60": 1,
+    "hover:bg-surface-container-high": 1,
+    "hover:text-on-surface": 6,
+    "active:scale-95": 7,
+    "transition-all": 10,
+    "text-[18px]": 5,
+    "flex-1": 5,
+    "overflow-y-auto": 1,
+    "py-space-16": 1,
+    "space-y-space-20": 1,
+    "custom-scrollbar": 1,
+    "text-[11px]": 10,
+    "border-outline-variant/50": 1,
+    "focus:border-primary-container": 1,
+    "focus:ring-1": 1,
+    "focus:ring-primary-container": 1,
+    "placeholder:text-outline-variant": 1,
+    "resize-none": 1,
+    "outline-none": 1,
+    "gap-2": 7,
+    "mt-2": 3,
+    "px-space-8": 2,
+    "py-1": 2,
+    "hover:border-primary/50": 2,
+    "text-[15px]": 3,
+    "grid-cols-4": 1,
+    "py-space-8": 4,
+    "px-1": 4,
+    "gap-1": 4,
+    "hover:border-error": 1,
+    "w-2": 4,
+    "bg-error": 1,
+    "shadow-[0_0_8px_rgba(255,180,171,0.5)]": 1,
+    "text-error": 1,
+    "font-medium": 4,
+    "border-2": 2,
+    "border-[#FBBF24]": 1,
+    "shadow-[0_0_14px_rgba(251,191,36,0.18)]": 1,
+    "bg-[#FBBF24]": 1,
+    "shadow-[0_0_8px_rgba(251,191,36,0.6)]": 1,
+    "text-[#FBBF24]": 1,
+    "hover:border-primary": 1,
+    "bg-primary-container": 1,
+    "font-normal": 3,
+    "hover:border-outline": 4,
+    "bg-outline": 1,
+    "space-y-space-12": 3,
+    "pt-space-4": 3,
+    "overflow-x-auto": 1,
+    "no-scrollbar": 1,
+    "-mx-space-20": 1,
+    "shrink-0": 4,
+    "px-3": 4,
+    "py-1.5": 4,
+    "border-secondary": 1,
+    "shadow-[0_0_12px_rgba(68,226,205,0.2)]": 1,
+    "text-[14px]": 4,
+    "gap-space-12": 1,
+    "text-body-md": 2,
+    "space-y-space-4": 1,
+    "w-1/2": 1,
+    "duration-300": 1,
+    "space-y-2": 1,
+    "gap-3": 4,
+    "p-space-8": 4,
+    "bg-surface-container/50": 2,
+    "w-5": 4,
+    "h-5": 5,
+    "rounded": 4,
+    "text-surface-container-lowest": 3,
+    "mt-0.5": 4,
+    "min-w-0": 4,
+    "font-body-sm": 6,
+    "text-body-sm": 6,
+    "line-through": 2,
+    "text-outline-variant": 2,
+    "text-[16px]": 2,
+    "hover:border-primary/40": 2,
+    "border-outline-variant/70": 2,
+    "p-1": 1,
+    "pl-space-12": 1,
+    "border-dashed": 1,
+    "border-outline-variant/60": 1,
+    "focus-within:border-primary": 1,
+    "bg-transparent": 1,
+    "border-none": 1,
+    "placeholder:text-outline": 1,
+    "focus:ring-0": 1,
+    "p-0": 1,
+    "hover:bg-surface-container-highest": 1,
+    "pt-space-12": 1,
+    "pb-space-20": 1,
+    "bg-surface-container-low/95": 1,
+    "backdrop-blur-lg": 1,
+    "cursor-pointer": 1,
+    "group": 1,
+    "sr-only": 1,
+    "peer": 2,
+    "w-10": 1,
+    "peer-focus:outline-none": 1,
+    "peer-checked:after:translate-x-full": 1,
+    "peer-checked:after:border-white": 1,
+    "after:content-['']": 1,
+    "after:absolute": 1,
+    "after:top-[2px]": 1,
+    "after:left-[2px]": 1,
+    "after:bg-on-surface": 1,
+    "after:border-gray-300": 1,
+    "after:border": 1,
+    "after:rounded-full": 1,
+    "after:h-4": 1,
+    "after:w-4": 1,
+    "after:transition-all": 1,
+    "peer-checked:bg-secondary": 1,
+    "h-12": 1,
+    "bg-gradient-to-r": 1,
+    "from-[#5575F6]": 1,
+    "to-[#2DD4BF]": 1,
+    "shadow-[0_4px_24px_rgba(85,117,246,0.35)]": 1,
+    "active:scale-[0.98]": 1,
+    "transition-transform": 1,
+    "text-[20px]": 1,
+    "font-bold": 1,
+    "pt-1": 1,
+    "pb-0.5": 1,
+    "w-32": 1,
+    "h-1": 1,
+    "bg-outline-variant/40": 1
+  },
+  "controls": [
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "close",
+      "placeholder": null,
+      "class": "w-9 h-9 -mr-1 -mt-1 rounded-full bg-surface-container-high/60 hover:bg-surface-container-high border border-outline-variant/30 flex items-center justify-center text-on-surface-variant hover:text-on-surface active:scale-95 transition-all",
+      "id": null
+    },
+    {
+      "tag": "textarea",
+      "type": null,
+      "text": "Refatorar pipeline de CI/CD para Rust microservices",
+      "placeholder": "Descreva a ação operacional...",
+      "class": "w-full bg-surface-container-lowest border border-outline-variant/50 focus:border-primary-container focus:ring-1 focus:ring-primary-container rounded-xl p-space-12 text-on-surface font-headline-sm text-headline-sm placeholder:text-outline-variant resize-none outline-none transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "mic Áudio IA",
+      "placeholder": null,
+      "class": "inline-flex items-center gap-1.5 px-space-8 py-1 rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-primary/50 text-on-surface-variant hover:text-on-surface font-code-md text-code-md transition-all active:scale-95",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "⌘K Comando CLI",
+      "placeholder": null,
+      "class": "inline-flex items-center gap-1.5 px-space-8 py-1 rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-primary/50 text-on-surface-variant hover:text-on-surface font-code-md text-code-md transition-all active:scale-95",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "Crítica",
+      "placeholder": null,
+      "class": "py-space-8 px-1 rounded-xl bg-surface-container border border-outline-variant/30 flex flex-col items-center gap-1 hover:border-error active:scale-95 transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "Alta",
+      "placeholder": null,
+      "class": "py-space-8 px-1 rounded-xl bg-surface-container-high border-2 border-[#FBBF24] flex flex-col items-center gap-1 shadow-[0_0_14px_rgba(251,191,36,0.18)] active:scale-95 transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "Média",
+      "placeholder": null,
+      "class": "py-space-8 px-1 rounded-xl bg-surface-container border border-outline-variant/30 flex flex-col items-center gap-1 hover:border-primary active:scale-95 transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "Baixa",
+      "placeholder": null,
+      "class": "py-space-8 px-1 rounded-xl bg-surface-container border border-outline-variant/30 flex flex-col items-center gap-1 hover:border-outline active:scale-95 transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "terminal #Infra / AWS",
+      "placeholder": null,
+      "class": "shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-high border-2 border-secondary text-secondary font-code-md text-code-md shadow-[0_0_12px_rgba(68,226,205,0.2)]",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "dns #Backend Core",
+      "placeholder": null,
+      "class": "shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container border border-outline-variant/40 text-on-surface-variant hover:text-on-surface hover:border-outline font-code-md text-code-md transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "account_balance_wallet #Finanças",
+      "placeholder": null,
+      "class": "shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container border border-outline-variant/40 text-on-surface-variant hover:text-on-surface hover:border-outline font-code-md text-code-md transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "palette #Design System",
+      "placeholder": null,
+      "class": "shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container border border-outline-variant/40 text-on-surface-variant hover:text-on-surface hover:border-outline font-code-md text-code-md transition-colors",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "text": "",
+      "placeholder": "+ Adicionar subtarefa rápida...",
+      "class": "w-full bg-transparent border-none text-on-surface text-body-sm placeholder:text-outline focus:ring-0 p-0 font-body-sm",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "add",
+      "placeholder": null,
+      "class": "w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant/40 flex items-center justify-center text-primary hover:bg-surface-container-highest transition-colors",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "text": "",
+      "placeholder": null,
+      "class": "sr-only peer",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "check_circle Criar Tarefa Operacional",
+      "placeholder": null,
+      "class": "w-full h-12 rounded-xl bg-gradient-to-r from-[#5575F6] to-[#2DD4BF] text-surface-container-lowest font-headline-sm font-semibold flex items-center justify-center gap-2 shadow-[0_4px_24px_rgba(85,117,246,0.35)] active:scale-[0.98] transition-transform",
+      "id": null
+    }
+  ],
+  "reading_note": "Extração estática. Os scripts e handlers do HTML original foram preservados, mas não executados nem considerados implementação funcional."
+}

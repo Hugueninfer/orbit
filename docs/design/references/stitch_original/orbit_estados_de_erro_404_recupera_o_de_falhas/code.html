@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Orbit — Resiliência Operacional &amp; Tratamento de Erros</title>
+<!-- Google Fonts: Geist & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary-container": "#7692ff",
+            "outline": "#8e909e",
+            "on-tertiary": "#002486",
+            "outline-variant": "#444653",
+            "surface-container-lowest": "#050e1c",
+            "inverse-primary": "#3856bf",
+            "surface-container-highest": "#2c3545",
+            "on-surface": "#d9e3f7",
+            "on-primary-fixed": "#001552",
+            "error": "#ffb4ab",
+            "on-secondary": "#003731",
+            "on-primary-fixed-variant": "#193ca7",
+            "surface-container-low": "#121c2a",
+            "surface-variant": "#2c3545",
+            "tertiary": "#b8c4ff",
+            "surface-bright": "#303a49",
+            "primary-fixed-dim": "#b7c4ff",
+            "surface-container-high": "#212a39",
+            "surface-dim": "#0a1422",
+            "on-error": "#690005",
+            "inverse-surface": "#d9e3f7",
+            "on-secondary-fixed-variant": "#005047",
+            "surface-container": "#16202f",
+            "tertiary-fixed-dim": "#b8c4ff",
+            "surface-tint": "#b7c4ff",
+            "secondary": "#44e2cd",
+            "surface": "#0a1422",
+            "on-tertiary-container": "#002588",
+            "background": "#0a1422",
+            "secondary-container": "#03c6b2",
+            "on-primary-container": "#002683",
+            "primary": "#b7c4ff",
+            "error-container": "#93000a",
+            "on-background": "#d9e3f7",
+            "tertiary-fixed": "#dde1ff",
+            "secondary-fixed": "#62fae3",
+            "on-primary": "#002682",
+            "primary-fixed": "#dde1ff",
+            "tertiary-container": "#7992ff",
+            "on-tertiary-fixed": "#001354",
+            "on-surface-variant": "#c4c5d5",
+            "on-tertiary-fixed-variant": "#0136bb",
+            "on-error-container": "#ffdad6",
+            "secondary-fixed-dim": "#3cddc7",
+            "inverse-on-surface": "#273140",
+            "on-secondary-fixed": "#00201c",
+            "on-secondary-container": "#004d44"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-16": "1rem",
+            "space-40": "2.5rem",
+            "space-24": "1.5rem",
+            "space-4": "0.25rem",
+            "space-64": "4rem",
+            "space-8": "0.5rem",
+            "space-20": "1.25rem",
+            "space-12": "0.75rem",
+            "space-32": "2rem",
+            "gutter-desktop": "1.5rem",
+            "margin-desktop": "2rem",
+            "margin-mobile": "1rem",
+            "space-48": "3rem",
+            "space-2": "0.125rem",
+            "gutter-mobile": "1rem",
+            "margin-tablet": "1.5rem"
+          },
+          "fontFamily": {
+            "headline-md": ["Geist"],
+            "headline-xl-mobile": ["Geist"],
+            "headline-sm": ["Geist"],
+            "display-lg-mobile": ["Geist"],
+            "code-md": ["JetBrains Mono"],
+            "body-lg": ["Geist"],
+            "body-sm": ["Geist"],
+            "label-regular": ["Geist"],
+            "label-caps": ["JetBrains Mono"],
+            "display-lg": ["Geist"],
+            "body-md": ["Geist"],
+            "headline-xl": ["Geist"]
+          },
+          "fontSize": {
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "500" }],
+            "headline-xl-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "display-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "code-md": ["13px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "body-lg": ["16px", { "lineHeight": "26px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "letterSpacing": "0.005em", "fontWeight": "400" }],
+            "label-regular": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "500" }],
+            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.025em", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-xl": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    
+    @keyframes orbit-drift {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes pulse-halo {
+      0%, 100% { transform: scale(1); opacity: 0.25; }
+      50% { transform: scale(1.4); opacity: 0.6; }
+    }
+    @keyframes glitch-flicker {
+      0%, 100% { opacity: 1; }
+      92% { opacity: 0.95; }
+      93% { opacity: 0.4; }
+      94% { opacity: 1; }
+      97% { opacity: 0.7; }
+    }
+
+    .orbital-ring {
+      animation: orbit-drift 120s linear infinite;
+      transform-origin: center center;
+    }
+    .orbital-ring-reverse {
+      animation: orbit-drift 80s linear infinite reverse;
+      transform-origin: center center;
+    }
+    .node-pulse {
+      animation: pulse-halo 3s ease-in-out infinite;
+    }
+    .terminal-flicker {
+      animation: glitch-flicker 8s infinite;
+    }
+    
+    /* Custom scrollbar for telemetry logs */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #050e1c;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #253653;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #444653;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased selection:bg-primary-container selection:text-surface-container-lowest min-h-screen flex flex-col font-body-md overflow-x-hidden">
+<!-- ========================================================================= -->
+<!-- 1. SHARED COMPONENT: SideNavBar (Strict compliance to JSON & tokens)     -->
+<!-- ========================================================================= -->
+<aside class="fixed top-0 left-0 h-screen w-64 z-40 bg-surface-container-low dark:bg-surface-container-low border-r border-outline-variant/30 flex flex-col justify-between p-space-16 select-none">
+<!-- Header / Brand -->
+<div class="flex flex-col gap-space-24">
+<div class="flex items-center gap-space-12 px-space-8 pt-space-4">
+<div class="relative w-9 h-9 rounded-lg bg-surface-container-high border border-outline-variant/40 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]" data-icon="all_inclusive">all_inclusive</span>
+<span class="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#44e2cd]"></span>
+</div>
+<div class="flex flex-col">
+<span class="text-headline-sm font-headline-sm font-semibold text-on-surface tracking-tight leading-none">Orbit</span>
+<span class="text-label-caps font-label-caps text-outline text-[10px] uppercase tracking-wider mt-1">Personal Operations Hub</span>
+</div>
+</div>
+<!-- Quick Action CTA -->
+<button class="w-full flex items-center justify-center gap-space-8 py-space-8 px-space-16 rounded-lg bg-primary-container text-on-primary-container font-medium text-body-sm hover:brightness-110 active:scale-[0.98] transition-all shadow-[0_0_16px_rgba(118,146,255,0.2)]">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+<span>+ Adicionar</span>
+</button>
+<!-- Primary Navigation Tabs -->
+<nav class="flex flex-col gap-space-4">
+<!-- Tab 0: Visão geral (Active semantic fallback since Error/Resilience lives in Overview/System diagnostic) -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg bg-surface-container-high dark:bg-surface-container-high text-secondary-fixed dark:text-secondary-fixed font-medium border-l-2 border-secondary transition-colors duration-150" href="#overview">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+<span class="text-body-md font-body-md">Visão geral</span>
+</a>
+<!-- Tab 1: Tarefas -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant dark:text-on-surface-variant font-normal hover:bg-surface-container dark:hover:bg-surface-container transition-colors duration-150 active:scale-[0.98]" href="#tarefas">
+<span class="material-symbols-outlined text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="text-body-md font-body-md">Tarefas</span>
+</a>
+<!-- Tab 2: Hábitos -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant dark:text-on-surface-variant font-normal hover:bg-surface-container dark:hover:bg-surface-container transition-colors duration-150 active:scale-[0.98]" href="#habitos">
+<span class="material-symbols-outlined text-[20px]" data-icon="repeat">repeat</span>
+<span class="text-body-md font-body-md">Hábitos</span>
+</a>
+<!-- Tab 3: Finanças -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant dark:text-on-surface-variant font-normal hover:bg-surface-container dark:hover:bg-surface-container transition-colors duration-150 active:scale-[0.98]" href="#financas">
+<span class="material-symbols-outlined text-[20px]" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="text-body-md font-body-md">Finanças</span>
+</a>
+<!-- Tab 4: Treinos -->
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant dark:text-on-surface-variant font-normal hover:bg-surface-container dark:hover:bg-surface-container transition-colors duration-150 active:scale-[0.98]" href="#treinos">
+<span class="material-symbols-outlined text-[20px]" data-icon="fitness_center">fitness_center</span>
+<span class="text-body-md font-body-md">Treinos</span>
+</a>
+</nav>
+</div>
+<!-- Footer System Tabs & Identity -->
+<div class="flex flex-col gap-space-4 pt-space-16 border-t border-outline-variant/30">
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors duration-150" href="#integracoes">
+<span class="material-symbols-outlined text-[20px]" data-icon="hub">hub</span>
+<span class="text-body-md font-body-md">Integrações</span>
+</a>
+<a class="flex items-center gap-space-12 px-space-12 py-space-8 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors duration-150" href="#configuracoes">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+<span class="text-body-md font-body-md">Configurações</span>
+</a>
+<!-- User Profile Row -->
+<div class="mt-space-8 pt-space-8 border-t border-outline-variant/20 flex items-center justify-between px-space-8">
+<div class="flex items-center gap-space-12">
+<div class="relative">
+<span class="material-symbols-outlined text-[32px] text-primary" data-icon="account_circle">account_circle</span>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-secondary border-2 border-surface-container-low" title="Sincronizado"></span>
+</div>
+<div class="flex flex-col">
+<span class="text-body-sm font-body-sm font-medium text-on-surface">Pedro Martins</span>
+<span class="text-label-caps font-label-caps text-[10px] text-outline">Cluster Master</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px] hover:text-on-surface cursor-pointer" data-icon="more_vert">more_vert</span>
+</div>
+</div>
+</aside>
+<!-- ========================================================================= -->
+<!-- 2. MAIN APPLICATION VIEWPORT                                            -->
+<!-- ========================================================================= -->
+<div class="pl-64 flex flex-col min-h-screen">
+<!-- SHARED COMPONENT: TopNavBar (Strict compliance to JSON) -->
+<header class="sticky top-0 w-full z-30 bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 h-16 px-space-24 flex justify-between items-center">
+<div class="flex items-center gap-space-16">
+<div class="flex items-center gap-space-8">
+<span class="text-headline-sm font-headline-sm font-semibold text-on-surface">Orbit</span>
+<span class="text-outline text-body-sm font-body-sm">/</span>
+<div class="flex items-center gap-space-4 px-space-8 py-1 rounded bg-error-container/30 border border-error/40 text-error text-label-caps font-label-caps text-[11px]">
+<span class="material-symbols-outlined text-[14px]" data-icon="warning">warning</span>
+<span>Cluster Recovery Deck</span>
+</div>
+</div>
+</div>
+<!-- Search & Trailing Controls -->
+<div class="flex items-center gap-space-16">
+<!-- Search Input Bar with Shortcut -->
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-[18px]" data-icon="search">search</span>
+<input class="bg-surface-container-low text-on-surface placeholder:text-outline/70 border border-outline-variant/40 rounded-lg pl-9 pr-14 py-1.5 text-body-sm font-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-72 transition-all" placeholder="Pesquisar registros, rotas ou snapshots..." type="text"/>
+<kbd class="absolute right-2 px-1.5 py-0.5 rounded bg-surface-container-high border border-outline-variant/50 text-outline text-[10px] font-label-caps">⌘K</kbd>
+</div>
+<!-- Notification Bell -->
+<button class="relative p-2 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors duration-150" title="Notificações Operacionais">
+<span class="material-symbols-outlined text-[20px]" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface"></span>
+</button>
+<!-- Global Primary Action -->
+<button class="flex items-center gap-space-4 px-space-12 py-1.5 rounded-lg bg-primary-container text-on-primary-container text-body-sm font-body-sm font-medium hover:brightness-110 active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined text-[16px]" data-icon="add">add</span>
+<span>+ Adicionar</span>
+</button>
+<!-- User mini-avatar -->
+<div class="w-8 h-8 rounded-full border border-secondary/60 flex items-center justify-center bg-surface-container-high text-primary" title="Avatar Pedro Martins com anel de status">
+<span class="material-symbols-outlined text-[20px]" data-icon="shield_person">shield_person</span>
+</div>
+</div>
+</header>
+<!-- Content Workspace -->
+<main class="flex-1 p-space-32 max-w-7xl w-full mx-auto flex flex-col gap-space-32">
+<!-- ========================================================================= -->
+<!-- SECTION 1: Breadcrumb & Header Controls                                  -->
+<!-- ========================================================================= -->
+<section class="flex flex-col md:flex-row md:items-center md:justify-between gap-space-16 pb-space-8 border-b border-outline-variant/20">
+<div class="flex flex-col gap-space-4">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-space-8 text-label-caps font-label-caps text-outline text-[11px]">
+<a class="hover:text-primary transition-colors" href="#">Sistema &amp; Resiliência</a>
+<span class="text-outline-variant">/</span>
+<span class="text-secondary-fixed">Centro de Recuperação de Falhas &amp; Erros 404</span>
+</div>
+<!-- Title & Subtitle -->
+<h1 class="text-headline-xl font-headline-xl text-on-surface tracking-tight flex items-center gap-space-12">
+            Resiliência Operacional &amp; Tratamento de Erros
+            <span class="px-2 py-0.5 rounded-full text-label-caps font-label-caps text-[10px] bg-primary/10 text-primary border border-primary/30">Node Guard v4.2</span>
+</h1>
+<p class="text-body-md font-body-md text-on-surface-variant max-w-2xl">
+            Diagnóstico de nós, rotas perdidas no vácuo e recuperação de estado com integridade de dados.
+          </p>
+</div>
+<!-- Top Header Actions -->
+<div class="flex items-center gap-space-12 shrink-0">
+<button class="flex items-center gap-space-8 px-space-16 py-2 rounded-lg bg-surface-container border border-outline-variant text-on-surface hover:bg-surface-container-high hover:border-primary text-body-sm font-body-sm transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-[18px] text-primary" data-icon="history">history</span>
+<span>Restaurar Snapshot Local</span>
+</button>
+<button class="flex items-center gap-space-8 px-space-16 py-2 rounded-lg bg-primary-container text-on-primary-container font-semibold text-body-sm font-body-sm hover:brightness-110 shadow-[0_0_16px_rgba(118,146,255,0.25)] transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-[18px]" data-icon="network_check">network_check</span>
+<span>Diagnosticar Rede &amp; Vault</span>
+</button>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- SECTION 2: Hero Card Principal — Estado 404 (Rota Fora de Órbita)       -->
+<!-- ========================================================================= -->
+<section class="relative overflow-hidden rounded-xl border border-outline-variant/40 bg-surface-container-low/90 backdrop-blur-xl p-space-32 shadow-[0_16px_40px_-8px_rgba(3,8,16,0.75)]">
+<!-- Ethereal Backlights -->
+<div class="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-primary/10 blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-32 right-12 w-80 h-80 rounded-full bg-error/10 blur-3xl pointer-events-none"></div>
+<div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-space-32 items-center">
+<!-- Orbital Graphic Canvas / Simulation -->
+<div class="lg:col-span-5 flex items-center justify-center p-space-16">
+<div class="relative w-72 h-72 flex items-center justify-center">
+<!-- Background Ambient Grid Rings -->
+<svg class="absolute inset-0 w-full h-full orbital-ring" fill="none" viewbox="0 0 288 288">
+<!-- Concentric ring 1 -->
+<circle cx="144" cy="144" opacity="0.6" r="130" stroke="#253653" stroke-dasharray="4 8" stroke-width="1"></circle>
+<!-- Concentric ring 2 -->
+<circle cx="144" cy="144" opacity="0.8" r="96" stroke="#444653" stroke-dasharray="2 6" stroke-width="1"></circle>
+<!-- Outer broken trajectory track -->
+<path d="M 24 144 A 120 120 0 0 1 230 60" opacity="0.45" stroke="#7692ff" stroke-linecap="round" stroke-width="1.5"></path>
+</svg>
+<!-- Reverse Counter Orbit -->
+<svg class="absolute inset-0 w-full h-full orbital-ring-reverse" fill="none" viewbox="0 0 288 288">
+<circle cx="144" cy="144" opacity="0.5" r="64" stroke="#2dd4bf" stroke-dasharray="3 5" stroke-width="1"></circle>
+<!-- Lost Tangent Ray -->
+<line opacity="0.8" stroke="#fb7185" stroke-dasharray="3 3" stroke-width="1.5" x1="144" x2="260" y1="144" y2="40"></line>
+</svg>
+<!-- Center Hub (Local Anchor Node) -->
+<div class="relative z-10 w-16 h-16 rounded-full bg-surface-container border border-primary/40 flex flex-col items-center justify-center shadow-[0_0_24px_rgba(118,146,255,0.2)]">
+<span class="material-symbols-outlined text-[24px] text-primary" data-icon="deployed_code">deployed_code</span>
+<span class="text-[9px] font-label-caps text-outline">CORE</span>
+</div>
+<!-- Stable Orbiting Node (Green/Teal) -->
+<div class="absolute top-10 left-20 flex items-center justify-center">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary shadow-[0_0_12px_#2dd4bf]"></span>
+<span class="absolute w-6 h-6 rounded-full border border-secondary/30"></span>
+</div>
+<!-- Disconnected / Lost Node 404 (Red / Carmim Pulse) -->
+<div class="absolute top-6 right-8 flex items-center justify-center">
+<div class="node-pulse absolute w-10 h-10 rounded-full bg-error/20 border border-error/40"></div>
+<span class="relative w-3.5 h-3.5 rounded-full bg-[#fb7185] shadow-[0_0_18px_#fb7185]"></span>
+<!-- Label Tag -->
+<div class="absolute -top-7 -right-10 bg-surface-container-highest/90 border border-error/50 px-2 py-0.5 rounded text-[10px] font-label-caps text-[#fb7185] whitespace-nowrap shadow-lg">
+                  NODE_404_OFF_GRID
+                </div>
+</div>
+<!-- Floating telemetry coordinates overlay -->
+<div class="absolute bottom-2 left-6 bg-surface-container/80 border border-outline-variant/40 px-2 py-1 rounded text-[10px] font-label-caps text-outline">
+                RAD: 240.85° // V: 0.00 km/s
+              </div>
+</div>
+</div>
+<!-- Hero Details & Recovery Directives -->
+<div class="lg:col-span-7 flex flex-col gap-space-20">
+<div class="flex items-center gap-space-8">
+<span class="px-2.5 py-1 rounded bg-error/10 border border-error/30 text-error font-label-caps text-[11px] font-medium tracking-wide">
+                ERRO 404 // TRAJETÓRIA PERDIDA NO VÁCUO
+              </span>
+<span class="text-outline text-body-sm font-label-caps">•</span>
+<span class="text-outline font-label-caps text-[11px]">HTTP/3 ROUTE_NOT_REGISTERED</span>
+</div>
+<div class="flex flex-col gap-space-8">
+<h2 class="text-headline-md font-headline-md text-on-surface font-semibold tracking-tight">
+                Vetor de Navegação Desconectado do Cluster
+              </h2>
+<p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">
+                A coordenada ou recurso solicitado não foi encontrado no cluster operacional. O módulo pode ter sido movido, desativado, purgado na última consolidação ou nunca orbitou neste sistema.
+              </p>
+</div>
+<!-- Targeted Coordinates Callout Box -->
+<div class="bg-surface-container-lowest/80 border border-outline-variant/40 rounded-lg p-space-12 flex items-center justify-between font-label-caps text-body-sm">
+<div class="flex items-center gap-space-12 overflow-hidden text-ellipsis">
+<span class="material-symbols-outlined text-outline text-[18px] shrink-0" data-icon="link_off">link_off</span>
+<span class="text-outline shrink-0">URI Alvo:</span>
+<span class="text-error font-code-md text-code-md truncate">/app/v2/ledger/transacoes/antigas_2021</span>
+</div>
+<button class="px-2 py-1 rounded hover:bg-surface-container text-outline hover:text-on-surface text-[11px] transition-colors" title="Copiar Coordenada">
+                Copiar
+              </button>
+</div>
+<!-- Immediate Action Buttons -->
+<div class="flex flex-wrap items-center gap-space-12 pt-space-8">
+<a class="flex items-center gap-space-8 px-space-20 py-2.5 rounded-lg bg-primary-container text-on-primary-container font-semibold text-body-md font-body-md hover:brightness-110 shadow-[0_0_20px_2px_rgba(118,146,255,0.25)] transition-all active:scale-[0.98]" href="#overview">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+<span>Retornar à Visão Geral (Dashboard)</span>
+</a>
+<button class="flex items-center gap-space-8 px-space-16 py-2.5 rounded-lg bg-surface-container-high border border-outline-variant text-on-surface hover:border-primary hover:text-primary text-body-md font-body-md transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-[18px]" data-icon="travel_explore">travel_explore</span>
+<span>Buscar na Constelação (⌘K)</span>
+</button>
+<button class="flex items-center gap-space-8 px-space-16 py-2.5 rounded-lg border border-outline-variant/60 text-outline hover:text-on-surface hover:border-outline text-body-md font-body-md transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-[18px]" data-icon="database">database</span>
+<span>Verificar Cache Local (IndexedDB)</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- SECTION 3: Matriz de Resolução de Outros Erros Críticos (3 Cards)        -->
+<!-- ========================================================================= -->
+<section class="flex flex-col gap-space-16">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-8">
+<span class="material-symbols-outlined text-secondary text-[20px]" data-icon="troubleshoot">troubleshoot</span>
+<h3 class="text-headline-sm font-headline-sm text-on-surface font-semibold">
+              Matriz de Resolução de Falhas Críticas em Segundo Plano
+            </h3>
+</div>
+<span class="text-label-caps font-label-caps text-outline text-[11px]">
+            ISOLAMENTO DE FALHAS: ATIVO (SANDBOX)
+          </span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-20">
+<!-- Card 1: Erro 500 / Falha de Processamento de Nó -->
+<div class="rounded-xl bg-surface-container-low border border-outline-variant/40 p-space-20 flex flex-col justify-between hover:border-primary/50 transition-all duration-200">
+<div class="flex flex-col gap-space-12">
+<div class="flex items-start justify-between">
+<div class="w-10 h-10 rounded-lg bg-error-container/20 border border-error/30 flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[22px]" data-icon="crisis_alert">crisis_alert</span>
+</div>
+<span class="px-2 py-0.5 rounded-full text-label-caps font-label-caps text-[10px] bg-error/15 text-error border border-error/30">
+                  CRITICAL 500
+                </span>
+</div>
+<div class="flex flex-col">
+<h4 class="text-headline-sm font-headline-sm text-on-surface font-semibold">Falha de Processamento de Nó</h4>
+<span class="text-label-caps font-label-caps text-outline text-[11px] mt-0.5">Cluster Node 03 • Falha de Execução</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant">
+                O worker assíncrono de agregação matemática estourou o limite de memória reservada durante a sincronização de métricas semanais.
+              </p>
+</div>
+<div class="mt-space-20 pt-space-16 border-t border-outline-variant/20 flex items-center gap-space-8">
+<button class="flex-1 py-1.5 px-3 rounded-lg bg-surface-container-high border border-outline-variant text-on-surface hover:bg-surface-container-highest hover:border-outline text-body-sm font-body-sm font-medium transition-colors">
+                Reiniciar Instância
+              </button>
+<button class="p-1.5 rounded-lg border border-outline-variant text-outline hover:text-on-surface hover:bg-surface-container" title="Baixar Stack Trace">
+<span class="material-symbols-outlined text-[18px]" data-icon="download">download</span>
+</button>
+</div>
+</div>
+<!-- Card 2: Perda de Conexão com Vault Local / Timeout de Sync -->
+<div class="rounded-xl bg-surface-container-low border border-outline-variant/40 p-space-20 flex flex-col justify-between hover:border-secondary/50 transition-all duration-200">
+<div class="flex flex-col gap-space-12">
+<div class="flex items-start justify-between">
+<div class="w-10 h-10 rounded-lg bg-secondary-container/20 border border-secondary/30 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[22px]" data-icon="cloud_off">cloud_off</span>
+</div>
+<span class="px-2 py-0.5 rounded-full text-label-caps font-label-caps text-[10px] bg-secondary/15 text-secondary border border-secondary/30">
+                  LOCAL SECURE
+                </span>
+</div>
+<div class="flex flex-col">
+<h4 class="text-headline-sm font-headline-sm text-on-surface font-semibold">Desconexão do Vault Local</h4>
+<span class="text-label-caps font-label-caps text-secondary-fixed text-[11px] mt-0.5">Modo Offline Ativado (Reserva Local Segura)</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant">
+                12 transações na fila de sincronização em espera. Seus dados continuam gravados com segurança atômica no SQLite criptografado.
+              </p>
+</div>
+<div class="mt-space-20 pt-space-16 border-t border-outline-variant/20 flex items-center gap-space-8">
+<button class="w-full py-1.5 px-3 rounded-lg bg-surface-container-high border border-secondary/40 text-secondary-fixed hover:bg-secondary/10 text-body-sm font-body-sm font-medium flex items-center justify-center gap-space-8 transition-colors">
+<span class="material-symbols-outlined text-[16px]" data-icon="sync">sync</span>
+<span>Forçar Re-handshake</span>
+</button>
+</div>
+</div>
+<!-- Card 3: Erro de Permissão / Token Expirado (401/403) -->
+<div class="rounded-xl bg-surface-container-low border border-outline-variant/40 p-space-20 flex flex-col justify-between hover:border-primary/50 transition-all duration-200">
+<div class="flex flex-col gap-space-12">
+<div class="flex items-start justify-between">
+<div class="w-10 h-10 rounded-lg bg-tertiary-container/20 border border-primary/30 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]" data-icon="key_off">key_off</span>
+</div>
+<span class="px-2 py-0.5 rounded-full text-label-caps font-label-caps text-[10px] bg-tertiary/15 text-primary border border-primary/30">
+                  AUTH 401/403
+                </span>
+</div>
+<div class="flex flex-col">
+<h4 class="text-headline-sm font-headline-sm text-on-surface font-semibold">Assinatura Criptográfica</h4>
+<span class="text-label-caps font-label-caps text-outline text-[11px] mt-0.5">Sessão Expirada ou Chave Incompatível</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant">
+                O token Ed25519 do canal local expirou após 720 horas de atividade sem renovação de credencial biométrica física.
+              </p>
+</div>
+<div class="mt-space-20 pt-space-16 border-t border-outline-variant/20 flex items-center gap-space-8">
+<button class="w-full py-1.5 px-3 rounded-lg bg-surface-container-high border border-outline-variant text-on-surface hover:border-primary text-body-sm font-body-sm font-medium flex items-center justify-center gap-space-8 transition-colors">
+<span class="material-symbols-outlined text-[16px] text-primary" data-icon="passkey">passkey</span>
+<span>Renovar com Chave Mestra</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- SECTION 4: Console de Telemetria e Diagnóstico em Tempo Real             -->
+<!-- ========================================================================= -->
+<section class="rounded-xl border border-outline-variant/30 bg-surface-container-lowest flex flex-col overflow-hidden mb-space-32 shadow-xl">
+<!-- Terminal Header -->
+<div class="bg-surface-container-low px-space-16 py-2.5 border-b border-outline-variant/30 flex flex-wrap items-center justify-between gap-space-8">
+<div class="flex items-center gap-space-12">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-error/70"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-outline-variant"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-secondary/70"></span>
+</div>
+<span class="text-label-caps font-label-caps text-on-surface text-[11px] tracking-wide">
+              TERMINAL TELEMETRY // ORBIT ENGINE EVENT STREAM
+            </span>
+</div>
+<!-- Integrity Badge & Actions -->
+<div class="flex items-center gap-space-16">
+<div class="hidden sm:flex items-center gap-space-8 text-label-caps font-label-caps text-[11px] text-secondary">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-ping"></span>
+<span>Banco SQLite Local: 100% Íntegro • 0 Bytes Corrompidos</span>
+</div>
+<button class="flex items-center gap-space-4 px-2.5 py-1 rounded bg-surface-container border border-outline-variant text-on-surface hover:text-primary text-[11px] font-label-caps transition-colors" onclick="navigator.clipboard.writeText('ORBIT DIAGNOSTIC REPORT: Route 404 on /app/v2/ledger, Node 03 Fail, Vault Local Safe.'); alert('Relatório de Diagnóstico copiado com sucesso.');">
+<span class="material-symbols-outlined text-[14px]" data-icon="content_copy">content_copy</span>
+<span>Copiar Relatório para Suporte</span>
+</button>
+</div>
+</div>
+<!-- Terminal Logs Container -->
+<div class="p-space-16 font-code-md text-code-md text-on-surface-variant flex flex-col gap-1.5 overflow-y-auto max-h-60 bg-[#050e1c]">
+<div class="flex items-start gap-space-8 text-outline">
+<span class="text-outline-variant">[14:32:01.102]</span>
+<span class="text-secondary">[SYS_INIT]</span>
+<span>Kernel Orbit v4.2 montado com persistência local IndexedDB v14.</span>
+</div>
+<div class="flex items-start gap-space-8">
+<span class="text-outline-variant">[14:32:02.480]</span>
+<span class="text-primary">[NET_PROBE]</span>
+<span>Cluster handshake ok (RTT: 18ms). Endpoints sincronizados: 4/5.</span>
+</div>
+<div class="flex items-start gap-space-8 text-error">
+<span class="text-outline-variant">[14:32:04.912]</span>
+<span class="text-error font-semibold">[ROUTER_404]</span>
+<span>Unresolved path lookup: GET /app/v2/ledger/transacoes/antigas_2021 -&gt; Err: NO_ROUTE_MATCH</span>
+</div>
+<div class="flex items-start gap-space-8 text-outline">
+<span class="text-outline-variant">[14:32:05.001]</span>
+<span class="text-outline">[RECOVERY_FALLBACK]</span>
+<span>Desvio gravitacional acionado. Redirecionamento seguro para Centro de Resiliência.</span>
+</div>
+<div class="flex items-start gap-space-8 text-tertiary">
+<span class="text-outline-variant">[14:32:06.140]</span>
+<span class="text-tertiary">[VAULT_STATUS]</span>
+<span>Isolamento transacional confirmado. 12 mutações pendentes em staging local.</span>
+</div>
+<div class="flex items-start gap-space-8 text-secondary">
+<span class="text-outline-variant">[14:32:08.320]</span>
+<span class="text-secondary">[HEALTH_OK]</span>
+<span>Telemetria em repouso. Aguardando comando de restauração ou retorno ao painel.</span>
+</div>
+</div>
+<!-- Status Bottom Bar -->
+<div class="bg-surface-container px-space-16 py-1.5 border-t border-outline-variant/20 flex items-center justify-between text-label-caps font-label-caps text-[10px] text-outline">
+<div class="flex items-center gap-space-16">
+<span>MEM: 48.2 MB / 512 MB</span>
+<span>LATÊNCIA DE NÓ: 14ms</span>
+<span>THREADS: 4 ACTIVE</span>
+</div>
+<div class="flex items-center gap-space-4">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="text-secondary">PROTEÇÃO LOCAL ATIVA</span>
+</div>
+</div>
+</section>
+</main>
+</div>
+</body></html>

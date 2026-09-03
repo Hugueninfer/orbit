@@ -1,0 +1,762 @@
+{
+  "screen_id": "orbit_configura_es_perfil",
+  "tailwind_config": {
+    "darkMode": "class",
+    "theme": {
+      "extend": {
+        "colors": {
+          "surface-tint": "#b7c4ff",
+          "tertiary-fixed-dim": "#b8c4ff",
+          "on-primary-container": "#002683",
+          "error-container": "#93000a",
+          "surface-container-lowest": "#050e1c",
+          "secondary-container": "#03c6b2",
+          "on-surface-variant": "#c4c5d5",
+          "surface-container-high": "#212a39",
+          "primary": "#b7c4ff",
+          "on-error": "#690005",
+          "primary-fixed": "#dde1ff",
+          "inverse-on-surface": "#273140",
+          "surface-variant": "#2c3545",
+          "on-surface": "#d9e3f7",
+          "on-tertiary-fixed": "#001354",
+          "secondary": "#44e2cd",
+          "on-tertiary": "#002486",
+          "primary-container": "#7692ff",
+          "inverse-primary": "#3856bf",
+          "outline": "#8e909e",
+          "surface-dim": "#0a1422",
+          "secondary-fixed-dim": "#3cddc7",
+          "on-tertiary-fixed-variant": "#0136bb",
+          "tertiary-fixed": "#dde1ff",
+          "inverse-surface": "#d9e3f7",
+          "tertiary-container": "#7992ff",
+          "on-secondary-fixed-variant": "#005047",
+          "on-tertiary-container": "#002588",
+          "surface-container": "#16202f",
+          "background": "#0a1422",
+          "surface-container-low": "#121c2a",
+          "surface-container-highest": "#2c3545",
+          "on-primary-fixed-variant": "#193ca7",
+          "on-secondary": "#003731",
+          "secondary-fixed": "#62fae3",
+          "surface": "#0a1422",
+          "on-primary-fixed": "#001552",
+          "on-background": "#d9e3f7",
+          "outline-variant": "#444653",
+          "on-secondary-fixed": "#00201c",
+          "tertiary": "#b8c4ff",
+          "on-secondary-container": "#004d44",
+          "primary-fixed-dim": "#b7c4ff",
+          "error": "#ffb4ab",
+          "surface-bright": "#303a49",
+          "on-error-container": "#ffdad6",
+          "on-primary": "#002682"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "space-12": "0.75rem",
+          "space-32": "2rem",
+          "space-64": "4rem",
+          "margin-tablet": "1.5rem",
+          "space-20": "1.25rem",
+          "margin-desktop": "2rem",
+          "margin-mobile": "1rem",
+          "space-4": "0.25rem",
+          "gutter-desktop": "1.5rem",
+          "space-2": "0.125rem",
+          "gutter-mobile": "1rem",
+          "space-24": "1.5rem",
+          "space-8": "0.5rem",
+          "space-40": "2.5rem",
+          "space-16": "1rem",
+          "space-48": "3rem"
+        },
+        "fontFamily": {
+          "headline-xl": [
+            "Geist"
+          ],
+          "headline-sm": [
+            "Geist"
+          ],
+          "body-lg": [
+            "Geist"
+          ],
+          "display-lg-mobile": [
+            "Geist"
+          ],
+          "code-md": [
+            "JetBrains Mono"
+          ],
+          "label-regular": [
+            "Geist"
+          ],
+          "headline-xl-mobile": [
+            "Geist"
+          ],
+          "headline-md": [
+            "Geist"
+          ],
+          "body-sm": [
+            "Geist"
+          ],
+          "label-caps": [
+            "JetBrains Mono"
+          ],
+          "body-md": [
+            "Geist"
+          ],
+          "display-lg": [
+            "Geist"
+          ]
+        },
+        "fontSize": {
+          "headline-xl": [
+            "28px",
+            {
+              "lineHeight": "36px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-sm": [
+            "16px",
+            {
+              "lineHeight": "24px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-lg": [
+            "16px",
+            {
+              "lineHeight": "26px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "display-lg-mobile": [
+            "30px",
+            {
+              "lineHeight": "38px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "600"
+            }
+          ],
+          "code-md": [
+            "13px",
+            {
+              "lineHeight": "20px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "label-regular": [
+            "12px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.01em",
+              "fontWeight": "500"
+            }
+          ],
+          "headline-xl-mobile": [
+            "24px",
+            {
+              "lineHeight": "32px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-md": [
+            "20px",
+            {
+              "lineHeight": "28px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "500"
+            }
+          ],
+          "body-sm": [
+            "12px",
+            {
+              "lineHeight": "18px",
+              "letterSpacing": "0.005em",
+              "fontWeight": "400"
+            }
+          ],
+          "label-caps": [
+            "11px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.06em",
+              "fontWeight": "500"
+            }
+          ],
+          "body-md": [
+            "14px",
+            {
+              "lineHeight": "22px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "display-lg": [
+            "40px",
+            {
+              "lineHeight": "48px",
+              "letterSpacing": "-0.025em",
+              "fontWeight": "600"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "inline_css": [
+    "\n    .material-symbols-outlined {\n      font-variation-settings: 'FILL' 0, 'wght' 350, 'GRAD' 0, 'opsz' 20;\n      vertical-align: middle;\n      display: inline-block;\n    }\n    \n    /* Technical subtle scanline & grid effects */\n    .telemetry-grid {\n      background-size: 32px 32px;\n      background-image: \n        linear-gradient(to right, rgba(37, 54, 83, 0.15) 1px, transparent 1px),\n        linear-gradient(to bottom, rgba(37, 54, 83, 0.15) 1px, transparent 1px);\n    }\n\n    .orbital-ring {\n      box-shadow: 0 0 0 1px rgba(68, 226, 205, 0.4), 0 0 20px 2px rgba(118, 146, 255, 0.25);\n    }\n\n    /* Custom toggle switch switch-knob */\n    .toggle-checkbox:checked {\n      right: 2px;\n      left: auto;\n      border-color: #44e2cd;\n    }\n    .toggle-checkbox:checked + .toggle-label {\n      background-color: #7692ff;\n    }\n  "
+  ],
+  "class_frequency": {
+    "bg-surface": 1,
+    "text-on-surface": 42,
+    "font-body-md": 33,
+    "antialiased": 1,
+    "telemetry-grid": 1,
+    "min-h-screen": 1,
+    "flex": 94,
+    "selection:bg-primary-container": 1,
+    "selection:text-on-primary-container": 1,
+    "fixed": 1,
+    "top-0": 2,
+    "left-0": 1,
+    "h-screen": 1,
+    "w-64": 3,
+    "z-40": 1,
+    "bg-surface-container-low": 7,
+    "dark:bg-surface-container-low": 1,
+    "border-r": 1,
+    "border-outline-variant/30": 26,
+    "flex-col": 15,
+    "justify-between": 25,
+    "h-full": 3,
+    "p-space-16": 12,
+    "gap-space-20": 1,
+    "items-center": 77,
+    "gap-space-12": 26,
+    "px-space-8": 5,
+    "py-space-4": 3,
+    "relative": 10,
+    "justify-center": 10,
+    "w-9": 1,
+    "h-9": 2,
+    "rounded-xl": 19,
+    "bg-surface-container": 25,
+    "border": 63,
+    "border-outline-variant/40": 9,
+    "shadow-inner": 2,
+    "w-5": 10,
+    "h-5": 2,
+    "rounded-full": 34,
+    "border-secondary/60": 1,
+    "animate-pulse": 1,
+    "w-2": 2,
+    "h-2": 11,
+    "bg-primary-container": 4,
+    "shadow-[0_0_8px_#7692ff]": 1,
+    "sr-only": 4,
+    "text-headline-md": 6,
+    "font-headline-md": 6,
+    "font-semibold": 15,
+    "dark:text-on-surface": 1,
+    "tracking-tight": 1,
+    "text-body-sm": 28,
+    "font-body-sm": 39,
+    "text-on-surface-variant": 41,
+    "font-code-md": 15,
+    "text-[10px]": 11,
+    "tracking-wide": 1,
+    "w-full": 14,
+    "gap-space-8": 19,
+    "px-space-12": 28,
+    "py-space-8": 24,
+    "rounded-lg": 43,
+    "text-on-primary": 2,
+    "font-medium": 24,
+    "hover:bg-primary": 2,
+    "transition-colors": 30,
+    "duration-150": 11,
+    "active:scale-[0.98]": 2,
+    "material-symbols-outlined": 38,
+    "text-[18px]": 11,
+    "gap-space-4": 4,
+    "text-label-caps": 29,
+    "font-label-caps": 20,
+    "text-outline": 25,
+    "uppercase": 12,
+    "tracking-wider": 1,
+    "dark:text-on-surface-variant": 6,
+    "font-normal": 8,
+    "hover:bg-surface-container": 11,
+    "dark:hover:bg-surface-container": 6,
+    "text-[20px]": 15,
+    "text-body-md": 33,
+    "border-t": 4,
+    "pt-space-12": 1,
+    "bg-surface-container-high": 18,
+    "dark:bg-surface-container-high": 1,
+    "text-secondary-fixed": 1,
+    "dark:text-secondary-fixed": 1,
+    "border-l-2": 2,
+    "border-secondary": 2,
+    "shadow-[0_0_12px_rgba(68,226,205,0.12)]": 1,
+    "mt-space-4": 1,
+    "hover:bg-surface-container-high": 1,
+    "cursor-pointer": 7,
+    "border-outline-variant/20": 10,
+    "overflow-hidden": 3,
+    "w-8": 1,
+    "h-8": 1,
+    "bg-surface-container-highest": 1,
+    "text-primary": 9,
+    "font-headline-sm": 8,
+    "border-primary/30": 2,
+    "shrink-0": 1,
+    "absolute": 7,
+    "bottom-0": 1,
+    "right-0": 1,
+    "bg-secondary": 7,
+    "border-surface-container-low": 2,
+    "truncate": 3,
+    "ml-64": 1,
+    "flex-1": 3,
+    "min-w-0": 1,
+    "sticky": 2,
+    "z-30": 1,
+    "bg-surface/80": 1,
+    "dark:bg-surface/80": 1,
+    "backdrop-blur-md": 1,
+    "border-b": 7,
+    "h-16": 1,
+    "px-space-24": 1,
+    "gap-space-16": 8,
+    "text-[16px]": 3,
+    "text-outline-variant": 1,
+    "hidden": 2,
+    "lg:flex": 1,
+    "py-space-2": 2,
+    "bg-secondary-container/10": 2,
+    "border-secondary/30": 2,
+    "w-1.5": 2,
+    "h-1.5": 3,
+    "shadow-[0_0_8px_#44e2cd]": 1,
+    "animate-ping": 1,
+    "text-secondary": 17,
+    "text-[10.5px]": 6,
+    "sm:flex": 1,
+    "left-space-12": 1,
+    "pl-9": 1,
+    "pr-12": 1,
+    "placeholder:text-outline": 1,
+    "border-outline-variant/50": 10,
+    "focus:outline-none": 1,
+    "focus:border-primary": 10,
+    "focus:ring-1": 8,
+    "focus:ring-primary/40": 8,
+    "transition-all": 8,
+    "right-2": 1,
+    "px-1.5": 1,
+    "py-0.5": 6,
+    "rounded": 1,
+    "w-[1px]": 1,
+    "bg-outline-variant/40": 1,
+    "mx-space-4": 1,
+    "px-space-16": 18,
+    "hover:text-on-surface": 5,
+    "shadow-[0_0_16px_rgba(118,146,255,0.35)]": 1,
+    "p-space-24": 7,
+    "lg:p-space-32": 1,
+    "max-w-7xl": 1,
+    "mx-auto": 1,
+    "grid": 5,
+    "grid-cols-1": 5,
+    "lg:grid-cols-12": 1,
+    "gap-space-24": 2,
+    "items-start": 6,
+    "lg:col-span-3": 1,
+    "top-24": 1,
+    "space-y-space-8": 1,
+    "p-space-12": 5,
+    "space-y-space-4": 10,
+    "shadow-[0_0_12px_rgba(68,226,205,0.1)]": 1,
+    "bg-surface-container-lowest": 1,
+    "text-[11px]": 21,
+    "w-[94%]": 1,
+    "lg:col-span-9": 1,
+    "space-y-space-24": 2,
+    "-right-20": 1,
+    "-top-20": 1,
+    "h-64": 1,
+    "pointer-events-none": 2,
+    "-right-36": 1,
+    "-top-36": 1,
+    "w-96": 1,
+    "h-96": 1,
+    "border-outline-variant/10": 1,
+    "pb-space-16": 4,
+    "mb-space-20": 1,
+    "bg-primary-container/10": 1,
+    "flex-wrap": 1,
+    "pb-space-20": 1,
+    "w-24": 1,
+    "h-24": 1,
+    "orbital-ring": 1,
+    "p-1": 3,
+    "border-outline-variant": 8,
+    "text-headline-xl": 1,
+    "font-headline-xl": 1,
+    "font-bold": 1,
+    "-bottom-1": 1,
+    "-right-1": 1,
+    "w-6": 1,
+    "h-6": 4,
+    "text-on-secondary": 1,
+    "border-2": 2,
+    "shadow-sm": 1,
+    "text-[14px]": 1,
+    "hover:bg-surface-variant": 6,
+    "text-error": 6,
+    "hover:bg-error-container/20": 1,
+    "md:grid-cols-2": 3,
+    "pt-space-20": 1,
+    "h-10": 11,
+    "right-3": 1,
+    "gap-1": 5,
+    "md:col-span-2": 1,
+    "resize-none": 1,
+    "space-y-space-20": 3,
+    "text-[24px]": 7,
+    "md:flex-row": 2,
+    "md:items-center": 2,
+    "p-space-8": 1,
+    "mt-1": 6,
+    "text-[22px]": 1,
+    "text-headline-sm": 4,
+    "bg-secondary-container/20": 5,
+    "mt-0.5": 4,
+    "whitespace-nowrap": 3,
+    "self-start": 2,
+    "md:self-auto": 2,
+    "space-y-space-12": 5,
+    "py-space-6": 4,
+    "bg-primary-container/20": 1,
+    "hover:bg-primary-container/30": 1,
+    "border-primary/40": 1,
+    "block": 6,
+    "hover:text-error": 2,
+    "pt-space-8": 3,
+    "hover:underline": 3,
+    "overflow-x-auto": 1,
+    "text-left": 1,
+    "bg-surface-container-high/60": 1,
+    "text-right": 3,
+    "divide-y": 1,
+    "divide-outline-variant/20": 1,
+    "text-[12px]": 1,
+    "py-space-12": 10,
+    "inline-flex": 4,
+    "gap-1.5": 1,
+    "px-2": 4,
+    "w-1": 1,
+    "h-1": 1,
+    "sm:grid-cols-3": 1,
+    "border-primary": 1,
+    "shadow-[0_0_16px_rgba(118,146,255,0.15)]": 1,
+    "bg-[#07111F]": 1,
+    "bg-[#101D31]": 1,
+    "hover:border-outline-variant": 2,
+    "w-4": 2,
+    "h-4": 2,
+    "bg-black": 1,
+    "bg-[#111111]": 1,
+    "bg-primary/40": 1,
+    "bg-[#050e1c]": 1,
+    "border-white": 1,
+    "bg-[#ffffff]": 1,
+    "space-y-space-16": 2,
+    "peer": 6,
+    "w-11": 3,
+    "peer-focus:outline-none": 3,
+    "peer-checked:after:translate-x-full": 3,
+    "peer-checked:after:border-white": 3,
+    "after:content-['']": 3,
+    "after:absolute": 3,
+    "after:top-[2px]": 3,
+    "after:left-[2px]": 3,
+    "after:bg-white": 3,
+    "after:border-gray-300": 3,
+    "after:border": 3,
+    "after:rounded-full": 3,
+    "after:h-5": 3,
+    "after:w-5": 3,
+    "after:transition-all": 3,
+    "peer-checked:bg-primary-container": 3,
+    "w-10": 3,
+    "mt-space-8": 1,
+    "px-space-20": 1,
+    "bg-error-container/10": 1,
+    "border-error/30": 1,
+    "sm:flex-row": 1,
+    "bg-surface-container-low/80": 1,
+    "border-error/20": 1,
+    "bg-error-container/30": 1,
+    "hover:bg-error-container": 1,
+    "border-error/40": 1,
+    "mx-2": 1
+  },
+  "controls": [
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "add + Adicionar",
+      "placeholder": null,
+      "class": "w-full flex items-center justify-center gap-space-8 px-space-12 py-space-8 rounded-lg bg-primary-container text-on-primary font-body-md font-medium hover:bg-primary transition-colors duration-150 active:scale-[0.98]",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "text": "",
+      "placeholder": "Buscar preferências...",
+      "class": "h-9 w-64 bg-surface-container pl-9 pr-12 text-body-sm font-body-sm text-on-surface placeholder:text-outline border border-outline-variant/50 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/40 transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "Descartar",
+      "placeholder": null,
+      "class": "px-space-16 py-space-8 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-body-sm font-medium border border-outline-variant/40 transition-colors duration-150",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "check Salvar Alterações",
+      "placeholder": null,
+      "class": "flex items-center gap-space-8 px-space-16 py-space-8 rounded-lg bg-primary-container text-on-primary font-body-sm font-semibold hover:bg-primary shadow-[0_0_16px_rgba(118,146,255,0.35)] transition-all duration-150 active:scale-[0.98]",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "Alterar foto",
+      "placeholder": null,
+      "class": "px-space-16 py-space-8 rounded-lg bg-surface-container-high text-on-surface hover:bg-surface-variant font-body-sm font-medium border border-outline-variant/40 transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "Remover",
+      "placeholder": null,
+      "class": "px-space-16 py-space-8 rounded-lg text-error hover:bg-error-container/20 font-body-sm font-medium transition-colors",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "text": "",
+      "placeholder": null,
+      "class": "w-full h-10 px-space-12 bg-surface-container text-body-md font-body-md text-on-surface rounded-lg border border-outline-variant/50 focus:border-primary focus:ring-1 focus:ring-primary/40 transition-colors",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "text": "",
+      "placeholder": null,
+      "class": "w-full h-10 px-space-12 bg-surface-container font-code-md text-body-md text-secondary rounded-lg border border-outline-variant/50 focus:border-primary focus:ring-1 focus:ring-primary/40 transition-colors",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "text": "",
+      "placeholder": null,
+      "class": "w-full h-10 px-space-12 bg-surface-container text-body-md font-body-md text-on-surface rounded-lg border border-outline-variant/50 focus:border-primary focus:ring-1 focus:ring-primary/40 transition-colors",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "email",
+      "text": "",
+      "placeholder": null,
+      "class": "w-full h-10 px-space-12 bg-surface-container text-body-md font-body-md text-on-surface rounded-lg border border-outline-variant/50 focus:border-primary focus:ring-1 focus:ring-primary/40 transition-colors",
+      "id": null
+    },
+    {
+      "tag": "textarea",
+      "type": null,
+      "text": "Engenheiro de infraestrutura e entusiasta de sistemas distribuídos e biohacking de alta consistência.",
+      "placeholder": null,
+      "class": "w-full p-space-12 bg-surface-container text-body-md font-body-md text-on-surface rounded-lg border border-outline-variant/50 focus:border-primary focus:ring-1 focus:ring-primary/40 transition-colors resize-none",
+      "id": null
+    },
+    {
+      "tag": "select",
+      "type": null,
+      "text": "América/São Paulo (BRT - UTC-3) UTC (Universal Coordinated Time) America/New_York (EST - UTC-5) Europe/London (BST - UTC+1)",
+      "placeholder": null,
+      "class": "w-full h-10 px-space-12 bg-surface-container text-body-md font-body-md text-on-surface rounded-lg border border-outline-variant/50 focus:border-primary focus:ring-1 focus:ring-primary/40 transition-colors",
+      "id": null
+    },
+    {
+      "tag": "select",
+      "type": null,
+      "text": "Português (Brasil) English (US - Precision)",
+      "placeholder": null,
+      "class": "w-full h-10 px-space-12 bg-surface-container text-body-md font-body-md text-on-surface rounded-lg border border-outline-variant/50 focus:border-primary focus:ring-1 focus:ring-primary/40 transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "Reconfigurar Chave",
+      "placeholder": null,
+      "class": "px-space-16 py-space-8 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-body-sm font-medium border border-outline-variant/40 transition-colors whitespace-nowrap self-start md:self-auto",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "add + Registrar nova Passkey",
+      "placeholder": null,
+      "class": "flex items-center gap-space-4 px-space-12 py-space-6 rounded-lg bg-primary-container/20 text-primary hover:bg-primary-container/30 border border-primary/40 font-body-sm font-medium transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "delete",
+      "placeholder": null,
+      "class": "text-outline hover:text-error transition-colors p-1",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "delete",
+      "placeholder": null,
+      "class": "text-outline hover:text-error transition-colors p-1",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "Revogar outras sessões",
+      "placeholder": null,
+      "class": "text-body-sm font-body-sm text-error hover:underline transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "Revogar",
+      "placeholder": null,
+      "class": "text-error hover:underline text-[11px]",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "text": "",
+      "placeholder": null,
+      "class": "sr-only peer",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "text": "",
+      "placeholder": null,
+      "class": "sr-only peer",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "text": "",
+      "placeholder": null,
+      "class": "sr-only peer",
+      "id": null
+    },
+    {
+      "tag": "select",
+      "type": null,
+      "text": "Segunda-feira (Padrão ISO 8601) Domingo Sábado",
+      "placeholder": null,
+      "class": "w-full h-10 px-space-12 bg-surface-container text-body-md font-body-md text-on-surface rounded-lg border border-outline-variant/50 focus:border-primary",
+      "id": null
+    },
+    {
+      "tag": "select",
+      "type": null,
+      "text": "YYYY-MM-DD (ISO) DD/MM/YYYY (BR)",
+      "placeholder": null,
+      "class": "w-full h-10 px-space-12 bg-surface-container font-code-md text-body-md text-on-surface rounded-lg border border-outline-variant/50 focus:border-primary",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "terminal Documentação da API",
+      "placeholder": null,
+      "class": "text-body-sm font-body-sm text-primary hover:underline flex items-center gap-1",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "Configurar",
+      "placeholder": null,
+      "class": "px-space-12 py-space-6 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-body-sm font-medium border border-outline-variant/40 transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "Configurar",
+      "placeholder": null,
+      "class": "px-space-12 py-space-6 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-body-sm font-medium border border-outline-variant/40 transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "Gerenciar",
+      "placeholder": null,
+      "class": "px-space-12 py-space-6 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-body-sm font-medium border border-outline-variant/40 transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "download Baixar Dump Criptografado",
+      "placeholder": null,
+      "class": "flex items-center gap-space-8 px-space-20 py-space-12 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-body-sm font-semibold border border-outline-variant/40 transition-all self-start md:self-auto whitespace-nowrap",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "Destruir Instância",
+      "placeholder": null,
+      "class": "px-space-16 py-space-8 rounded-lg bg-error-container/30 hover:bg-error-container text-error border border-error/40 font-body-sm font-semibold transition-colors whitespace-nowrap",
+      "id": null
+    }
+  ],
+  "reading_note": "Extração estática. Os scripts e handlers do HTML original foram preservados, mas não executados nem considerados implementação funcional."
+}

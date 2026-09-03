@@ -1,0 +1,621 @@
+{
+  "screen_id": "orbit_novo_treino_drawer_mobile",
+  "tailwind_config": {
+    "darkMode": "class",
+    "theme": {
+      "extend": {
+        "colors": {
+          "on-secondary": "#003731",
+          "secondary-container": "#03c6b2",
+          "on-secondary-fixed-variant": "#005047",
+          "on-tertiary-fixed-variant": "#0136bb",
+          "error": "#ffb4ab",
+          "secondary": "#44e2cd",
+          "primary-container": "#7692ff",
+          "secondary-fixed": "#62fae3",
+          "surface": "#0a1422",
+          "on-error": "#690005",
+          "on-tertiary": "#002486",
+          "on-primary-container": "#002683",
+          "secondary-fixed-dim": "#3cddc7",
+          "surface-container-high": "#212a39",
+          "outline": "#8e909e",
+          "surface-container-low": "#121c2a",
+          "on-primary": "#002682",
+          "on-background": "#d9e3f7",
+          "error-container": "#93000a",
+          "surface-container": "#16202f",
+          "surface-container-highest": "#2c3545",
+          "on-secondary-fixed": "#00201c",
+          "inverse-surface": "#d9e3f7",
+          "surface-container-lowest": "#050e1c",
+          "outline-variant": "#444653",
+          "on-primary-fixed-variant": "#193ca7",
+          "inverse-primary": "#3856bf",
+          "tertiary": "#b8c4ff",
+          "tertiary-fixed-dim": "#b8c4ff",
+          "surface-bright": "#303a49",
+          "on-surface-variant": "#c4c5d5",
+          "surface-tint": "#b7c4ff",
+          "on-tertiary-fixed": "#001354",
+          "primary-fixed-dim": "#b7c4ff",
+          "on-tertiary-container": "#002588",
+          "surface-dim": "#0a1422",
+          "background": "#0a1422",
+          "surface-variant": "#2c3545",
+          "tertiary-container": "#7992ff",
+          "on-primary-fixed": "#001552",
+          "on-error-container": "#ffdad6",
+          "primary": "#b7c4ff",
+          "primary-fixed": "#dde1ff",
+          "tertiary-fixed": "#dde1ff",
+          "on-surface": "#d9e3f7",
+          "on-secondary-container": "#004d44",
+          "inverse-on-surface": "#273140"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "space-64": "4rem",
+          "space-2": "0.125rem",
+          "space-16": "1rem",
+          "margin-desktop": "2rem",
+          "margin-tablet": "1.5rem",
+          "space-20": "1.25rem",
+          "space-4": "0.25rem",
+          "space-8": "0.5rem",
+          "space-12": "0.75rem",
+          "margin-mobile": "1rem",
+          "gutter-desktop": "1.5rem",
+          "space-24": "1.5rem",
+          "space-32": "2rem",
+          "space-40": "2.5rem",
+          "gutter-mobile": "1rem",
+          "space-48": "3rem"
+        },
+        "fontFamily": {
+          "label-caps": [
+            "JetBrains Mono"
+          ],
+          "label-regular": [
+            "Geist"
+          ],
+          "display-lg-mobile": [
+            "Geist"
+          ],
+          "body-md": [
+            "Geist"
+          ],
+          "headline-sm": [
+            "Geist"
+          ],
+          "headline-xl-mobile": [
+            "Geist"
+          ],
+          "headline-md": [
+            "Geist"
+          ],
+          "headline-xl": [
+            "Geist"
+          ],
+          "body-sm": [
+            "Geist"
+          ],
+          "display-lg": [
+            "Geist"
+          ],
+          "body-lg": [
+            "Geist"
+          ],
+          "code-md": [
+            "JetBrains Mono"
+          ]
+        },
+        "fontSize": {
+          "label-caps": [
+            "11px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.06em",
+              "fontWeight": "500"
+            }
+          ],
+          "label-regular": [
+            "12px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.01em",
+              "fontWeight": "500"
+            }
+          ],
+          "display-lg-mobile": [
+            "30px",
+            {
+              "lineHeight": "38px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-md": [
+            "14px",
+            {
+              "lineHeight": "22px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-sm": [
+            "16px",
+            {
+              "lineHeight": "24px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-xl-mobile": [
+            "24px",
+            {
+              "lineHeight": "32px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-md": [
+            "20px",
+            {
+              "lineHeight": "28px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "500"
+            }
+          ],
+          "headline-xl": [
+            "28px",
+            {
+              "lineHeight": "36px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-sm": [
+            "12px",
+            {
+              "lineHeight": "18px",
+              "letterSpacing": "0.005em",
+              "fontWeight": "400"
+            }
+          ],
+          "display-lg": [
+            "40px",
+            {
+              "lineHeight": "48px",
+              "letterSpacing": "-0.025em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-lg": [
+            "16px",
+            {
+              "lineHeight": "26px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "code-md": [
+            "13px",
+            {
+              "lineHeight": "20px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "inline_css": [
+    "\n    /* Custom subtle scrollbar for mobile feel */\n    ::-webkit-scrollbar {\n      width: 4px;\n      height: 4px;\n    }\n    ::-webkit-scrollbar-track {\n      background: transparent;\n    }\n    ::-webkit-scrollbar-thumb {\n      background: #253653;\n      border-radius: 9999px;\n    }\n    /* Glow utilities */\n    .glow-teal-sm {\n      box-shadow: 0 0 16px 1px rgba(45, 212, 191, 0.18);\n    }\n    .glow-primary-sm {\n      box-shadow: 0 0 20px 2px rgba(118, 146, 255, 0.22);\n    }\n    .no-scrollbar::-webkit-scrollbar {\n      display: none;\n    }\n    .no-scrollbar {\n      -ms-overflow-style: none;\n      scrollbar-width: none;\n    }\n  "
+  ],
+  "class_frequency": {
+    "bg-[#07111F]": 2,
+    "text-on-surface": 17,
+    "antialiased": 1,
+    "min-h-screen": 1,
+    "flex": 49,
+    "justify-center": 8,
+    "items-end": 1,
+    "sm:items-center": 1,
+    "overflow-x-hidden": 1,
+    "font-body-md": 6,
+    "text-body-md": 6,
+    "selection:bg-primary": 1,
+    "selection:text-on-primary": 1,
+    "fixed": 2,
+    "inset-0": 2,
+    "pointer-events-none": 1,
+    "flex-col": 5,
+    "justify-between": 17,
+    "p-6": 1,
+    "opacity-30": 1,
+    "blur-[2px]": 1,
+    "max-w-md": 1,
+    "mx-auto": 1,
+    "space-y-4": 1,
+    "items-center": 47,
+    "border-b": 3,
+    "border-outline-variant/30": 6,
+    "pb-4": 1,
+    "font-headline-sm": 5,
+    "text-headline-sm": 5,
+    "font-semibold": 10,
+    "tracking-tight": 3,
+    "text-label-caps": 23,
+    "font-label-caps": 35,
+    "text-on-surface-variant": 27,
+    "h-28": 1,
+    "rounded-xl": 16,
+    "bg-surface-container": 3,
+    "border": 29,
+    "p-4": 4,
+    "h-40": 1,
+    "h-32": 1,
+    "bg-[#07111F]/80": 1,
+    "backdrop-blur-[14px]": 1,
+    "transition-opacity": 1,
+    "duration-300": 2,
+    "z-40": 1,
+    "relative": 5,
+    "w-full": 7,
+    "max-w-[420px]": 1,
+    "max-h-[92vh]": 1,
+    "z-50": 1,
+    "bg-[#0B1728]": 2,
+    "border-t": 3,
+    "sm:border": 1,
+    "border-[#253653]": 19,
+    "sm:rounded-3xl": 1,
+    "rounded-t-[28px]": 1,
+    "shadow-[0_-12px_48px_rgba(3,8,16,0.85),0_0_0_1px_rgba(118,146,255,0.1)]": 1,
+    "overflow-hidden": 4,
+    "transition-all": 13,
+    "pt-3": 1,
+    "pb-2": 1,
+    "px-5": 2,
+    "select-none": 1,
+    "border-[#1B2A43]": 6,
+    "bg-[#0B1728]/95": 2,
+    "backdrop-blur-md": 2,
+    "sticky": 2,
+    "top-0": 1,
+    "z-30": 2,
+    "w-12": 1,
+    "h-1.5": 1,
+    "rounded-full": 11,
+    "bg-outline-variant/60": 1,
+    "hover:bg-outline": 1,
+    "cursor-grab": 1,
+    "active:cursor-grabbing": 1,
+    "transition-colors": 4,
+    "mb-2": 1,
+    "mt-1": 2,
+    "gap-2": 8,
+    "inline-flex": 4,
+    "gap-1.5": 9,
+    "px-2.5": 5,
+    "py-0.5": 9,
+    "bg-secondary/10": 2,
+    "border-secondary/25": 1,
+    "w-2": 1,
+    "h-2": 1,
+    "bg-[#2DD4BF]": 1,
+    "animate-pulse": 1,
+    "text-[#2DD4BF]": 5,
+    "tracking-wider": 5,
+    "uppercase": 6,
+    "text-on-surface-variant/70": 4,
+    "border-outline-variant/40": 1,
+    "px-2": 3,
+    "bg-surface-container-high/40": 1,
+    "w-8": 1,
+    "h-8": 1,
+    "bg-[#15243A]": 6,
+    "hover:text-on-surface": 8,
+    "hover:border-primary/50": 1,
+    "active:scale-95": 7,
+    "material-symbols-outlined": 16,
+    "text-[18px]": 4,
+    "text-left": 1,
+    "mt-2.5": 2,
+    "pb-1": 1,
+    "font-headline-xl-mobile": 1,
+    "text-headline-xl-mobile": 1,
+    "font-body-sm": 4,
+    "text-body-sm": 6,
+    "mt-0.5": 3,
+    "flex-1": 1,
+    "overflow-y-auto": 1,
+    "py-4": 1,
+    "space-y-5": 1,
+    "space-y-1.5": 1,
+    "text-secondary": 4,
+    "gap-1": 5,
+    "rounded-md": 4,
+    "text-primary": 7,
+    "hover:border-primary": 3,
+    "h-11": 1,
+    "bg-[#101D31]": 10,
+    "px-3.5": 1,
+    "focus:border-primary-container": 1,
+    "focus:ring-2": 1,
+    "focus:ring-primary-container/20": 1,
+    "outline-none": 1,
+    "placeholder:text-outline": 1,
+    "absolute": 1,
+    "right-3": 1,
+    "top-2.5": 1,
+    "text-on-surface-variant/50": 1,
+    "text-[20px]": 1,
+    "space-y-2": 1,
+    "overflow-x-auto": 1,
+    "pb-1.5": 1,
+    "no-scrollbar": 1,
+    "scroll-smooth": 1,
+    "shrink-0": 7,
+    "px-3": 5,
+    "py-2": 8,
+    "bg-secondary/15": 3,
+    "border-[#2DD4BF]": 1,
+    "text-secondary-fixed": 1,
+    "glow-teal-sm": 1,
+    "text-[15px]": 5,
+    "hover:border-outline": 4,
+    "grid": 5,
+    "grid-cols-2": 1,
+    "gap-3": 3,
+    "p-3": 4,
+    "text-[16px]": 3,
+    "items-baseline": 2,
+    "mt-2": 4,
+    "bg-[#1B2A43]": 2,
+    "h-1": 2,
+    "bg-primary-container": 1,
+    "h-full": 2,
+    "w-[65%]": 1,
+    "w-6": 2,
+    "h-6": 4,
+    "rounded": 11,
+    "bg-secondary": 1,
+    "w-[50%]": 1,
+    "space-y-3": 4,
+    "pt-1": 1,
+    "px-1.5": 8,
+    "py-0.2": 3,
+    "bg-surface-container-high": 1,
+    "hover:text-primary-fixed": 2,
+    "p-3.5": 2,
+    "hover:border-outline-variant/80": 3,
+    "items-start": 1,
+    "w-5": 3,
+    "h-5": 3,
+    "bg-primary-container/20": 1,
+    "text-[11px]": 3,
+    "text-[10px]": 8,
+    "border-secondary/20": 1,
+    "gap-0.5": 1,
+    "text-[13px]": 1,
+    "text-on-surface-variant/60": 2,
+    "p-1": 3,
+    "rounded-lg": 1,
+    "grid-cols-12": 4,
+    "py-1.5": 1,
+    "text-on-surface-variant/80": 1,
+    "col-span-2": 4,
+    "col-span-4": 4,
+    "col-span-3": 8,
+    "text-right": 4,
+    "divide-y": 1,
+    "divide-[#1B2A43]": 1,
+    "bg-[#101D31]/70": 1,
+    "font-code-md": 11,
+    "text-code-md": 9,
+    "text-[9px]": 3,
+    "bg-outline-variant/30": 1,
+    "bg-surface-container/20": 1,
+    "pt-0.5": 1,
+    "py-1": 1,
+    "text-[14px]": 1,
+    "font-medium": 4,
+    "flex-wrap": 2,
+    "text-[#7692FF]": 2,
+    "bg-primary-container/10": 2,
+    "text-[12px]": 2,
+    "pl-2": 2,
+    "block": 3,
+    "cursor-pointer": 3,
+    "group": 2,
+    "pr-3": 2,
+    "group-hover:text-primary": 2,
+    "sr-only": 2,
+    "peer": 4,
+    "w-11": 2,
+    "bg-[#16202F]": 2,
+    "peer-focus:outline-none": 2,
+    "peer-checked:after:translate-x-full": 2,
+    "peer-checked:after:border-white": 2,
+    "after:content-['']": 2,
+    "after:absolute": 2,
+    "after:top-[2px]": 2,
+    "after:left-[2px]": 2,
+    "after:bg-[#07111F]": 2,
+    "after:border-gray-300": 2,
+    "after:border": 2,
+    "after:rounded-full": 2,
+    "after:h-5": 2,
+    "after:w-5": 2,
+    "after:transition-all": 2,
+    "peer-checked:bg-[#2DD4BF]": 1,
+    "peer-checked:bg-[#7692FF]": 1,
+    "bottom-0": 1,
+    "h-12": 1,
+    "bg-gradient-to-r": 1,
+    "from-[#2DD4BF]": 1,
+    "via-[#44E2CD]": 1,
+    "to-[#7692FF]": 1,
+    "text-[#07111F]": 1,
+    "shadow-[0_4px_24px_rgba(45,212,191,0.35)]": 1,
+    "hover:opacity-95": 1,
+    "active:scale-[0.98]": 1,
+    "text-[22px]": 1,
+    "text-center": 1
+  },
+  "controls": [
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "close",
+      "placeholder": null,
+      "class": "w-8 h-8 rounded-full flex items-center justify-center bg-[#15243A] border border-[#253653] text-on-surface-variant hover:text-on-surface hover:border-primary/50 active:scale-95 transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "🎙️ Sugestão IA",
+      "placeholder": null,
+      "class": "inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-[#15243A] border border-[#253653] text-primary hover:border-primary transition-colors text-label-caps font-label-caps active:scale-95",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "text": "",
+      "placeholder": "Ex: Lower Body Hipertrofia...",
+      "class": "w-full h-11 bg-[#101D31] text-on-surface font-body-md text-body-md px-3.5 rounded-xl border border-[#253653] focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 outline-none transition-all placeholder:text-outline",
+      "id": "workout_name"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "shield Superior / Peito & Costas",
+      "placeholder": null,
+      "class": "shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl bg-secondary/15 border border-[#2DD4BF] text-secondary-fixed text-label-caps font-label-caps glow-teal-sm transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "directions_run Inferior / Pernas",
+      "placeholder": null,
+      "class": "shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#101D31] border border-[#253653] text-on-surface-variant hover:text-on-surface hover:border-outline text-label-caps font-label-caps active:scale-95 transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "exercise Ombros & Braços",
+      "placeholder": null,
+      "class": "shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#101D31] border border-[#253653] text-on-surface-variant hover:text-on-surface hover:border-outline text-label-caps font-label-caps active:scale-95 transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "accessibility_new Full Body / Core",
+      "placeholder": null,
+      "class": "shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#101D31] border border-[#253653] text-on-surface-variant hover:text-on-surface hover:border-outline text-label-caps font-label-caps active:scale-95 transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "bolt Cardio / HIIT",
+      "placeholder": null,
+      "class": "shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#101D31] border border-[#253653] text-on-surface-variant hover:text-on-surface hover:border-outline text-label-caps font-label-caps active:scale-95 transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "-",
+      "placeholder": null,
+      "class": "w-6 h-6 rounded bg-[#15243A] border border-[#253653] text-on-surface flex items-center justify-center text-body-sm font-semibold hover:border-primary",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "+",
+      "placeholder": null,
+      "class": "w-6 h-6 rounded bg-[#15243A] border border-[#253653] text-on-surface flex items-center justify-center text-body-sm font-semibold hover:border-primary",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "add_circle Adicionar",
+      "placeholder": null,
+      "class": "text-primary hover:text-primary-fixed font-label-caps text-label-caps flex items-center gap-1 active:scale-95 transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "drag_indicator",
+      "placeholder": null,
+      "class": "text-on-surface-variant/60 hover:text-on-surface p-1",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "add Nova Série",
+      "placeholder": null,
+      "class": "text-primary hover:text-primary-fixed font-label-caps text-label-caps flex items-center gap-1 py-1",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "more_vert",
+      "placeholder": null,
+      "class": "text-on-surface-variant hover:text-on-surface p-1",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "more_vert",
+      "placeholder": null,
+      "class": "text-on-surface-variant hover:text-on-surface p-1",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "text": "",
+      "placeholder": null,
+      "class": "sr-only peer",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "text": "",
+      "placeholder": null,
+      "class": "sr-only peer",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "check_circle Salvar e Registrar Treino",
+      "placeholder": null,
+      "class": "w-full h-12 rounded-xl bg-gradient-to-r from-[#2DD4BF] via-[#44E2CD] to-[#7692FF] text-[#07111F] font-headline-sm text-headline-sm font-semibold flex items-center justify-center gap-2 shadow-[0_4px_24px_rgba(45,212,191,0.35)] hover:opacity-95 active:scale-[0.98] transition-all cursor-pointer",
+      "id": null
+    }
+  ],
+  "reading_note": "Extração estática. Os scripts e handlers do HTML original foram preservados, mas não executados nem considerados implementação funcional."
+}

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Orbit — Autenticação de Operações</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Geist & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-variant": "#2c3545",
+            "secondary-fixed-dim": "#3cddc7",
+            "on-secondary-fixed": "#00201c",
+            "surface-bright": "#303a49",
+            "on-primary-fixed": "#001552",
+            "secondary-fixed": "#62fae3",
+            "on-tertiary": "#002486",
+            "on-secondary-fixed-variant": "#005047",
+            "tertiary": "#b8c4ff",
+            "inverse-on-surface": "#273140",
+            "surface-container-low": "#121c2a",
+            "on-secondary-container": "#004d44",
+            "inverse-surface": "#d9e3f7",
+            "on-background": "#d9e3f7",
+            "surface-container-high": "#212a39",
+            "on-error-container": "#ffdad6",
+            "primary-fixed": "#dde1ff",
+            "primary-fixed-dim": "#b7c4ff",
+            "primary-container": "#7692ff",
+            "surface-container": "#16202f",
+            "primary": "#b7c4ff",
+            "surface-container-highest": "#2c3545",
+            "on-tertiary-fixed": "#001354",
+            "on-primary-container": "#002683",
+            "surface": "#0a1422",
+            "on-secondary": "#003731",
+            "outline-variant": "#444653",
+            "on-tertiary-container": "#002588",
+            "surface-dim": "#0a1422",
+            "outline": "#8e909e",
+            "secondary-container": "#03c6b2",
+            "tertiary-container": "#7992ff",
+            "secondary": "#44e2cd",
+            "surface-container-lowest": "#050e1c",
+            "on-surface": "#d9e3f7",
+            "on-tertiary-fixed-variant": "#0136bb",
+            "on-primary-fixed-variant": "#193ca7",
+            "on-surface-variant": "#c4c5d5",
+            "tertiary-fixed-dim": "#b8c4ff",
+            "background": "#0a1422",
+            "tertiary-fixed": "#dde1ff",
+            "surface-tint": "#b7c4ff",
+            "error-container": "#93000a",
+            "inverse-primary": "#3856bf",
+            "on-error": "#690005",
+            "on-primary": "#002682",
+            "error": "#ffb4ab"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin-tablet": "1.5rem",
+            "space-8": "0.5rem",
+            "space-24": "1.5rem",
+            "space-2": "0.125rem",
+            "space-20": "1.25rem",
+            "gutter-mobile": "1rem",
+            "space-40": "2.5rem",
+            "space-32": "2rem",
+            "space-4": "0.25rem",
+            "space-16": "1rem",
+            "gutter-desktop": "1.5rem",
+            "space-64": "4rem",
+            "space-12": "0.75rem",
+            "space-48": "3rem",
+            "margin-desktop": "2rem",
+            "margin-mobile": "1rem"
+          },
+          "fontFamily": {
+            "body-sm": ["Geist", "sans-serif"],
+            "headline-xl-mobile": ["Geist", "sans-serif"],
+            "code-md": ["JetBrains Mono", "monospace"],
+            "display-lg": ["Geist", "sans-serif"],
+            "display-lg-mobile": ["Geist", "sans-serif"],
+            "headline-md": ["Geist", "sans-serif"],
+            "label-regular": ["Geist", "sans-serif"],
+            "label-caps": ["JetBrains Mono", "monospace"],
+            "body-md": ["Geist", "sans-serif"],
+            "headline-xl": ["Geist", "sans-serif"],
+            "body-lg": ["Geist", "sans-serif"],
+            "headline-sm": ["Geist", "sans-serif"]
+          },
+          "fontSize": {
+            "body-sm": ["12px", { "lineHeight": "18px", "letterSpacing": "0.005em", "fontWeight": "400" }],
+            "headline-xl-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "code-md": ["13px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.025em", "fontWeight": "600" }],
+            "display-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "500" }],
+            "label-regular": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "500" }],
+            "body-md": ["14px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-xl": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "26px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      background-color: #07111F;
+      color: #d9e3f7;
+      font-family: 'Geist', sans-serif;
+    }
+    
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-block;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Subtle orbital rotation */
+    @keyframes orbit-pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.35;
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 0.6;
+      }
+    }
+
+    .orbital-glow {
+      animation: orbit-pulse 6s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-space-16 md:p-space-24 relative overflow-x-hidden selection:bg-primary-container selection:text-surface-container-lowest">
+<!-- Background decorative atmospheric radial glow -->
+<div class="fixed inset-0 pointer-events-none z-0 flex items-center justify-center overflow-hidden">
+<div class="w-[850px] h-[850px] rounded-full bg-primary-container/5 blur-[140px] absolute -top-40 -left-20"></div>
+<div class="w-[650px] h-[650px] rounded-full bg-secondary-container/5 blur-[120px] absolute -bottom-32 -right-20"></div>
+</div>
+<!-- Main Split Panel (1100px x 680px approx, fully responsive) -->
+<main class="relative z-10 w-full max-w-[1100px] min-h-[680px] bg-surface-container-low border border-[#253653] rounded-[24px] overflow-hidden shadow-2xl flex flex-col lg:flex-row backdrop-blur-xl">
+<!-- 1. PAINEL ESQUERDO (Atmosfera Orbital & Brand) -->
+<div class="w-full lg:w-[54%] p-space-32 lg:p-space-40 flex flex-col justify-between relative bg-gradient-to-b from-[#07111F] to-[#0B1728] border-b lg:border-b-0 lg:border-r border-[#253653] overflow-hidden">
+<!-- Subtle Concentric Vector Rings (Orbital Backdrop) -->
+<div class="absolute inset-0 pointer-events-none opacity-40">
+<svg class="w-full h-full" fill="none" viewbox="0 0 540 680" xmlns="http://www.w3.org/2000/svg">
+<!-- Concentric Arcs -->
+<circle cx="270" cy="340" r="140" stroke="#253653" stroke-dasharray="4 4" stroke-width="1"></circle>
+<circle cx="270" cy="340" r="220" stroke="#253653" stroke-width="1"></circle>
+<circle cx="270" cy="340" r="300" stroke="#1B2A43" stroke-dasharray="6 8" stroke-width="1"></circle>
+<!-- Ray vectors -->
+<line stroke="#1B2A43" stroke-opacity="0.5" stroke-width="1" x1="270" x2="270" y1="40" y2="640"></line>
+<line stroke="#1B2A43" stroke-opacity="0.5" stroke-width="1" x1="0" x2="540" y1="340" y2="340"></line>
+<!-- Nodes -->
+<circle cx="270" cy="120" fill="#7692FF" r="4"></circle>
+<circle cx="270" cy="120" r="12" stroke="#7692FF" stroke-opacity="0.25"></circle>
+<circle cx="490" cy="340" fill="#2DD4BF" r="3.5"></circle>
+<circle cx="490" cy="340" r="10" stroke="#2DD4BF" stroke-opacity="0.2"></circle>
+<circle cx="115" cy="450" fill="#7692FF" r="3"></circle>
+</svg>
+</div>
+<!-- Top Header Brand & Version -->
+<div class="relative z-10 flex items-center justify-between">
+<div class="flex items-center gap-space-12">
+<!-- Concentric Orbit Icon -->
+<div class="w-9 h-9 rounded-xl bg-surface-container border border-[#253653] flex items-center justify-center text-primary relative">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">trip_origin</span>
+<div class="absolute inset-0 rounded-xl orbital-glow border border-primary/30"></div>
+</div>
+<span class="text-headline-md font-headline-md font-semibold tracking-tight text-on-surface">Orbit</span>
+</div>
+<div class="inline-flex items-center gap-space-4 px-space-8 py-space-2 rounded-full bg-surface-container border border-[#253653]">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">v2.4 Core</span>
+</div>
+</div>
+<!-- Center Headline & Core Pillars Grid -->
+<div class="relative z-10 my-space-32">
+<h1 class="text-headline-xl font-headline-xl text-on-surface font-semibold tracking-tight leading-tight">
+          Tudo o que importa, em uma única órbita.
+        </h1>
+<p class="text-body-md font-body-md text-on-surface-variant mt-space-8 max-w-[440px]">
+          Centralize suas tarefas críticas, rotinas de hábitos, finanças e treinos de alta performance em um único ecossistema seguro.
+        </p>
+<!-- 4 Pillars Interactive Bento Grid -->
+<div class="grid grid-cols-2 gap-space-12 mt-space-24">
+<!-- Card 1: Tarefas -->
+<div class="p-space-12 rounded-xl bg-[#101D31]/80 border border-[#253653] hover:border-primary/50 transition-colors group">
+<div class="flex items-center gap-space-8">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+<span class="text-body-sm font-body-sm font-medium text-on-surface">Tarefas</span>
+</div>
+<p class="text-label-caps font-label-caps text-on-surface-variant mt-space-4 text-[10px] truncate">Sincronização &amp; Priorização</p>
+</div>
+<!-- Card 2: Hábitos -->
+<div class="p-space-12 rounded-xl bg-[#101D31]/80 border border-[#253653] hover:border-secondary/50 transition-colors group">
+<div class="flex items-center gap-space-8">
+<span class="material-symbols-outlined text-secondary text-[18px]">repeat</span>
+<span class="text-body-sm font-body-sm font-medium text-on-surface">Hábitos</span>
+</div>
+<p class="text-label-caps font-label-caps text-on-surface-variant mt-space-4 text-[10px] truncate">Streaks &amp; Consistência</p>
+</div>
+<!-- Card 3: Finanças -->
+<div class="p-space-12 rounded-xl bg-[#101D31]/80 border border-[#253653] hover:border-primary/50 transition-colors group">
+<div class="flex items-center gap-space-8">
+<span class="material-symbols-outlined text-tertiary text-[18px]">account_balance_wallet</span>
+<span class="text-body-sm font-body-sm font-medium text-on-surface">Finanças</span>
+</div>
+<p class="text-label-caps font-label-caps text-on-surface-variant mt-space-4 text-[10px] truncate">Fluxo de Caixa &amp; Telegram Áudio</p>
+</div>
+<!-- Card 4: Treinos -->
+<div class="p-space-12 rounded-xl bg-[#101D31]/80 border border-[#253653] hover:border-secondary/50 transition-colors group">
+<div class="flex items-center gap-space-8">
+<span class="material-symbols-outlined text-secondary-fixed text-[18px]">fitness_center</span>
+<span class="text-body-sm font-body-sm font-medium text-on-surface">Treinos</span>
+</div>
+<p class="text-label-caps font-label-caps text-on-surface-variant mt-space-4 text-[10px] truncate">Volume &amp; Cargas Progressivas</p>
+</div>
+</div>
+</div>
+<!-- Bottom Security Seal -->
+<div class="relative z-10 flex items-center gap-space-8 pt-space-16 border-t border-[#1B2A43]">
+<span class="material-symbols-outlined text-secondary text-[16px]">verified_user</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant tracking-wider">
+          Criptografia de ponta a ponta • Sessões protegidas
+        </span>
+</div>
+</div>
+<!-- 2. PAINEL DIREITO (Formulário Dark Elegante #101D31) -->
+<div class="w-full lg:w-[46%] p-space-32 lg:p-space-40 flex flex-col justify-between bg-[#101D31]">
+<!-- Header do formulário -->
+<div>
+<div class="flex items-center justify-between mb-space-12">
+<span class="text-label-caps font-label-caps text-secondary-fixed flex items-center gap-space-4">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed animate-ping"></span>
+            Acesso Operacional
+          </span>
+<span class="text-label-caps font-label-caps text-on-surface-variant/70">ID: SEC-2048</span>
+</div>
+<h2 class="text-headline-xl font-headline-xl text-on-surface font-semibold tracking-tight">
+          Bem-vindo de volta
+        </h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-space-4">
+          Insira suas credenciais para acessar sua central pessoal.
+        </p>
+<!-- Formulário de autenticação -->
+<form class="mt-space-24 space-y-space-16" onsubmit="event.preventDefault();">
+<!-- Campo E-mail -->
+<div>
+<label class="block text-label-regular font-label-regular text-on-surface-variant mb-space-4" for="email">
+              E-mail profissional ou pessoal
+            </label>
+<div class="relative flex items-center">
+<span class="absolute left-space-12 text-on-surface-variant pointer-events-none flex items-center">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+</span>
+<input class="w-full h-10 pl-10 pr-space-12 rounded-lg bg-[#0B1728] border border-[#253653] text-on-surface text-body-md font-body-md placeholder-[#596A82] focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 focus:outline-none transition-all" id="email" name="email" placeholder="pedro.martins@orbit.dev" type="email" value="pedro.martins@orbit.dev"/>
+</div>
+</div>
+<!-- Campo Senha -->
+<div>
+<label class="block text-label-regular font-label-regular text-on-surface-variant mb-space-4" for="password">
+              Chave de acesso / Senha
+            </label>
+<div class="relative flex items-center">
+<span class="absolute left-space-12 text-on-surface-variant pointer-events-none flex items-center">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+</span>
+<input class="w-full h-10 pl-10 pr-10 rounded-lg bg-[#0B1728] border border-[#253653] text-on-surface text-body-md font-body-md placeholder-[#596A82] focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 focus:outline-none transition-all" id="password" name="password" placeholder="••••••••••••••••" type="password" value="••••••••••••••••"/>
+<!-- Botão alternar visualização -->
+<button aria-label="Alternar visibilidade da senha" class="absolute right-space-12 text-on-surface-variant hover:text-on-surface transition-colors flex items-center focus:outline-none" id="toggle-password" type="button">
+<span class="material-symbols-outlined text-[18px]" id="eye-icon">visibility</span>
+</button>
+</div>
+</div>
+<!-- Linha Auxiliar: Manter Conectado & Recuperação -->
+<div class="flex items-center justify-between pt-space-4">
+<label class="flex items-center gap-space-8 cursor-pointer select-none">
+<input checked="" class="w-4 h-4 rounded bg-[#0B1728] border-[#253653] text-primary-container focus:ring-0 focus:ring-offset-0 transition-colors cursor-pointer" type="checkbox"/>
+<span class="text-body-sm font-body-sm text-on-surface-variant hover:text-on-surface transition-colors">
+                Manter sessão conectada por 30 dias
+              </span>
+</label>
+<a class="text-body-sm font-body-sm text-primary hover:text-primary-fixed transition-colors font-medium" href="#">
+              Esqueci minha senha
+            </a>
+</div>
+<!-- Botão Primário: Entrar no Orbit -->
+<button class="w-full h-10 mt-space-8 bg-gradient-to-r from-[#5575F6] to-[#7692FF] hover:from-[#4968EC] hover:to-[#6784FF] text-[#07111F] font-headline-sm font-semibold rounded-lg flex items-center justify-center gap-space-8 shadow-[0_0_16px_rgba(85,117,246,0.28)] hover:shadow-[0_0_20px_rgba(85,117,246,0.45)] active:scale-[0.99] transition-all" type="submit">
+<span>Entrar no Orbit</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</form>
+<!-- Divisor sutil -->
+<div class="relative flex items-center justify-center my-space-20">
+<div class="border-t border-[#1B2A43] w-full"></div>
+<span class="bg-[#101D31] px-space-12 text-label-caps font-label-caps text-on-surface-variant/70 text-[10px] whitespace-nowrap">
+            ou acesse com chave de segurança
+          </span>
+<div class="border-t border-[#1B2A43] w-full"></div>
+</div>
+<!-- Botão Secundário: Hardware Key / WebAuthn / Passkey -->
+<button class="w-full h-10 bg-surface-container-low hover:bg-surface-container border border-[#253653] hover:border-primary-container/60 text-on-surface rounded-lg flex items-center justify-center gap-space-8 active:scale-[0.99] transition-all group" type="button">
+<span class="material-symbols-outlined text-secondary group-hover:scale-110 transition-transform text-[20px]">fingerprint</span>
+<span class="text-body-sm font-body-sm font-medium">Autenticar com Passkey / Biometria</span>
+<kbd class="ml-space-8 bg-[#15243A] border border-[#253653] rounded px-1.5 py-0.5 text-[10px] font-code-md text-on-surface-variant font-medium">⌘P</kbd>
+</button>
+</div>
+<!-- Rodapé do formulário -->
+<div class="pt-space-20 mt-space-16 border-t border-[#1B2A43] text-center">
+<p class="text-label-caps font-label-caps text-on-surface-variant/70 text-[10px] tracking-wide">
+          Orbit Operations Hub • Todos os dados sob sua jurisdição pessoal
+        </p>
+</div>
+</div>
+</main>
+<script>
+    // Toggle Password Visibility
+    const toggleBtn = document.getElementById('toggle-password');
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('eye-icon');
+
+    toggleBtn.addEventListener('click', () => {
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.textContent = 'visibility_off';
+      } else {
+        passwordInput.type = 'password';
+        eyeIcon.textContent = 'visibility';
+      }
+    });
+
+    // Keyboard shortcut listener for Passkey ⌘P / Ctrl+P simulation
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'p') {
+        e.preventDefault();
+        alert('Dispositivo de autenticação física (WebAuthn / Passkey) detectado.');
+      }
+    });
+  </script>
+</body></html>

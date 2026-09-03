@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Orbit — Nova Transação</title>
+<!-- Google Fonts: Geist & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container": "#16202f",
+            "on-primary-container": "#002683",
+            "tertiary-container": "#7992ff",
+            "secondary": "#44e2cd",
+            "secondary-fixed-dim": "#3cddc7",
+            "on-primary": "#002682",
+            "surface": "#0a1422",
+            "surface-bright": "#303a49",
+            "error-container": "#93000a",
+            "on-secondary-container": "#004d44",
+            "surface-container-high": "#212a39",
+            "on-tertiary": "#002486",
+            "tertiary-fixed": "#dde1ff",
+            "on-secondary": "#003731",
+            "surface-container-low": "#121c2a",
+            "outline": "#8e909e",
+            "on-error-container": "#ffdad6",
+            "on-surface-variant": "#c4c5d5",
+            "primary-fixed": "#dde1ff",
+            "on-error": "#690005",
+            "secondary-container": "#03c6b2",
+            "secondary-fixed": "#62fae3",
+            "on-tertiary-fixed": "#001354",
+            "on-background": "#d9e3f7",
+            "on-secondary-fixed-variant": "#005047",
+            "inverse-surface": "#d9e3f7",
+            "tertiary-fixed-dim": "#b8c4ff",
+            "outline-variant": "#444653",
+            "primary": "#b7c4ff",
+            "surface-variant": "#2c3545",
+            "on-tertiary-fixed-variant": "#0136bb",
+            "background": "#0a1422",
+            "surface-tint": "#b7c4ff",
+            "surface-dim": "#0a1422",
+            "tertiary": "#b8c4ff",
+            "inverse-on-surface": "#273140",
+            "primary-container": "#7692ff",
+            "surface-container-highest": "#2c3545",
+            "inverse-primary": "#3856bf",
+            "error": "#ffb4ab",
+            "on-surface": "#d9e3f7",
+            "on-primary-fixed-variant": "#193ca7",
+            "on-primary-fixed": "#001552",
+            "on-secondary-fixed": "#00201c",
+            "on-tertiary-container": "#002588",
+            "surface-container-lowest": "#050e1c",
+            "primary-fixed-dim": "#b7c4ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin-tablet": "1.5rem",
+            "space-48": "3rem",
+            "space-2": "0.125rem",
+            "space-20": "1.25rem",
+            "margin-mobile": "1rem",
+            "space-64": "4rem",
+            "gutter-desktop": "1.5rem",
+            "space-4": "0.25rem",
+            "space-16": "1rem",
+            "margin-desktop": "2rem",
+            "space-32": "2rem",
+            "gutter-mobile": "1rem",
+            "space-8": "0.5rem",
+            "space-24": "1.5rem",
+            "space-40": "2.5rem",
+            "space-12": "0.75rem"
+          },
+          "fontFamily": {
+            "headline-xl-mobile": ["Geist", "sans-serif"],
+            "headline-xl": ["Geist", "sans-serif"],
+            "code-md": ["JetBrains Mono", "monospace"],
+            "display-lg": ["Geist", "sans-serif"],
+            "body-sm": ["Geist", "sans-serif"],
+            "headline-md": ["Geist", "sans-serif"],
+            "label-regular": ["Geist", "sans-serif"],
+            "body-md": ["Geist", "sans-serif"],
+            "label-caps": ["JetBrains Mono", "monospace"],
+            "body-lg": ["Geist", "sans-serif"],
+            "headline-sm": ["Geist", "sans-serif"],
+            "display-lg-mobile": ["Geist", "sans-serif"]
+          },
+          "fontSize": {
+            "headline-xl-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "headline-xl": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "code-md": ["13px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.025em", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "letterSpacing": "0.005em", "fontWeight": "400" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "500" }],
+            "label-regular": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "body-md": ["14px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "500" }],
+            "body-lg": ["16px", { "lineHeight": "26px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "display-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    /* Custom subtle scrollbars */
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #253653;
+      border-radius: 9999px;
+    }
+    
+    .cursor-blink {
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body class="bg-[#07111F] text-on-surface antialiased min-h-screen flex justify-center items-end sm:items-center p-0 selection:bg-primary-container selection:text-on-primary-container overflow-hidden">
+<!-- Mobile Viewport Simulation Shell (390px x 844px context container) -->
+<div class="relative w-full max-w-[430px] h-screen max-h-[920px] bg-[#07111F] overflow-hidden flex flex-col justify-end shadow-2xl border border-[#1B2A43]/50 sm:rounded-[36px]">
+<!-- ================================================================= -->
+<!-- UNDERLYING BLURRED FINANCE SCREEN (Contextual Background Visual) -->
+<!-- ================================================================= -->
+<div aria-hidden="true" class="absolute inset-0 z-0 flex flex-col pointer-events-none opacity-40 filter blur-sm scale-[0.98] select-none">
+<!-- Top Operational Bar -->
+<div class="h-14 px-6 flex items-center justify-between border-b border-[#1B2A43]">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight">Finanças Orbit</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">notifications</span>
+<span class="material-symbols-outlined text-outline">search</span>
+</div>
+</div>
+<!-- Metrics Overview -->
+<div class="p-4 space-y-4">
+<div class="p-5 rounded-2xl bg-[#101D31] border border-[#253653]">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Patrimônio Líquido</span>
+<div class="font-headline-xl text-headline-xl text-on-surface mt-1">R$ 142.850,20</div>
+<div class="flex items-center gap-2 mt-2">
+<span class="px-2 py-0.5 rounded-full text-[10px] font-code-md bg-secondary/10 text-secondary border border-secondary/20">+4,8% este mês</span>
+<span class="font-body-sm text-body-sm text-outline">vs. mês anterior</span>
+</div>
+</div>
+<!-- Simulated transactions -->
+<div class="space-y-2">
+<div class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Últimos Lançamentos</div>
+<div class="p-3.5 rounded-xl bg-[#101D31]/80 border border-[#253653]/60 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-[#15243A] flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">cloud</span>
+</div>
+<div>
+<div class="font-body-md text-body-md text-on-surface font-medium">Amazon Web Services</div>
+<div class="font-body-sm text-body-sm text-outline">Cloud Hosting • Ontem</div>
+</div>
+</div>
+<span class="font-code-md text-code-md text-[#FB7185]">-R$ 389,40</span>
+</div>
+<div class="p-3.5 rounded-xl bg-[#101D31]/80 border border-[#253653]/60 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-[#15243A] flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<div class="font-body-md text-body-md text-on-surface font-medium">Stripe Payout</div>
+<div class="font-body-sm text-body-sm text-outline">Consultoria Tech • 22 Out</div>
+</div>
+</div>
+<span class="font-code-md text-code-md text-secondary">+R$ 8.500,00</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Backdrop Dimmer Layer -->
+<div class="absolute inset-0 bg-[#07111F]/75 backdrop-blur-[6px] z-10"></div>
+<!-- ================================================================= -->
+<!-- SLIDE-UP BOTTOM SHEET DRAWER (MAIN TARGET INTERFACE)            -->
+<!-- ================================================================= -->
+<div class="relative z-20 w-full max-h-[92%] bg-[#0B1728] border-t border-x border-[#253653] rounded-t-[28px] shadow-[0_-16px_40px_-8px_rgba(3,8,16,0.85),0_0_0_1px_rgba(118,146,255,0.12)] flex flex-col animate-in slide-in-from-bottom duration-300">
+<!-- Top Drag Handle -->
+<div class="pt-3 pb-1 flex justify-center shrink-0">
+<div class="w-12 h-1.5 rounded-full bg-outline-variant/60 active:bg-outline"></div>
+</div>
+<!-- Drawer Header Bar -->
+<div class="px-5 py-3 flex items-center justify-between border-b border-[#1B2A43]/70 shrink-0">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold tracking-tight">Nova Transação</h2>
+<span class="px-2 py-0.5 rounded-full font-label-caps text-[10px] bg-[#15243A] text-secondary border border-secondary/30">
+              MODO MANUAL
+            </span>
+</div>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="material-symbols-outlined text-secondary text-[14px]">lock</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant/80 tracking-wide">Criptografia E2E • Vault Local</span>
+</div>
+</div>
+<!-- Close Button with large touch target (>44px) -->
+<button aria-label="Fechar modal" class="w-11 h-11 rounded-full flex items-center justify-center bg-[#15243A]/80 hover:bg-[#212a39] text-on-surface-variant hover:text-on-surface border border-[#253653] active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Scrollable Form Container -->
+<div class="overflow-y-auto px-5 py-4 space-y-5 flex-1 overscroll-contain">
+<!-- 1. Transaction Type Segmented Toggle -->
+<div>
+<div class="grid grid-cols-3 p-1 rounded-xl bg-[#101D31] border border-[#253653]">
+<!-- Despesa (Active Selected) -->
+<button class="flex items-center justify-center gap-1.5 py-2.5 rounded-lg bg-[#FB7185]/15 border border-[#FB7185]/40 text-[#FB7185] font-body-md text-body-md font-medium shadow-sm transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">arrow_outward</span>
+<span>Despesa</span>
+</button>
+<!-- Receita -->
+<button class="flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface font-body-md text-body-md transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">arrow_downward</span>
+<span>Receita</span>
+</button>
+<!-- Transferência -->
+<button class="flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface font-body-md text-body-md transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">sync_alt</span>
+<span>Transf.</span>
+</button>
+</div>
+</div>
+<!-- 2. Large Ergonomic Currency Input Display -->
+<div class="p-4 rounded-2xl bg-[#101D31] border border-[#253653] relative overflow-hidden group focus-within:border-primary transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Valor do Lançamento</span>
+<span class="font-code-md text-[11px] text-secondary bg-secondary/10 px-2 py-0.5 rounded border border-secondary/20">BRL - Reais</span>
+</div>
+<!-- Currency Digits -->
+<div class="flex items-baseline mt-2 font-code-md">
+<span class="text-headline-md text-outline mr-2 font-medium">R$</span>
+<span class="text-[34px] leading-tight font-semibold text-on-surface tracking-tight">1.450,00</span>
+<span class="inline-block w-0.5 h-8 bg-primary ml-1 cursor-blink"></span>
+</div>
+<!-- Quick Amount Increment Chips -->
+<div class="flex items-center gap-2 mt-3 pt-3 border-t border-[#1B2A43]">
+<button class="px-2.5 py-1 rounded-lg bg-[#15243A] hover:bg-[#212a39] text-primary font-code-md text-[11px] border border-[#253653] active:scale-95 transition-all" type="button">
+              +R$ 50
+            </button>
+<button class="px-2.5 py-1 rounded-lg bg-[#15243A] hover:bg-[#212a39] text-primary font-code-md text-[11px] border border-[#253653] active:scale-95 transition-all" type="button">
+              +R$ 100
+            </button>
+<button class="px-2.5 py-1 rounded-lg bg-[#15243A] hover:bg-[#212a39] text-primary font-code-md text-[11px] border border-[#253653] active:scale-95 transition-all" type="button">
+              +R$ 500
+            </button>
+<button class="ml-auto px-2 py-1 rounded-lg text-outline hover:text-on-surface font-code-md text-[11px] active:scale-95 transition-all" type="button">
+              Limpar
+            </button>
+</div>
+</div>
+<!-- 3. Description & Voice Assistant -->
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Descrição da Transação</label>
+<span class="font-label-caps text-[10px] text-primary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
+              Parser Ativo
+            </span>
+</div>
+<div class="flex gap-2">
+<div class="relative flex-1">
+<input class="w-full h-11 px-3.5 pr-9 rounded-xl bg-[#101D31] border border-[#253653] text-on-surface font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-outline-variant" placeholder="Ex: Assinatura GitHub Copilot" type="text" value='Monitor Dell UltraSharp 32" 4K'/>
+<button aria-label="Limpar texto" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface p-1" type="button">
+<span class="material-symbols-outlined text-[18px]">cancel</span>
+</button>
+</div>
+<!-- Audio AI Sync Badge Button -->
+<button class="h-11 px-3 rounded-xl bg-[#15243A] hover:bg-[#212a39] border border-secondary/30 text-secondary flex items-center gap-1.5 active:scale-95 transition-all shrink-0" type="button">
+<span class="material-symbols-outlined text-[18px]">mic</span>
+<span class="font-label-caps text-label-caps">Áudio IA</span>
+</button>
+</div>
+</div>
+<!-- 4. Category & Cost Center Selector (Horizontal scrollable chips) -->
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<label class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Categoria &amp; Centro de Custo</label>
+<span class="font-label-caps text-[10px] text-on-surface-variant">Hardware</span>
+</div>
+<div class="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 no-scrollbar">
+<!-- Selected Pill -->
+<button class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-primary/15 border border-primary text-primary font-body-sm text-body-sm font-medium shrink-0 shadow-[0_0_12px_rgba(118,146,255,0.2)]" type="button">
+<span class="material-symbols-outlined text-[16px]">devices</span>
+<span>Tecnologia &amp; HW</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#101D31] border border-[#253653] text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm shrink-0 hover:border-outline transition-all" type="button">
+<span class="material-symbols-outlined text-[16px]">restaurant</span>
+<span>Alimentação</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#101D31] border border-[#253653] text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm shrink-0 hover:border-outline transition-all" type="button">
+<span class="material-symbols-outlined text-[16px]">home</span>
+<span>Habitação</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#101D31] border border-[#253653] text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm shrink-0 hover:border-outline transition-all" type="button">
+<span class="material-symbols-outlined text-[16px]">dns</span>
+<span>Infra / AWS</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#101D31] border border-[#253653] text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm shrink-0 hover:border-outline transition-all" type="button">
+<span class="material-symbols-outlined text-[16px]">commute</span>
+<span>Transporte</span>
+</button>
+</div>
+</div>
+<!-- 5. Payment Method & Account Selector -->
+<div class="space-y-2">
+<label class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Forma de Pagamento / Conta</label>
+<div class="p-3 rounded-xl bg-[#101D31] border border-primary/50 flex items-center justify-between cursor-pointer hover:border-primary transition-all">
+<div class="flex items-center gap-3">
+<div class="w-10 h-7 rounded-md bg-gradient-to-tr from-[#820AD1] to-[#400569] flex items-center justify-center shadow-inner border border-white/10">
+<span class="material-symbols-outlined text-white text-[16px]">credit_card</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-body-md text-body-md text-on-surface font-medium">Nubank Ultravioleta</span>
+<span class="font-code-md text-[10px] px-1.5 py-0.5 rounded bg-surface-container text-primary border border-[#253653]">Black</span>
+</div>
+<div class="font-code-md text-[11px] text-on-surface-variant">Mastercard •••• 8842</div>
+</div>
+</div>
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="font-code-md text-[11px]">Limite OK</span>
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+</div>
+</div>
+</div>
+<!-- 6. INSTALLMENTS / SELETOR DE PARCELAS (CRITICAL CORE REQUIREMENT) -->
+<div class="p-4 rounded-2xl bg-[#101D31] border-2 border-secondary/40 space-y-3.5 relative overflow-hidden shadow-[0_0_24px_rgba(68,226,205,0.06)]">
+<!-- Orbital node glow indicator -->
+<div class="absolute -right-8 -top-8 w-24 h-24 bg-secondary/10 rounded-full blur-xl pointer-events-none"></div>
+<!-- Section Header with Active Toggle Switch -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">call_split</span>
+<div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Compra Parcelada?</span>
+<p class="font-body-sm text-[11px] text-on-surface-variant">Fracionar impacto nas próximas faturas</p>
+</div>
+</div>
+<!-- Toggle Switch (ON State - Turquoise) -->
+<button aria-checked="true" class="w-12 h-6 rounded-full bg-secondary p-0.5 transition-colors relative flex items-center focus:outline-none focus:ring-2 focus:ring-secondary/50" role="switch" type="button">
+<div class="w-5 h-5 rounded-full bg-[#07111F] shadow-md transform translate-x-6 transition-transform"></div>
+</button>
+</div>
+<!-- Interactive Stepper & Quick Number Selector -->
+<div class="space-y-2 pt-1">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-outline uppercase">Número de Parcelas</span>
+<!-- Quick Stepper [-] & [+] -->
+<div class="flex items-center gap-2 bg-[#0B1728] px-2 py-1 rounded-xl border border-[#253653]">
+<button aria-label="Diminuir parcela" class="w-8 h-8 rounded-lg bg-[#15243A] hover:bg-[#212a39] text-on-surface flex items-center justify-center active:scale-90 transition-transform font-bold text-lg leading-none" type="button">−</button>
+<span class="font-code-md text-code-md font-semibold text-secondary px-2">10x</span>
+<button aria-label="Aumentar parcela" class="w-8 h-8 rounded-lg bg-[#15243A] hover:bg-[#212a39] text-on-surface flex items-center justify-center active:scale-90 transition-transform font-bold text-lg leading-none" type="button">+</button>
+</div>
+</div>
+<!-- Segmented Pill Strip for Fast Selection -->
+<div class="grid grid-cols-6 gap-1 pt-1">
+<button class="py-1.5 rounded-lg bg-[#0B1728] border border-[#253653] text-on-surface-variant hover:text-on-surface font-code-md text-[11px] text-center" type="button">1x</button>
+<button class="py-1.5 rounded-lg bg-[#0B1728] border border-[#253653] text-on-surface-variant hover:text-on-surface font-code-md text-[11px] text-center" type="button">2x</button>
+<button class="py-1.5 rounded-lg bg-[#0B1728] border border-[#253653] text-on-surface-variant hover:text-on-surface font-code-md text-[11px] text-center" type="button">3x</button>
+<button class="py-1.5 rounded-lg bg-[#0B1728] border border-[#253653] text-on-surface-variant hover:text-on-surface font-code-md text-[11px] text-center" type="button">6x</button>
+<!-- 10x Active Selected -->
+<button class="py-1.5 rounded-lg bg-secondary text-[#00201c] font-code-md text-[11px] font-semibold text-center shadow-[0_0_10px_rgba(68,226,205,0.4)]" type="button">10x</button>
+<button class="py-1.5 rounded-lg bg-[#0B1728] border border-[#253653] text-on-surface-variant hover:text-on-surface font-code-md text-[11px] text-center" type="button">12x</button>
+</div>
+</div>
+<!-- Breakdown Telemetry Preview Card -->
+<div class="p-3 rounded-xl bg-[#0B1728] border border-[#253653]/90 space-y-2">
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface font-medium">10x de R$ 145,00</span>
+<span class="font-code-md text-[11px] text-secondary font-medium">Total: R$ 1.450,00 sem juros</span>
+</div>
+<div class="h-px bg-[#1B2A43]"></div>
+<div class="grid grid-cols-2 gap-2 text-[11px]">
+<div>
+<span class="text-outline font-label-caps block text-[9px] uppercase">1ª Parcela</span>
+<span class="text-on-surface font-code-md">28 Out 2024 (Fatura Atual)</span>
+</div>
+<div>
+<span class="text-outline font-label-caps block text-[9px] uppercase">Última Parcela</span>
+<span class="text-on-surface font-code-md">28 Jul 2025</span>
+</div>
+</div>
+<!-- Limit Impact Bar -->
+<div class="pt-1">
+<div class="flex justify-between font-label-caps text-[10px] text-outline mb-1">
+<span>Impacto no Limite do Cartão</span>
+<span class="text-on-surface font-code-md">R$ 1.450 / R$ 25.000 (5,8%)</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-[#15243A] overflow-hidden flex">
+<div class="bg-primary/50 h-full w-[35%]"></div>
+<div class="bg-secondary h-full w-[6%]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- 7. Date & Due Date -->
+<div class="space-y-1.5">
+<label class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Data da Operação</label>
+<div class="h-11 px-3.5 rounded-xl bg-[#101D31] border border-[#253653] flex items-center justify-between cursor-pointer hover:border-outline transition-colors">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-primary text-[18px]">calendar_today</span>
+<span class="font-body-md text-body-md text-on-surface">Hoje, 24 de Outubro de 2024</span>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px]">expand_more</span>
+</div>
+</div>
+<!-- Extra spacing before sticky bottom bar -->
+<div class="h-2"></div>
+</div>
+<!-- ================================================================= -->
+<!-- 8. STICKY PRIMARY ACTION BAR AT BOTTOM OF DRAWER                -->
+<!-- ================================================================= -->
+<div class="px-5 pt-3 pb-6 border-t border-[#1B2A43] bg-[#0B1728]/95 backdrop-blur-md shrink-0 space-y-3">
+<!-- Recurrence checkbox option -->
+<label class="flex items-center gap-2.5 cursor-pointer select-none">
+<input class="w-4 h-4 rounded bg-[#101D31] border-[#253653] text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors">
+            Salvar padrão como sugestão de despesa frequente
+          </span>
+</label>
+<!-- Primary High-Density Action CTA -->
+<button class="w-full h-14 rounded-xl bg-gradient-to-r from-primary-container via-[#5575F6] to-secondary text-[#07111F] font-headline-sm text-headline-sm font-bold flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(118,146,255,0.35)] active:scale-[0.98] transition-all hover:brightness-110" type="button">
+<span class="material-symbols-outlined text-[22px]">check</span>
+<span>Confirmar Transação (10x de R$ 145,00)</span>
+</button>
+<!-- Home Indicator Bar (iOS style footer spacing) -->
+<div class="w-32 h-1 bg-outline-variant/40 rounded-full mx-auto mt-2"></div>
+</div>
+</div>
+</div>
+</body></html>

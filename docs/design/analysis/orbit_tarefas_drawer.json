@@ -1,0 +1,901 @@
+{
+  "screen_id": "orbit_tarefas_drawer",
+  "tailwind_config": {
+    "darkMode": "class",
+    "theme": {
+      "extend": {
+        "colors": {
+          "on-surface-variant": "#c4c5d5",
+          "on-tertiary-fixed": "#001354",
+          "on-tertiary": "#002486",
+          "on-tertiary-container": "#002588",
+          "surface-variant": "#2c3545",
+          "on-primary-container": "#002683",
+          "secondary-fixed-dim": "#3cddc7",
+          "surface-container-lowest": "#050e1c",
+          "on-primary-fixed-variant": "#193ca7",
+          "surface-container-high": "#212a39",
+          "secondary-fixed": "#62fae3",
+          "secondary-container": "#03c6b2",
+          "inverse-surface": "#d9e3f7",
+          "tertiary-fixed-dim": "#b8c4ff",
+          "on-background": "#d9e3f7",
+          "surface-container": "#16202f",
+          "on-secondary-container": "#004d44",
+          "surface-container-low": "#121c2a",
+          "outline-variant": "#444653",
+          "error": "#ffb4ab",
+          "background": "#0a1422",
+          "on-secondary-fixed": "#00201c",
+          "outline": "#8e909e",
+          "surface-tint": "#b7c4ff",
+          "primary-fixed": "#dde1ff",
+          "on-error-container": "#ffdad6",
+          "surface-dim": "#0a1422",
+          "surface-bright": "#303a49",
+          "inverse-on-surface": "#273140",
+          "primary-fixed-dim": "#b7c4ff",
+          "on-primary": "#002682",
+          "tertiary-container": "#7992ff",
+          "tertiary-fixed": "#dde1ff",
+          "on-secondary-fixed-variant": "#005047",
+          "on-error": "#690005",
+          "tertiary": "#b8c4ff",
+          "on-tertiary-fixed-variant": "#0136bb",
+          "surface-container-highest": "#2c3545",
+          "on-primary-fixed": "#001552",
+          "inverse-primary": "#3856bf",
+          "secondary": "#44e2cd",
+          "primary": "#b7c4ff",
+          "on-secondary": "#003731",
+          "primary-container": "#7692ff",
+          "error-container": "#93000a",
+          "on-surface": "#d9e3f7",
+          "surface": "#0a1422"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "space-2": "0.125rem",
+          "margin-tablet": "1.5rem",
+          "space-12": "0.75rem",
+          "space-24": "1.5rem",
+          "gutter-desktop": "1.5rem",
+          "margin-mobile": "1rem",
+          "gutter-mobile": "1rem",
+          "space-20": "1.25rem",
+          "space-8": "0.5rem",
+          "space-32": "2rem",
+          "space-64": "4rem",
+          "space-4": "0.25rem",
+          "space-16": "1rem",
+          "space-48": "3rem",
+          "space-40": "2.5rem",
+          "margin-desktop": "2rem"
+        },
+        "fontFamily": {
+          "headline-sm": [
+            "Geist",
+            "sans-serif"
+          ],
+          "display-lg": [
+            "Geist",
+            "sans-serif"
+          ],
+          "body-md": [
+            "Geist",
+            "sans-serif"
+          ],
+          "body-sm": [
+            "Geist",
+            "sans-serif"
+          ],
+          "headline-md": [
+            "Geist",
+            "sans-serif"
+          ],
+          "code-md": [
+            "JetBrains Mono",
+            "monospace"
+          ],
+          "body-lg": [
+            "Geist",
+            "sans-serif"
+          ],
+          "label-regular": [
+            "Geist",
+            "sans-serif"
+          ],
+          "headline-xl": [
+            "Geist",
+            "sans-serif"
+          ],
+          "display-lg-mobile": [
+            "Geist",
+            "sans-serif"
+          ],
+          "headline-xl-mobile": [
+            "Geist",
+            "sans-serif"
+          ],
+          "label-caps": [
+            "JetBrains Mono",
+            "monospace"
+          ]
+        },
+        "fontSize": {
+          "headline-sm": [
+            "16px",
+            {
+              "lineHeight": "24px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "600"
+            }
+          ],
+          "display-lg": [
+            "40px",
+            {
+              "lineHeight": "48px",
+              "letterSpacing": "-0.025em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-md": [
+            "14px",
+            {
+              "lineHeight": "22px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "body-sm": [
+            "12px",
+            {
+              "lineHeight": "18px",
+              "letterSpacing": "0.005em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-md": [
+            "20px",
+            {
+              "lineHeight": "28px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "500"
+            }
+          ],
+          "code-md": [
+            "13px",
+            {
+              "lineHeight": "20px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "body-lg": [
+            "16px",
+            {
+              "lineHeight": "26px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "label-regular": [
+            "12px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.01em",
+              "fontWeight": "500"
+            }
+          ],
+          "headline-xl": [
+            "28px",
+            {
+              "lineHeight": "36px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "600"
+            }
+          ],
+          "display-lg-mobile": [
+            "30px",
+            {
+              "lineHeight": "38px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-xl-mobile": [
+            "24px",
+            {
+              "lineHeight": "32px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "600"
+            }
+          ],
+          "label-caps": [
+            "11px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.06em",
+              "fontWeight": "500"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "inline_css": [
+    "\n    .material-symbols-outlined {\n      font-family: 'Material Symbols Outlined';\n      font-weight: normal;\n      font-style: normal;\n      font-size: 20px;\n      line-height: 1;\n      letter-spacing: normal;\n      text-transform: none;\n      display: inline-block;\n      white-space: nowrap;\n      word-wrap: normal;\n      direction: ltr;\n      -webkit-font-feature-settings: 'liga';\n      -webkit-font-smoothing: antialiased;\n    }\n    \n    /* Orbital subtle custom scrollbar */\n    ::-webkit-scrollbar {\n      width: 6px;\n      height: 6px;\n    }\n    ::-webkit-scrollbar-track {\n      background: #0a1422;\n    }\n    ::-webkit-scrollbar-thumb {\n      background: #253653;\n      border-radius: 9999px;\n    }\n    ::-webkit-scrollbar-thumb:hover {\n      background: #7692ff;\n    }\n\n    .orbital-glow {\n      box-shadow: 0 0 20px 2px rgba(118, 146, 255, 0.15);\n    }\n    .teal-glow {\n      box-shadow: 0 0 16px 1px rgba(45, 212, 191, 0.15);\n    }\n    .amber-badge {\n      background: rgba(251, 191, 36, 0.12);\n      color: #FBBF24;\n      border: 1px solid rgba(251, 191, 36, 0.25);\n    }\n    .critical-badge {\n      background: rgba(251, 113, 133, 0.12);\n      color: #FB7185;\n      border: 1px solid rgba(251, 113, 133, 0.25);\n    }\n  "
+  ],
+  "class_frequency": {
+    "bg-background": 2,
+    "text-on-surface": 30,
+    "font-body-md": 15,
+    "antialiased": 1,
+    "overflow-x-hidden": 1,
+    "min-h-screen": 2,
+    "selection:bg-primary-container": 1,
+    "selection:text-on-primary-container": 1,
+    "fixed": 3,
+    "top-0": 2,
+    "left-0": 1,
+    "h-screen": 1,
+    "w-64": 1,
+    "z-40": 1,
+    "bg-surface-container-low": 7,
+    "border-r": 1,
+    "border-outline-variant/30": 31,
+    "flex": 135,
+    "flex-col": 18,
+    "justify-between": 28,
+    "p-space-16": 10,
+    "select-none": 2,
+    "gap-space-24": 1,
+    "items-center": 115,
+    "gap-space-12": 21,
+    "px-space-12": 18,
+    "py-space-4": 5,
+    "relative": 17,
+    "w-9": 3,
+    "h-9": 8,
+    "rounded-xl": 14,
+    "bg-surface-container-high": 19,
+    "border": 67,
+    "border-outline-variant/40": 17,
+    "justify-center": 21,
+    "text-secondary": 15,
+    "orbital-glow": 3,
+    "absolute": 10,
+    "inset-0": 1,
+    "border-secondary/30": 3,
+    "scale-110": 1,
+    "animate-pulse": 2,
+    "material-symbols-outlined": 61,
+    "text-headline-md": 2,
+    "font-headline-md": 2,
+    "font-semibold": 14,
+    "tracking-tight": 5,
+    "leading-none": 1,
+    "text-label-caps": 63,
+    "font-label-caps": 63,
+    "text-on-surface-variant": 54,
+    "text-[10px]": 30,
+    "tracking-wider": 10,
+    "mt-1": 5,
+    "w-full": 15,
+    "h-10": 7,
+    "px-space-16": 7,
+    "rounded-lg": 45,
+    "bg-surface-container": 18,
+    "hover:bg-surface-container-high": 5,
+    "hover:border-primary/50": 4,
+    "text-headline-sm": 5,
+    "font-headline-sm": 6,
+    "transition-all": 17,
+    "duration-150": 10,
+    "active:scale-[0.98]": 3,
+    "gap-space-8": 25,
+    "text-primary": 17,
+    "text-[18px]": 16,
+    "text-body-md": 21,
+    "font-medium": 10,
+    "px-space-8": 6,
+    "py-space-2": 1,
+    "rounded": 25,
+    "gap-space-4": 5,
+    "py-space-8": 14,
+    "font-normal": 10,
+    "hover:bg-surface-container": 16,
+    "hover:text-on-surface": 25,
+    "transition-colors": 36,
+    "text-outline": 63,
+    "flex-1": 30,
+    "text-secondary-fixed": 2,
+    "border-l-2": 1,
+    "border-secondary": 5,
+    "shadow-sm": 2,
+    "px-2": 20,
+    "py-0.5": 22,
+    "rounded-full": 36,
+    "bg-secondary/15": 2,
+    "pt-space-12": 1,
+    "border-t": 8,
+    "border-outline-variant/20": 12,
+    "text-[11px]": 33,
+    "mb-1": 1,
+    "text-[16px]": 14,
+    "text-body-sm": 29,
+    "font-body-sm": 29,
+    "cursor-pointer": 14,
+    "w-2": 10,
+    "h-2": 10,
+    "bg-primary": 4,
+    "bg-secondary": 6,
+    "bg-amber-400": 2,
+    "pt-space-16": 2,
+    "bg-secondary-container": 1,
+    "teal-glow": 1,
+    "mt-space-8": 1,
+    "pt-space-8": 6,
+    "text-[28px]": 1,
+    "bottom-0": 1,
+    "right-0": 2,
+    "w-2.5": 4,
+    "h-2.5": 4,
+    "border-2": 6,
+    "border-surface-container-low": 1,
+    "leading-tight": 1,
+    "ml-64": 1,
+    "sticky": 1,
+    "z-30": 1,
+    "h-16": 2,
+    "px-space-24": 1,
+    "bg-surface/80": 1,
+    "backdrop-blur-md": 2,
+    "border-b": 3,
+    "gap-space-16": 23,
+    "hidden": 1,
+    "lg:flex": 1,
+    "py-1": 7,
+    "animate-ping": 1,
+    "hover:border-primary/40": 8,
+    "px-1.5": 9,
+    "text-[20px]": 7,
+    "top-2": 1,
+    "right-2": 3,
+    "bg-gradient-to-r": 3,
+    "from-[#5575F6]": 2,
+    "to-[#7692FF]": 2,
+    "text-[#07111F]": 2,
+    "hover:opacity-95": 1,
+    "font-bold": 3,
+    "p-space-24": 1,
+    "lg:p-space-32": 1,
+    "pb-24": 1,
+    "max-w-7xl": 1,
+    "mx-auto": 1,
+    "space-y-space-24": 2,
+    "grid": 3,
+    "grid-cols-1": 1,
+    "sm:grid-cols-2": 1,
+    "lg:grid-cols-4": 1,
+    "mb-space-8": 4,
+    "uppercase": 13,
+    "items-baseline": 4,
+    "text-headline-xl": 4,
+    "font-headline-xl": 4,
+    "bg-surface-container-highest": 6,
+    "h-1": 3,
+    "mt-3": 3,
+    "overflow-hidden": 4,
+    "h-full": 3,
+    "w-4/7": 1,
+    "hover:border-secondary/40": 1,
+    "w-[43%]": 1,
+    "font-code-md": 7,
+    "from-primary": 1,
+    "to-secondary": 1,
+    "w-[65%]": 1,
+    "hover:border-error/40": 1,
+    "text-error": 3,
+    "text-[#FB7185]": 4,
+    "bg-error-container/40": 1,
+    "truncate": 1,
+    "md:flex-row": 4,
+    "md:items-center": 7,
+    "p-space-12": 3,
+    "md:border-b-0": 1,
+    "pb-space-8": 1,
+    "md:pb-0": 1,
+    "overflow-x-auto": 1,
+    "border-b-2": 1,
+    "border-primary": 1,
+    "bg-primary/15": 1,
+    "border-primary/30": 2,
+    "flex-wrap": 10,
+    "sm:w-64": 1,
+    "left-3": 1,
+    "top-2.5": 7,
+    "pl-9": 1,
+    "pr-space-12": 1,
+    "placeholder:text-outline": 1,
+    "focus:border-primary": 7,
+    "focus:ring-1": 3,
+    "focus:ring-primary": 1,
+    "outline-none": 5,
+    "pr-8": 2,
+    "appearance-none": 4,
+    "focus:ring-0": 2,
+    "right-2.5": 2,
+    "pointer-events-none": 6,
+    "space-y-space-12": 3,
+    "critical-badge": 3,
+    "group": 3,
+    "border-[#FB7185]/30": 1,
+    "hover:border-[#FB7185]/60": 1,
+    "hover:shadow-lg": 3,
+    "items-start": 3,
+    "min-w-0": 14,
+    "md:mt-0": 3,
+    "w-6": 7,
+    "h-6": 7,
+    "border-outline-variant/60": 5,
+    "hover:border-secondary": 5,
+    "group-hover:scale-105": 3,
+    "bg-transparent": 3,
+    "group-hover:bg-secondary/40": 3,
+    "space-y-1": 11,
+    "text-body-lg": 4,
+    "font-body-lg": 4,
+    "group-hover:text-primary": 3,
+    "gap-1": 23,
+    "w-1.5": 2,
+    "h-1.5": 2,
+    "bg-[#FB7185]": 2,
+    "text-[15px]": 8,
+    "self-end": 3,
+    "md:self-center": 3,
+    "w-8": 6,
+    "h-8": 6,
+    "amber-badge": 1,
+    "text-amber-300": 1,
+    "bg-primary/10": 3,
+    "border-primary/20": 1,
+    "transition-transform": 2,
+    "duration-200": 1,
+    "space-y-space-8": 3,
+    "bg-surface-container-low/70": 2,
+    "opacity-75": 2,
+    "hover:opacity-100": 2,
+    "transition-opacity": 2,
+    "bg-secondary/20": 4,
+    "space-y-0.5": 2,
+    "line-through": 4,
+    "hover:underline": 1,
+    "text-[14px]": 4,
+    "border-primary/25": 1,
+    "inset-y-0": 1,
+    "z-50": 1,
+    "sm:w-[480px]": 1,
+    "bg-[#101D31]": 1,
+    "border-l": 1,
+    "border-[#253653]": 7,
+    "shadow-2xl": 1,
+    "transform": 1,
+    "duration-300": 1,
+    "ease-in-out": 1,
+    "translate-x-0": 1,
+    "px-space-20": 2,
+    "bg-surface-container-low/80": 1,
+    "overflow-y-auto": 1,
+    "p-space-20": 2,
+    "space-y-space-20": 1,
+    "bg-[#0B1728]": 9,
+    "focus:border-[#7692FF]": 2,
+    "focus:ring-[#7692FF]": 2,
+    "resize-none": 1,
+    "leading-relaxed": 1,
+    "grid-cols-2": 1,
+    "pr-6": 2,
+    "pl-8": 2,
+    "left-2": 2,
+    "space-y-2": 2,
+    "grid-cols-4": 1,
+    "py-1.5": 6,
+    "border-[#FB7185]": 1,
+    "hover:border-amber-400/50": 1,
+    "p-space-8": 3,
+    "w-5": 3,
+    "h-5": 3,
+    "hover:text-error": 3,
+    "border-outline-variant": 1,
+    "hover:border-primary": 2,
+    "border-dashed": 2,
+    "hover:border-primary/60": 1,
+    "gap-2": 2,
+    "inline-flex": 4,
+    "px-2.5": 3,
+    "rounded-md": 4,
+    "text-[12px]": 3,
+    "text-[#FB7185]/80": 1,
+    "hover:text-[#FB7185]": 1,
+    "shadow-md": 1,
+    "hover:brightness-110": 1,
+    "bottom-6": 1,
+    "right-6": 1,
+    "z-20": 1,
+    "bg-surface-container-high/90": 1,
+    "backdrop-blur": 1,
+    "px-3": 1,
+    "shadow-lg": 1,
+    "px-1": 2,
+    "text-outline-variant": 1
+  },
+  "controls": [
+    {
+      "tag": "button",
+      "type": null,
+      "text": "add_circle + Adicionar N",
+      "placeholder": null,
+      "class": "w-full h-10 px-space-16 rounded-lg bg-surface-container border border-outline-variant/40 text-on-surface hover:bg-surface-container-high hover:border-primary/50 text-headline-sm font-headline-sm flex items-center justify-between transition-all duration-150 active:scale-[0.98]",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "add",
+      "placeholder": null,
+      "class": "hover:text-on-surface",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "search Buscar em órbita... ⌘K",
+      "placeholder": null,
+      "class": "flex items-center gap-space-12 px-space-12 py-space-4 h-9 rounded-lg bg-surface-container border border-outline-variant/30 text-on-surface-variant hover:border-primary/40 hover:text-on-surface transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "notifications",
+      "placeholder": null,
+      "class": "relative w-9 h-9 rounded-lg bg-surface-container border border-outline-variant/30 flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "add + Nova Tarefa",
+      "placeholder": null,
+      "class": "h-9 px-space-16 rounded-lg bg-gradient-to-r from-[#5575F6] to-[#7692FF] text-[#07111F] font-headline-sm text-body-md font-semibold flex items-center gap-space-8 shadow-sm hover:opacity-95 active:scale-[0.98] transition-all cursor-pointer",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Hoje 4",
+      "placeholder": null,
+      "class": "flex items-center gap-space-8 px-space-16 py-space-8 rounded-lg bg-surface-container-high text-primary border-b-2 border-primary font-medium text-body-md transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Próximas 6",
+      "placeholder": null,
+      "class": "flex items-center gap-space-8 px-space-16 py-space-8 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-normal text-body-md transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Todas 18",
+      "placeholder": null,
+      "class": "flex items-center gap-space-8 px-space-16 py-space-8 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-normal text-body-md transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Concluídas 42",
+      "placeholder": null,
+      "class": "flex items-center gap-space-8 px-space-16 py-space-8 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-normal text-body-md transition-all",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "text": "",
+      "placeholder": "Filtrar tarefas, tags ou listas...",
+      "class": "w-full h-9 pl-9 pr-space-12 rounded-lg bg-surface-container border border-outline-variant/40 text-body-sm font-body-sm text-on-surface placeholder:text-outline focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all",
+      "id": null
+    },
+    {
+      "tag": "select",
+      "type": null,
+      "text": "Prioridade: Todas Crítica Alta Média Baixa",
+      "placeholder": null,
+      "class": "h-9 px-space-12 pr-8 rounded-lg bg-surface-container border border-outline-variant/40 text-body-sm font-body-sm text-on-surface-variant appearance-none hover:border-primary/40 focus:border-primary focus:ring-0 cursor-pointer",
+      "id": null
+    },
+    {
+      "tag": "select",
+      "type": null,
+      "text": "Lista: Todas Infra / AWS Engenharia Core Finanças Pessoal",
+      "placeholder": null,
+      "class": "h-9 px-space-12 pr-8 rounded-lg bg-surface-container border border-outline-variant/40 text-body-sm font-body-sm text-on-surface-variant appearance-none hover:border-primary/40 focus:border-primary focus:ring-0 cursor-pointer",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "view_agenda",
+      "placeholder": null,
+      "class": "h-9 w-9 flex items-center justify-center rounded-lg bg-surface-container border border-outline-variant/40 text-on-surface-variant hover:text-on-surface hover:border-primary/40",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "",
+      "placeholder": null,
+      "class": "relative mt-1 md:mt-0 w-6 h-6 rounded-full border-2 border-outline-variant/60 hover:border-secondary flex items-center justify-center transition-all group-hover:scale-105",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "more_vert",
+      "placeholder": null,
+      "class": "w-8 h-8 rounded-lg hover:bg-surface-container-high flex items-center justify-center text-outline hover:text-on-surface transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "",
+      "placeholder": null,
+      "class": "relative mt-1 md:mt-0 w-6 h-6 rounded-full border-2 border-outline-variant/60 hover:border-secondary flex items-center justify-center transition-all group-hover:scale-105",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "more_vert",
+      "placeholder": null,
+      "class": "w-8 h-8 rounded-lg hover:bg-surface-container-high flex items-center justify-center text-outline hover:text-on-surface transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "",
+      "placeholder": null,
+      "class": "relative mt-1 md:mt-0 w-6 h-6 rounded-full border-2 border-outline-variant/60 hover:border-secondary flex items-center justify-center transition-all group-hover:scale-105",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "more_vert",
+      "placeholder": null,
+      "class": "w-8 h-8 rounded-lg hover:bg-surface-container-high flex items-center justify-center text-outline hover:text-on-surface transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "VER CRONOGRAMA COMPLETO arrow_forward",
+      "placeholder": null,
+      "class": "text-label-caps font-label-caps text-primary hover:underline text-[11px] flex items-center gap-1",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "",
+      "placeholder": null,
+      "class": "w-6 h-6 rounded-full border-2 border-outline-variant/60 hover:border-secondary flex items-center justify-center transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "",
+      "placeholder": null,
+      "class": "w-6 h-6 rounded-full border-2 border-outline-variant/60 hover:border-secondary flex items-center justify-center transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "share",
+      "placeholder": null,
+      "class": "w-8 h-8 rounded-lg hover:bg-surface-container flex items-center justify-center text-outline hover:text-on-surface transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "close",
+      "placeholder": null,
+      "class": "w-8 h-8 rounded-lg hover:bg-surface-container flex items-center justify-center text-outline hover:text-on-surface transition-colors",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "text": "",
+      "placeholder": null,
+      "class": "w-full bg-[#0B1728] border border-[#253653] focus:border-[#7692FF] focus:ring-1 focus:ring-[#7692FF] rounded-lg text-body-lg font-body-lg font-semibold text-on-surface px-space-12 py-space-8 outline-none transition-all",
+      "id": null
+    },
+    {
+      "tag": "textarea",
+      "type": null,
+      "text": "Verificar se o rollback automático está configurado para falhas no healthcheck `/livez`. Certificar-se de executar os migrations antes de subir o pod worker principal.",
+      "placeholder": null,
+      "class": "w-full bg-[#0B1728] border border-[#253653] focus:border-[#7692FF] focus:ring-1 focus:ring-[#7692FF] rounded-lg text-body-sm font-body-sm text-on-surface px-space-12 py-space-8 outline-none transition-all resize-none leading-relaxed font-code-md",
+      "id": null
+    },
+    {
+      "tag": "select",
+      "type": null,
+      "text": "Infra / AWS Engenharia Core Finanças Pessoal",
+      "placeholder": null,
+      "class": "w-full h-10 px-space-8 pr-6 rounded-lg bg-[#0B1728] border border-[#253653] text-body-sm font-body-sm text-on-surface appearance-none focus:border-primary cursor-pointer",
+      "id": null
+    },
+    {
+      "tag": "select",
+      "type": null,
+      "text": "Não se repete Diário Dias úteis Semanal",
+      "placeholder": null,
+      "class": "w-full h-10 px-space-8 pr-6 rounded-lg bg-[#0B1728] border border-[#253653] text-body-sm font-body-sm text-on-surface appearance-none focus:border-primary cursor-pointer",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "text": "",
+      "placeholder": null,
+      "class": "w-full h-10 px-space-8 pl-8 rounded-lg bg-[#0B1728] border border-[#253653] text-body-sm font-body-sm text-on-surface focus:border-primary outline-none",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "text": "",
+      "placeholder": null,
+      "class": "w-full h-10 px-space-8 pl-8 rounded-lg bg-[#0B1728] border border-[#253653] text-body-sm font-body-sm text-[#FB7185] font-code-md focus:border-primary outline-none",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Crítica",
+      "placeholder": null,
+      "class": "py-1.5 px-2 rounded-lg text-label-caps font-label-caps text-[11px] critical-badge border-[#FB7185] font-medium flex items-center justify-center gap-1",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Alta",
+      "placeholder": null,
+      "class": "py-1.5 px-2 rounded-lg text-label-caps font-label-caps text-[11px] bg-surface-container text-on-surface-variant border border-outline-variant/30 hover:border-amber-400/50 transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Média",
+      "placeholder": null,
+      "class": "py-1.5 px-2 rounded-lg text-label-caps font-label-caps text-[11px] bg-surface-container text-on-surface-variant border border-outline-variant/30 hover:border-primary/50 transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Baixa",
+      "placeholder": null,
+      "class": "py-1.5 px-2 rounded-lg text-label-caps font-label-caps text-[11px] bg-surface-container text-on-surface-variant border border-outline-variant/30 hover:text-on-surface transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "close",
+      "placeholder": null,
+      "class": "text-outline hover:text-error",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "close",
+      "placeholder": null,
+      "class": "text-outline hover:text-error",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "close",
+      "placeholder": null,
+      "class": "text-outline hover:text-error",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "add Adicionar subtarefa",
+      "placeholder": null,
+      "class": "w-full py-1.5 rounded-lg border border-dashed border-outline-variant/40 hover:border-primary/60 text-body-sm font-body-sm text-primary flex items-center justify-center gap-1 transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "close",
+      "placeholder": null,
+      "class": "text-outline hover:text-on-surface",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "close",
+      "placeholder": null,
+      "class": "text-outline hover:text-on-surface",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "close",
+      "placeholder": null,
+      "class": "text-outline hover:text-on-surface",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "add + Tag",
+      "placeholder": null,
+      "class": "inline-flex items-center gap-1 px-2 py-1 rounded-md text-label-caps font-label-caps text-[11px] border border-dashed border-outline-variant/40 text-primary hover:border-primary",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "delete Excluir",
+      "placeholder": null,
+      "class": "text-body-sm font-body-sm text-[#FB7185]/80 hover:text-[#FB7185] flex items-center gap-1 transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Cancelar",
+      "placeholder": null,
+      "class": "px-space-16 h-10 rounded-lg border border-outline-variant/40 text-on-surface hover:bg-surface-container text-body-md font-body-md transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Salvar Alterações",
+      "placeholder": null,
+      "class": "px-space-20 h-10 rounded-lg bg-gradient-to-r from-[#5575F6] to-[#7692FF] text-[#07111F] font-semibold text-body-md shadow-md hover:brightness-110 active:scale-[0.98] transition-all",
+      "id": null
+    }
+  ],
+  "reading_note": "Extração estática. Os scripts e handlers do HTML original foram preservados, mas não executados nem considerados implementação funcional."
+}

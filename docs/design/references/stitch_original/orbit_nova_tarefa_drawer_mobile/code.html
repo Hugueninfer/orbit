@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Orbit — Nova Tarefa Operacional</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Fonts: Geist & JetBrains Mono via Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "surface-bright": "#303a49",
+                  "on-secondary-container": "#004d44",
+                  "primary-fixed": "#dde1ff",
+                  "surface-container-high": "#212a39",
+                  "error-container": "#93000a",
+                  "tertiary": "#b8c4ff",
+                  "inverse-on-surface": "#273140",
+                  "on-primary-fixed-variant": "#193ca7",
+                  "on-primary-fixed": "#001552",
+                  "primary-container": "#7692ff",
+                  "secondary-container": "#03c6b2",
+                  "outline-variant": "#444653",
+                  "error": "#ffb4ab",
+                  "background": "#0a1422",
+                  "secondary-fixed": "#62fae3",
+                  "on-secondary": "#003731",
+                  "primary-fixed-dim": "#b7c4ff",
+                  "outline": "#8e909e",
+                  "on-tertiary-container": "#002588",
+                  "surface-dim": "#0a1422",
+                  "surface-container-low": "#121c2a",
+                  "surface-container-highest": "#2c3545",
+                  "surface-variant": "#2c3545",
+                  "surface-tint": "#b7c4ff",
+                  "primary": "#b7c4ff",
+                  "inverse-primary": "#3856bf",
+                  "tertiary-fixed": "#dde1ff",
+                  "surface-container": "#16202f",
+                  "surface": "#0a1422",
+                  "on-surface-variant": "#c4c5d5",
+                  "on-secondary-fixed": "#00201c",
+                  "on-primary": "#002682",
+                  "on-primary-container": "#002683",
+                  "on-tertiary-fixed-variant": "#0136bb",
+                  "on-background": "#d9e3f7",
+                  "tertiary-container": "#7992ff",
+                  "on-surface": "#d9e3f7",
+                  "on-tertiary-fixed": "#001354",
+                  "secondary": "#44e2cd",
+                  "on-secondary-fixed-variant": "#005047",
+                  "inverse-surface": "#d9e3f7",
+                  "secondary-fixed-dim": "#3cddc7",
+                  "on-error-container": "#ffdad6",
+                  "on-tertiary": "#002486",
+                  "surface-container-lowest": "#050e1c",
+                  "on-error": "#690005",
+                  "tertiary-fixed-dim": "#b8c4ff"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.25rem",
+                  "lg": "0.5rem",
+                  "xl": "0.75rem",
+                  "full": "9999px"
+          },
+          "spacing": {
+                  "space-12": "0.75rem",
+                  "space-4": "0.25rem",
+                  "space-32": "2rem",
+                  "margin-desktop": "2rem",
+                  "space-48": "3rem",
+                  "gutter-mobile": "1rem",
+                  "margin-mobile": "1rem",
+                  "space-16": "1rem",
+                  "space-40": "2.5rem",
+                  "gutter-desktop": "1.5rem",
+                  "space-24": "1.5rem",
+                  "space-2": "0.125rem",
+                  "space-64": "4rem",
+                  "space-20": "1.25rem",
+                  "space-8": "0.5rem",
+                  "margin-tablet": "1.5rem"
+          },
+          "fontFamily": {
+                  "code-md": ["JetBrains Mono"],
+                  "display-lg-mobile": ["Geist"],
+                  "body-sm": ["Geist"],
+                  "label-regular": ["Geist"],
+                  "headline-xl-mobile": ["Geist"],
+                  "body-lg": ["Geist"],
+                  "headline-sm": ["Geist"],
+                  "headline-xl": ["Geist"],
+                  "body-md": ["Geist"],
+                  "label-caps": ["JetBrains Mono"],
+                  "headline-md": ["Geist"],
+                  "display-lg": ["Geist"]
+          },
+          "fontSize": {
+                  "code-md": ["13px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
+                  "display-lg-mobile": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                  "body-sm": ["12px", {"lineHeight": "18px", "letterSpacing": "0.005em", "fontWeight": "400"}],
+                  "label-regular": ["12px", {"lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                  "headline-xl-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+                  "body-lg": ["16px", {"lineHeight": "26px", "letterSpacing": "0em", "fontWeight": "400"}],
+                  "headline-sm": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                  "headline-xl": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                  "body-md": ["14px", {"lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400"}],
+                  "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "500"}],
+                  "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "500"}],
+                  "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.025em", "fontWeight": "600"}]
+          }
+        },
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #253653;
+      border-radius: 4px;
+    }
+    /* Orbital glow utility */
+    .orbital-ring {
+      background-image: radial-gradient(circle at top center, rgba(118, 146, 255, 0.08) 0%, transparent 70%);
+    }
+  </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body-md antialiased overflow-hidden select-none">
+<!-- SIMULATED MOBILE DEVICE CONTAINER -->
+<div class="relative w-full h-screen max-w-md mx-auto bg-surface-dim overflow-hidden flex flex-col justify-end">
+<!-- Ambient Dashboard Background (Simulated Parent Context blurred underneath) -->
+<div class="absolute inset-0 opacity-40 filter blur-[2px] pointer-events-none p-space-16 space-y-space-16">
+<div class="flex items-center justify-between pt-space-8">
+<div class="flex items-center gap-space-8">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant/30 flex items-center justify-center text-primary font-headline-sm">⬡</div>
+<div>
+<span class="font-headline-sm text-headline-sm text-on-surface block">Orbit</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Personal Operations Hub</span>
+</div>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-outline">notifications</span>
+</div>
+</div>
+<!-- Mock Telemetry Cards behind backdrop -->
+<div class="p-space-16 rounded-xl bg-surface-container-low border border-outline-variant/20 space-y-space-8">
+<div class="flex justify-between items-center">
+<span class="font-label-caps text-label-caps text-secondary-fixed">CLUSTER STATUS // RUNNING</span>
+<span class="font-code-md text-code-md text-primary">99.98%</span>
+</div>
+<div class="h-2 rounded-full bg-surface-container-highest w-full overflow-hidden">
+<div class="h-full bg-secondary w-3/4 rounded-full"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-8">
+<div class="p-space-12 rounded-xl bg-surface-container border border-outline-variant/20">
+<span class="font-label-caps text-label-caps text-on-surface-variant">DEEP WORK TODAY</span>
+<div class="font-headline-md text-headline-md text-on-surface mt-space-4">4h 12m</div>
+</div>
+<div class="p-space-12 rounded-xl bg-surface-container border border-outline-variant/20">
+<span class="font-label-caps text-label-caps text-on-surface-variant">ACTIVE TASKS</span>
+<div class="font-headline-md text-headline-md text-secondary mt-space-4">12 Nodes</div>
+</div>
+</div>
+</div>
+<!-- Backdrop Dimmer with Blur -->
+<div class="absolute inset-0 bg-surface-container-lowest/80 backdrop-blur-md transition-opacity duration-200"></div>
+<!-- MOBILE DRAWER / BOTTOM SHEET -->
+<div class="relative z-20 w-full max-h-[92vh] flex flex-col bg-surface-container-low border-t border-outline-variant/40 rounded-t-[28px] shadow-[0_-12px_40px_rgba(3,8,16,0.85)] orbital-ring">
+<!-- Drag Handle -->
+<div class="pt-3 pb-1 flex justify-center items-center w-full cursor-grab active:cursor-grabbing">
+<div class="w-12 h-1.5 rounded-full bg-outline-variant/60 hover:bg-outline transition-colors"></div>
+</div>
+<!-- 1. Header do Drawer -->
+<div class="px-space-20 pt-space-8 pb-space-12 border-b border-outline-variant/20 flex items-start justify-between">
+<div class="space-y-space-2">
+<div class="flex items-center gap-space-8">
+<h1 class="font-headline-xl-mobile text-headline-xl-mobile font-semibold text-on-surface tracking-tight">Nova Tarefa</h1>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-primary-container/20 border border-primary-container/40 text-primary font-label-caps text-[10px] tracking-wider uppercase">
+              DEEP WORK
+            </span>
+</div>
+<div class="flex items-center gap-1.5 text-on-surface-variant font-label-caps text-label-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container animate-pulse"></span>
+<span>Sincronizado via Vault Local • Cluster AWS</span>
+</div>
+</div>
+<!-- Botão Fechar Tátil (✕) -->
+<button aria-label="Fechar gaveta" class="w-9 h-9 -mr-1 -mt-1 rounded-full bg-surface-container-high/60 hover:bg-surface-container-high border border-outline-variant/30 flex items-center justify-center text-on-surface-variant hover:text-on-surface active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- Scrollable Form Body -->
+<div class="flex-1 overflow-y-auto px-space-20 py-space-16 space-y-space-20 custom-scrollbar">
+<!-- 2. Título da Tarefa e Input Rápido -->
+<div class="space-y-space-8">
+<div class="flex items-center justify-between">
+<label class="font-label-caps text-label-caps text-on-surface-variant">TÍTULO DA TAREFA OPERACIONAL</label>
+<div class="flex items-center gap-1.5">
+<span class="font-code-md text-[11px] text-outline">PRIORITY RAIL</span>
+</div>
+</div>
+<div class="relative">
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant/50 focus:border-primary-container focus:ring-1 focus:ring-primary-container rounded-xl p-space-12 text-on-surface font-headline-sm text-headline-sm placeholder:text-outline-variant resize-none outline-none transition-all" placeholder="Descreva a ação operacional..." rows="2">Refatorar pipeline de CI/CD para Rust microservices</textarea>
+<!-- Floating Quick Voice & CLI Trigger -->
+<div class="flex items-center gap-2 mt-2">
+<button class="inline-flex items-center gap-1.5 px-space-8 py-1 rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-primary/50 text-on-surface-variant hover:text-on-surface font-code-md text-code-md transition-all active:scale-95" type="button">
+<span class="material-symbols-outlined text-primary text-[15px]">mic</span>
+<span class="text-[11px]">Áudio IA</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-space-8 py-1 rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-primary/50 text-on-surface-variant hover:text-on-surface font-code-md text-code-md transition-all active:scale-95" type="button">
+<span class="text-[11px] text-outline font-code-md">⌘K</span>
+<span class="text-[11px]">Comando CLI</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 3. Seletor de Prioridade (Matriz de Criticidade) -->
+<div class="space-y-space-8">
+<div class="flex items-center justify-between">
+<label class="font-label-caps text-label-caps text-on-surface-variant">MATRIZ DE CRITICIDADE</label>
+<span class="font-label-caps text-[10px] text-secondary">SLA: P2 - 4H</span>
+</div>
+<div class="grid grid-cols-4 gap-space-8">
+<!-- Crítica -->
+<button class="py-space-8 px-1 rounded-xl bg-surface-container border border-outline-variant/30 flex flex-col items-center gap-1 hover:border-error active:scale-95 transition-all" type="button">
+<span class="w-2 h-2 rounded-full bg-error shadow-[0_0_8px_rgba(255,180,171,0.5)]"></span>
+<span class="font-label-caps text-[11px] text-error font-medium">Crítica</span>
+</button>
+<!-- Alta (Active State) -->
+<button class="py-space-8 px-1 rounded-xl bg-surface-container-high border-2 border-[#FBBF24] flex flex-col items-center gap-1 shadow-[0_0_14px_rgba(251,191,36,0.18)] active:scale-95 transition-all" type="button">
+<span class="w-2 h-2 rounded-full bg-[#FBBF24] shadow-[0_0_8px_rgba(251,191,36,0.6)]"></span>
+<span class="font-label-caps text-[11px] text-[#FBBF24] font-semibold">Alta</span>
+</button>
+<!-- Média -->
+<button class="py-space-8 px-1 rounded-xl bg-surface-container border border-outline-variant/30 flex flex-col items-center gap-1 hover:border-primary active:scale-95 transition-all" type="button">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span class="font-label-caps text-[11px] text-on-surface-variant font-normal">Média</span>
+</button>
+<!-- Baixa -->
+<button class="py-space-8 px-1 rounded-xl bg-surface-container border border-outline-variant/30 flex flex-col items-center gap-1 hover:border-outline active:scale-95 transition-all" type="button">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span class="font-label-caps text-[11px] text-outline font-normal">Baixa</span>
+</button>
+</div>
+</div>
+<!-- 4. Contexto, Projeto / Tag e Data de Entrega -->
+<div class="space-y-space-12 pt-space-4 border-t border-outline-variant/20">
+<!-- Projeto Chips Deslizáveis -->
+<div class="space-y-space-8">
+<div class="flex items-center justify-between">
+<label class="font-label-caps text-label-caps text-on-surface-variant">PROJETO OPERACIONAL</label>
+<span class="font-code-md text-[11px] text-outline">WORKSPACE #01</span>
+</div>
+<div class="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar -mx-space-20 px-space-20">
+<!-- #Infra / AWS (Selected) -->
+<button class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-high border-2 border-secondary text-secondary font-code-md text-code-md shadow-[0_0_12px_rgba(68,226,205,0.2)]" type="button">
+<span class="material-symbols-outlined text-[14px]">terminal</span>
+<span class="font-medium">#Infra / AWS</span>
+</button>
+<!-- #Backend Core -->
+<button class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container border border-outline-variant/40 text-on-surface-variant hover:text-on-surface hover:border-outline font-code-md text-code-md transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">dns</span>
+<span>#Backend Core</span>
+</button>
+<!-- #Finanças -->
+<button class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container border border-outline-variant/40 text-on-surface-variant hover:text-on-surface hover:border-outline font-code-md text-code-md transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">account_balance_wallet</span>
+<span>#Finanças</span>
+</button>
+<!-- #Design System -->
+<button class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container border border-outline-variant/40 text-on-surface-variant hover:text-on-surface hover:border-outline font-code-md text-code-md transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">palette</span>
+<span>#Design System</span>
+</button>
+</div>
+</div>
+<!-- Data & Janela de Execução -->
+<div class="grid grid-cols-2 gap-space-12 pt-space-4">
+<div class="p-space-12 rounded-xl bg-surface-container border border-outline-variant/30 flex flex-col justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant">DATA DE ENTREGA</span>
+<div class="flex items-center gap-2 mt-2">
+<span class="material-symbols-outlined text-primary text-[18px]">calendar_today</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Hoje, 16:30</span>
+</div>
+</div>
+<div class="p-space-12 rounded-xl bg-surface-container border border-outline-variant/30 flex flex-col justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant">JANELA DE FOCO</span>
+<div class="flex items-center gap-2 mt-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">timer</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">1h 30m alocado</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 5. Gestão Interativa de Subtarefas -->
+<div class="space-y-space-12 pt-space-4 border-t border-outline-variant/20">
+<div class="space-y-space-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<label class="font-label-caps text-label-caps text-on-surface">SUBTAREFAS (2/4 PRONTAS)</label>
+</div>
+<span class="font-code-md text-[11px] text-secondary-fixed">50% CONCLUÍDO</span>
+</div>
+<!-- Compact Progress Bar -->
+<div class="w-full h-1.5 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-secondary w-1/2 rounded-full transition-all duration-300"></div>
+</div>
+</div>
+<!-- Checklist Items -->
+<div class="space-y-2">
+<!-- Subtask 1 (Completed) -->
+<div class="flex items-start gap-3 p-space-8 rounded-lg bg-surface-container/50 border border-outline-variant/20">
+<div class="w-5 h-5 rounded flex items-center justify-center bg-secondary text-surface-container-lowest mt-0.5">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="flex-1 min-w-0">
+<span class="font-body-sm text-body-sm text-outline line-through">Configurar runner no Kubernetes</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-[16px]">done_all</span>
+</div>
+<!-- Subtask 2 (Completed) -->
+<div class="flex items-start gap-3 p-space-8 rounded-lg bg-surface-container/50 border border-outline-variant/20">
+<div class="w-5 h-5 rounded flex items-center justify-center bg-secondary text-surface-container-lowest mt-0.5">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="flex-1 min-w-0">
+<span class="font-body-sm text-body-sm text-outline line-through">Criar secrets no AWS Parameter Store</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-[16px]">done_all</span>
+</div>
+<!-- Subtask 3 (Pending) -->
+<div class="flex items-start gap-3 p-space-8 rounded-lg bg-surface-container border border-outline-variant/30 hover:border-primary/40 transition-colors">
+<div class="w-5 h-5 rounded border border-outline-variant/70 flex items-center justify-center bg-surface-container-lowest mt-0.5"></div>
+<div class="flex-1 min-w-0">
+<span class="font-body-sm text-body-sm text-on-surface">Executar testes de carga no cluster Staging</span>
+</div>
+<span class="font-code-md text-[10px] text-on-surface-variant">STAGE</span>
+</div>
+<!-- Subtask 4 (Pending) -->
+<div class="flex items-start gap-3 p-space-8 rounded-lg bg-surface-container border border-outline-variant/30 hover:border-primary/40 transition-colors">
+<div class="w-5 h-5 rounded border border-outline-variant/70 flex items-center justify-center bg-surface-container-lowest mt-0.5"></div>
+<div class="flex-1 min-w-0">
+<span class="font-body-sm text-body-sm text-on-surface">Escrever documentação técnica no RFC #48</span>
+</div>
+<span class="font-code-md text-[10px] text-on-surface-variant">DOCS</span>
+</div>
+</div>
+<!-- Add inline subtask input -->
+<div class="flex items-center gap-2 p-1 pl-space-12 rounded-xl bg-surface-container-lowest border border-dashed border-outline-variant/60 focus-within:border-primary transition-all">
+<input class="w-full bg-transparent border-none text-on-surface text-body-sm placeholder:text-outline focus:ring-0 p-0 font-body-sm" placeholder="+ Adicionar subtarefa rápida..." type="text"/>
+<button class="w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant/40 flex items-center justify-center text-primary hover:bg-surface-container-highest transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 6. Ação Fixa de Rodapé no Alcance do Polegar -->
+<div class="px-space-20 pt-space-12 pb-space-20 border-t border-outline-variant/30 bg-surface-container-low/95 backdrop-blur-lg space-y-space-12">
+<!-- Toggle Prioridade no Dashboard -->
+<label class="flex items-center justify-between cursor-pointer group">
+<div class="flex items-center gap-space-8">
+<span class="material-symbols-outlined text-secondary-fixed text-[18px]">radar</span>
+<span class="font-body-sm text-body-sm text-on-surface font-normal">Destacar no Dashboard de Foco de Hoje</span>
+</div>
+<div class="relative inline-flex items-center">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-10 h-5 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-on-surface after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-secondary"></div>
+</div>
+</label>
+<!-- Botão Primário Largo de Confirmação -->
+<button class="w-full h-12 rounded-xl bg-gradient-to-r from-[#5575F6] to-[#2DD4BF] text-surface-container-lowest font-headline-sm font-semibold flex items-center justify-center gap-2 shadow-[0_4px_24px_rgba(85,117,246,0.35)] active:scale-[0.98] transition-transform" type="button">
+<span class="material-symbols-outlined text-[20px] font-bold">check_circle</span>
+<span>Criar Tarefa Operacional</span>
+</button>
+<!-- Home Indicator Bar (iOS/Android) -->
+<div class="flex justify-center pt-1 pb-0.5">
+<div class="w-32 h-1 bg-outline-variant/40 rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

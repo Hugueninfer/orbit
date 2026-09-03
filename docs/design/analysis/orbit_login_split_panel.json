@@ -1,0 +1,460 @@
+{
+  "screen_id": "orbit_login_split_panel",
+  "tailwind_config": {
+    "darkMode": "class",
+    "theme": {
+      "extend": {
+        "colors": {
+          "surface-variant": "#2c3545",
+          "secondary-fixed-dim": "#3cddc7",
+          "on-secondary-fixed": "#00201c",
+          "surface-bright": "#303a49",
+          "on-primary-fixed": "#001552",
+          "secondary-fixed": "#62fae3",
+          "on-tertiary": "#002486",
+          "on-secondary-fixed-variant": "#005047",
+          "tertiary": "#b8c4ff",
+          "inverse-on-surface": "#273140",
+          "surface-container-low": "#121c2a",
+          "on-secondary-container": "#004d44",
+          "inverse-surface": "#d9e3f7",
+          "on-background": "#d9e3f7",
+          "surface-container-high": "#212a39",
+          "on-error-container": "#ffdad6",
+          "primary-fixed": "#dde1ff",
+          "primary-fixed-dim": "#b7c4ff",
+          "primary-container": "#7692ff",
+          "surface-container": "#16202f",
+          "primary": "#b7c4ff",
+          "surface-container-highest": "#2c3545",
+          "on-tertiary-fixed": "#001354",
+          "on-primary-container": "#002683",
+          "surface": "#0a1422",
+          "on-secondary": "#003731",
+          "outline-variant": "#444653",
+          "on-tertiary-container": "#002588",
+          "surface-dim": "#0a1422",
+          "outline": "#8e909e",
+          "secondary-container": "#03c6b2",
+          "tertiary-container": "#7992ff",
+          "secondary": "#44e2cd",
+          "surface-container-lowest": "#050e1c",
+          "on-surface": "#d9e3f7",
+          "on-tertiary-fixed-variant": "#0136bb",
+          "on-primary-fixed-variant": "#193ca7",
+          "on-surface-variant": "#c4c5d5",
+          "tertiary-fixed-dim": "#b8c4ff",
+          "background": "#0a1422",
+          "tertiary-fixed": "#dde1ff",
+          "surface-tint": "#b7c4ff",
+          "error-container": "#93000a",
+          "inverse-primary": "#3856bf",
+          "on-error": "#690005",
+          "on-primary": "#002682",
+          "error": "#ffb4ab"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "margin-tablet": "1.5rem",
+          "space-8": "0.5rem",
+          "space-24": "1.5rem",
+          "space-2": "0.125rem",
+          "space-20": "1.25rem",
+          "gutter-mobile": "1rem",
+          "space-40": "2.5rem",
+          "space-32": "2rem",
+          "space-4": "0.25rem",
+          "space-16": "1rem",
+          "gutter-desktop": "1.5rem",
+          "space-64": "4rem",
+          "space-12": "0.75rem",
+          "space-48": "3rem",
+          "margin-desktop": "2rem",
+          "margin-mobile": "1rem"
+        },
+        "fontFamily": {
+          "body-sm": [
+            "Geist",
+            "sans-serif"
+          ],
+          "headline-xl-mobile": [
+            "Geist",
+            "sans-serif"
+          ],
+          "code-md": [
+            "JetBrains Mono",
+            "monospace"
+          ],
+          "display-lg": [
+            "Geist",
+            "sans-serif"
+          ],
+          "display-lg-mobile": [
+            "Geist",
+            "sans-serif"
+          ],
+          "headline-md": [
+            "Geist",
+            "sans-serif"
+          ],
+          "label-regular": [
+            "Geist",
+            "sans-serif"
+          ],
+          "label-caps": [
+            "JetBrains Mono",
+            "monospace"
+          ],
+          "body-md": [
+            "Geist",
+            "sans-serif"
+          ],
+          "headline-xl": [
+            "Geist",
+            "sans-serif"
+          ],
+          "body-lg": [
+            "Geist",
+            "sans-serif"
+          ],
+          "headline-sm": [
+            "Geist",
+            "sans-serif"
+          ]
+        },
+        "fontSize": {
+          "body-sm": [
+            "12px",
+            {
+              "lineHeight": "18px",
+              "letterSpacing": "0.005em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-xl-mobile": [
+            "24px",
+            {
+              "lineHeight": "32px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "600"
+            }
+          ],
+          "code-md": [
+            "13px",
+            {
+              "lineHeight": "20px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "display-lg": [
+            "40px",
+            {
+              "lineHeight": "48px",
+              "letterSpacing": "-0.025em",
+              "fontWeight": "600"
+            }
+          ],
+          "display-lg-mobile": [
+            "30px",
+            {
+              "lineHeight": "38px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-md": [
+            "20px",
+            {
+              "lineHeight": "28px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "500"
+            }
+          ],
+          "label-regular": [
+            "12px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.01em",
+              "fontWeight": "500"
+            }
+          ],
+          "label-caps": [
+            "11px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.06em",
+              "fontWeight": "500"
+            }
+          ],
+          "body-md": [
+            "14px",
+            {
+              "lineHeight": "22px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-xl": [
+            "28px",
+            {
+              "lineHeight": "36px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-lg": [
+            "16px",
+            {
+              "lineHeight": "26px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-sm": [
+            "16px",
+            {
+              "lineHeight": "24px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "600"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "inline_css": [
+    "\n    body {\n      background-color: #07111F;\n      color: #d9e3f7;\n      font-family: 'Geist', sans-serif;\n    }\n    \n    .material-symbols-outlined {\n      font-family: 'Material Symbols Outlined';\n      font-weight: normal;\n      font-style: normal;\n      font-size: 20px;\n      line-height: 1;\n      display: inline-block;\n      text-transform: none;\n      letter-spacing: normal;\n      word-wrap: normal;\n      white-space: nowrap;\n      direction: ltr;\n      -webkit-font-smoothing: antialiased;\n    }\n\n    /* Subtle orbital rotation */\n    @keyframes orbit-pulse {\n      0%, 100% {\n        transform: scale(1);\n        opacity: 0.35;\n      }\n      50% {\n        transform: scale(1.05);\n        opacity: 0.6;\n      }\n    }\n\n    .orbital-glow {\n      animation: orbit-pulse 6s ease-in-out infinite;\n    }\n  "
+  ],
+  "class_frequency": {
+    "min-h-screen": 1,
+    "flex": 25,
+    "items-center": 23,
+    "justify-center": 6,
+    "p-space-16": 1,
+    "md:p-space-24": 1,
+    "relative": 10,
+    "overflow-x-hidden": 1,
+    "selection:bg-primary-container": 1,
+    "selection:text-surface-container-lowest": 1,
+    "fixed": 1,
+    "inset-0": 3,
+    "pointer-events-none": 4,
+    "z-0": 1,
+    "overflow-hidden": 3,
+    "w-[850px]": 1,
+    "h-[850px]": 1,
+    "rounded-full": 5,
+    "bg-primary-container/5": 1,
+    "blur-[140px]": 1,
+    "absolute": 7,
+    "-top-40": 1,
+    "-left-20": 1,
+    "w-[650px]": 1,
+    "h-[650px]": 1,
+    "bg-secondary-container/5": 1,
+    "blur-[120px]": 1,
+    "-bottom-32": 1,
+    "-right-20": 1,
+    "z-10": 4,
+    "w-full": 10,
+    "max-w-[1100px]": 1,
+    "min-h-[680px]": 1,
+    "bg-surface-container-low": 2,
+    "border": 12,
+    "border-[#253653]": 13,
+    "rounded-[24px]": 1,
+    "shadow-2xl": 1,
+    "flex-col": 3,
+    "lg:flex-row": 1,
+    "backdrop-blur-xl": 1,
+    "lg:w-[54%]": 1,
+    "p-space-32": 2,
+    "lg:p-space-40": 2,
+    "justify-between": 5,
+    "bg-gradient-to-b": 1,
+    "from-[#07111F]": 1,
+    "to-[#0B1728]": 1,
+    "border-b": 1,
+    "lg:border-b-0": 1,
+    "lg:border-r": 1,
+    "opacity-40": 1,
+    "h-full": 1,
+    "gap-space-12": 2,
+    "w-9": 1,
+    "h-9": 1,
+    "rounded-xl": 6,
+    "bg-surface-container": 2,
+    "text-primary": 3,
+    "material-symbols-outlined": 11,
+    "orbital-glow": 1,
+    "border-primary/30": 1,
+    "text-headline-md": 1,
+    "font-headline-md": 1,
+    "font-semibold": 4,
+    "tracking-tight": 3,
+    "text-on-surface": 10,
+    "inline-flex": 1,
+    "gap-space-4": 2,
+    "px-space-8": 1,
+    "py-space-2": 1,
+    "w-1.5": 2,
+    "h-1.5": 2,
+    "bg-secondary": 1,
+    "text-label-caps": 10,
+    "font-label-caps": 10,
+    "text-on-surface-variant": 15,
+    "my-space-32": 1,
+    "text-headline-xl": 2,
+    "font-headline-xl": 2,
+    "leading-tight": 1,
+    "text-body-md": 3,
+    "font-body-md": 3,
+    "mt-space-8": 2,
+    "max-w-[440px]": 1,
+    "grid": 1,
+    "grid-cols-2": 1,
+    "mt-space-24": 2,
+    "p-space-12": 4,
+    "bg-[#101D31]/80": 4,
+    "hover:border-primary/50": 2,
+    "transition-colors": 8,
+    "group": 5,
+    "gap-space-8": 8,
+    "text-[18px]": 8,
+    "text-body-sm": 8,
+    "font-body-sm": 8,
+    "font-medium": 7,
+    "mt-space-4": 5,
+    "text-[10px]": 7,
+    "truncate": 4,
+    "hover:border-secondary/50": 2,
+    "text-secondary": 3,
+    "text-tertiary": 1,
+    "text-secondary-fixed": 2,
+    "pt-space-16": 1,
+    "border-t": 4,
+    "border-[#1B2A43]": 4,
+    "text-[16px]": 1,
+    "tracking-wider": 1,
+    "lg:w-[46%]": 1,
+    "bg-[#101D31]": 2,
+    "mb-space-12": 1,
+    "bg-secondary-fixed": 1,
+    "animate-ping": 1,
+    "text-on-surface-variant/70": 3,
+    "space-y-space-16": 1,
+    "block": 2,
+    "text-label-regular": 2,
+    "font-label-regular": 2,
+    "mb-space-4": 2,
+    "left-space-12": 2,
+    "h-10": 4,
+    "pl-10": 2,
+    "pr-space-12": 1,
+    "rounded-lg": 4,
+    "bg-[#0B1728]": 3,
+    "placeholder-[#596A82]": 2,
+    "focus:border-primary-container": 2,
+    "focus:ring-2": 2,
+    "focus:ring-primary-container/20": 2,
+    "focus:outline-none": 3,
+    "transition-all": 4,
+    "pr-10": 1,
+    "right-space-12": 1,
+    "hover:text-on-surface": 2,
+    "pt-space-4": 1,
+    "cursor-pointer": 2,
+    "select-none": 1,
+    "w-4": 1,
+    "h-4": 1,
+    "rounded": 2,
+    "text-primary-container": 1,
+    "focus:ring-0": 1,
+    "focus:ring-offset-0": 1,
+    "hover:text-primary-fixed": 1,
+    "bg-gradient-to-r": 1,
+    "from-[#5575F6]": 1,
+    "to-[#7692FF]": 1,
+    "hover:from-[#4968EC]": 1,
+    "hover:to-[#6784FF]": 1,
+    "text-[#07111F]": 1,
+    "font-headline-sm": 1,
+    "shadow-[0_0_16px_rgba(85,117,246,0.28)]": 1,
+    "hover:shadow-[0_0_20px_rgba(85,117,246,0.45)]": 1,
+    "active:scale-[0.99]": 2,
+    "my-space-20": 1,
+    "px-space-12": 1,
+    "whitespace-nowrap": 1,
+    "hover:bg-surface-container": 1,
+    "hover:border-primary-container/60": 1,
+    "group-hover:scale-110": 1,
+    "transition-transform": 1,
+    "text-[20px]": 1,
+    "ml-space-8": 1,
+    "bg-[#15243A]": 1,
+    "px-1.5": 1,
+    "py-0.5": 1,
+    "font-code-md": 1,
+    "pt-space-20": 1,
+    "mt-space-16": 1,
+    "text-center": 1,
+    "tracking-wide": 1
+  },
+  "controls": [
+    {
+      "tag": "input",
+      "type": "email",
+      "text": "",
+      "placeholder": "pedro.martins@orbit.dev",
+      "class": "w-full h-10 pl-10 pr-space-12 rounded-lg bg-[#0B1728] border border-[#253653] text-on-surface text-body-md font-body-md placeholder-[#596A82] focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 focus:outline-none transition-all",
+      "id": "email"
+    },
+    {
+      "tag": "input",
+      "type": "password",
+      "text": "",
+      "placeholder": "••••••••••••••••",
+      "class": "w-full h-10 pl-10 pr-10 rounded-lg bg-[#0B1728] border border-[#253653] text-on-surface text-body-md font-body-md placeholder-[#596A82] focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 focus:outline-none transition-all",
+      "id": "password"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "visibility",
+      "placeholder": null,
+      "class": "absolute right-space-12 text-on-surface-variant hover:text-on-surface transition-colors flex items-center focus:outline-none",
+      "id": "toggle-password"
+    },
+    {
+      "tag": "input",
+      "type": "checkbox",
+      "text": "",
+      "placeholder": null,
+      "class": "w-4 h-4 rounded bg-[#0B1728] border-[#253653] text-primary-container focus:ring-0 focus:ring-offset-0 transition-colors cursor-pointer",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "submit",
+      "text": "Entrar no Orbit arrow_forward",
+      "placeholder": null,
+      "class": "w-full h-10 mt-space-8 bg-gradient-to-r from-[#5575F6] to-[#7692FF] hover:from-[#4968EC] hover:to-[#6784FF] text-[#07111F] font-headline-sm font-semibold rounded-lg flex items-center justify-center gap-space-8 shadow-[0_0_16px_rgba(85,117,246,0.28)] hover:shadow-[0_0_20px_rgba(85,117,246,0.45)] active:scale-[0.99] transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "text": "fingerprint Autenticar com Passkey / Biometria ⌘P",
+      "placeholder": null,
+      "class": "w-full h-10 bg-surface-container-low hover:bg-surface-container border border-[#253653] hover:border-primary-container/60 text-on-surface rounded-lg flex items-center justify-center gap-space-8 active:scale-[0.99] transition-all group",
+      "id": null
+    }
+  ],
+  "reading_note": "Extração estática. Os scripts e handlers do HTML original foram preservados, mas não executados nem considerados implementação funcional."
+}

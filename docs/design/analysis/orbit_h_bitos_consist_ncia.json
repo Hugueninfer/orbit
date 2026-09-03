@@ -1,0 +1,759 @@
+{
+  "screen_id": "orbit_h_bitos_consist_ncia",
+  "tailwind_config": {
+    "darkMode": "class",
+    "theme": {
+      "extend": {
+        "colors": {
+          "on-primary-fixed": "#001552",
+          "on-surface-variant": "#c4c5d5",
+          "on-secondary-container": "#004d44",
+          "on-secondary-fixed": "#00201c",
+          "outline": "#8e909e",
+          "on-primary": "#002682",
+          "tertiary-container": "#7992ff",
+          "secondary-fixed-dim": "#3cddc7",
+          "surface-variant": "#2c3545",
+          "on-error": "#690005",
+          "primary-fixed": "#dde1ff",
+          "background": "#0a1422",
+          "secondary-fixed": "#62fae3",
+          "on-error-container": "#ffdad6",
+          "inverse-surface": "#d9e3f7",
+          "secondary": "#44e2cd",
+          "surface-container": "#16202f",
+          "on-tertiary-fixed-variant": "#0136bb",
+          "inverse-on-surface": "#273140",
+          "on-primary-container": "#002683",
+          "on-tertiary-fixed": "#001354",
+          "surface-container-lowest": "#050e1c",
+          "surface-bright": "#303a49",
+          "primary-container": "#7692ff",
+          "on-primary-fixed-variant": "#193ca7",
+          "surface-container-low": "#121c2a",
+          "on-surface": "#d9e3f7",
+          "on-tertiary-container": "#002588",
+          "surface": "#0a1422",
+          "tertiary-fixed-dim": "#b8c4ff",
+          "on-secondary-fixed-variant": "#005047",
+          "on-tertiary": "#002486",
+          "surface-tint": "#b7c4ff",
+          "tertiary-fixed": "#dde1ff",
+          "primary-fixed-dim": "#b7c4ff",
+          "on-secondary": "#003731",
+          "on-background": "#d9e3f7",
+          "error": "#ffb4ab",
+          "primary": "#b7c4ff",
+          "surface-container-highest": "#2c3545",
+          "surface-container-high": "#212a39",
+          "error-container": "#93000a",
+          "inverse-primary": "#3856bf",
+          "outline-variant": "#444653",
+          "surface-dim": "#0a1422",
+          "secondary-container": "#03c6b2",
+          "tertiary": "#b8c4ff"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "space-16": "1rem",
+          "margin-desktop": "2rem",
+          "space-48": "3rem",
+          "gutter-desktop": "1.5rem",
+          "space-8": "0.5rem",
+          "space-2": "0.125rem",
+          "space-12": "0.75rem",
+          "margin-tablet": "1.5rem",
+          "space-4": "0.25rem",
+          "space-40": "2.5rem",
+          "space-64": "4rem",
+          "space-24": "1.5rem",
+          "space-20": "1.25rem",
+          "gutter-mobile": "1rem",
+          "space-32": "2rem",
+          "margin-mobile": "1rem"
+        },
+        "fontFamily": {
+          "body-sm": [
+            "Geist",
+            "sans-serif"
+          ],
+          "code-md": [
+            "JetBrains Mono",
+            "monospace"
+          ],
+          "headline-xl": [
+            "Geist",
+            "sans-serif"
+          ],
+          "display-lg-mobile": [
+            "Geist",
+            "sans-serif"
+          ],
+          "headline-xl-mobile": [
+            "Geist",
+            "sans-serif"
+          ],
+          "body-lg": [
+            "Geist",
+            "sans-serif"
+          ],
+          "body-md": [
+            "Geist",
+            "sans-serif"
+          ],
+          "headline-sm": [
+            "Geist",
+            "sans-serif"
+          ],
+          "label-caps": [
+            "JetBrains Mono",
+            "monospace"
+          ],
+          "display-lg": [
+            "Geist",
+            "sans-serif"
+          ],
+          "headline-md": [
+            "Geist",
+            "sans-serif"
+          ],
+          "label-regular": [
+            "Geist",
+            "sans-serif"
+          ]
+        },
+        "fontSize": {
+          "body-sm": [
+            "12px",
+            {
+              "lineHeight": "18px",
+              "letterSpacing": "0.005em",
+              "fontWeight": "400"
+            }
+          ],
+          "code-md": [
+            "13px",
+            {
+              "lineHeight": "20px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-xl": [
+            "28px",
+            {
+              "lineHeight": "36px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "600"
+            }
+          ],
+          "display-lg-mobile": [
+            "30px",
+            {
+              "lineHeight": "38px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-xl-mobile": [
+            "24px",
+            {
+              "lineHeight": "32px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-lg": [
+            "16px",
+            {
+              "lineHeight": "26px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "body-md": [
+            "14px",
+            {
+              "lineHeight": "22px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-sm": [
+            "16px",
+            {
+              "lineHeight": "24px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "600"
+            }
+          ],
+          "label-caps": [
+            "11px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.06em",
+              "fontWeight": "500"
+            }
+          ],
+          "display-lg": [
+            "40px",
+            {
+              "lineHeight": "48px",
+              "letterSpacing": "-0.025em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-md": [
+            "20px",
+            {
+              "lineHeight": "28px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "500"
+            }
+          ],
+          "label-regular": [
+            "12px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.01em",
+              "fontWeight": "500"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "inline_css": [
+    "\n    .orbital-ring {\n      background: radial-gradient(circle, rgba(118, 146, 255, 0.08) 0%, rgba(10, 20, 34, 0) 70%);\n    }\n    .custom-scroll::-webkit-scrollbar {\n      width: 4px;\n      height: 4px;\n    }\n    .custom-scroll::-webkit-scrollbar-track {\n      background: rgba(10, 20, 34, 0.5);\n    }\n    .custom-scroll::-webkit-scrollbar-thumb {\n      background: #253653;\n      border-radius: 4px;\n    }\n    .pulse-glow {\n      box-shadow: 0 0 16px 2px rgba(68, 226, 205, 0.25);\n    }\n  "
+  ],
+  "class_frequency": {
+    "bg-surface": 1,
+    "text-on-surface": 35,
+    "antialiased": 1,
+    "font-body-md": 19,
+    "selection:bg-primary-container": 1,
+    "selection:text-on-primary-container": 1,
+    "min-h-screen": 2,
+    "flex": 209,
+    "overflow-x-hidden": 1,
+    "fixed": 1,
+    "top-0": 2,
+    "left-0": 1,
+    "h-screen": 1,
+    "w-64": 1,
+    "z-40": 1,
+    "bg-surface-container-low": 15,
+    "border-r": 1,
+    "border-outline-variant/30": 30,
+    "flex-col": 51,
+    "justify-between": 37,
+    "p-space-16": 8,
+    "select-none": 1,
+    "gap-space-24": 3,
+    "items-center": 175,
+    "gap-space-12": 15,
+    "px-space-8": 1,
+    "pt-space-4": 1,
+    "relative": 11,
+    "justify-center": 61,
+    "w-10": 1,
+    "h-10": 3,
+    "rounded-xl": 25,
+    "bg-surface-container": 18,
+    "border": 65,
+    "border-outline-variant/40": 7,
+    "shadow-inner": 1,
+    "absolute": 9,
+    "w-7": 3,
+    "h-7": 3,
+    "rounded-full": 84,
+    "border-primary/40": 1,
+    "w-4": 8,
+    "h-4": 8,
+    "border-secondary/70": 1,
+    "animate-pulse": 3,
+    "w-1.5": 5,
+    "h-1.5": 8,
+    "bg-secondary": 65,
+    "shadow-[0_0_8px_#44e2cd]": 2,
+    "gap-space-8": 2,
+    "text-headline-md": 3,
+    "font-headline-md": 3,
+    "font-semibold": 18,
+    "tracking-tight": 4,
+    "font-label-caps": 16,
+    "text-label-caps": 10,
+    "px-1.5": 4,
+    "py-0.5": 7,
+    "rounded": 4,
+    "bg-surface-container-high": 6,
+    "text-secondary": 32,
+    "border-secondary/30": 6,
+    "font-body-sm": 23,
+    "text-body-sm": 21,
+    "text-on-surface-variant": 23,
+    "w-full": 18,
+    "py-2.5": 8,
+    "px-space-16": 1,
+    "bg-primary-container": 4,
+    "hover:bg-inverse-primary": 2,
+    "text-on-primary": 2,
+    "font-medium": 28,
+    "shadow-[0_0_16px_rgba(118,146,255,0.25)]": 1,
+    "transition-all": 19,
+    "duration-150": 7,
+    "active:scale-[0.98]": 2,
+    "material-symbols-outlined": 49,
+    "text-[18px]": 11,
+    "gap-1": 25,
+    "text-outline": 65,
+    "px-space-12": 10,
+    "pb-1": 2,
+    "uppercase": 9,
+    "tracking-wider": 9,
+    "py-space-8": 7,
+    "rounded-lg": 20,
+    "font-normal": 4,
+    "hover:bg-surface-container": 12,
+    "transition-colors": 23,
+    "text-[20px]": 18,
+    "text-body-md": 21,
+    "font-code-md": 74,
+    "text-secondary-fixed": 2,
+    "border-l-2": 1,
+    "border-secondary": 4,
+    "shadow-sm": 2,
+    "text-[10px]": 44,
+    "px-2": 4,
+    "bg-secondary/15": 2,
+    "border-t": 2,
+    "pt-space-16": 1,
+    "hover:text-on-surface": 13,
+    "w-2": 48,
+    "h-2": 6,
+    "py-space-12": 1,
+    "mt-2": 8,
+    "bg-surface-container/60": 2,
+    "border-outline-variant/20": 8,
+    "hover:border-outline-variant/50": 4,
+    "cursor-pointer": 1,
+    "w-8": 13,
+    "h-8": 14,
+    "bg-surface-variant": 1,
+    "border-secondary/60": 1,
+    "text-primary-fixed": 4,
+    "font-headline-sm": 15,
+    "text-sm": 1,
+    "bottom-0": 1,
+    "right-0": 1,
+    "w-2.5": 2,
+    "h-2.5": 2,
+    "ring-2": 2,
+    "ring-surface-container-low": 1,
+    "overflow-hidden": 12,
+    "truncate": 2,
+    "text-[11px]": 27,
+    "flex-1": 11,
+    "ml-64": 1,
+    "bg-background": 1,
+    "sticky": 1,
+    "z-30": 1,
+    "bg-surface/80": 1,
+    "backdrop-blur-md": 1,
+    "h-16": 2,
+    "px-space-24": 1,
+    "border-b": 1,
+    "gap-space-16": 23,
+    "h-6": 1,
+    "w-px": 1,
+    "bg-outline-variant/30": 1,
+    "mx-1": 1,
+    "hidden": 9,
+    "sm:block": 1,
+    "sm:flex": 7,
+    "gap-2": 24,
+    "px-2.5": 1,
+    "py-1": 4,
+    "left-3": 1,
+    "placeholder:text-outline": 1,
+    "pl-9": 1,
+    "pr-14": 1,
+    "py-1.5": 3,
+    "focus:outline-none": 1,
+    "focus:border-primary": 1,
+    "focus:ring-1": 1,
+    "focus:ring-primary": 1,
+    "w-48": 1,
+    "lg:w-64": 1,
+    "right-2.5": 1,
+    "gap-0.5": 1,
+    "w-9": 1,
+    "h-9": 1,
+    "hover:bg-surface-container-high": 1,
+    "top-2": 1,
+    "right-2": 1,
+    "md:flex": 1,
+    "gap-1.5": 9,
+    "px-3": 1,
+    "hover:border-outline-variant/60": 7,
+    "px-3.5": 1,
+    "shadow-[0_0_12px_rgba(118,146,255,0.3)]": 1,
+    "p-space-24": 1,
+    "lg:p-space-32": 1,
+    "max-w-[1600px]": 1,
+    "mx-auto": 1,
+    "grid": 6,
+    "grid-cols-1": 2,
+    "sm:grid-cols-2": 1,
+    "xl:grid-cols-4": 1,
+    "rounded-2xl": 14,
+    "p-space-20": 6,
+    "mb-space-12": 4,
+    "items-baseline": 2,
+    "font-display-lg": 5,
+    "text-display-lg": 2,
+    "font-bold": 35,
+    "mt-0.5": 18,
+    "w-16": 1,
+    "h-full": 8,
+    "-rotate-90": 1,
+    "duration-1000": 1,
+    "bg-surface-container-highest": 25,
+    "h-1": 4,
+    "mt-space-16": 2,
+    "bg-primary/15": 1,
+    "text-primary": 7,
+    "border-primary/30": 5,
+    "w-14": 1,
+    "h-14": 2,
+    "shadow-[0_0_20px_rgba(118,146,255,0.15)]": 1,
+    "text-[30px]": 1,
+    "text-[16px]": 6,
+    "items-end": 1,
+    "pt-2": 1,
+    "bg-secondary/80": 3,
+    "rounded-t": 7,
+    "text-[9px]": 8,
+    "h-12": 3,
+    "bg-secondary/90": 4,
+    "h-11": 7,
+    "bg-secondary/70": 2,
+    "bg-primary/90": 1,
+    "border-t-2": 1,
+    "mt-space-12": 1,
+    "text-xs": 11,
+    "mt-1": 3,
+    "bg-primary/50": 1,
+    "mt-space-8": 1,
+    "lg:grid-cols-12": 1,
+    "lg:col-span-7": 1,
+    "xl:col-span-8": 1,
+    "gap-space-20": 3,
+    "grid-cols-7": 3,
+    "px-1": 11,
+    "bg-surface-container/50": 10,
+    "bg-secondary/20": 3,
+    "border-2": 3,
+    "pulse-glow": 1,
+    "-top-2": 1,
+    "py-0.2": 1,
+    "text-surface": 29,
+    "text-[12px]": 4,
+    "bg-surface-container/20": 7,
+    "border-outline-variant/10": 7,
+    "hover:border-outline-variant/30": 3,
+    "text-headline-sm": 6,
+    "group": 6,
+    "hover:border-secondary/50": 5,
+    "duration-200": 6,
+    "shadow-[0_0_12px_rgba(68,226,205,0.4)]": 5,
+    "transition-transform": 5,
+    "active:scale-95": 5,
+    "w-11": 6,
+    "text-[22px]": 6,
+    "gap-3": 6,
+    "text-[14px]": 6,
+    "h-5": 42,
+    "hover:border-primary/50": 1,
+    "border-outline-variant/60": 1,
+    "hover:border-secondary": 1,
+    "group-hover:scale-105": 1,
+    "bg-transparent": 2,
+    "group-hover:bg-secondary/40": 1,
+    "border-secondary/50": 1,
+    "lg:col-span-5": 1,
+    "xl:col-span-4": 1,
+    "border-secondary/20": 2,
+    "p-1": 1,
+    "text-center": 5,
+    "pt-1": 1,
+    "aspect-square": 35,
+    "rounded-md": 35,
+    "opacity-30": 4,
+    "bg-primary/70": 1,
+    "bg-primary/80": 2,
+    "shadow-[0_0_12px_#44e2cd]": 1,
+    "font-black": 1,
+    "ring-secondary/30": 1,
+    "-top-1": 1,
+    "-right-1": 1,
+    "border-surface": 1,
+    "pt-3": 1,
+    "w-3": 5,
+    "h-3": 5,
+    "rounded-sm": 5,
+    "bg-primary/40": 1,
+    "shadow-[0_0_6px_rgba(68,226,205,0.4)]": 1,
+    "grid-cols-3": 1,
+    "p-3": 2,
+    "text-lg": 3,
+    "leading-tight": 3,
+    "border-x": 1,
+    "bg-tertiary": 1,
+    "bg-tertiary/80": 1,
+    "items-start": 1,
+    "gap-2.5": 1,
+    "shrink-0": 1,
+    "leading-relaxed": 1
+  },
+  "controls": [
+    {
+      "tag": "button",
+      "type": null,
+      "text": "add + Adicionar",
+      "placeholder": null,
+      "class": "flex items-center justify-center gap-space-8 w-full py-2.5 px-space-16 rounded-xl bg-primary-container hover:bg-inverse-primary text-on-primary font-body-md font-medium shadow-[0_0_16px_rgba(118,146,255,0.25)] transition-all duration-150 active:scale-[0.98]",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "text": "",
+      "placeholder": "Buscar hábito...",
+      "class": "bg-surface-container-low text-on-surface placeholder:text-outline border border-outline-variant/40 rounded-lg pl-9 pr-14 py-1.5 text-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-48 lg:w-64 transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "notifications",
+      "placeholder": null,
+      "class": "w-9 h-9 flex items-center justify-center rounded-lg bg-surface-container border border-outline-variant/30 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors relative",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "tune Filtrar",
+      "placeholder": null,
+      "class": "hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container border border-outline-variant/30 text-on-surface hover:border-outline-variant/60 font-body-sm transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "add + Novo Hábito",
+      "placeholder": null,
+      "class": "flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-primary-container hover:bg-inverse-primary text-on-primary font-headline-sm text-body-sm shadow-[0_0_12px_rgba(118,146,255,0.3)] transition-all active:scale-[0.98]",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "SEG 21",
+      "placeholder": null,
+      "class": "flex flex-col items-center py-2.5 px-1 rounded-xl bg-surface-container/50 border border-outline-variant/20 hover:border-outline-variant/50 transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "TER 22",
+      "placeholder": null,
+      "class": "flex flex-col items-center py-2.5 px-1 rounded-xl bg-surface-container/50 border border-outline-variant/20 hover:border-outline-variant/50 transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "QUA 23",
+      "placeholder": null,
+      "class": "flex flex-col items-center py-2.5 px-1 rounded-xl bg-surface-container/50 border border-outline-variant/20 hover:border-outline-variant/50 transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "HOJE QUI 24 check",
+      "placeholder": null,
+      "class": "flex flex-col items-center py-2.5 px-1 rounded-xl bg-surface-container-high border-2 border-secondary pulse-glow transition-all relative",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "SEX 25",
+      "placeholder": null,
+      "class": "flex flex-col items-center py-2.5 px-1 rounded-xl bg-surface-container/20 border border-outline-variant/10 text-outline hover:border-outline-variant/30 transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "SÁB 26",
+      "placeholder": null,
+      "class": "flex flex-col items-center py-2.5 px-1 rounded-xl bg-surface-container/20 border border-outline-variant/10 text-outline hover:border-outline-variant/30 transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "DOM 27",
+      "placeholder": null,
+      "class": "flex flex-col items-center py-2.5 px-1 rounded-xl bg-surface-container/20 border border-outline-variant/10 text-outline hover:border-outline-variant/30 transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "check",
+      "placeholder": null,
+      "class": "w-8 h-8 rounded-xl bg-secondary flex items-center justify-center text-surface shadow-[0_0_12px_rgba(68,226,205,0.4)] transition-transform active:scale-95",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "more_vert",
+      "placeholder": null,
+      "class": "w-8 h-8 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container flex items-center justify-center transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "check",
+      "placeholder": null,
+      "class": "w-8 h-8 rounded-xl bg-secondary flex items-center justify-center text-surface shadow-[0_0_12px_rgba(68,226,205,0.4)] transition-transform active:scale-95",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "more_vert",
+      "placeholder": null,
+      "class": "w-8 h-8 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container flex items-center justify-center transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "check",
+      "placeholder": null,
+      "class": "w-8 h-8 rounded-xl bg-secondary flex items-center justify-center text-surface shadow-[0_0_12px_rgba(68,226,205,0.4)] transition-transform active:scale-95",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "more_vert",
+      "placeholder": null,
+      "class": "w-8 h-8 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container flex items-center justify-center transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "check",
+      "placeholder": null,
+      "class": "w-8 h-8 rounded-xl bg-secondary flex items-center justify-center text-surface shadow-[0_0_12px_rgba(68,226,205,0.4)] transition-transform active:scale-95",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "more_vert",
+      "placeholder": null,
+      "class": "w-8 h-8 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container flex items-center justify-center transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "check",
+      "placeholder": null,
+      "class": "w-8 h-8 rounded-xl bg-secondary flex items-center justify-center text-surface shadow-[0_0_12px_rgba(68,226,205,0.4)] transition-transform active:scale-95",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "more_vert",
+      "placeholder": null,
+      "class": "w-8 h-8 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container flex items-center justify-center transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "",
+      "placeholder": null,
+      "class": "w-8 h-8 rounded-xl bg-surface-container border-2 border-outline-variant/60 hover:border-secondary flex items-center justify-center transition-all group-hover:scale-105",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "more_vert",
+      "placeholder": null,
+      "class": "w-8 h-8 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container flex items-center justify-center transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "chevron_left",
+      "placeholder": null,
+      "class": "w-7 h-7 rounded-lg bg-surface-container border border-outline-variant/30 hover:border-outline-variant/60 flex items-center justify-center text-outline hover:text-on-surface transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "chevron_right",
+      "placeholder": null,
+      "class": "w-7 h-7 rounded-lg bg-surface-container border border-outline-variant/30 hover:border-outline-variant/60 flex items-center justify-center text-outline hover:text-on-surface transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Todos os Hábitos",
+      "placeholder": null,
+      "class": "flex-1 py-1 text-center font-body-sm text-[12px] font-medium rounded-lg bg-surface-container-high text-secondary border border-secondary/20 shadow-sm",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Foco & Mente",
+      "placeholder": null,
+      "class": "flex-1 py-1 text-center font-body-sm text-[12px] text-outline hover:text-on-surface transition-colors",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Físico",
+      "placeholder": null,
+      "class": "flex-1 py-1 text-center font-body-sm text-[12px] text-outline hover:text-on-surface transition-colors",
+      "id": null
+    }
+  ],
+  "reading_note": "Extração estática. Os scripts e handlers do HTML original foram preservados, mas não executados nem considerados implementação funcional."
+}

@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Orbit — Check-in de Hábitos (Mobile)</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-lowest": "#050e1c",
+            "surface-container-highest": "#2c3545",
+            "on-tertiary-container": "#002588",
+            "inverse-on-surface": "#273140",
+            "error-container": "#93000a",
+            "primary-fixed": "#dde1ff",
+            "tertiary-fixed": "#dde1ff",
+            "secondary-fixed": "#62fae3",
+            "surface-container-low": "#121c2a",
+            "secondary-container": "#03c6b2",
+            "inverse-surface": "#d9e3f7",
+            "on-secondary-fixed-variant": "#005047",
+            "on-primary-fixed-variant": "#193ca7",
+            "background": "#0a1422",
+            "primary-container": "#7692ff",
+            "on-primary": "#002682",
+            "tertiary-container": "#7992ff",
+            "outline": "#8e909e",
+            "surface": "#0a1422",
+            "on-surface": "#d9e3f7",
+            "on-primary-container": "#002683",
+            "surface-bright": "#303a49",
+            "secondary": "#44e2cd",
+            "primary": "#b7c4ff",
+            "inverse-primary": "#3856bf",
+            "tertiary": "#b8c4ff",
+            "tertiary-fixed-dim": "#b8c4ff",
+            "secondary-fixed-dim": "#3cddc7",
+            "surface-container": "#16202f",
+            "surface-variant": "#2c3545",
+            "surface-container-high": "#212a39",
+            "on-secondary-fixed": "#00201c",
+            "on-error-container": "#ffdad6",
+            "outline-variant": "#444653",
+            "surface-dim": "#0a1422",
+            "on-tertiary-fixed-variant": "#0136bb",
+            "on-background": "#d9e3f7",
+            "on-secondary-container": "#004d44",
+            "on-surface-variant": "#c4c5d5",
+            "on-tertiary-fixed": "#001354",
+            "on-error": "#690005",
+            "on-tertiary": "#002486",
+            "surface-tint": "#b7c4ff",
+            "primary-fixed-dim": "#b7c4ff",
+            "on-secondary": "#003731",
+            "error": "#ffb4ab",
+            "on-primary-fixed": "#001552"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-16": "1rem",
+            "space-32": "2rem",
+            "gutter-mobile": "1rem",
+            "margin-desktop": "2rem",
+            "space-2": "0.125rem",
+            "space-4": "0.25rem",
+            "space-40": "2.5rem",
+            "space-20": "1.25rem",
+            "gutter-desktop": "1.5rem",
+            "space-48": "3rem",
+            "space-64": "4rem",
+            "margin-mobile": "1rem",
+            "space-12": "0.75rem",
+            "margin-tablet": "1.5rem",
+            "space-8": "0.5rem",
+            "space-24": "1.5rem"
+          },
+          "fontFamily": {
+            "headline-md": ["Geist", "sans-serif"],
+            "display-lg": ["Geist", "sans-serif"],
+            "headline-xl": ["Geist", "sans-serif"],
+            "body-sm": ["Geist", "sans-serif"],
+            "display-lg-mobile": ["Geist", "sans-serif"],
+            "body-lg": ["Geist", "sans-serif"],
+            "label-regular": ["Geist", "sans-serif"],
+            "headline-sm": ["Geist", "sans-serif"],
+            "headline-xl-mobile": ["Geist", "sans-serif"],
+            "code-md": ["JetBrains Mono", "monospace"],
+            "body-md": ["Geist", "sans-serif"],
+            "label-caps": ["JetBrains Mono", "monospace"]
+          },
+          "fontSize": {
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "500" }],
+            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.025em", "fontWeight": "600" }],
+            "headline-xl": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "letterSpacing": "0.005em", "fontWeight": "400" }],
+            "display-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "26px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "label-regular": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-xl-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "code-md": ["13px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "body-md": ["14px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    /* Subtle orbital glow and pulsing */
+    @keyframes pulse-halo {
+      0%, 100% {
+        box-shadow: 0 0 16px 2px rgba(68, 226, 205, 0.2);
+      }
+      50% {
+        box-shadow: 0 0 24px 6px rgba(68, 226, 205, 0.4);
+      }
+    }
+    .pulse-orbital {
+      animation: pulse-halo 3s infinite ease-in-out;
+    }
+    
+    /* Hide scrollbar for clean telemetry rails */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface antialiased selection:bg-primary/20 selection:text-primary min-h-screen pb-24 font-body-md">
+<!-- ==================================================================== -->
+<!-- 1. TOPBAR COMPACTA ORBIT MOBILE                                       -->
+<!-- ==================================================================== -->
+<header class="sticky top-0 z-30 w-full bg-surface-container-lowest/90 backdrop-blur-md px-space-16 pt-space-12 pb-space-8 border-b border-outline-variant/30">
+<div class="flex items-center justify-between">
+<!-- Marca & Status Telemetria -->
+<div class="flex items-center gap-space-12">
+<div class="relative flex items-center justify-center w-8 h-8 rounded-lg bg-surface-container border border-outline-variant/50">
+<div class="w-3.5 h-3.5 rounded-full border border-secondary/70 flex items-center justify-center">
+<div class="w-1.5 h-1.5 rounded-full bg-primary-container"></div>
+</div>
+<div class="absolute inset-0 rounded-lg border border-primary/20 pointer-events-none"></div>
+</div>
+<div>
+<div class="flex items-center gap-space-8">
+<span class="font-headline-sm text-headline-sm font-semibold tracking-tight text-on-surface">Orbit</span>
+<span class="font-label-caps text-label-caps px-1.5 py-0.5 rounded bg-surface-container-high text-primary border border-outline-variant/40">v2.4</span>
+</div>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
+</span>
+<span class="font-label-caps text-label-caps text-secondary-fixed text-[10px]">Sincronizado há 1m</span>
+</div>
+</div>
+</div>
+<!-- Ações do Topo -->
+<div class="flex items-center gap-space-8">
+<button aria-label="Calendário de Hábitos" class="flex items-center justify-center w-9 h-9 rounded-lg bg-surface-container border border-outline-variant/40 text-on-surface-variant active:scale-[0.98] transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+</button>
+<button class="flex items-center gap-1.5 h-9 px-space-12 rounded-lg bg-primary-container text-surface-container-lowest font-headline-sm text-[13px] font-semibold active:scale-[0.98] shadow-sm transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-[16px] font-bold">add</span>
+<span>Hábito</span>
+</button>
+</div>
+</div>
+</header>
+<!-- ==================================================================== -->
+<!-- CONTEÚDO PRINCIPAL DO FLUXO MOBILE                                    -->
+<!-- ==================================================================== -->
+<main class="px-space-16 pt-space-16 space-y-space-20 max-w-md mx-auto">
+<!-- 2. Cabeçalho de Resumo & Dia Atual -->
+<section class="space-y-space-12">
+<div>
+<h1 class="font-headline-xl-mobile text-headline-xl-mobile text-on-surface tracking-tight">Hábitos &amp; Consistência</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[14px] text-primary">schedule</span>
+          Quinta-feira, 24 de Outubro
+        </p>
+</div>
+<!-- Carrossel de Métricas Telemetric / Bento Compacto -->
+<div class="grid grid-cols-3 gap-space-8">
+<!-- Card 1: Anel Orbital de Conclusão -->
+<div class="bg-surface-container-low border border-outline-variant/40 rounded-xl p-space-12 flex flex-col items-center text-center relative overflow-hidden">
+<div class="absolute -top-6 -right-6 w-16 h-16 bg-secondary/10 rounded-full blur-xl pointer-events-none"></div>
+<!-- Anel SVG Circular SVG Telemetria -->
+<div class="relative w-12 h-12 flex items-center justify-center my-1">
+<svg class="w-12 h-12 transform -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-variant stroke-current" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="3"></path>
+<path class="text-secondary stroke-current" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-dasharray="83, 100" stroke-linecap="round" stroke-width="3.2"></path>
+</svg>
+<span class="absolute font-code-md text-code-md font-semibold text-on-surface">83%</span>
+</div>
+<span class="font-label-caps text-label-caps text-secondary-fixed text-[10px] mt-1">5 de 6 hoje</span>
+<span class="font-body-sm text-[10px] text-on-surface-variant mt-0.5">Quase completo</span>
+</div>
+<!-- Card 2: Sequência Ativa -->
+<div class="bg-surface-container-low border border-outline-variant/40 rounded-xl p-space-12 flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px]">Sequência</span>
+<span class="material-symbols-outlined text-[15px] text-secondary" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<div class="my-1">
+<div class="font-headline-md text-headline-md font-bold text-on-surface">14 <span class="text-xs font-normal text-on-surface-variant">dias</span></div>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-caps text-[10px] text-secondary-fixed font-medium">Órbita Estável</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full w-2/3 rounded-full"></div>
+</div>
+<span class="font-label-caps text-[9px] text-on-surface-variant mt-1">Marco: 21 dias</span>
+</div>
+<!-- Card 3: Aderência Semanal Sparkline -->
+<div class="bg-surface-container-low border border-outline-variant/40 rounded-xl p-space-12 flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px]">Aderência</span>
+<span class="font-code-md text-code-md text-primary font-medium">92%</span>
+</div>
+<!-- Micro Barras 7 Dias -->
+<div class="flex items-end justify-between gap-1 h-8 my-1 px-1">
+<div class="w-2 bg-secondary/80 rounded-t h-[90%]"></div>
+<div class="w-2 bg-secondary/80 rounded-t h-[100%]"></div>
+<div class="w-2 bg-secondary/80 rounded-t h-[80%]"></div>
+<div class="w-2 bg-secondary rounded-t h-[100%] ring-1 ring-secondary/50"></div>
+<div class="w-2 bg-surface-variant rounded-t h-[40%]"></div>
+<div class="w-2 bg-surface-variant rounded-t h-[40%]"></div>
+<div class="w-2 bg-surface-variant rounded-t h-[40%]"></div>
+</div>
+<span class="font-label-caps text-[9px] text-on-surface-variant text-center">Semana 43</span>
+</div>
+</div>
+</section>
+<!-- 3. Seletor Horizontal de Dias da Semana (Semana 43) -->
+<section class="space-y-space-8">
+<div class="flex items-center justify-between px-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Semana 43 • Outubro</span>
+<span class="font-label-caps text-label-caps text-secondary-fixed">87% média</span>
+</div>
+<div class="flex items-center justify-between gap-1.5 overflow-x-auto no-scrollbar py-1">
+<!-- Seg 21 -->
+<div class="flex-1 min-w-[44px] py-2 px-1 rounded-xl bg-surface-container-low border border-outline-variant/30 flex flex-col items-center gap-1">
+<span class="font-label-caps text-[10px] text-on-surface-variant">SEG</span>
+<span class="font-code-md text-body-sm font-medium text-on-surface">21</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+<!-- Ter 22 -->
+<div class="flex-1 min-w-[44px] py-2 px-1 rounded-xl bg-surface-container-low border border-outline-variant/30 flex flex-col items-center gap-1">
+<span class="font-label-caps text-[10px] text-on-surface-variant">TER</span>
+<span class="font-code-md text-body-sm font-medium text-on-surface">22</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+<!-- Qua 23 -->
+<div class="flex-1 min-w-[44px] py-2 px-1 rounded-xl bg-surface-container-low border border-outline-variant/30 flex flex-col items-center gap-1">
+<span class="font-label-caps text-[10px] text-on-surface-variant">QUA</span>
+<span class="font-code-md text-body-sm font-medium text-on-surface">23</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+<!-- Qui 24 (HOJE - SELECIONADO) -->
+<div class="flex-1 min-w-[48px] py-2 px-1 rounded-xl bg-surface-container-high border-2 border-secondary flex flex-col items-center gap-1 shadow-[0_0_12px_rgba(68,226,205,0.25)] relative">
+<span class="font-label-caps text-[10px] text-secondary-fixed font-bold">QUI</span>
+<span class="font-code-md text-body-md font-bold text-on-surface">24</span>
+<div class="flex items-center gap-0.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-caps text-[8px] text-secondary font-bold">HOJE</span>
+</div>
+</div>
+<!-- Sex 25 -->
+<div class="flex-1 min-w-[44px] py-2 px-1 rounded-xl bg-surface-container-lowest/50 border border-outline-variant/20 flex flex-col items-center gap-1 opacity-70">
+<span class="font-label-caps text-[10px] text-on-surface-variant">SEX</span>
+<span class="font-code-md text-body-sm font-normal text-on-surface">25</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant/40"></span>
+</div>
+<!-- Sab 26 -->
+<div class="flex-1 min-w-[44px] py-2 px-1 rounded-xl bg-surface-container-lowest/50 border border-outline-variant/20 flex flex-col items-center gap-1 opacity-60">
+<span class="font-label-caps text-[10px] text-on-surface-variant">SÁB</span>
+<span class="font-code-md text-body-sm font-normal text-on-surface">26</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant/30"></span>
+</div>
+<!-- Dom 27 -->
+<div class="flex-1 min-w-[44px] py-2 px-1 rounded-xl bg-surface-container-lowest/50 border border-outline-variant/20 flex flex-col items-center gap-1 opacity-60">
+<span class="font-label-caps text-[10px] text-on-surface-variant">DOM</span>
+<span class="font-code-md text-body-sm font-normal text-on-surface">27</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant/30"></span>
+</div>
+</div>
+</section>
+<!-- 4. LISTA DE HÁBITOS PARA CHECK-IN RÁPIDO (Por Blocos Circadianos) -->
+<section class="space-y-space-16">
+<!-- ============================================== -->
+<!-- BLOCO 1: Rotina Matinal & Cognição (2/2)       -->
+<!-- ============================================== -->
+<div class="space-y-space-8">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">wb_twilight</span>
+<h2 class="font-headline-sm text-[14px] text-on-surface font-semibold">Rotina Matinal &amp; Cognição</h2>
+</div>
+<span class="font-label-caps text-label-caps px-2 py-0.5 rounded-full bg-secondary/10 text-secondary border border-secondary/20">
+            2/2 feitos
+          </span>
+</div>
+<div class="space-y-space-8">
+<!-- Hábito 1: Hidratação Estruturada -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded-xl p-space-12 flex items-center justify-between transition-all duration-150">
+<div class="flex items-center gap-space-12 flex-1 min-w-0 mr-2">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center shrink-0 border border-outline-variant/30 text-secondary">
+<span class="material-symbols-outlined text-[20px]">water_drop</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-body-md font-semibold text-on-surface truncate">Hidratação Estruturada</span>
+<span class="inline-flex items-center gap-0.5 font-label-caps text-[10px] text-secondary bg-secondary/10 px-1 rounded">
+                    🔥 24d
+                  </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Ao acordar • Meta: 3.000ml</p>
+<!-- Mini Pílulas de consistência semanal -->
+<div class="flex items-center gap-1 mt-1.5">
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-surface-variant"></span>
+<span class="w-3 h-1 rounded bg-surface-variant"></span>
+<span class="w-3 h-1 rounded bg-surface-variant"></span>
+</div>
+</div>
+</div>
+<!-- Botão Check-in Tátil (Concluído) -->
+<button aria-label="Hábito Concluído" class="w-11 h-11 rounded-xl bg-secondary text-surface-container-lowest flex items-center justify-center shrink-0 active:scale-[0.96] shadow-[0_0_12px_rgba(68,226,205,0.3)] transition-all" type="button">
+<span class="material-symbols-outlined text-[22px] font-bold">check</span>
+</button>
+</div>
+<!-- Hábito 2: Meditação & Presença -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded-xl p-space-12 flex items-center justify-between transition-all duration-150">
+<div class="flex items-center gap-space-12 flex-1 min-w-0 mr-2">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center shrink-0 border border-outline-variant/30 text-primary">
+<span class="material-symbols-outlined text-[20px]">self_improvement</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-body-md font-semibold text-on-surface truncate">Meditação &amp; Presença</span>
+<span class="inline-flex items-center gap-0.5 font-label-caps text-[10px] text-secondary bg-secondary/10 px-1 rounded">
+                    🔥 14d
+                  </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">15 min Mindfulness • Respiração</p>
+<!-- Mini Pílulas de consistência semanal -->
+<div class="flex items-center gap-1 mt-1.5">
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-surface-variant"></span>
+<span class="w-3 h-1 rounded bg-surface-variant"></span>
+<span class="w-3 h-1 rounded bg-surface-variant"></span>
+</div>
+</div>
+</div>
+<!-- Botão Check-in Tátil (Concluído) -->
+<button aria-label="Hábito Concluído" class="w-11 h-11 rounded-xl bg-secondary text-surface-container-lowest flex items-center justify-center shrink-0 active:scale-[0.96] shadow-[0_0_12px_rgba(68,226,205,0.3)] transition-all" type="button">
+<span class="material-symbols-outlined text-[22px] font-bold">check</span>
+</button>
+</div>
+</div>
+</div>
+<!-- ============================================== -->
+<!-- BLOCO 2: Produtividade & Engenharia (1/1)      -->
+<!-- ============================================== -->
+<div class="space-y-space-8">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">terminal</span>
+<h2 class="font-headline-sm text-[14px] text-on-surface font-semibold">Produtividade &amp; Engenharia</h2>
+</div>
+<span class="font-label-caps text-label-caps px-2 py-0.5 rounded-full bg-secondary/10 text-secondary border border-secondary/20">
+            1/1 feito
+          </span>
+</div>
+<div class="bg-surface-container-low border border-outline-variant/30 rounded-xl p-space-12 flex items-center justify-between transition-all duration-150">
+<div class="flex items-center gap-space-12 flex-1 min-w-0 mr-2">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center shrink-0 border border-outline-variant/30 text-primary">
+<span class="material-symbols-outlined text-[20px]">menu_book</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-body-md font-semibold text-on-surface truncate">Leitura Técnica de Arquitetura</span>
+<span class="inline-flex items-center gap-0.5 font-label-caps text-[10px] text-secondary bg-secondary/10 px-1 rounded">
+                  🔥 42d
+                </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">30 págs • DDIA / Rust Book</p>
+<div class="flex items-center gap-1 mt-1.5">
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-surface-variant"></span>
+<span class="w-3 h-1 rounded bg-surface-variant"></span>
+<span class="w-3 h-1 rounded bg-surface-variant"></span>
+</div>
+</div>
+</div>
+<button aria-label="Hábito Concluído" class="w-11 h-11 rounded-xl bg-secondary text-surface-container-lowest flex items-center justify-center shrink-0 active:scale-[0.96] shadow-[0_0_12px_rgba(68,226,205,0.3)] transition-all" type="button">
+<span class="material-symbols-outlined text-[22px] font-bold">check</span>
+</button>
+</div>
+</div>
+<!-- ============================================== -->
+<!-- BLOCO 3: Saúde & Físico (2/2)                  -->
+<!-- ============================================== -->
+<div class="space-y-space-8">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">fitness_center</span>
+<h2 class="font-headline-sm text-[14px] text-on-surface font-semibold">Saúde &amp; Físico</h2>
+</div>
+<span class="font-label-caps text-label-caps px-2 py-0.5 rounded-full bg-secondary/10 text-secondary border border-secondary/20">
+            2/2 feitos
+          </span>
+</div>
+<div class="space-y-space-8">
+<!-- Hábito: Treino de Força -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded-xl p-space-12 flex items-center justify-between transition-all duration-150">
+<div class="flex items-center gap-space-12 flex-1 min-w-0 mr-2">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center shrink-0 border border-outline-variant/30 text-secondary">
+<span class="material-symbols-outlined text-[20px]">exercise</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-body-md font-semibold text-on-surface truncate">Treino de Força</span>
+<span class="inline-flex items-center gap-0.5 font-label-caps text-[10px] text-secondary bg-secondary/10 px-1 rounded">
+                    🔥 19d
+                  </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Hipertrofia A • Peito &amp; Tríceps</p>
+<div class="flex items-center gap-1 mt-1.5">
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-surface-variant"></span>
+<span class="w-3 h-1 rounded bg-surface-variant"></span>
+<span class="w-3 h-1 rounded bg-surface-variant"></span>
+</div>
+</div>
+</div>
+<button aria-label="Hábito Concluído" class="w-11 h-11 rounded-xl bg-secondary text-surface-container-lowest flex items-center justify-center shrink-0 active:scale-[0.96] shadow-[0_0_12px_rgba(68,226,205,0.3)] transition-all" type="button">
+<span class="material-symbols-outlined text-[22px] font-bold">check</span>
+</button>
+</div>
+<!-- Hábito: Alimentação Limpa -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded-xl p-space-12 flex items-center justify-between transition-all duration-150">
+<div class="flex items-center gap-space-12 flex-1 min-w-0 mr-2">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center shrink-0 border border-outline-variant/30 text-primary">
+<span class="material-symbols-outlined text-[20px]">nutrition</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-body-md font-semibold text-on-surface truncate">Alimentação Limpa</span>
+<span class="inline-flex items-center gap-0.5 font-label-caps text-[10px] text-secondary bg-secondary/10 px-1 rounded">
+                    🔥 31d
+                  </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Zero Açúcar Refinado &amp; Ultraprocessados</p>
+<div class="flex items-center gap-1 mt-1.5">
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-surface-variant"></span>
+<span class="w-3 h-1 rounded bg-surface-variant"></span>
+<span class="w-3 h-1 rounded bg-surface-variant"></span>
+</div>
+</div>
+</div>
+<button aria-label="Hábito Concluído" class="w-11 h-11 rounded-xl bg-secondary text-surface-container-lowest flex items-center justify-center shrink-0 active:scale-[0.96] shadow-[0_0_12px_rgba(68,226,205,0.3)] transition-all" type="button">
+<span class="material-symbols-outlined text-[22px] font-bold">check</span>
+</button>
+</div>
+</div>
+</div>
+<!-- ============================================== -->
+<!-- BLOCO 4: Higiene do Sono & Noite (0/1 PENDENTE) -->
+<!-- ============================================== -->
+<div class="space-y-space-8">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">bedtime</span>
+<h2 class="font-headline-sm text-[14px] text-on-surface font-semibold">Higiene do Sono &amp; Noite</h2>
+</div>
+<span class="font-label-caps text-label-caps px-2 py-0.5 rounded-full bg-primary-container/15 text-primary border border-primary/30">
+            0/1 pendente
+          </span>
+</div>
+<!-- Hábito PENDENTE com Call to Action Tátil no Polegar -->
+<div class="bg-surface-container border border-primary/40 rounded-xl p-space-12 flex items-center justify-between shadow-[0_0_16px_rgba(118,146,255,0.12)]">
+<div class="flex items-center gap-space-12 flex-1 min-w-0 mr-2">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center shrink-0 border border-primary/30 text-primary">
+<span class="material-symbols-outlined text-[20px]">screen_lock_portrait</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-body-md font-semibold text-on-surface truncate">Desconexão de Telas</span>
+<span class="font-label-caps text-[9px] px-1.5 py-0.5 rounded bg-surface-bright text-primary border border-primary/20">23:00</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Bloqueio Luz Azul • Leitura no Kindle</p>
+<div class="flex items-center gap-1 mt-1.5">
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-secondary"></span>
+<span class="w-3 h-1 rounded bg-surface-variant"></span>
+<span class="w-3 h-1 rounded bg-surface-variant"></span>
+<span class="w-3 h-1 rounded bg-surface-variant"></span>
+<span class="w-3 h-1 rounded bg-surface-variant"></span>
+</div>
+</div>
+</div>
+<!-- Botão Pendente Interativo / Grande Área de Toque -->
+<button class="min-w-[76px] h-11 px-3 rounded-xl bg-surface-container-highest hover:bg-primary/20 border-2 border-primary text-primary font-headline-sm text-[13px] font-semibold flex items-center justify-center gap-1 active:scale-[0.95] transition-all pulse-orbital" id="btn-pending-habit" onclick="togglePendingHabit(this)" type="button">
+<span class="material-symbols-outlined text-[18px]">radio_button_unchecked</span>
+<span>Check</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 5. Mini Matriz de Consistência / Heatmap Mensal Compacto -->
+<section class="bg-surface-container-low border border-outline-variant/40 rounded-xl p-space-16 space-y-space-12">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">grid_view</span>
+<h3 class="font-headline-sm text-[14px] text-on-surface font-semibold">Consistência de Outubro</h3>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">31 DIAS</span>
+</div>
+<!-- Grid GitHub/Heatmap Orbital Retrátil -->
+<div class="space-y-1">
+<div class="grid grid-cols-7 gap-1.5">
+<!-- Semana 1 -->
+<div class="h-5 rounded-sm bg-secondary opacity-90 border border-secondary/40" title="01 Out"></div>
+<div class="h-5 rounded-sm bg-secondary opacity-80 border border-secondary/40" title="02 Out"></div>
+<div class="h-5 rounded-sm bg-secondary opacity-100 border border-secondary/40" title="03 Out"></div>
+<div class="h-5 rounded-sm bg-secondary opacity-70 border border-secondary/40" title="04 Out"></div>
+<div class="h-5 rounded-sm bg-secondary opacity-100 border border-secondary/40" title="05 Out"></div>
+<div class="h-5 rounded-sm bg-secondary opacity-60 border border-secondary/40" title="06 Out"></div>
+<div class="h-5 rounded-sm bg-surface-variant/40" title="07 Out"></div>
+<!-- Semana 2 -->
+<div class="h-5 rounded-sm bg-secondary opacity-100 border border-secondary/40" title="08 Out"></div>
+<div class="h-5 rounded-sm bg-secondary opacity-90 border border-secondary/40" title="09 Out"></div>
+<div class="h-5 rounded-sm bg-secondary opacity-100 border border-secondary/40" title="10 Out"></div>
+<div class="h-5 rounded-sm bg-secondary opacity-100 border border-secondary/40" title="11 Out"></div>
+<div class="h-5 rounded-sm bg-secondary opacity-80 border border-secondary/40" title="12 Out"></div>
+<div class="h-5 rounded-sm bg-secondary opacity-90 border border-secondary/40" title="13 Out"></div>
+<div class="h-5 rounded-sm bg-secondary opacity-100 border border-secondary/40" title="14 Out"></div>
+<!-- Semana 3 -->
+<div class="h-5 rounded-sm bg-secondary opacity-100 border border-secondary/40" title="15 Out"></div>
+<div class="h-5 rounded-sm bg-secondary opacity-70 border border-secondary/40" title="16 Out"></div>
+<div class="h-5 rounded-sm bg-secondary opacity-100 border border-secondary/40" title="17 Out"></div>
+<div class="h-5 rounded-sm bg-secondary opacity-100 border border-secondary/40" title="18 Out"></div>
+<div class="h-5 rounded-sm bg-secondary opacity-90 border border-secondary/40" title="19 Out"></div>
+<div class="h-5 rounded-sm bg-secondary opacity-80 border border-secondary/40" title="20 Out"></div>
+<div class="h-5 rounded-sm bg-secondary opacity-100 border border-secondary/40" title="21 Out"></div>
+<!-- Semana 4 -->
+<div class="h-5 rounded-sm bg-secondary opacity-100 border border-secondary/40" title="22 Out"></div>
+<div class="h-5 rounded-sm bg-secondary opacity-100 border border-secondary/40" title="23 Out"></div>
+<div class="h-5 rounded-sm bg-secondary ring-2 ring-primary border border-secondary" title="24 Out (Hoje)"></div>
+<div class="h-5 rounded-sm bg-surface-container-highest/60 border border-outline-variant/20" title="25 Out"></div>
+<div class="h-5 rounded-sm bg-surface-container-highest/60 border border-outline-variant/20" title="26 Out"></div>
+<div class="h-5 rounded-sm bg-surface-container-highest/60 border border-outline-variant/20" title="27 Out"></div>
+<div class="h-5 rounded-sm bg-surface-container-highest/60 border border-outline-variant/20" title="28 Out"></div>
+<!-- Semana 5 -->
+<div class="h-5 rounded-sm bg-surface-container-highest/60 border border-outline-variant/20" title="29 Out"></div>
+<div class="h-5 rounded-sm bg-surface-container-highest/60 border border-outline-variant/20" title="30 Out"></div>
+<div class="h-5 rounded-sm bg-surface-container-highest/60 border border-outline-variant/20" title="31 Out"></div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-1.5">
+<span class="font-label-caps text-[9px] text-on-surface-variant">Menos</span>
+<span class="w-2 h-2 rounded-sm bg-surface-variant/40"></span>
+<span class="w-2 h-2 rounded-sm bg-secondary/50"></span>
+<span class="w-2 h-2 rounded-sm bg-secondary"></span>
+<span class="font-label-caps text-[9px] text-on-surface-variant">Mais</span>
+</div>
+<span class="font-label-caps text-[9px] text-secondary font-medium">22 dias perfeitos</span>
+</div>
+</div>
+<!-- Estatísticas Rápidas -->
+<div class="pt-2 border-t border-outline-variant/20 grid grid-cols-2 gap-2 text-center">
+<div class="bg-surface-container p-2 rounded-lg">
+<span class="font-label-caps text-[10px] text-on-surface-variant block">Taxa Mensal</span>
+<span class="font-code-md text-body-md font-bold text-secondary">88.4%</span>
+</div>
+<div class="bg-surface-container p-2 rounded-lg">
+<span class="font-label-caps text-[10px] text-on-surface-variant block">Melhor Streak</span>
+<span class="font-code-md text-body-md font-bold text-on-surface">42 dias</span>
+</div>
+</div>
+</section>
+</main>
+<!-- ==================================================================== -->
+<!-- 6. BOTTOM NAVIGATION BAR FIXA (Padrão Mobile do Ecossistema Orbit)   -->
+<!-- ==================================================================== -->
+<nav class="fixed bottom-0 left-0 right-0 z-40 bg-surface-container-low/95 backdrop-blur-lg border-t border-outline-variant/30 h-16 px-space-12 shadow-[0_-8px_20px_rgba(5,14,28,0.7)]">
+<div class="max-w-md mx-auto h-full flex items-center justify-around">
+<!-- Item 1: Início / Visão Geral -->
+<a class="flex flex-col items-center justify-center flex-1 h-full text-on-surface-variant hover:text-on-surface active:scale-[0.95] transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="font-label-caps text-[10px] mt-0.5">Início</span>
+</a>
+<!-- Item 2: Tarefas com badge -->
+<a class="flex flex-col items-center justify-center flex-1 h-full text-on-surface-variant hover:text-on-surface active:scale-[0.95] transition-all relative" href="#">
+<div class="relative">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span class="absolute -top-1 -right-2 bg-primary-container text-surface-container-lowest font-code-md text-[9px] font-bold px-1 rounded-full leading-tight">4</span>
+</div>
+<span class="font-label-caps text-[10px] mt-0.5">Tarefas</span>
+</a>
+<!-- Item 3: Hábitos (ATIVO com marcador turquesa e destaque) -->
+<a class="flex flex-col items-center justify-center flex-1 h-full text-secondary relative active:scale-[0.95] transition-all" href="#">
+<div class="relative flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">repeat</span>
+<span class="absolute -top-1 -right-2 text-[10px]">🔥</span>
+</div>
+<span class="font-label-caps text-[10px] font-semibold text-secondary mt-0.5">Hábitos</span>
+<!-- Marcador inferior turquesa de navegação ativa -->
+<span class="absolute bottom-1 w-6 h-0.5 bg-secondary rounded-full shadow-[0_0_8px_rgba(68,226,205,0.8)]"></span>
+</a>
+<!-- Item 4: Finanças -->
+<a class="flex flex-col items-center justify-center flex-1 h-full text-on-surface-variant hover:text-on-surface active:scale-[0.95] transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+<span class="font-label-caps text-[10px] mt-0.5">Finanças</span>
+</a>
+<!-- Item 5: Treinos -->
+<a class="flex flex-col items-center justify-center flex-1 h-full text-on-surface-variant hover:text-on-surface active:scale-[0.95] transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">fitness_center</span>
+<span class="font-label-caps text-[10px] mt-0.5">Treinos</span>
+</a>
+</div>
+</nav>
+<!-- Script leve de micro-interação no botão pendente -->
+<script>
+    function togglePendingHabit(button) {
+      const isChecked = button.classList.contains('bg-secondary');
+      if (!isChecked) {
+        button.classList.remove('bg-surface-container-highest', 'border-primary', 'text-primary', 'pulse-orbital');
+        button.classList.add('bg-secondary', 'border-secondary', 'text-surface-container-lowest', 'shadow-[0_0_12px_rgba(68,226,205,0.3)]');
+        button.innerHTML = '<span class="material-symbols-outlined text-[20px] font-bold">check</span><span>Feito</span>';
+        
+        // Atualiza temporariamente feedback auditivo / haptic sutil via classe
+        button.parentElement.classList.remove('border-primary/40');
+        button.parentElement.classList.add('border-secondary/40', 'bg-surface-container-low');
+      } else {
+        button.classList.remove('bg-secondary', 'border-secondary', 'text-surface-container-lowest', 'shadow-[0_0_12px_rgba(68,226,205,0.3)]');
+        button.classList.add('bg-surface-container-highest', 'border-primary', 'text-primary', 'pulse-orbital');
+        button.innerHTML = '<span class="material-symbols-outlined text-[18px]">radio_button_unchecked</span><span>Check</span>';
+        button.parentElement.classList.add('border-primary/40');
+        button.parentElement.classList.remove('border-secondary/40');
+      }
+    }
+  </script>
+</body></html>

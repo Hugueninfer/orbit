@@ -1,0 +1,752 @@
+{
+  "screen_id": "orbit_treinos_rotinas",
+  "tailwind_config": {
+    "darkMode": "class",
+    "theme": {
+      "extend": {
+        "colors": {
+          "tertiary": "#b8c4ff",
+          "on-surface": "#d9e3f7",
+          "surface-variant": "#2c3545",
+          "primary-fixed-dim": "#b7c4ff",
+          "error-container": "#93000a",
+          "surface-container-high": "#212a39",
+          "on-primary": "#002682",
+          "surface-container": "#16202f",
+          "secondary-container": "#03c6b2",
+          "surface-dim": "#0a1422",
+          "surface-bright": "#303a49",
+          "secondary-fixed": "#62fae3",
+          "secondary": "#44e2cd",
+          "primary": "#b7c4ff",
+          "on-secondary-fixed-variant": "#005047",
+          "surface-container-low": "#121c2a",
+          "outline": "#8e909e",
+          "inverse-surface": "#d9e3f7",
+          "surface": "#0a1422",
+          "on-secondary": "#003731",
+          "on-primary-fixed": "#001552",
+          "inverse-primary": "#3856bf",
+          "on-tertiary-container": "#002588",
+          "on-secondary-fixed": "#00201c",
+          "background": "#0a1422",
+          "on-tertiary-fixed": "#001354",
+          "on-surface-variant": "#c4c5d5",
+          "surface-container-lowest": "#050e1c",
+          "tertiary-fixed": "#dde1ff",
+          "on-primary-fixed-variant": "#193ca7",
+          "surface-container-highest": "#2c3545",
+          "secondary-fixed-dim": "#3cddc7",
+          "tertiary-fixed-dim": "#b8c4ff",
+          "outline-variant": "#444653",
+          "primary-container": "#7692ff",
+          "on-error": "#690005",
+          "error": "#ffb4ab",
+          "tertiary-container": "#7992ff",
+          "primary-fixed": "#dde1ff",
+          "surface-tint": "#b7c4ff",
+          "on-tertiary-fixed-variant": "#0136bb",
+          "on-secondary-container": "#004d44",
+          "inverse-on-surface": "#273140",
+          "on-background": "#d9e3f7",
+          "on-error-container": "#ffdad6",
+          "on-tertiary": "#002486",
+          "on-primary-container": "#002683"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "margin-mobile": "1rem",
+          "gutter-desktop": "1.5rem",
+          "space-64": "4rem",
+          "space-2": "0.125rem",
+          "space-32": "2rem",
+          "space-48": "3rem",
+          "space-12": "0.75rem",
+          "space-4": "0.25rem",
+          "space-40": "2.5rem",
+          "margin-desktop": "2rem",
+          "space-20": "1.25rem",
+          "space-16": "1rem",
+          "space-24": "1.5rem",
+          "gutter-mobile": "1rem",
+          "margin-tablet": "1.5rem",
+          "space-8": "0.5rem"
+        },
+        "fontFamily": {
+          "label-caps": [
+            "JetBrains Mono"
+          ],
+          "headline-md": [
+            "Geist"
+          ],
+          "body-md": [
+            "Geist"
+          ],
+          "headline-xl-mobile": [
+            "Geist"
+          ],
+          "display-lg": [
+            "Geist"
+          ],
+          "body-sm": [
+            "Geist"
+          ],
+          "code-md": [
+            "JetBrains Mono"
+          ],
+          "display-lg-mobile": [
+            "Geist"
+          ],
+          "label-regular": [
+            "Geist"
+          ],
+          "headline-sm": [
+            "Geist"
+          ],
+          "headline-xl": [
+            "Geist"
+          ],
+          "body-lg": [
+            "Geist"
+          ]
+        },
+        "fontSize": {
+          "label-caps": [
+            "11px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.06em",
+              "fontWeight": "500"
+            }
+          ],
+          "headline-md": [
+            "20px",
+            {
+              "lineHeight": "28px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "500"
+            }
+          ],
+          "body-md": [
+            "14px",
+            {
+              "lineHeight": "22px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-xl-mobile": [
+            "24px",
+            {
+              "lineHeight": "32px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "600"
+            }
+          ],
+          "display-lg": [
+            "40px",
+            {
+              "lineHeight": "48px",
+              "letterSpacing": "-0.025em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-sm": [
+            "12px",
+            {
+              "lineHeight": "18px",
+              "letterSpacing": "0.005em",
+              "fontWeight": "400"
+            }
+          ],
+          "code-md": [
+            "13px",
+            {
+              "lineHeight": "20px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "display-lg-mobile": [
+            "30px",
+            {
+              "lineHeight": "38px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "600"
+            }
+          ],
+          "label-regular": [
+            "12px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.01em",
+              "fontWeight": "500"
+            }
+          ],
+          "headline-sm": [
+            "16px",
+            {
+              "lineHeight": "24px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-xl": [
+            "28px",
+            {
+              "lineHeight": "36px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-lg": [
+            "16px",
+            {
+              "lineHeight": "26px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "inline_css": [
+    "\n    .orbital-glow {\n      box-shadow: 0 0 24px 2px rgba(118, 146, 255, 0.14);\n    }\n    .teal-glow {\n      box-shadow: 0 0 16px 1px rgba(68, 226, 205, 0.2);\n    }\n    .orbital-ring {\n      background-image: radial-gradient(circle at 50% 50%, rgba(118, 146, 255, 0.05) 0%, transparent 70%);\n    }\n  "
+  ],
+  "class_frequency": {
+    "bg-[#07111F]": 1,
+    "text-on-surface": 51,
+    "font-body-md": 17,
+    "text-body-md": 19,
+    "antialiased": 1,
+    "min-h-screen": 2,
+    "selection:bg-primary-container": 1,
+    "selection:text-on-primary-container": 1,
+    "fixed": 1,
+    "top-0": 2,
+    "left-0": 1,
+    "h-screen": 1,
+    "w-64": 1,
+    "z-40": 1,
+    "bg-surface-container-low": 3,
+    "dark:bg-surface-container-low": 1,
+    "border-r": 2,
+    "border-outline-variant/30": 28,
+    "flex": 102,
+    "flex-col": 8,
+    "justify-between": 31,
+    "p-space-16": 1,
+    "select-none": 1,
+    "space-y-space-24": 2,
+    "items-center": 87,
+    "gap-space-12": 13,
+    "px-space-8": 2,
+    "py-space-4": 1,
+    "w-9": 2,
+    "h-9": 2,
+    "rounded-xl": 16,
+    "bg-surface-container-highest": 3,
+    "justify-center": 10,
+    "relative": 10,
+    "orbital-ring": 1,
+    "border": 50,
+    "border-outline-variant/40": 12,
+    "w-3.5": 1,
+    "h-3.5": 1,
+    "rounded-full": 28,
+    "border-2": 2,
+    "border-secondary": 2,
+    "w-1.5": 4,
+    "h-1.5": 5,
+    "bg-secondary": 8,
+    "absolute": 7,
+    "-top-0.5": 1,
+    "-right-0.5": 1,
+    "w-2": 4,
+    "h-2": 4,
+    "bg-primary": 4,
+    "animate-pulse": 1,
+    "text-headline-md": 3,
+    "font-headline-md": 3,
+    "font-semibold": 41,
+    "dark:text-on-surface": 1,
+    "tracking-tight": 3,
+    "leading-none": 1,
+    "text-label-caps": 33,
+    "font-label-caps": 64,
+    "text-on-surface-variant/70": 7,
+    "mt-1": 3,
+    "w-full": 4,
+    "gap-space-8": 1,
+    "py-2": 7,
+    "px-space-12": 10,
+    "rounded-lg": 32,
+    "bg-surface-container": 1,
+    "text-primary": 17,
+    "hover:bg-surface-container-high": 7,
+    "dark:hover:bg-surface-container-high": 1,
+    "hover:text-on-surface": 18,
+    "transition-colors": 16,
+    "duration-150": 11,
+    "active:scale-[0.98]": 12,
+    "font-medium": 16,
+    "space-y-1": 6,
+    "py-space-8": 8,
+    "text-on-surface-variant": 33,
+    "dark:text-on-surface-variant": 6,
+    "font-normal": 7,
+    "hover:bg-surface-container": 8,
+    "dark:hover:bg-surface-container": 7,
+    "material-symbols-outlined": 41,
+    "text-[20px]": 15,
+    "bg-surface-container-high": 21,
+    "dark:bg-surface-container-high": 1,
+    "text-secondary-fixed": 2,
+    "dark:text-secondary-fixed": 1,
+    "border-l-2": 1,
+    "teal-glow": 1,
+    "text-secondary": 18,
+    "text-[10px]": 31,
+    "px-1.5": 2,
+    "py-0.5": 16,
+    "rounded": 15,
+    "bg-secondary/15": 4,
+    "border-secondary/30": 5,
+    "pt-space-16": 1,
+    "border-t": 2,
+    "cursor-pointer": 2,
+    "w-7": 1,
+    "h-7": 1,
+    "border-secondary/50": 1,
+    "text-xs": 20,
+    "truncate": 1,
+    "bg-secondary-container": 1,
+    "pl-64": 1,
+    "sticky": 1,
+    "z-30": 1,
+    "bg-surface/80": 1,
+    "dark:bg-surface/80": 1,
+    "backdrop-blur-md": 1,
+    "border-b": 1,
+    "h-16": 1,
+    "px-space-24": 1,
+    "gap-space-16": 3,
+    "text-on-surface-variant/80": 3,
+    "left-3": 1,
+    "text-outline": 39,
+    "text-[18px]": 22,
+    "bg-[#0B1728]": 7,
+    "placeholder:text-outline/70": 1,
+    "pl-9": 1,
+    "pr-14": 1,
+    "py-1.5": 4,
+    "font-body-sm": 6,
+    "text-body-sm": 11,
+    "w-72": 1,
+    "focus:outline-none": 2,
+    "focus:border-primary-container": 1,
+    "focus:ring-1": 1,
+    "focus:ring-primary-container": 1,
+    "transition-all": 15,
+    "right-2.5": 1,
+    "top-2": 1,
+    "right-2": 1,
+    "ring-2": 1,
+    "ring-[#07111F]": 1,
+    "h-5": 1,
+    "w-px": 1,
+    "bg-outline-variant/30": 1,
+    "gap-1.5": 10,
+    "hover:border-primary/50": 2,
+    "font-label-regular": 8,
+    "gap-2": 15,
+    "px-space-16": 2,
+    "bg-primary-container": 2,
+    "text-[#07111F]": 3,
+    "hover:brightness-110": 1,
+    "shadow-[0_0_16px_rgba(118,146,255,0.35)]": 1,
+    "p-space-24": 2,
+    "max-w-[1600px]": 1,
+    "overflow-hidden": 5,
+    "rounded-2xl": 1,
+    "bg-gradient-to-br": 1,
+    "from-[#101D31]": 1,
+    "to-[#0B1728]": 1,
+    "orbital-glow": 1,
+    "-right-20": 1,
+    "-top-32": 1,
+    "w-96": 1,
+    "h-96": 1,
+    "border-primary/10": 1,
+    "pointer-events-none": 2,
+    "-right-10": 1,
+    "-top-20": 1,
+    "w-80": 1,
+    "h-80": 1,
+    "border-secondary/15": 1,
+    "right-32": 1,
+    "top-10": 1,
+    "shadow-[0_0_12px_#44e2cd]": 1,
+    "z-10": 1,
+    "grid": 8,
+    "grid-cols-12": 2,
+    "gap-space-24": 3,
+    "col-span-7": 2,
+    "space-y-space-16": 9,
+    "pr-space-24": 1,
+    "animate-ping": 1,
+    "gap-1": 7,
+    "text-[14px]": 2,
+    "font-headline-xl": 1,
+    "text-headline-xl": 1,
+    "w-1": 2,
+    "h-1": 7,
+    "bg-outline-variant": 2,
+    "text-tertiary": 2,
+    "pt-2": 2,
+    "px-space-20": 1,
+    "py-2.5": 2,
+    "hover:bg-[#5575F6]": 1,
+    "shadow-[0_0_20px_rgba(118,146,255,0.35)]": 1,
+    "bg-[#15243A]/60": 1,
+    "hover:bg-[#15243A]": 1,
+    "col-span-5": 2,
+    "pl-space-8": 1,
+    "uppercase": 1,
+    "tracking-wider": 1,
+    "grid-cols-2": 1,
+    "bg-[#0B1728]/80": 4,
+    "p-3.5": 4,
+    "items-baseline": 4,
+    "font-code-md": 32,
+    "mt-2": 2,
+    "h-full": 2,
+    "flex-1": 4,
+    "gap-0.5": 2,
+    "text-[12px]": 2,
+    "px-2": 13,
+    "px-2.5": 3,
+    "py-1": 8,
+    "grid-cols-3": 5,
+    "bg-[#101D31]": 5,
+    "p-space-20": 8,
+    "hover:border-primary-container/60": 3,
+    "hover:-translate-y-0.5": 3,
+    "duration-200": 5,
+    "group": 4,
+    "space-y-space-12": 5,
+    "items-start": 4,
+    "bg-primary/10": 1,
+    "border-primary/25": 1,
+    "opacity-60": 3,
+    "group-hover:opacity-100": 3,
+    "transition-opacity": 3,
+    "p-1": 10,
+    "font-headline-sm": 7,
+    "text-headline-sm": 7,
+    "mt-0.5": 4,
+    "border-y": 4,
+    "border-outline-variant/20": 7,
+    "text-center": 5,
+    "text-sm": 15,
+    "pt-1": 4,
+    "px-3": 8,
+    "bg-primary-container/20": 1,
+    "hover:bg-primary-container": 3,
+    "hover:text-[#07111F]": 3,
+    "text-[16px]": 3,
+    "bg-secondary/10": 1,
+    "border-secondary/25": 1,
+    "bg-tertiary/10": 1,
+    "border-tertiary/25": 1,
+    "bg-[#101D31]/70": 1,
+    "opacity-85": 1,
+    "hover:opacity-100": 1,
+    "hover:border-outline-variant/60": 4,
+    "bg-outline-variant/20": 1,
+    "bg-outline": 1,
+    "hover:underline": 1,
+    "border-dashed": 1,
+    "border-[#253653]": 1,
+    "hover:border-primary/60": 1,
+    "bg-[#0B1728]/50": 1,
+    "min-h-[220px]": 1,
+    "w-12": 1,
+    "h-12": 1,
+    "group-hover:scale-110": 1,
+    "group-hover:bg-primary-container": 1,
+    "group-hover:text-[#07111F]": 1,
+    "text-[24px]": 1,
+    "mt-3": 1,
+    "max-w-[200px]": 1,
+    "text-lg": 1,
+    "p-3": 8,
+    "gap-3": 14,
+    "w-8": 3,
+    "h-8": 3,
+    "text-right": 3,
+    "bg-primary/15": 1,
+    "border-primary/30": 1,
+    "w-24": 1,
+    "flex-wrap": 1,
+    "ml-auto": 1,
+    "rounded-md": 1,
+    "placeholder:text-outline": 1,
+    "w-32": 1,
+    "focus:w-44": 1,
+    "focus:border-primary": 1,
+    "divide-y": 1,
+    "divide-outline-variant/20": 1,
+    "hover:bg-surface-container-high/40": 4,
+    "hover:text-white": 4
+  },
+  "controls": [
+    {
+      "tag": "button",
+      "type": null,
+      "text": "+ Adicionar",
+      "placeholder": null,
+      "class": "w-full flex items-center justify-center gap-space-8 py-2 px-space-12 rounded-lg bg-surface-container text-primary border border-outline-variant/40 hover:bg-surface-container-high dark:hover:bg-surface-container-high hover:text-on-surface transition-colors duration-150 active:scale-[0.98]",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "text": "",
+      "placeholder": "Buscar rotinas, exercícios...",
+      "class": "bg-[#0B1728] text-on-surface placeholder:text-outline/70 border border-outline-variant/40 rounded-lg pl-9 pr-14 py-1.5 font-body-sm text-body-sm w-72 focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "notifications",
+      "placeholder": null,
+      "class": "w-9 h-9 rounded-lg border border-outline-variant/30 flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors relative active:scale-[0.98]",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "add Nova Rotina",
+      "placeholder": null,
+      "class": "flex items-center gap-1.5 px-space-12 py-2 rounded-lg bg-surface-container-high border border-outline-variant/40 text-on-surface hover:border-primary/50 text-body-sm font-label-regular transition-all active:scale-[0.98]",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "play_arrow Iniciar Treino",
+      "placeholder": null,
+      "class": "flex items-center gap-2 px-space-16 py-2 rounded-lg bg-primary-container text-[#07111F] font-semibold text-body-sm hover:brightness-110 active:scale-[0.98] transition-all shadow-[0_0_16px_rgba(118,146,255,0.35)]",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "play_arrow Iniciar Treino Agora",
+      "placeholder": null,
+      "class": "flex items-center gap-2 px-space-20 py-2.5 rounded-xl bg-primary-container text-[#07111F] font-semibold text-body-md hover:bg-[#5575F6] transition-all duration-150 active:scale-[0.98] shadow-[0_0_20px_rgba(118,146,255,0.35)]",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "calendar_month Ver Histórico",
+      "placeholder": null,
+      "class": "flex items-center gap-2 px-space-16 py-2.5 rounded-xl bg-[#15243A]/60 text-on-surface border border-outline-variant/40 hover:border-primary/50 hover:bg-[#15243A] transition-all duration-150 text-body-md font-medium active:scale-[0.98]",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Todas",
+      "placeholder": null,
+      "class": "px-2.5 py-1 text-label-caps font-label-caps rounded-lg bg-surface-container-high text-on-surface border border-outline-variant/40",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Hipertrofia",
+      "placeholder": null,
+      "class": "px-2.5 py-1 text-label-caps font-label-caps rounded-lg text-on-surface-variant hover:text-on-surface",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Força",
+      "placeholder": null,
+      "class": "px-2.5 py-1 text-label-caps font-label-caps rounded-lg text-on-surface-variant hover:text-on-surface",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "edit",
+      "placeholder": null,
+      "class": "p-1 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "content_copy",
+      "placeholder": null,
+      "class": "p-1 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "play_arrow Iniciar",
+      "placeholder": null,
+      "class": "flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-container/20 text-primary hover:bg-primary-container hover:text-[#07111F] transition-all font-label-regular text-xs font-semibold",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "edit",
+      "placeholder": null,
+      "class": "p-1 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "content_copy",
+      "placeholder": null,
+      "class": "p-1 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "play_arrow Iniciar",
+      "placeholder": null,
+      "class": "flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-high text-on-surface hover:bg-primary-container hover:text-[#07111F] transition-all font-label-regular text-xs font-semibold border border-outline-variant/30",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "edit",
+      "placeholder": null,
+      "class": "p-1 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "content_copy",
+      "placeholder": null,
+      "class": "p-1 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "play_arrow Iniciar",
+      "placeholder": null,
+      "class": "flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-high text-on-surface hover:bg-primary-container hover:text-[#07111F] transition-all font-label-regular text-xs font-semibold border border-outline-variant/30",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Reativar",
+      "placeholder": null,
+      "class": "text-xs font-label-regular text-primary hover:underline",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Peito",
+      "placeholder": null,
+      "class": "px-3 py-1 rounded-lg text-label-caps font-label-caps bg-primary text-[#07111F] font-semibold",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Costas",
+      "placeholder": null,
+      "class": "px-3 py-1 rounded-lg text-label-caps font-label-caps bg-surface-container-high text-on-surface-variant hover:text-on-surface border border-outline-variant/30",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Pernas",
+      "placeholder": null,
+      "class": "px-3 py-1 rounded-lg text-label-caps font-label-caps bg-surface-container-high text-on-surface-variant hover:text-on-surface border border-outline-variant/30",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Ombros",
+      "placeholder": null,
+      "class": "px-3 py-1 rounded-lg text-label-caps font-label-caps bg-surface-container-high text-on-surface-variant hover:text-on-surface border border-outline-variant/30",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "Braços",
+      "placeholder": null,
+      "class": "px-3 py-1 rounded-lg text-label-caps font-label-caps bg-surface-container-high text-on-surface-variant hover:text-on-surface border border-outline-variant/30",
+      "id": null
+    },
+    {
+      "tag": "input",
+      "type": "text",
+      "text": "",
+      "placeholder": "Filtrar...",
+      "class": "bg-[#0B1728] border border-outline-variant/30 rounded-md py-0.5 px-2 text-xs text-on-surface placeholder:text-outline w-32 focus:w-44 transition-all focus:outline-none focus:border-primary",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "chevron_right",
+      "placeholder": null,
+      "class": "text-primary hover:text-white p-1",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "chevron_right",
+      "placeholder": null,
+      "class": "text-primary hover:text-white p-1",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "chevron_right",
+      "placeholder": null,
+      "class": "text-primary hover:text-white p-1",
+      "id": null
+    },
+    {
+      "tag": "button",
+      "type": null,
+      "text": "chevron_right",
+      "placeholder": null,
+      "class": "text-primary hover:text-white p-1",
+      "id": null
+    }
+  ],
+  "reading_note": "Extração estática. Os scripts e handlers do HTML original foram preservados, mas não executados nem considerados implementação funcional."
+}
