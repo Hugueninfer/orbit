@@ -19,11 +19,12 @@ def cycle_bucket(rule: dict, scheduled: date) -> int:
     return (scheduled - start).days // width
 
 
-def protected_cycles(rule: dict, occurrences: list) -> set[int]:
+def protected_cycles(rule: dict, occurrences: list, as_of: date) -> set[int]:
     return {
         cycle_bucket(rule, date.fromisoformat(item.data["scheduled_date"]))
         for item in occurrences
         if item.data["status"] == "posted"
+        or (item.data["status"] == "planned" and item.data["date"] <= as_of.isoformat())
         or (item.data["status"] == "cancelled" and not item.data["recurrence_superseded"])
     }
 
@@ -69,7 +70,7 @@ def extend_recurrence(db, user, recurrence, through: date) -> int:
         item for item in rows(db, user, "transaction") if item.data["recurrence_id"] == str(recurrence.id)
     ]
     existing = {item.data["scheduled_date"] for item in occurrences}
-    protected = protected_cycles(d, occurrences)
+    protected = protected_cycles(d, occurrences, today(user))
     created = 0
     for scheduled in occurrence_dates(d, through):
         if scheduled.isoformat() in existing or cycle_bucket(d, scheduled) in protected:
@@ -114,7 +115,7 @@ def revise_recurrence(db, user, recurrence, changes):
     occurrences = [
         item for item in rows(db, user, "transaction") if item.data["recurrence_id"] == str(recurrence.id)
     ]
-    protected = protected_cycles(rule, occurrences)
+    protected = protected_cycles(rule, occurrences, today(user))
     valid = {
         value.isoformat()
         for value in occurrence_dates(rule, horizon)

@@ -419,3 +419,37 @@ def test_frequency_interval_cycle_buckets(frequency, interval, first, same, next
     rule = {"start_date": "2026-09-03", "frequency": frequency, "interval": interval}
     assert cycle_bucket(rule, date.fromisoformat(first)) == cycle_bucket(rule, date.fromisoformat(same))
     assert cycle_bucket(rule, date.fromisoformat(first)) != cycle_bucket(rule, date.fromisoformat(next_cycle))
+
+
+@pytest.mark.parametrize("edit_day", [3, 4])
+def test_schedule_edit_preserves_retained_planned_current_cycle_without_duplicate(client, frozen, edit_day):
+    h = demo(client)
+    rule = recurring(client, h)
+    initial = occurrences(client, h, rule)
+    september = next(item for item in initial if item["date"] == "2026-09-03")
+    october = next(item for item in initial if item["date"] == "2026-10-03")
+    frozen[0] = datetime(2026, 9, edit_day, 10 if edit_day == 4 else 12, tzinfo=UTC)
+    changed = patch(client, h, "/recurrences/" + rule["id"], {"version": rule["version"], "day_of_month": 5})
+    assert changed.status_code == 200, changed.text
+    actual = occurrences(client, h, rule)
+    retained = next(item for item in actual if item["id"] == september["id"])
+    assert {key: value for key, value in retained.items() if key != "is_overdue"} == {
+        key: value for key, value in september.items() if key != "is_overdue"
+    }
+    assert retained["is_overdue"] is (edit_day == 4)
+    september_planned = [
+        item
+        for item in actual
+        if item["status"] == "planned" and item["scheduled_date"].startswith("2026-09")
+    ]
+    assert [item["id"] for item in september_planned] == [september["id"]]
+    assert next(item for item in actual if item["id"] == october["id"])["status"] == "cancelled"
+    assert [
+        item["date"]
+        for item in actual
+        if item["status"] == "planned" and item["scheduled_date"].startswith("2026-10")
+    ] == ["2026-10-05"]
+    assert (
+        post(client, h, "/recurrences/generate", {"through_date": rule["generated_through"]})["created"] == 0
+    )
+    assert occurrences(client, h, rule) == actual
