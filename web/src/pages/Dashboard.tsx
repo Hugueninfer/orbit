@@ -290,40 +290,48 @@ export default function Dashboard() {
               Receitas e despesas realizadas nos últimos 7 dias
             </p>
             <div className="chart">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={chart} barGap={4}>
-                  <CartesianGrid vertical={false} stroke="#25365366" />
-                  <XAxis
-                    dataKey="day"
-                    axisLine={false}
-                    tickLine={false}
-                    tick={{ fill: "#969cac", fontSize: 10 }}
-                  />
-                  <YAxis hide />
-                  <Tooltip
-                    contentStyle={{
-                      background: "#16202f",
-                      border: "1px solid #253653",
-                      borderRadius: 8,
-                    }}
-                    formatter={(v) => money(Number(v) * 100)}
-                  />
-                  <Bar
-                    name="Entradas"
-                    dataKey="income"
-                    fill="#44e2cd"
-                    radius={[4, 4, 0, 0]}
-                    maxBarSize={16}
-                  />
-                  <Bar
-                    name="Saídas"
-                    dataKey="expense"
-                    fill="#7692ff"
-                    radius={[4, 4, 0, 0]}
-                    maxBarSize={16}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
+              {tx.error ? (
+                <ErrorState error={tx.error} retry={() => tx.refetch()} />
+              ) : tx.isLoading ? (
+                <Loading />
+              ) : (
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={chart} barGap={4}>
+                    <CartesianGrid vertical={false} stroke="#25365366" />
+                    <XAxis
+                      dataKey="day"
+                      axisLine={false}
+                      tickLine={false}
+                      tick={{ fill: "#969cac", fontSize: 10 }}
+                    />
+                    <YAxis hide />
+                    <Tooltip
+                      contentStyle={{
+                        background: "#16202f",
+                        border: "1px solid #253653",
+                        borderRadius: 8,
+                      }}
+                      formatter={(v) => money(Number(v) * 100)}
+                    />
+                    <Bar
+                      isAnimationActive={false}
+                      name="Entradas"
+                      dataKey="income"
+                      fill="#44e2cd"
+                      radius={[4, 4, 0, 0]}
+                      maxBarSize={16}
+                    />
+                    <Bar
+                      isAnimationActive={false}
+                      name="Saídas"
+                      dataKey="expense"
+                      fill="#7692ff"
+                      radius={[4, 4, 0, 0]}
+                      maxBarSize={16}
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              )}
             </div>
             <div
               className="actions mono muted"

@@ -1,0 +1,1384 @@
+ORBIT
+Personal Operations Hub
+Especificação de produto, arquitetura, tecnologia, regras de negócio e roadmap de implementação
+ 
+Documento preparado para
+Pedro Huguenin
+Projeto de portfólio full-stack internacional · Python/FastAPI · React/TypeScript · PostgreSQL
+Versão 1.1  ·  2 de setembro de 2026
+
+Controle do documento
+Campo
+Valor
+Título de trabalho
+Orbit — Personal Operations Hub
+Status
+Especificação revisada: IA limitada à captura de despesas por áudio via Telegram
+Objetivo
+Orientar produto, implementação e apresentação de portfólio
+Arquitetura proposta
+Monólito modular com API REST e SPA separada
+Público técnico
+Recrutadores, tech leads, avaliadores de código e o próprio autor
+Regra de evolução
+Decisões relevantes devem ser registradas como Architecture Decision Records (ADRs)
+
+Premissa principal
+“Melhores práticas” não significam usar o maior número de tecnologias. Para um portfólio forte, a escolha correta é demonstrar profundidade de domínio, decisões justificadas, testes, segurança, observabilidade e entrega — evitando microsserviços, event sourcing ou filas antes de existir uma necessidade real.
+
+Sumário
+No Word, pressione Ctrl+A e F9 para atualizar o sumário e os números de página.
+Estrutura principal: visão e posicionamento; arquitetura e stack; padrões transversais; módulos de tarefas, hábitos, finanças, treinos e dashboard; banco e API; frontend e backend; segurança, testes, observabilidade e DevOps; roadmap; integração de despesas por áudio no Telegram; apresentação de portfólio; anexos técnicos.
+
+1. Resumo executivo
+Orbit será uma plataforma pessoal de operações que reúne tarefas, hábitos, finanças e treinos em uma única experiência. Embora o produto seja de uso individual, a solução deve nascer multiusuário, com isolamento rigoroso de dados, para demonstrar fundamentos de SaaS, segurança por objeto e arquitetura escalável sem introduzir microsserviços prematuramente.
+A recomendação é construir uma API em Python com FastAPI, PostgreSQL e SQLAlchemy 2, consumida por uma aplicação React com TypeScript e Vite. A combinação é coerente com o objetivo de mostrar versatilidade além de PHP/Laravel, preservando sinais profissionais já relevantes: APIs REST, modelagem relacional, Docker, CI/CD, React, testes e ownership ponta a ponta. FastAPI gera OpenAPI a partir de tipagem Python e o ecossistema atual mostra forte interesse no framework; React continua oferecendo o sinal de mercado mais amplo entre React e Svelte para vagas full-stack [R1–R6].
+Decisão
+Escolha recomendada
+Motivo de portfólio
+Frontend
+React + TypeScript + Vite
+Maior reconhecimento de mercado; separação clara da REST API; ecossistema amplo para dashboard e PWA.
+Backend
+Python 3.14 + FastAPI
+API-first, tipagem, validação, OpenAPI e forte sinal para vagas Python/Applied AI.
+Persistência
+PostgreSQL 18 + SQLAlchemy 2 + Alembic
+Transações e constraints adequadas ao domínio financeiro; ORM explícito e migrações versionadas.
+Arquitetura
+Monólito modular + DDD pragmático
+Demonstra desenho de fronteiras sem complexidade operacional artificial.
+Autenticação
+OIDC/OAuth com PKCE; Keycloak local
+Evita reinventar autenticação e demonstra integração corporativa e validação de tokens.
+Entrega
+Docker Compose + GitHub Actions + Terraform de referência
+Reprodutibilidade local, pipeline auditável e conhecimento de cloud/IaC.
+Qualidade
+pytest, Testcontainers, Vitest, Playwright, Ruff, mypy
+Evidencia testes reais contra PostgreSQL, tipagem e automação de qualidade.
+Observabilidade
+Logs estruturados + OpenTelemetry
+Mostra preocupação com operação, diagnóstico e correlação de requisições.
+
+Sequência recomendada
+Não comece desenhando todos os módulos nem todas as tabelas. Entregue fatias verticais completas: fundação → identidade → tarefas → hábitos → finanças → treinos → dashboard → hardening → bot Telegram. Cada fatia precisa conter migration, regra de domínio, endpoint, tela ou canal de entrada, testes, telemetria e documentação.
+
+1.1 O que um avaliador deve enxergar
+Capacidade de transformar requisitos vagos em regras de negócio verificáveis.
+Domínio de Python moderno, tipagem, async I/O e desenho de APIs REST.
+Modelagem relacional consistente, transações, índices, constraints e migrações.
+Separação entre estado do servidor e estado de interface no React.
+Estratégia de testes que valida banco real, contratos e fluxos ponta a ponta.
+Segurança por objeto, autenticação moderna, idempotência e auditoria.
+Capacidade de explicar trade-offs — inclusive tecnologias deliberadamente não utilizadas.
+Entrega executável por Docker, CI/CD, observabilidade e documentação em inglês.
+
+2. Visão de produto e limites
+2.1 Problema a resolver
+Pessoas que organizam tarefas, hábitos, finanças e treinos em ferramentas distintas perdem contexto e não conseguem enxergar o dia ou o mês como um sistema único. Orbit centraliza planejamento, execução e histórico, permitindo responder perguntas como: “o que preciso fazer hoje?”, “quais hábitos estão pendentes?”, “quanto da próxima fatura já está comprometido?” e “qual foi minha última carga neste exercício?”.
+2.2 Persona principal
+Aspecto
+Descrição
+Perfil
+Profissional que gerencia objetivos pessoais, despesas e rotina de academia.
+Comportamento
+Usa desktop para planejamento e celular durante o dia e o treino.
+Necessidade
+Registrar rapidamente, revisar histórico e confiar nos cálculos.
+Risco de abandono
+Fluxos lentos, excesso de campos obrigatórios, dados financeiros inconsistentes e falta de experiência mobile.
+
+2.3 Objetivos do MVP
+Autenticar usuários e isolar integralmente os dados por proprietário.
+Criar, priorizar, ordenar e concluir tarefas.
+Configurar hábitos, registrar check-ins e calcular aderência/streaks.
+Controlar receitas, despesas, contas, cartões, compras parceladas, faturas e recorrências.
+Criar rotinas de treino, iniciar sessões, registrar séries e consultar a execução anterior.
+Compor uma dashboard diária e uma visão financeira mensal.
+Disponibilizar API documentada, testes automatizados e deploy demonstrável.
+2.4 Fora do MVP
+Integração automática com bancos, Open Finance, corretoras ou cartões reais.
+Contabilidade fiscal, emissão de notas, conciliação bancária ou recomendação financeira.
+Rede social, ranking, compartilhamento público de treinos ou colaboração em tempo real.
+Nutrição, contagem de calorias, agenda médica ou dados biométricos sensíveis.
+Aplicativo nativo; a evolução natural é uma PWA mobile-first.
+Microsserviços, Kafka, Kubernetes ou event sourcing sem necessidade comprovada.
+Qualquer recurso de IA além da captura de despesas por áudio no Telegram: assistente geral, consultas, resumos, sugestões de treino, comandos para tarefas/hábitos, RAG ou automações abertas.
+2.5 Critério de sucesso do produto
+Área
+Indicador verificável
+Usabilidade
+O usuário registra uma tarefa, um check-in, uma compra e uma série de treino sem sair do contexto do módulo.
+Confiabilidade
+Cálculos de parcelas, datas de fatura e streaks possuem testes de borda e não usam ponto flutuante.
+Performance
+Endpoints principais atendem a um orçamento definido e medido; não declarar métricas antes de medi-las.
+Segurança
+Nenhum endpoint retorna ou altera objeto de outro usuário, mesmo com UUID válido conhecido.
+Portfólio
+Repositório público reproduzível, documentação em inglês, demo, ADRs, OpenAPI e pipeline verde.
+Integração
+Uma nota de voz financeira válida gera exatamente um lançamento, enquanto entradas ambíguas não criam registros parciais.
+
+
+3. React ou Svelte: decisão de frontend
+Svelte oferece excelente experiência de desenvolvimento e menos cerimônia, mas React é a escolha mais inteligente para este portfólio. O objetivo não é apenas construir a aplicação; é maximizar legibilidade para recrutadores e alinhamento com vagas full-stack internacionais. A pesquisa Stack Overflow 2025 mantém React como tecnologia central no movimento de desenvolvedores que desejam ampliar atuação full-stack, enquanto o ecossistema oficial de React, TypeScript, Vite e TanStack cobre bem uma SPA orientada a dados [R1, R4–R6].
+Critério
+React + TypeScript
+Svelte
+Conclusão
+Sinal no mercado
+Muito alto; aparece com frequência em vagas e equipes existentes.
+Menor; forte satisfação, porém menos vagas.
+React
+Ecossistema de dashboard
+Muito amplo: query, forms, charts, testing e design systems.
+Bom, mas menor e com menos padrões amplamente reconhecidos.
+React
+Curva e produtividade
+Mais decisões e bibliotecas; conhecimento transferível.
+Sintaxe simples e excelente produtividade.
+Svelte
+Integração API-first
+Excelente com TanStack Query e clientes OpenAPI.
+Também excelente.
+Empate
+Valor de avaliação
+Avaliador entende rapidamente as escolhas e padrões.
+Pode deslocar a conversa para o framework em vez do domínio.
+React
+Risco do projeto
+Baixo; documentação, exemplos e ferramentas abundantes.
+Moderado; menor base de exemplos corporativos.
+React
+
+Decisão
+Usar React + TypeScript com Vite. Não usar Next.js no MVP: a aplicação é autenticada, tem pouco valor de SEO e já possui um backend REST dedicado. Vite deixa essa fronteira explícita e reduz complexidade acidental.
+
+3.1 Estado no frontend
+TanStack Query para estado remoto: cache, invalidação, sincronização, paginação e mutations.
+React Hook Form + Zod para formulários e validação de experiência; o backend continua sendo a autoridade final.
+Context apenas para autenticação, tema e preferências globais pequenas.
+Não usar Redux por padrão. Introduzir Zustand ou Redux Toolkit somente após um caso concreto de estado cliente compartilhado e complexo.
+Gerar tipos/cliente TypeScript a partir do OpenAPI para reduzir divergência entre backend e frontend.
+
+4. Estratégia arquitetural
+4.1 Monólito modular
+Orbit deve ser implantado inicialmente como uma única API e um único banco PostgreSQL, mas o código será dividido em módulos de domínio com dependências explícitas. Essa solução preserva transações locais, simplifica desenvolvimento e deploy e, ao mesmo tempo, demonstra arquitetura. O custo operacional de microsserviços não é justificável para uma pessoa desenvolvendo um produto de portfólio.
+
+Figura 1 — Arquitetura de containers proposta.
+4.2 Fronteiras dos módulos
+
+Figura 2 — Context map simplificado. O dashboard compõe leituras; módulos não alteram tabelas uns dos outros diretamente.
+Cada módulo possui camada de domínio, aplicação, infraestrutura e API. A regra de dependência é de fora para dentro: FastAPI e SQLAlchemy conhecem a aplicação; o domínio não conhece o framework. Essa separação deve ser pragmática: entidades simples não precisam de classes artificiais, e abstrações só entram quando protegem uma regra ou uma fronteira real.
+4.3 Princípios de desenho
+Princípio
+Aplicação no projeto
+Vertical slices
+Cada funcionalidade atravessa banco, domínio, API, tela, testes e telemetria antes da próxima.
+DDD pragmático
+Agregados e value objects apenas onde há invariantes: Money, compra parcelada, fatura, rotina e sessão.
+CQS
+Commands alteram estado; queries retornam DTOs. Não adotar CQRS distribuído.
+Transação por caso de uso
+O application service abre e fecha a transação; repositórios não realizam commit oculto.
+Contratos explícitos
+OpenAPI, schemas Pydantic, erros RFC 9457 e tipos gerados no frontend.
+Evolução orientada por evidência
+Redis, worker, cache e materialized views entram quando uma necessidade mensurável aparecer.
+
+4.4 O que não fazer
+Criar um “BaseRepository” genérico com dezenas de métodos que esconda SQL e regras de consulta.
+Permitir que rotas FastAPI executem lógica financeira ou façam commit diretamente.
+Compartilhar modelos ORM como schemas de entrada/saída da API.
+Criar dependências cíclicas entre módulos; usar interfaces de aplicação ou eventos internos.
+Extrair um microsserviço apenas para “mostrar conhecimento”. A decisão deve nascer de escala, ownership ou isolamento operacional real.
+5. Stack tecnológica recomendada
+A baseline indicada em setembro de 2026 é Python 3.14 e PostgreSQL 18; versões de bibliotecas devem ser fixadas no lockfile no momento do bootstrap e atualizadas por automação controlada. Python 3.14 é a linha estável atual e Node 24 está em LTS [R2, R16].
+Camada
+Tecnologia
+Uso e justificativa
+Runtime backend
+Python 3.14
+Tipagem moderna, ecossistema de API e alinhamento com aplicações de IA.
+API
+FastAPI + Uvicorn
+REST, dependency injection, validação e OpenAPI automático [R3].
+Schemas/config
+Pydantic + pydantic-settings
+Validação de fronteira e configuração tipada.
+ORM/SQL
+SQLAlchemy 2 + psycopg 3
+Unit of Work explícito, queries tipadas e acesso PostgreSQL.
+Migrações
+Alembic
+Schema versionado; autogenerate sempre revisado antes do commit [R9].
+Banco
+PostgreSQL 18
+Transações, constraints, JSONB pontual, índices e tipos numéricos/data adequados [R7].
+Dependências Python
+uv
+pyproject.toml, lock reprodutível, workspaces e execução rápida [R10].
+Qualidade Python
+Ruff + mypy --strict
+Lint/format e verificação estática.
+Testes backend
+pytest + pytest-asyncio + Hypothesis + Testcontainers
+Unidade, propriedades e integração com Postgres real [R14, R15].
+Runtime frontend
+Node 24 LTS + pnpm
+Linha LTS e workspace eficiente [R16, R17].
+UI
+React + TypeScript + Vite
+SPA separada, HMR e build otimizado [R4, R5].
+Dados frontend
+TanStack Query
+Cache e sincronização de estado remoto [R6].
+Forms
+React Hook Form + Zod
+Formulários tipados, rápidos e com mensagens coerentes.
+Componentes
+Tailwind CSS + shadcn/ui
+Design consistente sem esconder composição e acessibilidade.
+Gráficos
+Recharts
+Curva pequena para dashboard; abstrair somente visualizações reutilizadas.
+Testes frontend
+Vitest + Testing Library + MSW + Playwright
+Componentes, mocks de rede e jornadas reais [R15].
+Contrato
+openapi-typescript + openapi-fetch
+Tipos e cliente gerados da especificação publicada.
+Identidade
+Keycloak local + OIDC provider gerenciado em produção
+Authorization Code + PKCE; API valida issuer, audience, assinatura e expiração.
+Ambiente local
+Docker Compose
+Stack multi-container reproduzível [R18].
+CI/CD
+GitHub Actions
+Quality gates, builds, migrations, preview e deploy.
+IaC
+Terraform
+Arquitetura AWS de referência versionada.
+Observabilidade
+OpenTelemetry + logs JSON
+Correlação de logs, métricas e traces [R13].
+
+5.1 Tecnologias condicionais
+Tecnologia
+Entrar quando
+Não usar para
+Redis
+Cache realmente necessário, rate limiting distribuído ou broker do worker da integração Telegram.
+Guardar fonte de verdade financeira.
+Celery + Redis
+No marco da integração Telegram, para processar download, conversão, transcrição, extração e retries fora do webhook.
+Gerar parcelas no momento da compra; isso continua sendo uma transação síncrona do módulo Finance.
+pgvector
+Não previsto no escopo atual; reconsiderar apenas se surgirem documentos ou notas com busca semântica real.
+Interpretar mensagens de despesas ou consultar dados estruturados do Orbit.
+Materialized views
+Agregações mensais se tornarem caras e medição confirmar gargalo.
+Substituir índices e queries bem desenhadas.
+Kubernetes
+Somente como laboratório isolado ou quando houver múltiplos serviços e necessidade operacional.
+Hospedar o MVP.
+
+6. Estrutura do repositório
+Um monorepo facilita revisão, alterações de contrato e execução do projeto. Os ecossistemas continuam independentes: uv para Python e pnpm para TypeScript.
+Estrutura inicial do monorepo
+orbit/├── apps/│   ├── api/│   │   ├── pyproject.toml│   │   ├── src/orbit_api/│   │   │   ├── main.py│   │   │   ├── core/│   │   │   ├── modules/│   │   │   │   ├── identity/│   │   │   │   ├── tasks/│   │   │   │   ├── habits/│   │   │   │   ├── finance/│   │   │   │   ├── workouts/│   │   │   │   └── dashboard/│   │   │   ├── integrations/│   │   │   │   └── telegram/│   │   │   ├── workers/│   │   │   └── infrastructure/│   │   └── tests/│   └── web/│       ├── package.json│       └── src/│           ├── app/│           ├── routes/│           ├── features/│           └── shared/├── packages/│   └── api-client/          # gerado do OpenAPI├── docs/│   ├── adr/│   ├── architecture/│   ├── product/│   └── api/├── infra/│   ├── compose/│   └── terraform/├── scripts/├── .github/workflows/├── compose.yaml├── Taskfile.yml└── README.md
+
+6.1 Estrutura de um módulo backend
+modules/finance/├── domain/│   ├── entities.py│   ├── value_objects.py│   ├── policies.py│   ├── events.py│   └── errors.py├── application/│   ├── commands/│   ├── queries/│   ├── dto.py│   └── ports.py├── infrastructure/│   ├── models.py│   ├── repositories.py│   └── query_services.py└── api/    ├── routes.py    ├── schemas.py    └── dependencies.py
+
+A camada domain deve ser importável em testes sem FastAPI, SQLAlchemy ou rede. A camada application coordena casos de uso e transações. Infrastructure implementa ports. API converte HTTP em comandos/queries e mapeia erros de domínio para Problem Details.
+6.2 Estrutura por feature no frontend
+src/├── app/                     # providers, router, query client, telemetry├── routes/                  # composição de páginas├── features/│   ├── tasks/│   │   ├── api/│   │   ├── components/│   │   ├── hooks/│   │   ├── schemas/│   │   └── pages/│   ├── habits/│   ├── finance/│   └── workouts/└── shared/    ├── api/    ├── ui/    ├── lib/    └── types/
+
+7. Padrões transversais de domínio e API
+7.1 Identificadores e ownership
+Usar UUID gerado pela aplicação para recursos públicos; nunca expor IDs sequenciais como autorização implícita.
+Toda tabela de domínio pertencente ao usuário contém user_id ou é alcançável por uma relação que permita verificar ownership.
+Todo repositório recebe o user_id no método; “buscar por id” sem proprietário não deve existir na camada de aplicação.
+Índices compostos começam por user_id para consultas dominantes e isolamento lógico.
+RLS do PostgreSQL pode ser introduzido como defesa adicional na fase de hardening, sem substituir testes de autorização.
+7.2 Dinheiro
+Nunca utilizar float/double para valores monetários.
+Persistir amount_minor como BIGINT e currency como código ISO 4217. Em Python, expor um value object Money e usar Decimal apenas nas fronteiras de conversão.
+O sinal não fica no valor: amount_minor é não negativo; tipo/direção define entrada, saída ou transferência.
+Operações entre moedas ficam fora do MVP; transferências exigem a mesma currency.
+Somas e rateios devem ser testados por propriedade: a soma das parcelas sempre precisa ser exatamente igual ao total.
+7.3 Datas, horas e timezone
+Timestamps técnicos em UTC com timezone; preferências do usuário armazenam um timezone IANA, por exemplo America/Sao_Paulo.
+Datas de competência, vencimento e check-in são DATE local, não timestamp UTC.
+Mudança de timezone afeta cálculos futuros; datas históricas locais já registradas não são reescritas.
+Injetar Clock na aplicação para testes determinísticos de “hoje”, fechamento, vencimento e streak.
+7.4 REST e contrato
+Aspecto
+Padrão
+Base path
+/api/v1; nova versão apenas para quebra incompatível.
+Formato
+JSON UTF-8; nomes em snake_case no backend e cliente gerado pode adaptar convenção se necessário.
+Erros
+application/problem+json conforme RFC 9457, com type, title, status, detail, instance, code e errors [R11].
+Criação
+201 Created e Location quando houver recurso persistido.
+Atualização
+PATCH para alteração parcial; 409 para conflito de versão/estado.
+Exclusão
+204 quando efetiva; domínios auditáveis usam archive/cancel/refund em vez de apagar história.
+Paginação
+Cursor opaco em históricos; limit com teto; total apenas quando barato ou necessário.
+Filtros
+Parâmetros explícitos, whitelists de ordenação e validação de intervalos.
+Idempotência
+Idempotency-Key em compras, pagamentos, transferências e sync offline.
+Concorrência
+Campo version e If-Match/expected_version em agregados sensíveis.
+Correlação
+X-Request-ID aceito/gerado e devolvido na resposta.
+
+Exemplo de erro padronizado
+{  "type": "https://docs.orbit.example/problems/installment-total-mismatch",  "title": "Installment values do not match the purchase total",  "status": 422,  "detail": "12 installments of BRL 75.00 total BRL 900.00, not BRL 1,500.00.",  "instance": "/api/v1/finance/card-purchases",  "code": "installment_total_mismatch",  "errors": [    {"pointer": "/installment_amount", "detail": "Expected BRL 125.00."}  ]}
+
+7.5 Auditoria, arquivamento e imutabilidade
+Audit events registram actor, ação, entidade, timestamp, request_id e mudanças relevantes; não registrar segredos ou token.
+Capturas do Telegram registram update_id, estágio de processamento, payload extraído, lançamento resultante e correções; o áudio bruto é descartado após o processamento e nunca é gravado em logs.
+Dados financeiros que já impactaram uma fatura fechada não são apagados: usar ajuste, cancelamento ou estorno.
+Templates de treino podem mudar, mas sessões concluídas preservam snapshots do nome, posição, descanso e metas.
+Tarefas e hábitos podem ser arquivados para manter histórico sem poluir listas ativas.
+8. Identity & Access
+8.1 Estratégia de autenticação
+Não implementar armazenamento de senha e recuperação de conta do zero. Use OpenID Connect com Authorization Code + PKCE. No ambiente local, Keycloak sobe pelo Compose; em produção, o provedor pode ser Cognito, Auth0 ou outro compatível. O frontend recebe tokens pelo fluxo OIDC e a API valida assinatura via JWKS, issuer, audience, expiração e scopes.
+Componente
+Responsabilidade
+Provedor OIDC
+Login, MFA opcional, recuperação, sessões e emissão de tokens.
+React
+Iniciar PKCE, manter estado autenticado, renovar conforme SDK e nunca persistir token em localStorage sem necessidade.
+FastAPI
+Validar JWT, converter sub em user profile interno e aplicar autorização por recurso.
+PostgreSQL
+Persistir user_profile, preferências e dados; não persistir senha do OIDC.
+
+8.2 Autorização
+MVP possui role user; role admin é apenas operacional e não deve permitir leitura irrestrita de dados pessoais pela aplicação.
+Autorização por objeto é obrigatória: possuir token válido não autoriza acessar qualquer UUID.
+Scopes podem separar read/write em futuras integrações, mas não precisam criar complexidade na primeira interface humana.
+Endpoints de exportação e exclusão da conta exigem reautenticação ou confirmação forte.
+8.3 Perfil e preferências
+Campo
+Regra
+timezone
+IANA timezone; obrigatório após onboarding.
+default_currency
+BRL inicialmente; preparado para ISO 4217.
+locale
+pt-BR no produto; documentação e nomes técnicos em inglês.
+week_starts_on
+Segunda-feira por padrão; usado por hábitos semanais e dashboard.
+weight_unit
+kg no Brasil; conversão de apresentação, sem alterar histórico bruto.
+
+9. Módulo de tarefas
+9.1 Entidades
+Entidade
+Responsabilidade
+TaskList
+Agrupar tarefas por contexto/projeto; “Inbox” criada automaticamente.
+Task
+Título, descrição, status, prioridade, datas, posição, estimativa e versão.
+Subtask
+Checklist simples pertencente a uma tarefa; não possui subtarefas recursivas no MVP.
+Tag
+Classificação transversal opcional; ownership do usuário.
+
+9.2 Regras de negócio
+Título obrigatório entre 1 e 160 caracteres após trim.
+Status: todo, in_progress, done ou cancelled. done e cancelled são terminais para cálculo de atraso.
+Completar define completed_at; reabrir limpa completed_at e volta para todo ou in_progress conforme comando explícito.
+overdue é derivado quando due_at < agora e status não é terminal; não persistir esse boolean como fonte de verdade.
+Uma due date no passado é permitida para importação e planejamento atrasado; a interface deve sinalizar.
+Reordenar tarefas é uma operação em lote limitada à mesma lista e protegida por versão quando houver conflito.
+Arquivar remove das listas padrão, mas preserva histórico e auditoria.
+Recorrência e lembretes ficam para a fase 2, evitando misturar o motor de recorrências financeiras com tarefas cedo demais.
+9.3 API mínima
+Método
+Rota
+Finalidade
+GET
+/api/v1/task-lists
+Listar listas e contagens.
+POST
+/api/v1/task-lists
+Criar lista.
+GET
+/api/v1/tasks
+Filtrar por status, lista, prioridade, tag e intervalo.
+POST
+/api/v1/tasks
+Criar tarefa.
+GET
+/api/v1/tasks/{task_id}
+Detalhar tarefa e checklist.
+PATCH
+/api/v1/tasks/{task_id}
+Editar campos permitidos com expected_version.
+POST
+/api/v1/tasks/{task_id}/completion
+Concluir de forma idempotente.
+DELETE
+/api/v1/tasks/{task_id}/completion
+Reabrir.
+POST
+/api/v1/task-lists/{list_id}/reorder
+Reordenar IDs em lote.
+DELETE
+/api/v1/tasks/{task_id}
+Arquivar.
+
+9.4 Critérios de aceitação do primeiro slice
+Usuário A não visualiza nem altera tarefa do usuário B; coberto por teste de integração.
+Completar e reabrir são idempotentes e auditados.
+Página possui loading, empty, error e retry states.
+Filtro reflete URL para ser compartilhável e restaurado após reload.
+Navegação por teclado e labels acessíveis para criar/concluir tarefas.
+10. Módulo de hábitos
+10.1 Modelo de agenda
+Tipo
+Exemplo
+Regra de conclusão
+daily
+Beber água todos os dias
+Quantidade do dia local ≥ meta.
+weekdays
+Academia seg/ter/qui/sex
+Cada dia configurado é uma ocorrência agendada.
+times_per_week
+Ler 3 vezes por semana
+Soma de check-ins na semana ≥ meta semanal.
+
+10.2 Entidades
+Entidade
+Campos essenciais
+Habit
+name, description, schedule_type, target_quantity, unit, start_on, end_on, status.
+HabitSchedule
+weekdays, weekly_target ou regras específicas; validado conforme schedule_type.
+HabitCheckIn
+habit_id, local_date, quantity, note, source, created_at.
+
+10.3 Regras de streak e aderência
+Streak diário percorre apenas datas agendadas e concluídas; dias não agendados não quebram a sequência.
+Streak semanal mede semanas consecutivas que atingiram a meta; não deve fingir que são dias consecutivos.
+O dia atual não quebra streak antes do fim do dia local do usuário.
+Check-ins podem ser registrados em dias não agendados e aparecem como extra, mas não substituem uma ocorrência agendada de outro dia.
+A fonte de verdade são check-ins. current_streak pode ser cache recalculável, nunca o único registro.
+Editar check-in histórico dispara recálculo das métricas afetadas e gera auditoria.
+Para meta diária maior que 1, existe no máximo um registro por habit_id + local_date e a quantidade é incrementada/ajustada de forma atômica.
+10.4 API mínima
+Método
+Rota
+Finalidade
+GET
+/api/v1/habits
+Listar ativos e status no período.
+POST
+/api/v1/habits
+Criar hábito e agenda.
+PATCH
+/api/v1/habits/{habit_id}
+Editar apenas futuro quando a mudança altera agenda.
+POST
+/api/v1/habits/{habit_id}/check-ins
+Registrar ou incrementar check-in local.
+PATCH
+/api/v1/habits/{habit_id}/check-ins/{date}
+Ajustar quantidade/nota.
+DELETE
+/api/v1/habits/{habit_id}/check-ins/{date}
+Remover check-in e recalcular métricas.
+GET
+/api/v1/habits/{habit_id}/stats
+Aderência, streak atual/máximo e calendário.
+
+10.5 Casos de teste obrigatórios
+Mudança de mês, ano bissexto e horário de verão em timezones que o utilizam.
+Hábito de segunda/quarta não quebra no intervalo de terça-feira.
+Meta semanal atravessando virada de ano e configuração de início da semana.
+Check-in duplicado é idempotente quando usa a mesma chave da ação; sem chave, incrementa conforme contrato explícito.
+
+11. Módulo financeiro
+Módulo de maior risco
+Finanças exige invariantes, datas e relatórios claros. O objetivo do MVP não é replicar um banco, mas garantir que compras parceladas, faturas, recorrências e saldos sejam determinísticos e auditáveis.
+
+11.1 Conceitos do domínio
+Conceito
+Definição no Orbit
+Conta financeira
+Caixa ou conta bancária em que receitas/despesas são efetivamente movimentadas.
+Cartão de crédito
+Instrumento com dia de fechamento, dia de vencimento, limite opcional e conta padrão de pagamento.
+Transação
+Movimento de caixa planejado ou realizado: income, expense, transfer ou invoice_payment.
+Compra no cartão
+Agregado que gera N parcelas; não é apagado depois de impactar fatura fechada.
+Parcela
+Obrigação vinculada a uma fatura específica e a uma sequência da compra.
+Fatura
+Ciclo de cartão com fechamento, vencimento, parcelas, ajustes e pagamentos.
+Regra recorrente
+Template que gera ocorrências futuras de salário, renda extra ou despesa fixa.
+
+
+Figura 3 — Modelo relacional de referência para o módulo financeiro.
+11.2 Bases de relatório: competência e caixa
+O produto deve deixar explícito qual visão está sendo exibida. Na visão de competência, uma parcela aparece no mês da fatura a que pertence, representando consumo/compromisso. Na visão de caixa, o saldo bancário muda quando a fatura é paga. O pagamento da fatura não pode ser contado novamente como nova despesa na visão de competência; ele é a liquidação de uma obrigação já reconhecida.
+Evento
+Competência
+Caixa
+Compra parcelada
+Reconhece cada parcela no respectivo ciclo.
+Não movimenta conta bancária.
+Pagamento de fatura
+Liquida obrigação; não soma despesa novamente.
+Sai da conta escolhida na data do pagamento.
+Despesa no débito
+Reconhece no período definido.
+Movimenta a conta ao ser postada.
+Salário previsto
+Entra como planned no período.
+Só compõe saldo realizado quando posted.
+
+11.3 Compras parceladas
+Entrada canônica: total_amount + installment_count. O sistema calcula as parcelas; installment_amount manual é opcional e precisa ser consistente.
+R$ 1.500,00 em 12 parcelas gera 12 × R$ 125,00. Informar R$ 75,00 produziria R$ 900,00 e deve resultar em 422 ou em remoção do campo manual.
+Rateio em centavos: base = total // count; o resto é absorvido pela última parcela. Exemplo: R$ 10,00 / 3 = R$ 3,33 + R$ 3,33 + R$ 3,34.
+A soma das parcelas é uma constraint de domínio validada antes do commit e coberta por property-based tests.
+Compra e todas as parcelas são criadas em uma única transação de banco; falha parcial não é permitida.
+Repetir o POST com a mesma Idempotency-Key retorna o mesmo recurso, sem duplicar parcelas.
+11.4 Algoritmo de ciclo da fatura
+Calcular a primeira closing_date igual ao próximo dia de fechamento que seja maior ou igual à purchase_date.
+Se o dia configurado não existir no mês, usar o último dia do mês; a interface deve informar essa regra.
+A due_date é a primeira ocorrência do due_day estritamente posterior à closing_date: pode ser no mesmo mês ou no mês seguinte.
+Compra em ou antes do fechamento entra no ciclo calculado; compra depois entra no próximo. Essa convenção determinística é documentada, pois bancos reais podem variar no dia exato.
+Cada parcela seguinte avança um ciclo mensal de fechamento/vencimento, não apenas “30 dias”.
+A fatura é criada de forma lazy/upsert para o par credit_card_id + closing_date, protegido por unique constraint.
+Pseudocódigo do rateio exato
+def allocate_installments(total_minor: int, count: int) -> list[int]:    if total_minor <= 0 or count <= 0:        raise InvalidInstallmentPlan()    base, remainder = divmod(total_minor, count)    amounts = [base] * count    amounts[-1] += remainder    assert sum(amounts) == total_minor    return amounts
+
+11.5 Fechamento, alteração e estorno
+Situação
+Regra
+Fatura open
+Parcelas e ajustes podem mudar por eventos válidos; total é derivado/recalculado.
+Fatura closed
+Parcelas monetárias ficam imutáveis; correções geram adjustment/refund.
+Fatura paid
+Pagamento(s) somam valor liquidado; alteração exige evento de reversão auditado.
+Compra sem ciclo fechado
+Pode ser editada; o plano futuro é regenerado atomicamente.
+Compra com parcela fechada/paga
+Não editar total, contagem ou data; criar estorno/ajuste e manter trilha.
+Exclusão
+Somente cancelamento lógico antes do impacto; depois, estorno.
+
+11.6 Receitas, salário e recorrências
+Regra recorrente armazena frequência, intervalo, data inicial, data final opcional, template de valor, conta e categoria.
+Ao criar, gerar ocorrências planned para um horizonte configurado, por exemplo 12 meses; job posterior estende o horizonte.
+Marcar uma ocorrência como posted representa recebimento/pagamento real e permite ajustar valor sem alterar o template.
+Editar regra afeta apenas ocorrências futuras planned; histórico posted não muda.
+Pausar regra cancela a geração futura, não apaga ocorrências já realizadas.
+Receita extra pode ser avulsa ou outra recorrência; relatórios distinguem planned, overdue, posted e cancelled.
+11.7 Transferências e saldos
+Transferência cria duas pernas ligadas e atômicas: saída na origem e entrada no destino.
+Transferência não conta como receita nem despesa em relatórios consolidados.
+No MVP, origem e destino usam a mesma moeda; câmbio é não objetivo.
+Saldo atual = opening balance + movimentos posted. Saldo projetado adiciona planned até a data consultada.
+Não armazenar saldo mutável sem necessidade; se materializado no futuro, manter mecanismo de reconciliação.
+11.8 API mínima
+Método
+Rota
+Finalidade
+GET/POST
+/api/v1/finance/accounts
+Listar/criar contas financeiras.
+GET/POST
+/api/v1/finance/credit-cards
+Listar/criar cartões e ciclos.
+GET/POST
+/api/v1/finance/categories
+Categorias personalizadas.
+GET/POST
+/api/v1/finance/transactions
+Movimentos avulsos e filtros.
+POST
+/api/v1/finance/transfers
+Criar transferência atômica.
+POST
+/api/v1/finance/card-purchases
+Criar compra e plano parcelado idempotente.
+GET
+/api/v1/finance/card-purchases/{id}
+Detalhar compra e parcelas.
+GET
+/api/v1/finance/credit-cards/{id}/invoices
+Listar faturas por intervalo/status.
+GET
+/api/v1/finance/invoices/{id}
+Detalhar parcelas, ajustes e pagamentos.
+POST
+/api/v1/finance/invoices/{id}/payments
+Registrar pagamento total ou parcial.
+POST
+/api/v1/finance/card-purchases/{id}/refunds
+Criar estorno auditável.
+GET/POST
+/api/v1/finance/recurring-rules
+Gerenciar templates de recorrência.
+GET
+/api/v1/finance/cash-flow
+Saldos e movimentos por base/período.
+GET
+/api/v1/finance/monthly-summary
+Receitas, despesas e compromissos do mês.
+
+Contrato de criação de compra parcelada
+POST /api/v1/finance/card-purchasesIdempotency-Key: 4ae15ed1-38e6-4bca-9628-8ca7d4cfb965{  "credit_card_id": "01991baf-...",  "description": "Notebook",  "purchased_on": "2026-09-02",  "total_amount": "1500.00",  "currency": "BRL",  "installment_count": 12,  "category_id": "01991bb0-..."}
+
+11.9 Constraints e índices financeiros
+CHECK amount_minor > 0; installment_count > 0; closing_day/due_day entre 1 e 31.
+UNIQUE (purchase_id, sequence) e sequence entre 1 e installment_count.
+UNIQUE (credit_card_id, closing_on) para faturas.
+UNIQUE (user_id, idempotency_key, operation_scope) para operações protegidas.
+Índices em (user_id, due_on, status), (user_id, posted_on), (credit_card_id, closing_on) e (invoice_id, status).
+Foreign keys restritivas; evitar cascade delete em faturas, parcelas e pagamentos.
+11.10 Testes de domínio prioritários
+Rateio de qualquer total positivo e quantidade válida preserva soma e diferença máxima de um centavo entre parcelas.
+Fechamento nos dias 28–31 em fevereiro e meses de 30 dias.
+Vencimento antes/depois do fechamento, incluindo virada de ano.
+POST duplicado com mesma chave não duplica compra, parcelas ou fatura.
+Concorrência criando a mesma fatura resulta em um único registro.
+Pagamento parcial, completo, excedente rejeitado e reversão.
+Relatório de competência não duplica despesa ao pagar fatura.
+12. Módulo de treinos
+12.1 Objetivo de experiência
+Durante o treino, a interface precisa reduzir atrito: abrir a rotina do dia, ver a execução anterior, registrar peso/repetições com poucos toques, iniciar descanso automaticamente e manter dados mesmo após refresh. O desktop é útil para montar rotinas; a sessão ativa deve ser mobile-first.
+
+Figura 4 — Modelo relacional de referência para rotinas, sessões e séries.
+12.2 Entidades e snapshots
+Entidade
+Responsabilidade
+Exercise
+Catálogo global + exercícios personalizados; grupo muscular, equipamento e instruções básicas.
+WorkoutRoutine
+Template nomeado, por exemplo Upper, Lower A ou Push.
+RoutineExercise
+Ordem, descanso padrão, notas e metas do exercício na rotina.
+RoutineSetTemplate
+Quantidade e tipo de séries, faixa de repetições e alvo opcional.
+WorkoutSession
+Execução com status draft/in_progress/completed/cancelled.
+SessionExercise
+Snapshot do exercício e parâmetros da rotina no início da sessão.
+WorkoutSet
+Carga, repetições, tipo, RPE/RIR opcional, conclusão e observação.
+PersonalRecord
+Cache/referência de recordes recalculáveis derivados de séries concluídas.
+
+12.3 Regras de sessão
+Iniciar uma sessão a partir de rotina copia ordem, nomes, descanso e template de séries; mudanças futuras na rotina não alteram o histórico.
+Por padrão, permitir apenas uma sessão in_progress por usuário; oferecer retomar ou cancelar antes de iniciar outra.
+Uma série concluída exige repetitions ≥ 0 e load ≥ 0; séries isométricas/tempo podem ser extensão posterior.
+Série de aquecimento, normal, drop set e falha são tipos explícitos; recordes ignoram aquecimento por padrão.
+Após concluir uma série, completed_at inicia o descanso. Em reload, o frontend calcula remaining = completed_at + rest_seconds − now.
+Finalizar sessão exige pelo menos uma série concluída; sessão vazia deve ser cancelada.
+Editar sessão concluída é permitido com auditoria e recálculo dos recordes afetados.
+Exclusão de exercício usado em histórico vira arquivamento; referências antigas permanecem válidas.
+12.4 Desempenho anterior
+Ao abrir um exercício na sessão, buscar a última sessão completed do mesmo usuário e exercício.
+Retornar séries ordenadas, carga, reps, tipo e data; opcionalmente restringir à mesma rotina por filtro.
+A API retorna previous_performance junto da sessão ou por endpoint dedicado para evitar N+1 no frontend.
+Não preencher automaticamente a série atual com a anterior sem deixar explícito; oferecer botão “copiar último treino”.
+12.5 Recordes
+Recorde
+Cálculo
+Heaviest load
+Maior carga concluída em série de trabalho.
+Most reps at load
+Maior número de repetições para uma carga normalizada.
+Estimated 1RM
+Métrica opcional com fórmula documentada; nunca apresentada como medição clínica.
+Volume
+Soma load × repetitions em séries elegíveis.
+
+12.6 API mínima
+Método
+Rota
+Finalidade
+GET/POST
+/api/v1/workouts/exercises
+Catálogo e exercícios personalizados.
+GET/POST
+/api/v1/workouts/routines
+Listar/criar rotinas.
+GET/PATCH
+/api/v1/workouts/routines/{id}
+Detalhar/editar template com versão.
+POST
+/api/v1/workouts/sessions
+Iniciar sessão a partir de rotina ou em branco.
+GET
+/api/v1/workouts/sessions/active
+Retomar sessão em andamento.
+GET
+/api/v1/workouts/sessions/{id}
+Sessão, snapshots e performance anterior.
+PATCH
+/api/v1/workouts/sessions/{id}/sets/{set_id}
+Salvar carga, reps e conclusão.
+POST
+/api/v1/workouts/sessions/{id}/finish
+Finalizar com expected_version.
+POST
+/api/v1/workouts/sessions/{id}/cancel
+Cancelar mantendo auditoria.
+GET
+/api/v1/workouts/exercises/{id}/history
+Histórico paginado e recordes.
+
+12.7 Evolução PWA/offline
+Offline é valioso na academia, mas deve entrar depois da versão online confiável. A evolução usa IndexedDB como outbox de mutations, IDs gerados no cliente, Idempotency-Key e sync ordenado. Conflitos de sessão usam version/expected_version e uma política explícita; “last write wins” silencioso não é adequado para séries.
+13. Dashboard e read models
+13.1 Dashboard de hoje
+Tarefas vencidas, de hoje e próximas.
+Hábitos agendados com progresso e streak atual.
+Treino sugerido, última sessão e sessão ativa.
+Saldo realizado e projetado; contas a vencer e próxima fatura.
+Ações rápidas para criar tarefa, registrar check-in, lançar gasto e iniciar treino.
+13.2 Dashboard mensal
+Receitas e despesas por base de caixa ou competência.
+Gastos por categoria e cartão.
+Faturas abertas/fechadas e compromissos futuros.
+Aderência aos hábitos e frequência de treinos.
+Tendências com períodos comparáveis, sem afirmações de causalidade.
+13.3 Arquitetura de leitura
+Dashboard é um módulo de composição. Ele pode consultar views/read models que unem dados de outros módulos, mas não executa alterações em tabelas alheias. No início, queries SQL otimizadas são suficientes; materialized views e cache só entram após medição.
+Endpoint
+Resposta otimizada para tela
+/api/v1/dashboard/today?date=YYYY-MM-DD
+Resumo diário em uma chamada, com seções e timestamps de atualização.
+/api/v1/dashboard/monthly?month=YYYY-MM&basis=accrual
+KPIs, séries para gráficos e breakdowns.
+/api/v1/dashboard/quick-actions
+Metadados e opções necessárias aos formulários rápidos.
+
+14. Banco de dados e persistência
+14.1 Convenções
+Nomes de tabelas e colunas em snake_case; plural consistente.
+created_at e updated_at em UTC; archived_at/cancelled_at apenas quando possuem semântica.
+version inteiro para optimistic locking em agregados concorrentes.
+Enums preferencialmente como VARCHAR + CHECK para migrações mais simples; enum nativo apenas com justificativa.
+JSONB somente para metadados variáveis/auditoria, não para substituir relações centrais.
+Migrations pequenas, reversíveis quando seguro e revisadas manualmente; autogenerate não é aprovação automática.
+14.2 Transações
+Caso de uso
+Limite transacional
+Criar compra parcelada
+Compra + N parcelas + upsert de faturas + idempotência.
+Transferência
+Duas pernas + vínculo + auditoria.
+Iniciar treino
+Sessão + snapshots + séries iniciais.
+Concluir série
+Atualização da série + versão da sessão; PR pode ser recalculado na mesma transação ou por evento consistente.
+Check-in de hábito
+Upsert/incremento atômico + invalidar cache de stats.
+
+14.3 Estratégia de migrations
+Cada PR que altera schema inclui migration, teste de upgrade e, quando aplicável, estratégia de backfill.
+Deploy executa migration em job único antes de liberar nova versão; não executar DDL automaticamente em cada réplica da API.
+Mudanças destrutivas seguem expand-and-contract: adicionar, migrar/leitura dupla quando necessário e remover em release posterior.
+Dados seed globais, como catálogo inicial de exercícios, usam comando idempotente separado de migrations de schema.
+14.4 Performance e índices
+Analisar EXPLAIN ANALYZE para queries da dashboard e históricos antes de adicionar cache.
+Evitar N+1 com selectinload/joinedload deliberado ou query DTO; não ativar eager loading global.
+Cursor composto por data + id em históricos para ordenação estável.
+Índices parciais para sessão ativa, tarefas não arquivadas e transações abertas quando justificável.
+Definir statement timeout e limites de pool adequados ao ambiente; telemetria do pool deve ser observável.
+15. Arquitetura da API backend
+15.1 Fluxo de uma requisição
+Etapa
+Responsabilidade
+Middleware
+Request ID, logging context, CORS, metrics, exception boundary.
+Dependency auth
+Validar token e resolver CurrentUser.
+Route/schema
+Validar HTTP, converter schema para command/query e definir status code.
+Application service
+Verificar regra, carregar agregados, abrir transação e publicar eventos internos.
+Repository/query service
+Persistência e consultas específicas com ownership.
+Mapper
+DTO → response schema; nunca retornar ORM diretamente.
+Error handler
+DomainError → RFC 9457 sem stack trace ou detalhes sensíveis.
+
+15.2 Async com propósito
+Usar async no boundary HTTP e acesso ao banco porque a carga é I/O-bound. Não transformar funções de domínio puras em async. O ganho de portfólio não vem da palavra-chave async, mas de compreender pool, cancelamento, timeout e não bloquear o event loop com CPU ou bibliotecas síncronas.
+15.3 Exemplo de caso de uso
+class CreateCardPurchaseHandler:    def __init__(self, uow: UnitOfWork, clock: Clock, ids: IdGenerator): ...    async def execute(self, command: CreateCardPurchase) -> CardPurchaseDTO:        async with self.uow:            existing = await self.uow.idempotency.find(                user_id=command.user_id,                key=command.idempotency_key,                scope="create_card_purchase",            )            if existing:                return await self.uow.card_purchases.get_dto(existing.resource_id)            card = await self.uow.credit_cards.get_owned(command.card_id, command.user_id)            purchase = CardPurchase.create(command, card.cycle_policy, self.clock, self.ids)            await self.uow.card_purchases.add(purchase)            await self.uow.idempotency.record(...)            await self.uow.commit()            return CardPurchaseDTO.from_domain(purchase)
+
+15.4 Eventos internos
+Eventos de domínio podem acoplar efeitos secundários sem broker: TaskCompleted, HabitCheckedIn, InvoiceClosed e WorkoutFinished. Um dispatcher in-process chama handlers após persistência conforme política definida. O padrão outbox só é necessário quando houver entrega assíncrona confiável para worker/integração externa.
+16. Arquitetura do frontend
+16.1 Rotas
+/├── /today├── /tasks├── /habits├── /finance│   ├── /overview│   ├── /transactions│   ├── /cards│   ├── /cards/:cardId/invoices/:invoiceId│   └── /recurring├── /workouts│   ├── /routines│   ├── /session/active│   └── /history└── /settings
+
+16.2 Regras de experiência
+Layouts responsivos desde o início; sessão de treino com navegação inferior e controles de toque grandes.
+Toda consulta possui loading/skeleton, empty state, erro recuperável e estado de dados antigos quando aplicável.
+Mutations comuns podem usar optimistic update somente quando rollback é seguro; finanças preferem confirmação do servidor.
+Formulários financeiros exibem preview do plano de parcelas e ciclo antes de salvar.
+URLs representam filtros e período para permitir refresh e compartilhamento.
+Datas e moedas formatadas por Intl APIs; valores recebidos como string/minor units, nunca float arbitrário.
+Acessibilidade: labels, foco, keyboard, contraste, aria-live para timer e mensagens, reduced motion.
+16.3 Estratégia de cache
+Dado
+Política sugerida
+Dashboard today
+staleTime curto; invalidar após mutations relevantes.
+Catálogo de exercícios
+staleTime longo e persistência opcional.
+Sessão ativa
+Atualização frequente; cache sempre sincronizado após set mutation.
+Faturas/financeiro
+Sem optimistic total; invalidar queries da compra, fatura e resumo após confirmação.
+Históricos
+Infinite query/cursor e prefetch ao abrir detalhe.
+
+16.4 Design system
+Tokens de cor, spacing, radius e typography centralizados; dark mode é opcional, não prioridade.
+Componentes de domínio separados dos primitives: MoneyInput, InstallmentPreview, HabitCalendar, ExerciseSetRow e RestTimer.
+Não copiar componentes shadcn sem revisar acessibilidade, estados e consistência visual.
+Storybook é opcional; entra quando houver conjunto relevante de componentes reutilizáveis.
+17. Segurança e privacidade
+A segurança deve se apoiar no OWASP API Security Top 10, principalmente autorização por objeto, autenticação, consumo irrestrito de recursos, configuração e inventário de endpoints [R12].
+Risco
+Controle no Orbit
+Broken Object Level Authorization
+user_id em todos os acessos; testes usuário A × usuário B; 404 para recurso não pertencente.
+Broken Authentication
+OIDC/PKCE, validação completa do JWT, clock skew limitado e rotação administrada pelo IdP.
+Unrestricted Resource Consumption
+Limites de paginação, body size, rate limit, timeout e quotas para exportações.
+Mass assignment
+Schemas específicos por caso de uso; nunca aceitar model_dump indiscriminado no ORM.
+Security misconfiguration
+CORS allowlist, headers seguros, docs internas configuráveis, debug desativado em produção.
+Injection
+Queries parametrizadas via SQLAlchemy; whitelist de sort/filter; nenhuma concatenação SQL de entrada.
+Sensitive data exposure
+TLS, secrets manager, logs redigidos, backups criptografados pelo provedor.
+Supply chain
+Lockfiles, Dependabot/Renovate, pip-audit, npm audit, CodeQL e imagem base mínima.
+Webhook spoofing e replay
+Secret token do Telegram, conversa privada vinculada, update_id único, rate limit e processamento idempotente.
+
+17.1 Controles específicos
+Não registrar descrições financeiras completas, tokens ou payloads sensíveis em logs de produção.
+Aplicar Content Security Policy no frontend e proteção contra clickjacking.
+CSRF é tratado conforme o mecanismo de token/cookie escolhido; documentar a decisão no ADR de autenticação.
+Uploads não fazem parte do MVP; ao entrar, validar tamanho, MIME real, armazenamento externo e URL assinada.
+Exportação de dados em job assíncrono com link expiring e autorização revalidada.
+Exclusão de conta deve ter política clara de retenção/auditoria e não prometer conformidade legal sem revisão específica.
+18. Estratégia de testes
+18.1 Pirâmide pragmática
+Nível
+Ferramentas
+Foco
+Unit/domain
+pytest + Hypothesis
+Rateio, ciclos, streaks, estados de sessão, Money e políticas puras.
+Integration
+pytest + Testcontainers PostgreSQL
+Repositories, constraints, migrations, concorrência e queries.
+API
+HTTPX/ASGI
+Status, auth, erros RFC 9457, idempotência e contrato.
+Frontend unit/component
+Vitest + Testing Library + MSW
+Comportamento observável, forms e estados de rede.
+E2E
+Playwright
+Jornadas críticas em stack implantada.
+Performance
+k6 ou Locust
+Orçamentos para dashboard, históricos e criação concorrente.
+
+18.2 Jornadas E2E obrigatórias
+Login → criar tarefa → concluir → confirmar no dashboard.
+Criar hábito em dias específicos → check-in → visualizar streak correto.
+Criar cartão → compra de R$ 1.500 em 12× → verificar 12 parcelas de R$ 125 nas faturas.
+Criar salário recorrente → marcar ocorrência como recebida → validar saldo realizado/projetado.
+Criar rotina Upper → iniciar sessão → registrar supino → finalizar → abrir nova sessão e ver performance anterior.
+Vincular o Telegram → receber fixture de áudio “Gastei 50 reais no cartão Santander com comida” → registrar BRL 50,00 em Alimentação e exibir o lançamento no Finance.
+Reentregar o mesmo update_id → não duplicar o gasto; dois cartões Santander possíveis → pedir escolha e não gravar antes da resposta.
+Tentar acessar UUID de outro usuário → receber 404/403 sem vazamento de existência.
+18.3 Quality gates
+Ruff, mypy --strict, ESLint, TypeScript noEmit e formatting sem diferenças.
+Testes unitários e de integração obrigatórios; E2E crítico em branch principal/release.
+Cobertura como indicador, não meta vazia: estabelecer alvo alto para domain/application e exigir teste para toda correção de bug.
+Migration smoke test em banco vazio e upgrade da versão anterior suportada.
+OpenAPI gerado sem diff não revisado; cliente TypeScript precisa compilar.
+Scanner sem vulnerabilidade crítica conhecida ou com exceção documentada e temporária.
+18.4 Testabilidade por design
+Clock, ID generator, Telegram client, speech-to-text e extrator estruturado injetáveis.
+Factories/builders para entidades e dados de teste; fixtures pequenas e legíveis.
+Sem singleton de sessão SQLAlchemy; escopo por request/caso de uso.
+Testes de propriedade para valores e datas; testes de exemplo para linguagem de negócio.
+Não mockar PostgreSQL em testes de repository; usar container real.
+19. Observabilidade e operação
+19.1 Logs
+JSON estruturado com timestamp, level, service, environment, request_id, trace_id, route, status e duration_ms.
+user_id deve ser pseudonimizado/hasheado quando necessário; nunca incluir token.
+Eventos de negócio relevantes em nível info; payload completo e SQL somente em ambiente local controlado; áudio e transcrição completa nunca entram em logs.
+Exceções inesperadas incluem stack trace no backend observability, mas resposta pública permanece genérica.
+19.2 Métricas e traces
+Sinal
+Exemplos
+HTTP
+request count, latency histogram, errors por route/status, in-flight.
+Database
+pool usage, query duration, transaction rollback, lock wait.
+Jobs
+Execuções, tempo em fila, retries, falhas por estágio e dead letters do processamento de áudio.
+Negócio
+Sessões iniciadas/finalizadas, compras criadas, check-ins, capturas por voz, taxa de auto-registro, ambiguidades e correções — sem alta cardinalidade.
+Tracing
+Telegram webhook → fila → download/conversão → transcrição → extração → Finance → PostgreSQL → resposta do bot, com propagação W3C.
+
+19.3 Health checks
+/health/live: processo está vivo; não depende do banco.
+/health/ready: dependências essenciais disponíveis e migrations compatíveis.
+/metrics: protegido/restrito conforme ambiente.
+Runbook documenta falha de banco, migration, OIDC, fila, webhook do Telegram, provedor de transcrição e degradação do dashboard.
+20. Developer Experience, CI/CD e deploy
+20.1 Ambiente local
+Um comando inicializa web, API, PostgreSQL e Keycloak; o profile telegram adiciona Redis, worker e stubs dos provedores; collector permanece opcional.
+Seed cria usuário demo, tarefas, hábitos, cartões, faturas e treinos realistas, sem dados pessoais reais.
+Taskfile fornece bootstrap, dev, test, lint, format, migration, seed e export-openapi de forma cross-platform.
+.env.example documentado; secrets reais nunca entram no repositório.
+20.2 Pipeline de pull request
+Job
+Ações
+changes
+Detectar backend/frontend/infra afetados.
+backend-quality
+uv sync --frozen, Ruff, mypy, unit tests.
+backend-integration
+PostgreSQL service/container, migrations e integration tests.
+frontend-quality
+pnpm install --frozen-lockfile, lint, typecheck, unit tests e build.
+contract
+Exportar OpenAPI, detectar breaking change e compilar api-client.
+security
+CodeQL, dependency audit, secret scan e container scan.
+e2e
+Subir Compose/preview e executar Playwright crítico.
+
+20.3 Deploy de demonstração e arquitetura de referência
+Nível
+Proposta
+Demo econômica
+SPA em Cloudflare Pages/Vercel; API em Render/Railway/Fly; PostgreSQL gerenciado. Manter backups e variáveis seguras.
+Referência AWS
+CloudFront + S3 para SPA; ALB + ECS Fargate para API/worker; RDS PostgreSQL; Cognito; Secrets Manager; OTel/CloudWatch.
+IaC
+Terraform modular; ambiente dev reduzido. GitHub Actions autentica na AWS por OIDC, sem access key longa.
+Migrations
+ECS one-off task/job antes do rollout; rollback de aplicação não deve pressupor downgrade destrutivo do banco.
+
+20.4 Estratégia de branches e releases
+Trunk-based: branches curtas, pull requests pequenos e main sempre implantável.
+Conventional Commits como convenção, não substituto de mensagens descritivas.
+Tags semânticas e changelog gerado; demo usa releases identificáveis.
+Feature flags para funcionalidade incompleta que precisa ser integrada, não branches de longa duração.
+21. Roadmap de implementação
+O roadmap usa marcos e gates de saída, não datas artificiais. Cada marco deve terminar demonstrável e implantável.
+Marco
+Objetivo
+Entregáveis
+Gate de saída
+M0 — Discovery e decisões
+Escopo, linguagem ubíqua e contratos iniciais.
+Documento de visão; mapa de contextos; backlog; wireframes; ADR-001 React; ADR-002 monólito modular; ADR-003 dinheiro/datas.
+Nenhum módulo começa sem exemplos de regras e não objetivos escritos.
+M1 — Fundação executável
+Monorepo, ambientes e primeira requisição.
+FastAPI health; React shell; Postgres/Alembic; Compose; uv/pnpm; lint/typecheck; CI básica; logs/request ID.
+Clone limpo executa por um comando; pipeline verde; migration funciona.
+M2 — Identidade e shared kernel
+Usuário autenticado e dados isolados.
+Keycloak local; validação JWT; user profile; Money/Clock/ID; base de Problem Details; testes A×B.
+Endpoint /me e recurso de exemplo protegidos; nenhum acesso cross-user.
+M3 — Tasks vertical slice
+Primeiro fluxo completo de produto.
+Listas, tarefas, conclusão, filtros, página React, testes integration/E2E e telemetria.
+Usuário cria e conclui tarefa; dashboard placeholder reflete mudança.
+M4 — Habits vertical slice
+Agenda e cálculos temporais.
+Hábitos, check-ins, calendário, streak, stats e property tests de datas.
+Cenários daily/weekdays/weekly corretos em timezone configurado.
+M5 — Finance core
+Contas, transações e recorrência.
+Accounts, categories, income/expense/transfer, recurring rules, cash flow e telas.
+Saldo realizado/projetado e recorrências sem duplicação.
+M6 — Cartões, parcelas e faturas
+Parte de maior profundidade do domínio.
+Cards, purchases, allocation, invoice cycle, payments, refunds, idempotency e reports.
+Compra 1.500/12 gera 12×125; competência e caixa não duplicam.
+M7 — Workouts vertical slice
+Experiência mobile de treino.
+Catálogo, rotinas, snapshots, sessão, sets, timer, history e PR básico.
+Segunda sessão mostra cargas/reps da anterior; refresh preserva descanso.
+M8 — Dashboard integrado
+Visão diária e mensal.
+Read models, cards, charts, quick actions, query budgets e empty states.
+Uma chamada por dashboard principal; métricas corretas após mutations.
+M9 — Hardening e release
+Produto apresentável e operável.
+E2E crítico, performance, OWASP review, OTel, backups, demo deploy, Terraform reference, runbook e docs em inglês.
+Release tag, vídeo, demo, OpenAPI e README reproduzível.
+M10 — Telegram por áudio
+Captura financeira conversacional, limitada e auditável.
+Vinculação segura; webhook/inbox; worker; transcrição; ExpenseCapture tipado; resolução de cartão/categoria; auto-registro; clarificação; editar/desfazer; evals e telemetria.
+Áudio válido gera um único lançamento; duplicatas não repetem; ambiguidades não gravam; nenhum outro módulo é acessível pela IA.
+
+21.1 Ordem interna de cada vertical slice
+1. Escrever exemplos e critérios de aceitação.
+2. Modelar invariantes e estados; registrar decisão quando houver trade-off.
+3. Criar migration e constraints.
+4. Implementar domínio/application e unit tests.
+5. Implementar repository/query e integration tests.
+6. Expor API e atualizar OpenAPI.
+7. Gerar/atualizar cliente e construir UI com estados completos.
+8. Adicionar E2E, logs/métricas e documentação.
+9. Fazer review de segurança, acessibilidade e performance antes de marcar concluído.
+22. Priorização do backlog
+Prioridade
+Itens
+Must
+OIDC; isolamento; tasks; habits; contas/transações; cartões/parcelas/faturas; rotinas/sessões/sets; dashboard básico; testes e deploy.
+Should
+Recorrências financeiras; partial invoice payment; tags; quick actions; PRs; audit viewer; import/export CSV; chatbot Telegram para despesas por áudio.
+Could
+PWA offline; push reminders; budgets; metas; anexos; tema escuro; gráficos avançados; RLS; multi-currency.
+Won’t now
+Open Finance, contabilidade fiscal, app nativo, social, wearables, microservices, Kubernetes de produção e qualquer outro recurso de IA.
+
+22.1 Issues iniciais sugeridas
+001 — Create monorepo and root developer commands
+002 — Bootstrap FastAPI application factory and settings
+003 — Bootstrap React/Vite shell and route layout
+004 — Add PostgreSQL, SQLAlchemy async session and Alembic
+005 — Add request ID, structured logging and RFC 9457 handler
+006 — Configure uv, Ruff, mypy, pytest and pre-commit
+007 — Configure pnpm, ESLint, TypeScript, Vitest and Playwright
+008 — Add Docker Compose for API, web, database and Keycloak
+009 — Implement OIDC JWT validation and CurrentUser
+010 — Create user_profile and settings onboarding
+011 — Add ownership test helpers and cross-user security tests
+012 — Implement task lists and task aggregate
+013 — Expose task CRUD/completion endpoints
+014 — Build task list UI and filters
+015 — Add first E2E journey and preview deployment
+23. Integração de despesas por áudio no Telegram
+Esta será a única funcionalidade de IA no escopo atual. O bot não atuará como assistente geral e não consultará tarefas, hábitos ou treinos. Ele receberá uma nota de voz, transcreverá o áudio, extrairá um comando financeiro estruturado e o enviará ao módulo Finance, que continuará responsável por autorização, cartões, categorias, parcelas, faturas e auditoria. Exemplo: “Gastei 50 reais no cartão de crédito Santander com comida” → BRL 50,00 no cartão Santander, categoria Alimentação e data local da mensagem. O resultado é salvo no banco do Orbit e refletido nas telas financeiras; CSV permanece apenas como exportação, nunca como segunda fonte de verdade [R19–R21].
+23.1 Jornada do usuário
+Etapa
+Comportamento
+Vincular conta
+No Orbit, o usuário gera um código de uso único e envia /connect <código> em conversa privada com o bot. O código expira e não pode ser reutilizado.
+Enviar áudio
+O usuário envia uma nota de voz, por exemplo: “Gastei 50 reais no cartão de crédito Santander com comida”.
+Receber e enfileirar
+O webhook valida o secret token, identifica a conexão, deduplica update_id, persiste o inbox e responde rapidamente ao Telegram.
+Transcrever e extrair
+O worker baixa o arquivo, converte quando necessário, transcreve e produz um ExpenseCapture aderente a um schema Pydantic.
+Resolver entidades
+A aplicação associa cartão e categoria exclusivamente entre os registros do usuário; o modelo nunca fornece autorização nem grava diretamente.
+Registrar ou esclarecer
+Com todos os campos resolvidos sem ambiguidade, o gasto é criado automaticamente. Caso contrário, o bot pergunta apenas o dado faltante e não cria registro parcial.
+Confirmar e corrigir
+O bot devolve valor, categoria, cartão, data e parcelas, com ações de Editar, Desfazer e Abrir no Orbit.
+Fluxo técnico: Telegram → webhook → inbox/idempotência → fila → transcrição → extração estruturada → resolução de entidades → comando Finance → PostgreSQL → resposta do bot.
+23.2 Arquitetura e responsabilidades
+O adapter Telegram recebe Update e CallbackQuery; handlers traduzem protocolo externo para comandos, sem conter regras financeiras.
+O webhook usa HTTPS, valida X-Telegram-Bot-Api-Secret-Token, aceita somente os update types necessários e rejeita chats que não sejam privados ou vinculados [R19].
+telegram_updates funciona como inbox com UNIQUE em bot_id + update_id; redelivery devolve sucesso sem repetir efeitos.
+O webhook persiste/enfileira e responde rapidamente. Um worker Celery executa download, conversão, transcrição, extração, retries e resposta ao usuário.
+SpeechToTextPort e ExpenseExtractorPort isolam o provedor. A implementação inicial recomendada usa OpenAI File Transcription e Structured Outputs com Pydantic [R20, R21].
+O worker usa FFmpeg apenas quando o formato recebido precisar ser convertido para um formato aceito pelo serviço de transcrição.
+O extrator retorna apenas dados candidatos — amount, currency, instrument_hint, category_hint, occurred_on, description e installment_count — sem IDs internos.
+Resolvers determinísticos validam ownership, aliases e unicidade de cartões/categorias; somente depois o application service chama o comando existente do módulo Finance.
+PostgreSQL continua sendo a única fonte de verdade. Áudio, modelo e Telegram não acessam tabelas diretamente e não contornam invariantes de fatura ou parcelamento.
+TelegramClient envia recibos, perguntas e botões; falhas depois do commit usam outbox/retry para responder sem repetir o lançamento.
+23.3 Regras de negócio e ambiguidades
+A integração segue regras restritas para que conveniência não reduza a confiabilidade financeira:
+A primeira versão aceita somente despesas enviadas por nota de voz em conversa privada por um usuário previamente vinculado.
+Campos mínimos: valor positivo, moeda, data, descrição, categoria e meio de pagamento. BRL, data local da mensagem e uma parcela são defaults quando não houver indicação contrária.
+Para cartão de crédito, o resolvedor precisa encontrar exatamente um cartão ativo do usuário. Se houver dois cartões Santander, o bot apresenta opções e aguarda uma CallbackQuery.
+O modelo sugere category_hint; a aplicação escolhe apenas categorias existentes do usuário. “Comida”, por exemplo, pode resolver para o alias Alimentação. A IA não cria categorias automaticamente.
+Auto-registro ocorre somente quando valor, direção, meio de pagamento, cartão/conta e categoria atingem critérios de resolução definidos e avaliados. Ausência ou conflito leva a awaiting_clarification.
+“Em 12 vezes” utiliza o mesmo caso de uso de compra parcelada da API; soma, fechamento, vencimento e faturas continuam obedecendo às invariantes financeiras existentes.
+update_id é a chave de deduplicação externa; o comando financeiro recebe Idempotency-Key derivada da captura para garantir efeito único no domínio.
+Depois do commit, o bot envia um recibo. Editar usa os endpoints normais do Finance; Desfazer executa cancelamento, estorno ou ajuste conforme o estado, nunca exclusão silenciosa de histórico.
+Áudio bruto é mantido apenas em armazenamento temporário durante o job e removido ao final. Transcrição e payload extraído têm retenção configurável, ficam fora de logs e são visíveis somente ao proprietário.
+Limites de duração, tamanho e frequência são menores que os limites externos e configurados por ambiente; abuso ou arquivos inválidos falham antes de consumir o provedor de IA.
+23.4 Modelo de dados e estados
+A integração pode ser implementada com quatro tabelas próprias, mantendo o módulo Finance independente do Telegram:
+telegram_connections — user_id, telegram_user_id, chat_id, status, linked_at e revoked_at; IDs externos em BIGINT e unicidade por bot.
+telegram_link_tokens — token_hash, user_id, expires_at, consumed_at e attempts; token de uso único, curto e nunca armazenado em texto puro.
+telegram_updates — bot_id, update_id, chat_id, message_id, file_unique_id, status, attempts, last_error, received_at e processed_at.
+voice_expense_captures — telegram_update_id, user_id, transcript, extracted_payload JSONB, resolved_card_id, resolved_category_id, confidence metadata, transaction_id e failure_code.
+Estados principais: received → queued → transcribing → extracting → resolving → posting → posted. awaiting_clarification pode retornar a resolving; failed, cancelled e reversed preservam histórico e motivo.
+23.5 Contratos e endpoints
+POST /api/v1/integrations/telegram/link-tokens — gera um código temporário para o usuário autenticado.
+GET /api/v1/integrations/telegram/connection — informa status, bot configurado e data da última atividade, sem expor token.
+DELETE /api/v1/integrations/telegram/connection — revoga a conexão e invalida capturas ainda não processadas.
+POST /integrations/telegram/webhook — endpoint externo separado da API do usuário; autenticação pelo secret header e validação da conexão armazenada.
+Callbacks de escolher cartão/categoria, cancelar e desfazer usam payload opaco e curto que referencia uma captura pertencente ao chat vinculado.
+23.6 Testes, avaliações e observabilidade
+Dataset versionado em português brasileiro com valores em reais, aliases de bancos/cartões, categorias, datas relativas, parcelas, ruído, pausas e transcrições imperfeitas.
+Teste canônico: “Gastei 50 reais no cartão de crédito Santander com comida” deve produzir amount_minor=5000, currency=BRL, direction=expense, instrument_hint=Santander e category_hint=Alimentação.
+Testes unitários cobrem schema e resolvers; integração cobre inbox, ownership, transação Finance e outbox; E2E usa fixture de Update e providers falsos para ser determinístico.
+Casos negativos obrigatórios: secret inválido, usuário não vinculado, chat em grupo, arquivo excessivo, valor ausente, dois cartões compatíveis, categoria inexistente, redelivery e falha após commit.
+CI não depende de chamadas reais. Um smoke test manual ou agendado pode validar Telegram e o provedor em ambiente protegido, com orçamento e credenciais separados.
+Métricas: latência por estágio, custo por captura, taxa de auto-registro, taxa de clarificação, falhas, retries, correções/desfazimentos e divergência encontrada nas avaliações.
+Logs e traces usam IDs e status; nunca incluem áudio, bot token, API key ou transcrição completa em produção.
+23.7 Fora do escopo desta integração
+Não haverá chat aberto, perguntas sobre dados pessoais, resumo semanal, recomendação financeira, planejamento de treino, alteração de tarefas/hábitos, geração de dieta, resposta por voz, RAG, embeddings ou banco vetorial. A IA existe apenas para transformar uma nota de voz de despesa em um lançamento financeiro validado.
+24. Apresentação de portfólio
+24.1 README público
+Problema, público e screenshot/GIF acima da dobra.
+Live demo e credenciais demo sem acesso a dados reais.
+Arquitetura em um diagrama, stack e decisões principais.
+Quick start comprovado em ambiente limpo.
+Comandos de teste, lint, migrations, seed e OpenAPI.
+Links para ADRs, ERD, API docs, runbook e roadmap.
+Trade-offs e “what I would do next”; não vender o projeto como sistema bancário ou médico.
+24.2 Artefatos que elevam a avaliação
+Artefato
+Valor
+ADRs
+Mostram raciocínio: React vs Svelte, monólito, OIDC, dinheiro, faturas, offline.
+OpenAPI publicado
+Permite avaliar consistência, erros, auth e documentação sem ler toda a base.
+Seed demo
+Facilita revisar fluxos complexos imediatamente.
+Vídeo curto
+Demonstra today dashboard, compra parcelada, sessão de treino e uma despesa criada por áudio no Telegram.
+Coverage/test report
+Sinaliza áreas protegidas, sem substituir leitura dos testes.
+Observability screenshot
+Trace real de criação de compra/sessão mostra operação ponta a ponta.
+Performance note
+EXPLAIN/benchmark com antes e depois — somente números medidos.
+
+24.3 Perguntas de entrevista que o projeto deve responder
+Por que monólito modular em vez de microsserviços?
+Como você impede dupla contagem entre compra no cartão e pagamento da fatura?
+Como garante que parcelas somem exatamente o total?
+Como o histórico de treino permanece correto após editar uma rotina?
+Por que TanStack Query e não Redux para dados da API?
+Como testa timezone, fechamento, concorrência e isolamento entre usuários?
+O que faria você introduzir Redis, worker, RLS ou materialized views?
+Como o webhook, a deduplicação, a resolução de entidades e o fluxo de ambiguidades impedem lançamento incorreto ou cross-user?
+24.4 Bullet para currículo — preencher apenas com métricas reais
+Designed and built Orbit, a modular personal operations platform using Python,FastAPI, PostgreSQL, React and TypeScript. Modeled transactional credit-cardinstallments and invoices, workout history snapshots and timezone-aware habitstreaks; delivered OpenAPI-generated clients, containerized environments,automated tests, CI/CD and OpenTelemetry-based observability.
+
+Não fabricar impacto
+Depois do deploy, substitua descrições genéricas por métricas realmente medidas: cobertura do domínio, tempo de resposta p95, quantidade de cenários E2E, redução de queries ou número de módulos entregues. Não invente usuários, receita ou escala.
+
+25. Architecture Decision Records sugeridos
+ADR
+Título
+Decisão esperada
+ADR-001
+React instead of Svelte
+Priorizar sinal de mercado/ecossistema para este portfólio.
+ADR-002
+Modular monolith instead of microservices
+Uma API, fronteiras por módulo, extração somente com evidência.
+ADR-003
+FastAPI instead of Django REST Framework
+API-first, tipagem e OpenAPI; aceitar maior composição explícita.
+ADR-004
+PostgreSQL as system of record
+Transações e constraints para domínio financeiro.
+ADR-005
+Money in minor units
+BIGINT + currency; sem float.
+ADR-006
+OIDC instead of custom password auth
+Keycloak local e provider compatível em produção.
+ADR-007
+Installment and invoice model
+Compra gera parcelas por ciclo; caixa e competência separados.
+ADR-008
+Workout snapshots
+Sessões preservam dados da rotina no momento de início.
+ADR-009
+OpenAPI-generated TypeScript client
+Contrato único, geração em CI.
+ADR-010
+Online-first, offline later
+Validar fluxo antes de outbox/conflict resolution.
+ADR-011
+Telegram voice expense ingestion
+Webhook + inbox + worker; transcrição e Structured Outputs atrás de ports; auto-registro apenas após resolução inequívoca, com clarificação, recibo e desfazer.
+
+26. Definition of Done
+Critérios de aceitação implementados e revisados.
+Regra de domínio coberta por testes relevantes, incluindo bordas conhecidas.
+Migration e constraints adicionadas; rollback/expand-contract considerado.
+Endpoint documentado no OpenAPI com respostas e Problem Details.
+Autorização por ownership testada positiva e negativamente.
+Frontend contém loading, empty, error, success e acessibilidade básica.
+Logs/métricas suficientes para diagnosticar falha sem dados sensíveis.
+Lint, typecheck, unit, integration e builds verdes.
+E2E atualizado quando o fluxo crítico mudou.
+README/ADR/changelog ajustado quando houver decisão ou operação nova.
+Preview/release implantável; nenhuma configuração depende da máquina do autor.
+27. Riscos e mitigação
+Risco
+Sinal
+Mitigação
+Escopo excessivo
+Muitos módulos parcialmente prontos.
+Vertical slices e gates; congelar Could até release M9.
+Arquitetura cerimonial
+Mais interfaces que regras.
+Criar abstração somente na fronteira; revisar linhas e dependências.
+Erro financeiro
+Totals divergentes ou dupla contagem.
+Minor units, invariantes, property tests, base explícita e auditoria.
+Complexidade de datas
+Bugs em fechamento/streak.
+Clock/timezone explícitos, DATE local e matriz de testes.
+Auth consome o projeto
+Sem feature após semanas de identidade.
+OIDC pronto, escopo mínimo, não escrever password flows.
+UI ruim no treino
+Muitos toques e perda de dados.
+Mobile-first, autosave, timer derivado, E2E em viewport móvel.
+Offline prematuro
+Conflitos e bugs de sync.
+Online-first; idempotência desde o início; outbox só após fluxo estável.
+Classificação incorreta por voz
+Valor, cartão ou categoria interpretados incorretamente.
+Schema tipado, aliases, critérios de resolução, clarificação, recibo, desfazer, idempotência e evals versionados.
+Deploy caro
+Infra AWS desligada ou abandonada.
+Demo econômica e Terraform de referência separado.
+
+28. Próximas ações concretas
+1. Criar o repositório público com o nome de trabalho Orbit e escrever README de uma página.
+2. Registrar ADR-001 a ADR-006 antes de implementar features.
+3. Desenhar wireframes de Today, Tasks, Habit calendar, Finance overview, Card invoice, Active workout e Telegram connection.
+4. Criar o Compose mínimo e o pipeline de qualidade.
+5. Entregar Identity + Tasks como primeira fatia vertical pública.
+6. Somente depois modelar e implementar Habits; em seguida Finance em dois marcos, Workouts, Dashboard e, por último, o pipeline Telegram.
+7. Criar uma release após cada marco demonstrável, com changelog e vídeo/screenshot.
+8. Manter documentação técnica e commits em inglês para maximizar valor internacional.
+Primeira decisão operacional
+A primeira implementação não deve ser a tabela de finanças. O melhor começo é Identity + Tasks: valida toda a fundação — auth, ownership, migrations, API, cliente gerado, React, testes e CI — com domínio pequeno. Depois, a mesma infraestrutura recebe hábitos e os módulos profundos.
+
+
+Anexo A — Catálogo inicial de tabelas
+Módulo
+Tabelas iniciais
+Identity/shared
+user_profiles, user_settings, audit_events, idempotency_records
+Tasks
+task_lists, tasks, subtasks, tags, task_tags
+Habits
+habits, habit_schedules, habit_check_ins
+Finance
+financial_accounts, finance_categories, credit_cards, transactions, transfer_links, recurring_rules, card_purchases, card_installments, card_invoices, invoice_payments, finance_adjustments
+Workouts
+exercises, workout_routines, routine_exercises, routine_set_templates, workout_sessions, session_exercises, workout_sets, personal_records
+Integrations/Telegram
+telegram_connections, telegram_link_tokens, telegram_updates, voice_expense_captures, integration_outbox
+Dashboard
+Sem tabela obrigatória no início; views/read queries. Materialized views somente por evidência.
+
+Anexo B — Matriz de estados
+Agregado
+Estados
+Transições relevantes
+Task
+todo, in_progress, done, cancelled
+todo↔in_progress; qualquer ativo→done/cancelled; done→todo por reopen.
+Habit
+active, paused, archived
+active↔paused; ativo/pausado→archived.
+Transaction
+planned, posted, cancelled, overdue (derivado)
+planned→posted/cancelled; posted exige reversão para correção.
+CardPurchase
+active, cancelled, refunded, partially_refunded
+active→cancelled antes de fechamento; depois refund.
+Invoice
+open, closed, partially_paid, paid, overdue
+open→closed→partial/paid; overdue derivado por due date/saldo.
+WorkoutSession
+draft, in_progress, completed, cancelled
+draft→in_progress→completed; draft/in_progress→cancelled.
+
+Anexo C — Checklist de revisão de pull request
+A mudança pertence ao módulo correto e respeita dependências?
+A regra está no domínio/application ou vazou para route/component?
+Ownership é aplicado em toda leitura e escrita?
+Money/date/timezone estão usando os tipos corretos?
+A transação cobre todos os efeitos atômicos?
+Há idempotência ou optimistic locking quando necessário?
+Erro público é RFC 9457 e não vaza detalhes?
+Query evita N+1 e possui índice plausível?
+Testes cobrem cenário feliz, falha e borda?
+Frontend possui estados e acessibilidade?
+OpenAPI/cliente/docs/telemetria foram atualizados?
+Anexo D — Referências técnicas consultadas
+[R1] Stack Overflow Developer Survey 2025 — Technology
+[R2] Python 3.14 — releases oficiais
+[R3] FastAPI — documentação e características
+[R4] React — Using TypeScript
+[R5] Vite — Getting Started
+[R6] TanStack Query — React overview
+[R7] PostgreSQL 18 — Numeric Types e Date/Time Types
+[R8] SQLAlchemy — documentação oficial
+[R9] Alembic — documentação oficial
+[R10] uv — documentação oficial
+[R11] RFC 9457 — Problem Details for HTTP APIs
+[R12] OWASP API Security Top 10 — 2023 edition
+[R13] OpenTelemetry — What is OpenTelemetry?
+[R14] pytest — documentação oficial
+[R15] Testcontainers for Python e Playwright
+[R16] Node.js releases — LTS
+[R17] pnpm — documentação oficial
+[R18] Docker Compose — documentação oficial
+[R19] Telegram Bot API — Update, Voice, getFile, setWebhook e CallbackQuery
+[R20] OpenAI API — File transcription
+[R21] OpenAI API — Structured model outputs
+Nota: as referências fundamentam escolhas de tecnologia e padrões; as regras específicas do produto são decisões propostas neste documento e devem ser validadas por testes e ADRs durante a implementação.
+Conclusão
+Orbit é um projeto de portfólio forte porque combina quatro domínios com tipos distintos de complexidade: workflow, calendário, transações financeiras e histórico de execução. A integração Telegram adiciona uma fronteira externa real — webhook, fila, áudio, extração estruturada, idempotência e observabilidade — sem conceder autonomia irrestrita à IA. A arquitetura maximiza o que pode ser avaliado sem transformar o repositório em uma demonstração artificial de infraestrutura.
+A disciplina mais importante será controlar o escopo. Uma aplicação menor, completa e profundamente testada terá mais valor de mercado do que quatro módulos incompletos. O caminho recomendado é entregar primeiro a fundação com tarefas e, depois, usar hábitos, finanças e treinos para demonstrar progressivamente decisões mais sofisticadas.
+Direção final
+React + TypeScript, FastAPI, PostgreSQL e monólito modular são as escolhas-base. A profundidade do projeto estará nas regras de parcelas/faturas, streaks, snapshots de treino, ownership, idempotência, testes de propriedade, OpenAPI, CI/CD e observabilidade. A única IA será um pipeline delimitado de despesas por áudio no Telegram, demonstrando integração externa e processamento assíncrono sem transformar o produto em um agente genérico.

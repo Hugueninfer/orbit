@@ -407,11 +407,15 @@ textarea:focus-visible {
   flex: 1;
 }
 .page {
+  grid-template-columns: minmax(0, 1fr);
   max-width: 1536px;
   margin: 0 auto;
   padding: 28px;
   display: grid;
   gap: 24px;
+}
+.page > * {
+  min-width: 0;
 }
 .page-heading {
   display: flex;
@@ -681,6 +685,7 @@ textarea:focus-visible {
 }
 .section-heading {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 10px;
   margin: 6px 0 16px;
@@ -1509,6 +1514,15 @@ select.control {
   }
 }
 @media (max-width: 700px) {
+  html {
+    scroll-padding-block: 90px;
+  }
+  main button,
+  main input,
+  main select,
+  main textarea {
+    scroll-margin-block: 90px;
+  }
   :root {
     font-size: 14px;
   }
@@ -1534,6 +1548,17 @@ select.control {
     min-height: 38px;
     padding: 8px 11px;
     font-size: 12px;
+  }
+  .topbar > div:first-child {
+    min-width: 0;
+  }
+  .topbar .actions {
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    gap: 4px;
+  }
+  .topbar .button > span {
+    display: none;
   }
   .topbar .desktop-only {
     display: none;

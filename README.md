@@ -37,11 +37,11 @@ Do not use `docker compose down -v` on data you want to keep. For real data, con
 ## Implemented core
 
 - OIDC Authorization Code + PKCE personal login; issuer/audience/signature validation, profile preferences and owner-scoped access. Demo credentials are unavailable in personal mode.
-- Task lists, statuses, deadlines, priorities, tags, checklists, archival, filtering and version-conflict protection.
-- Habit schedules, quantity check-ins, local dates, calendar, adherence and streaks with future-effective schedule edits.
-- Integer-money accounts, categories, cash transactions, planned transactions, atomic transfers and idempotent recurring occurrences.
-- Credit cards, exact installment allocation, closing/due-date cycles, invoices, partial payments, cancellations and auditable refunds/credit carry-forward.
-- Workout routines, exercise library, independent session snapshots, sets, timer, history, volume and personal-record calculations.
+- Task lists, statuses, deadlines, priorities, tags, checklists, archival/restoration, filtering and version-conflict protection.
+- Habit schedules, quantity check-ins, local dates, calendar, adherence and streaks with future-effective schedule and target edits.
+- Integer-money accounts, categories, cash transactions, planned transactions, atomic transfers and idempotent daily/weekly/monthly/yearly recurring occurrences with automatic initial horizons.
+- Credit cards, exact installment allocation, closing/due-date cycles, invoices, open-cycle purchase editing, partial payments, cancellations and auditable refunds/credit carry-forward.
+- Workout routines, exercise library, independent session snapshots, sets with optional RPE/RIR, draft preservation, timer, history, volume and personal-record calculations.
 - Responsive dashboard with real account data, quick actions, empty/error/loading states, keyboard-accessible drawers and mobile navigation.
 
 The optional Telegram adapter includes linking, durable inbox/outbox, provider boundaries and an explicitly labeled fixture simulation. **Full live audio/conversation/receipt flow is not a validated release feature**; see [backend limitations](backend/README.md). No AI provider is required to run the core.

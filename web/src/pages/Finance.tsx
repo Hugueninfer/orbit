@@ -389,6 +389,7 @@ export default function Finance() {
                       formatter={(v) => money(Number(v) * 100)}
                     />
                     <Bar
+                      isAnimationActive={false}
                       dataKey="value"
                       fill="#44e2cd"
                       radius={[5, 5, 0, 0]}

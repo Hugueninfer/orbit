@@ -253,7 +253,11 @@ function Shell({ config }: { config: Config }) {
             >
               <UserRound size={20} />
             </Link>
-            <Button variant="primary" onClick={() => setQuick(true)}>
+            <Button
+              variant="primary"
+              aria-label="Adicionar"
+              onClick={() => setQuick(true)}
+            >
               <Plus size={18} />
               <span>Adicionar</span>
             </Button>

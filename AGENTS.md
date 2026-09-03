@@ -2,6 +2,7 @@
 
 O usuário pediu para manter a especificação v1.1 como base funcional e adotar o pacote de telas Stitch como referência visual exata para desenvolvimento futuro.
 
+- Especificação integral preservada: `docs/original/orbit_personal_operations_hub_specification_v1.1.docx` e `docs/original/specification-v1.1.txt`.
 - Base funcional consolidada: `docs/specification.md`.
 - Prioridades de portfólio, uso pessoal, demo, gratuidade e deploy Docker: `docs/deployment-requirements.md`.
 - Sistema visual e catálogo das 19 telas: `docs/design/design.json`.

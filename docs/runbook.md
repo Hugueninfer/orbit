@@ -48,7 +48,7 @@ docker compose exec -T app python -m app.jobs extend-recurrences --through YYYY-
 docker compose exec -T app python -m app.jobs cleanup-demo
 ```
 
-Use an actual future date no more than 366 days ahead. Recurring occurrences are unique by recurrence/date, so reruns do not duplicate them. The UI also offers explicit horizon generation. Free sleeping hosts do not imply a continuous scheduler.
+Use an actual future date no more than 366 days ahead. Recurring occurrences are unique by recurrence/immutable scheduled date and protect occupied recurrence cycles, so reruns do not duplicate them. The UI also offers explicit horizon generation. Free sleeping hosts do not imply a continuous scheduler.
 
 Telegram is optional. The current worker is a one-shot command (`python -m app.jobs telegram-worker`) consuming durable rows. Full live production support, retry/retention and conversation completion are tracked as limitations; do not enable it for personal financial automation before completing those gates.
 

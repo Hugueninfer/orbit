@@ -72,7 +72,7 @@ test("demo journey persists tasks, habits, money and workout sets", async ({
     page.getByLabel("Carga da série 1", { exact: true }),
   ).toHaveValue("32");
   await page.getByText("Esforço · série 1 (opcional)", { exact: true }).click();
-  await page.getByLabel("RPE da série 1", { exact: true }).fill("8");
+  await page.getByLabel(/^RPE da série 1/).fill("8");
   await page.getByLabel("Repetições da série 1", { exact: true }).fill("10");
   await page
     .getByRole("button", { name: "Salvar série 1", exact: true })
@@ -85,9 +85,7 @@ test("demo journey persists tasks, habits, money and workout sets", async ({
     page.getByLabel("Carga da série 1", { exact: true }),
   ).toHaveValue("32");
   await page.getByText("Esforço · série 1 (opcional)", { exact: true }).click();
-  await expect(page.getByLabel("RPE da série 1", { exact: true })).toHaveValue(
-    "8",
-  );
+  await expect(page.getByLabel(/^RPE da série 1/)).toHaveValue("8");
   await page.getByLabel("Carga da série 2", { exact: true }).fill("999");
   await page
     .getByRole("button", {
@@ -107,7 +105,9 @@ test("demo journey persists tasks, habits, money and workout sets", async ({
   ).toBeVisible();
   expect(
     await page.evaluate(
-      () => document.documentElement.scrollWidth <= window.innerWidth,
+      () =>
+        document.documentElement.scrollWidth <=
+        document.documentElement.clientWidth,
     ),
   ).toBeTruthy();
   expect(errors).toEqual([]);
@@ -136,7 +136,9 @@ test("all routes fit viewport and drawers retain keyboard focus", async ({
     await expect(page.getByText("Carregando sua órbita…")).toHaveCount(0);
     expect(
       await page.evaluate(
-        () => document.documentElement.scrollWidth <= window.innerWidth,
+        () =>
+          document.documentElement.scrollWidth <=
+          document.documentElement.clientWidth,
       ),
       path,
     ).toBeTruthy();
@@ -209,7 +211,10 @@ test("card purchase editing, partial payment and recurrence creation persist", a
     .getByRole("button", { name: "Registrar pagamento", exact: true })
     .click();
   await expect(dialog.getByRole("heading", { name: /3,34/ })).toBeVisible();
-  await dialog.getByRole("button", { name: "Fechar", exact: true }).click();
+  await dialog
+    .locator("footer")
+    .getByRole("button", { name: "Fechar", exact: true })
+    .click();
   await page.getByRole("button", { name: "Compras", exact: true }).click();
   await expect(
     page.getByRole("button", {
@@ -223,9 +228,7 @@ test("card purchase editing, partial payment and recurrence creation persist", a
     .getByLabel("Descrição", { exact: true })
     .fill("Recorrência validada");
   await dialog.getByText("Repetir esta transação", { exact: true }).click();
-  await dialog
-    .getByLabel("Frequência", { exact: true })
-    .selectOption("monthly");
+  await dialog.getByLabel("Frequência").selectOption("monthly");
   await dialog
     .getByRole("button", { name: "Confirmar transação", exact: true })
     .click();
