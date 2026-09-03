@@ -7,3 +7,5 @@
 - OIDC is required for personal mode. Demo uses isolated expiring bearer sessions only in separately configured demo instances.
 - Dark Stitch visual takes precedence over earlier optional-dark wording. Mobile shares the application and all persisted data.
 - External publication needs accessible provider accounts; deployment files and local Docker validation do not constitute a public deployment.
+- Frontend self-hosts Geist and JetBrains Mono fonts. Lucide SVG icons replace the original external Material Symbols font with equivalent meanings and fixed dimensions, reducing external requests.
+- The login split-panel preserves the reference layout but uses OIDC redirect rather than a local password form; biometric controls are not shown without a real identity-provider capability.

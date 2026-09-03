@@ -1,0 +1,26 @@
+// DTOs come from the FastAPI OpenAPI contract. Regenerate with scripts/generate-api.sh.
+import type { components } from './generated/api';
+type Schema=components['schemas'];
+export type Entity={id:string;version:number};
+export type Config=Schema['RuntimeConfig'];
+export type Profile=Schema['Profile'];
+export type TaskList=Schema['TaskListOut'];
+export type Task=Schema['TaskOut'];
+export type Schedule=Required<Schema['Schedule']>;
+export type Habit=Schema['HabitOut'];
+export type HabitStats=Schema['HabitStats'];
+export type Account=Schema['AccountOut'];
+export type Category=Schema['CategoryOut'];
+export type Transaction=Schema['TransactionOut'];
+export type CreditCard=Schema['CardOut'];
+export type Invoice=Schema['InvoiceOut'];
+export type Purchase=Schema['PurchaseOut'];
+export type Recurrence=Schema['RecurrenceOut'];
+export type FinanceReport=Schema['FinanceReport'];
+export type Exercise=Schema['ExerciseOut'];
+export type RoutineExercise={exercise_id:string;name?:string;muscle_group?:string;sets:number;reps:number;load:string;rest_seconds:number};
+export type Routine=Schema['RoutineOut'];
+export type WorkoutSet=Schema['SessionSet'];
+export type Session=Schema['SessionOut'];
+export type Dashboard=Schema['DashboardOut'];
+export type Telegram=Schema['IntegrationStatus'];

@@ -18,3 +18,5 @@ test-results/
 *.tfvars
 !*.tfvars.example
 work/
+
+*.egg-info/
