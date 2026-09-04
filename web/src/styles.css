@@ -2090,7 +2090,8 @@ select.control {
   gap: 6px;
 }
 .language-short {
-  display: inline-flex;
+  display: flex;
+  line-height: 1;
   align-items: center;
   gap: 7px;
   font-size: 12px;
