@@ -45,4 +45,6 @@ Own only components/Select.tsx, components/Select.test.tsx, styles.css and packa
 ### Task 5: integrate, review and deploy (root + independent reviewer)
 - [x] Confirm zero remaining native select tags in pages. Coverage audit all UI-owned literals and dictionary keys in EN/DE. Run frontend tests/typecheck/build and backend affected tests, Docker build.
 - [x] Browser QA PT/EN/DE navigation, settings persistence, forms and select popup (desktop/mobile); no production financial writes. Independent whole-change review; fix real regressions and re-review.
-- [ ] Commit and fast-forward main, push and deploy Docker on Render. Verify active assets and health, update docs/archive and communicate result.
+- [x] Commit and fast-forward main, push and deploy Docker on Render. Verify active assets and health, update docs/archive and communicate result.
+
+Deployed code: 6cfddc7; Render dep-dadckupt0dsc73d206t0 Live. Production bundle index-BhkfJfZS.js matches local Docker image, health/database OK. Three language options verified in the online login selector.
