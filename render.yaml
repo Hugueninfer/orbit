@@ -1,16 +1,17 @@
 # One online installation and one Neon database; personal data and demos are owner-scoped.
-# Replace image.url with the exact digest printed by the verified GitHub release.
+# Render builds the Dockerfile directly from main; no GitHub release or GHCR image is required.
 # Free services lack pre-deploy jobs: apply scripts/migrate-remote.sh before deployment.
 services:
   - type: web
     name: orbit
-    runtime: image
+    runtime: docker
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
     plan: free
     region: oregon
-    image:
-      url: ghcr.io/replace-owner/orbit:replace-with-verified-digest
     healthCheckPath: /api/v1/health
-    autoDeployTrigger: off
+    autoDeployTrigger: "off"
     envVars:
       - key: APP_MODE
         value: combined

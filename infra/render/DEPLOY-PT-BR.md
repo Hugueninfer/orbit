@@ -1,82 +1,84 @@
-# Publicar o Orbit: uma URL e um banco
+# Publicar diretamente do repositório no Render
 
-Uma imagem Docker, um serviço online e um PostgreSQL. Sua conta entra por e-mail/senha; o botão **Experimentar demonstração** cria um espaço temporário exclusivo para cada visitante no mesmo banco, separado por usuário. Não há Auth0 obrigatório, cadastro público ou tela de administração de usuários.
+Decisão do usuário em 2026-09-04: usar o repositório já publicado e deixar o Render construir o Dockerfile. Não é necessário criar release, publicar imagem no GHCR ou aguardar GitHub Actions. Uma aplicação/URL e um banco continuam atendendo conta pessoal e demos isoladas.
 
-## 1. Gerar a imagem no GitHub
+## 1. Preparar o banco e sua conta
 
-1. Aguarde a verificação da branch `main` ficar verde em **Actions**.
-2. Abra [a criação de releases](https://github.com/Hugueninfer/orbit/releases/new).
-3. Crie uma tag ainda não utilizada (por exemplo, `v1.0.0` na primeira publicação), selecione `main`, dê um título e publique a release.
-4. Em **Actions**, aguarde **Publish approved container** concluir.
-5. Copie do resumo a linha `Verified deployment image`, no formato `ghcr.io/hugueninfer/orbit@sha256:...`.
-6. Em **Packages**, abra o pacote `orbit` e deixe sua visibilidade pública nas configurações, para o Render baixar a imagem.
+No Neon, use apenas `orbit-personal`. Abra **Connect**, selecione conexão direta (sem pooling) e copie a connection string. Troque somente `postgresql://` por `postgresql+psycopg://`, mantendo os parâmetros TLS. Não compartilhe a conexão, que contém senha.
 
-Substitua o campo `image.url` do `render.yaml` pelo endereço completo. Faça commit e push. Não use o texto de exemplo nem invente o digest.
+Na pasta do projeto no computador, atualize o código e crie um arquivo privado (ignorado pelo Git):
 
-## 2. Preparar um banco Neon
+```sh
+git pull --ff-only
+umask 077
+nano .env.deploy
+```
 
-Você já criou `orbit-demo` e `orbit-personal`. Use **somente `orbit-personal`** para esta instalação. O outro projeto pode ficar sem uso; este procedimento não exclui nenhum banco. Se já houver dados pessoais, preserve esse banco e faça backup antes de atualizar. Não há fusão automática dos dois bancos antigos.
-
-No projeto `orbit-personal`, abra **Connect** e copie a connection string direta, sem pooling, para migrações e criação de conta. Troque apenas `postgresql://` por `postgresql+psycopg://`, preservando usuário, senha, host, banco e parâmetros TLS. Não publique essa URL no GitHub nem na conversa.
-
-Na pasta do Orbit, crie o arquivo privado `.env.deploy` (ignorado pelo Git):
+Conteúdo, substituindo o valor da conexão sem aspas:
 
 ```dotenv
 APP_MODE=combined
-DATABASE_URL=COLE_A_CONEXAO_DO_PROJETO_PERSONAL
+DATABASE_URL=COLE_A_CONEXAO_AJUSTADA_DO_NEON
 SESSION_COOKIE_SECURE=true
 ```
 
-Não use aspas: o arquivo será lido por `docker --env-file`. Proteja-o:
+Salve com Ctrl+O, Enter e saia com Ctrl+X. Com Docker funcionando, execute na mesma pasta:
 
 ```sh
-chmod 600 .env.deploy
+docker build -t orbit:deploy .
+bash scripts/migrate-remote.sh orbit:deploy .env.deploy
+bash scripts/account-remote.sh orbit:deploy .env.deploy create hugueninpedro@gmail.com
 ```
 
-## 3. Criar as tabelas e sua conta
+O último comando pede uma senha do Orbit duas vezes, sem exibi-la; use 15–128 caracteres. Se as tabelas/conta já existem, não recrie a conta. As migrações podem ser reaplicadas e só executam revisões pendentes. Nenhum projeto Neon precisa ser excluído ou mesclado.
 
-Na pasta do projeto, substitua `IMAGEM_COM_DIGEST` pelo endereço real da etapa 1:
+## 2. Criar o serviço no Render
+
+No Render, escolha **New → Web Service**, conecte GitHub e selecione `Hugueninfer/orbit` como repositório de código (não Existing Image).
+
+| Campo | Valor |
+|---|---|
+| Name | `orbit` |
+| Branch | `main` |
+| Language / Runtime | `Docker` |
+| Root Directory | deixar vazio |
+| Dockerfile Path | `./Dockerfile` |
+| Instance Type | `Free` |
+| Docker Command | deixar vazio; usar o CMD do Dockerfile |
+| Health Check Path | `/api/v1/health` |
+| Auto-Deploy | desativado; atualizações por Manual Deploy |
+
+Adicione as variáveis:
+
+| Variável | Valor |
+|---|---|
+| `APP_MODE` | `combined` |
+| `DATABASE_URL` | conexão ajustada do Neon |
+| `SESSION_COOKIE_SECURE` | `true` |
+| `ALLOWED_ORIGINS` | origem HTTPS real do serviço, sem barra final |
+
+Deixe `OIDC_AUTHORITY` vazio. Se a URL só aparecer após criar o serviço, use temporariamente `https://orbit.onrender.com`, depois substitua em **Environment** pela URL atribuída e aplique a atualização antes do login.
+
+Clique em **Deploy Web Service**. O Render compila diretamente o Dockerfile do repositório. Não configure a opção de aguardar verificações do GitHub para esse fluxo.
+
+Alternativa equivalente: **New → Blueprint**, conectar o mesmo repositório e usar `render.yaml` da main. O arquivo já define um serviço Docker Free com construção direta. Escolha apenas um dos dois caminhos para não criar serviços duplicados.
+
+## 3. Conferir
+
+Abra `/api/v1/health` na URL publicada; deve indicar banco saudável. Entre com sua conta, crie uma tarefa e confira no celular após login. Em janela anônima, use **Experimentar demonstração**. O caminho `/demo` é uma entrada pública na mesma URL; dados pessoais e demo continuam isolados.
+
+## Atualizações e senha
+
+Antes de atualizar, faça backup. Construa localmente o mesmo commit que será publicado, aplique migrações e use **Manual Deploy → Deploy latest commit** no Render. Deploy automático fica desligado para permitir essa ordem.
+
+Para trocar a senha preservando os dados e revogando sessões anteriores:
 
 ```sh
-bash scripts/migrate-remote.sh 'IMAGEM_COM_DIGEST' .env.deploy
-bash scripts/account-remote.sh 'IMAGEM_COM_DIGEST' .env.deploy create hugueninpedro@gmail.com
+bash scripts/account-remote.sh orbit:deploy .env.deploy reset-password hugueninpedro@gmail.com
 ```
 
-O segundo comando pede uma senha entre 15 e 128 caracteres duas vezes, sem mostrá-la. Essa será sua senha do Orbit. Não há senha padrão. Se a conta já existe, não tente recriá-la; seus dados e sua senha continuam no banco. A demonstração não precisa de conta criada manualmente.
+GitHub Actions continua como verificação de qualidade independente. O workflow de release/GHCR permanece opcional para quem quiser usar esse outro caminho; não é pré-requisito deste deploy.
 
-## 4. Criar um serviço no Render
+Planos gratuitos têm cotas e podem suspender serviços por inatividade. Confira o plano selecionado e mantenha backups; não há promessa de disponibilidade contínua gratuita.
 
-1. Escolha **New → Blueprint** e conecte `Hugueninfer/orbit`.
-2. Use o `render.yaml` da branch `main`.
-3. Confirme **um serviço `orbit`**, no plano **Free**.
-4. Preencha `DATABASE_URL` com a conexão Neon do banco escolhido, usando o prefixo `postgresql+psycopg://` e TLS.
-5. Preencha `ALLOWED_ORIGINS` com a origem HTTPS real do serviço, sem barra final. Se a URL só aparecer depois da criação, ajuste em **Environment** antes de testar login.
-6. O blueprint define `APP_MODE=combined` e `SESSION_COOKIE_SECURE=true`. Deixe `OIDC_AUTHORITY` vazio.
-7. Inicie o deploy. O serviço baixa a imagem verificada e atende interface e API na mesma URL.
-
-Use a URL atribuída pelo Render, que pode ter um sufixo. Não coloque `localhost` ou `*` em `ALLOWED_ORIGINS`. Se já publicou os serviços antigos, mantenha-os até verificar o novo; não exclua volumes ou bancos para fazer a atualização.
-
-## 5. Conferir no computador e no celular
-
-- Abra `/api/v1/health` na URL: deve retornar `status: ok` e `database: ok`.
-- Entre com seu e-mail e senha, crie uma tarefa e atualize a página. Entre na mesma URL pelo celular: a tarefa deve estar lá.
-- Em uma janela privada, abra a mesma URL e clique em **Experimentar demonstração**. Só dados fictícios devem aparecer.
-- Você também pode compartilhar o caminho `/demo` da mesma URL. Ele abre a tela de entrada sem restaurar automaticamente sua sessão pessoal naquela aba.
-- Reinicie a demo em **Configurações** e confira que sua tarefa pessoal continua intacta.
-- **Sair** na demo encerra apenas aquela sessão demo. **Sair** na sua conta revoga a sessão pessoal daquele navegador.
-
-Demos expiram em 24 horas por padrão. Dados pessoais não têm essa expiração. A limpeza de demos é limitada aos usuários temporários, mesmo compartilhando o banco.
-
-## Trocar ou recuperar a senha
-
-```sh
-bash scripts/account-remote.sh 'IMAGEM_COM_DIGEST' .env.deploy reset-password hugueninpedro@gmail.com
-```
-
-Preserva seus dados e encerra sessões pessoais anteriores. A recuperação depende do acesso administrativo ao banco; não há envio de e-mail. Para backups e manutenção, consulte [o runbook](../../docs/runbook.md).
-
-## Planos gratuitos
-
-A aplicação não exige serviço pago para o núcleo. Planos gratuitos têm cotas e podem suspender a aplicação após inatividade; a primeira abertura pode demorar. Confira o plano e os limites atuais na conta antes de confirmar a criação. Use PostgreSQL externo persistente, como o Neon, e mantenha backups. Não há promessa de disponibilidade contínua sem custo.
-
-Referências: [Render Free](https://render.com/docs/free), [publicar uma imagem](https://render.com/docs/deploying-an-image), [conexão Python/Neon](https://neon.com/docs/guides/python).
+Referências: [Docker no Render](https://render.com/docs/docker), [Web services](https://render.com/docs/web-services), [Blueprint](https://render.com/docs/blueprint-spec).

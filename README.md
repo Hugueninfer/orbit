@@ -110,4 +110,4 @@ ORBIT_BASE_URL=http://127.0.0.1:8080 npm run e2e
 - [Approved visual references](docs/design/LEIA-ME.md), [design deviations](docs/design-deviations.md), [product decisions](docs/decisions/001-product-rulings.md).
 - [Optional AWS laboratory](infra/aws/README.md). Terraform validation is not a claim of a deployed AWS environment.
 
-The workflow verifies code, contracts and a real container journey. Publishing a GitHub release publishes the versioned container to GHCR; it does not provision cloud services or migrate personal databases automatically.
+The workflow verifies code, contracts and a real container journey. Render can build the Dockerfile directly from this repository without waiting for GitHub Actions or creating a release. The optional GitHub release workflow still publishes a versioned container to GHCR; it does not provision cloud services or migrate databases automatically.

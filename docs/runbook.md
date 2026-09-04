@@ -38,7 +38,7 @@ Passwords use scrypt N=131072/r=8/p=1 with a random salt. Seven-day session cook
 
 ## Release
 
-Publish the reviewed GitHub release and retain the verified image digest from its workflow summary. CI tests, saves and publishes that same image; the Render service references its digest. Back up, apply migrations once via the `migrate` service, then start/recreate app. On a managed free web service, run `scripts/migrate-remote.sh IMAGE PRIVATE_ENV_FILE` from the operator's machine before deploying; no unsupported paid pre-deploy hook is assumed.
+The default online path builds directly from the GitHub repository on Render with manual deployment. No release, GHCR package or successful Actions run is required. Back up, build the same commit locally, then apply migrations with `scripts/migrate-remote.sh orbit:deploy PRIVATE_ENV_FILE` before choosing Manual Deploy on Render. See the updated Render guide. The optional release workflow still tests and publishes an image for independent registry-based installations.
 
 Application rollback means running the previous compatible image. A database backup restore is a separate reviewed recovery operation. Never automatically downgrade destructive migrations.
 
@@ -85,6 +85,6 @@ The repo and deploy artifacts do not create accounts, register domains or publis
 
 ## npm audit unavailable during release
 
-The mandatory web audit runs through `node scripts/audit-web.mjs`. It keeps `--omit=dev --audit-level=high`, limits each network request to 20 seconds and each npm process to 60 seconds, and retries network failures up to three times. High/critical findings, invalid reports and configuration errors fail closed. Persistent registry failure also blocks publication and emits an explicit GitHub error annotation. `npm ci --no-audit` avoids a redundant advisory query during installation; it does not skip the separate required audit gate.
+The GitHub CI web audit (independent of direct Render deployment) runs through `node scripts/audit-web.mjs`. It keeps `--omit=dev --audit-level=high`, limits each network request to 20 seconds and each npm process to 60 seconds, and retries network failures up to three times. High/critical findings, invalid reports and configuration errors fail closed. Persistent registry failure also blocks the optional GitHub release and emits an explicit GitHub error annotation. `npm ci --no-audit` avoids a redundant advisory query during installation; it does not skip the separate required audit gate.
 
 A failed release remains attached to its original commit. After a workflow fix reaches main and verification passes, publish a new release with an unused tag; do not move an existing published tag. The failed first release used tag `1.0.0`, so `1.0.1` can be used if still available.
