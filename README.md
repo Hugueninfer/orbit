@@ -10,7 +10,7 @@ Tarefas · Hábitos · Finanças · Notas & Diário · Jardim de Foco · Treinos
 
 **Uma central pessoal para o dia a dia, construída como um projeto full stack de portfólio.**
 
-[**Experimentar demonstração →**](https://orbit-x1i7.onrender.com/demo) · [Documentação da API](https://orbit-x1i7.onrender.com/api/docs) · [Rodar com Docker](#rodar-com-docker) · [Galeria](#galeria)
+[**Experimentar demonstração →**](https://orbit-huguenin.onrender.com/demo) · [Documentação da API](https://orbit-huguenin.onrender.com/api/docs) · [Rodar com Docker](#rodar-com-docker) · [Galeria](#galeria)
 
 **React 19 · TypeScript · FastAPI · PostgreSQL 18 · Docker**
 
@@ -46,7 +46,7 @@ O projeto inclui interface responsiva, API tipada, regras de negócio, persistê
 
 ## Experimentar em cinco minutos
 
-Abra a [demonstração online](https://orbit-x1i7.onrender.com/demo) e clique em **Experimentar demonstração**. Não é necessário cadastrar uma conta, informar um e-mail ou usar uma senha pública.
+Abra a [demonstração online](https://orbit-huguenin.onrender.com/demo) e clique em **Experimentar demonstração**. Não é necessário cadastrar uma conta, informar um e-mail ou usar uma senha pública.
 
 1. **Dashboard:** confira tarefas, hábitos, finanças e o treino sugerido.
 2. **Tarefas e hábitos:** conclua uma tarefa ou registre quantos copos de água bebeu. Recarregue para conferir a persistência.
@@ -347,7 +347,7 @@ Abra [localhost:5173](http://localhost:5173). O Vite encaminha `/api` para `127.
 
 ### Contratos e traduções
 
-- Swagger: [API publicada](https://orbit-x1i7.onrender.com/api/docs) ou `/api/docs` na instalação local.
+- Swagger: [API publicada](https://orbit-huguenin.onrender.com/api/docs) ou `/api/docs` na instalação local.
 - OpenAPI: `/api/v1/openapi.json`; cópia versionada em `backend/openapi.json`.
 - Após alterar o contrato, execute `./scripts/generate-api.sh` com as dependências de desenvolvimento instaladas.
 - Novos textos da interface usam `web/src/i18n.ts` e os catálogos em `web/src/locales/`.
@@ -374,7 +374,7 @@ Consulte [.env.example](.env.example) para a configuração de referência. Segr
 
 ### Publicação online
 
-A instalação demonstrada neste README está em [orbit-x1i7.onrender.com](https://orbit-x1i7.onrender.com), com build do Dockerfile pelo Render e persistência no Neon.
+A instalação demonstrada neste README está em [orbit-huguenin.onrender.com](https://orbit-huguenin.onrender.com), com build do Dockerfile pelo Render e persistência no Neon.
 
 O caminho adotado é:
 
@@ -554,6 +554,6 @@ O projeto preserva a especificação e as referências visuais originais, com ev
 
 **Orbit · Seu espaço. Seu ritmo. Sua órbita.**
 
-[Experimentar o produto](https://orbit-x1i7.onrender.com/demo) · [Perfil no GitHub](https://github.com/Hugueninfer) · [Voltar ao início](#orbit)
+[Experimentar o produto](https://orbit-huguenin.onrender.com/demo) · [Perfil no GitHub](https://github.com/Hugueninfer) · [Voltar ao início](#orbit)
 
 </div>

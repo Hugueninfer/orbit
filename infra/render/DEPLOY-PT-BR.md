@@ -38,7 +38,7 @@ No Render, escolha **New → Web Service**, conecte GitHub e selecione `Huguenin
 
 | Campo | Valor |
 |---|---|
-| Name | `orbit` |
+| Name | `orbit-huguenin` |
 | Branch | `main` |
 | Language / Runtime | `Docker` |
 | Root Directory | deixar vazio |

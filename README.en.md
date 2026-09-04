@@ -10,7 +10,7 @@ Tasks · Habits · Finances · Notes & Journal · Focus Garden · Workouts
 
 **A personal hub for everyday life, built as a full-stack portfolio project.**
 
-[**Try the demo →**](https://orbit-x1i7.onrender.com/demo) · [API documentation](https://orbit-x1i7.onrender.com/api/docs) · [Run with Docker](#run-with-docker) · [Gallery](#gallery)
+[**Try the demo →**](https://orbit-huguenin.onrender.com/demo) · [API documentation](https://orbit-huguenin.onrender.com/api/docs) · [Run with Docker](#run-with-docker) · [Gallery](#gallery)
 
 **React 19 · TypeScript · FastAPI · PostgreSQL 18 · Docker**
 
@@ -46,7 +46,7 @@ The project includes a responsive interface, a typed API, business rules, real p
 
 ## Try it in five minutes
 
-Open the [online demo](https://orbit-x1i7.onrender.com/demo) and click **Experimentar demonstração** (Try the demo). No account registration, email address, or shared public password is required. Use the language selector to switch to English or German; the screenshots below show the Portuguese interface.
+Open the [online demo](https://orbit-huguenin.onrender.com/demo) and click **Experimentar demonstração** (Try the demo). No account registration, email address, or shared public password is required. Use the language selector to switch to English or German; the screenshots below show the Portuguese interface.
 
 1. **Dashboard:** review tasks, habits, finances, and the suggested workout.
 2. **Tasks and habits:** complete a task or record how many glasses of water you drank. Reload the page to check persistence.
@@ -347,7 +347,7 @@ Open [localhost:5173](http://localhost:5173). Vite proxies `/api` to `127.0.0.1:
 
 ### Contracts and translations
 
-- Swagger: [Published API](https://orbit-x1i7.onrender.com/api/docs) or `/api/docs` on your local installation.
+- Swagger: [Published API](https://orbit-huguenin.onrender.com/api/docs) or `/api/docs` on your local installation.
 - OpenAPI: `/api/v1/openapi.json`; versioned copy in `backend/openapi.json`.
 - After changing the contract, run `./scripts/generate-api.sh` with development dependencies installed.
 - New interface text uses `web/src/i18n.ts` and the catalogs in `web/src/locales/`.
@@ -374,7 +374,7 @@ See [.env.example](.env.example) for the reference configuration. Secrets and pr
 
 ### Online deployment
 
-The installation shown in this README is available at [orbit-x1i7.onrender.com](https://orbit-x1i7.onrender.com), with Render building the Dockerfile and Neon providing persistence.
+The installation shown in this README is available at [orbit-huguenin.onrender.com](https://orbit-huguenin.onrender.com), with Render building the Dockerfile and Neon providing persistence.
 
 The adopted workflow is:
 
@@ -556,6 +556,6 @@ The project preserves the original specification and visual references, with doc
 
 **Orbit · Your space. Your pace. Your orbit.**
 
-[Try the product](https://orbit-x1i7.onrender.com/demo) · [GitHub profile](https://github.com/Hugueninfer) · [Back to top](#orbit)
+[Try the product](https://orbit-huguenin.onrender.com/demo) · [GitHub profile](https://github.com/Hugueninfer) · [Back to top](#orbit)
 
 </div>
