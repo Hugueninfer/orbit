@@ -15,10 +15,12 @@ Objetivo aprovado: enviar áudio ao bot Telegram, interpretar uma despesa e regi
 - [x] Provedor Gemini e testes de contrato HTTP: áudio, JSON inválido, referências desconhecidas, esclarecimento e falha 429. Rodar testes antes (falha por implementação ausente), implementar e repetir.
 - [x] Integração do provider, esclarecimento durável, worker e deep link. Testar webhook→fila→extração→despesa, duplicidade, isolamento e execução/reinício do worker em PostgreSQL local de testes. Nenhum teste financeiro em produção.
 - [x] UI, variáveis de Compose, guia operacional, OpenAPI gerado. Verificar typecheck/build, Ruff/mypy e testes backend relevantes.
-- [ ] Revisão independente; merge/push já autorizados no fluxo de deploy. Configurar segredos no Render, publicar Docker e só então registrar webhook. Validar getWebhookInfo, saúde e estado autenticado; usuário abre /start para concluir vínculo (não inventar chat_id).
+- [x] Revisão independente; merge/push já autorizados no fluxo de deploy. Configurar segredos no Render, publicar Docker e só então registrar webhook. Validar getWebhookInfo, saúde e estado autenticado; usuário abre /start para concluir vínculo (não inventar chat_id).
 
 ## Verificação externa
 
 Credenciais ficam no checkout principal em `.env.telegram` (ignorado, 0600), nunca neste plano nem no Git. Validar bot com getMe e Gemini com áudio sintético sem informações pessoais. Manter o banco pessoal livre de despesas de teste. Ativação usa `https://orbit-x1i7.onrender.com/api/v1/integrations/telegram/webhook` e segredo aleatório.
 
 Revisão independente identificou e corrigiu perda de rascunho em falha temporária, tentativas de recibo muito rápidas e envio após desvinculação. As três regressões foram reproduzidas antes das correções.
+
+Publicado no Render em 2026-09-04 (commit329f123, deploydep-dadbuq8jo6nc73dttqd0). O deploy acionado pela atualização de variáveis reportou live, porém serviu código anterior; reconstrução explícita sem cache resolveu. A API atual contém bot_url, a UI pessoal mostra integração habilitada e o webhook está cadastrado sem erros. O usuário ainda precisa abrir o link temporário e tocar em Iniciar para vincular seu chat e testar seu áudio. Nenhuma despesa pessoal de teste foi criada.
