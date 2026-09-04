@@ -30,3 +30,5 @@ Idiomas e seletores (2026-09-04): interface pt-BR/en-US/de-DE, preview imediato 
 Demo pronta (2026-09-04): seed_demo copia fixtures/demo-base.json em lotes com IDs novos e datas atuais; build_demo_source é somente gerador offline. Preservar isolamento/expiração de 24h e quota ORM. Ao mudar exemplos, reexportar base e testar calendário das faturas e referências. Ver docs/demo.md.
 
 Notas & Diário (2026-09-04): módulo /notas com pastas simples, notas ricas e data opcional de diário, autosave serializado, lixeira e owner isolado. Consultar docs/notes.md; atualizar fixture ao alterar exemplos.
+
+Atualização de URL em 2026-09-04: produção agora em https://orbit-huguenin.onrender.com, serviço Render `srv-dadfdmf40ujc73e3o7hg` (Docker Free, Auto-Deploy Off). Mesmo banco Neon, conta pessoal e Telegram; webhook atualizado. Serviço antigo `srv-dadb2f8jo6nc73dqiuk0`/orbit-x1i7 suspenso, preservado para recuperação. Próximos deploys devem usar o novo serviço.
