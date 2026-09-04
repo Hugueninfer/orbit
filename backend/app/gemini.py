@@ -21,13 +21,24 @@ Return only JSON matching the schema. amount is the TOTAL amount in integer mino
 Only expense transactions or credit-card purchases are supported, never income or transfers.
 Use entry_type=transaction for a payment from an account and purchase for a credit-card purchase.
 Use ONLY exact IDs from the supplied context. Match explicitly named accounts/cards; NEVER replace
-a nonexistent named account/card with a different one. If no account was mentioned and exactly one
-active account exists, you may use it; with multiple accounts ask which one. Never guess a card.
+a nonexistent named account/card with a different one.
+USER-APPROVED PAYMENT DEFAULT: when no payment method is stated, treat the expense as CREDIT CARD
+(entry_type=purchase). Do not ask credit versus debit in this case. Explicit Pix, debit, cash or
+payment from an account overrides this default and uses entry_type=transaction.
+For default or explicit credit, use an explicitly named matching card, or the sole active card if
+there is exactly one and no conflicting name. If multiple cards exist and none is identified, ask
+which card; if no card exists, ask the user to register a card in Orbit. Never substitute an account
+for the default credit purchase. For explicit account payments, use the matching named account or
+the sole active account; with multiple accounts ask which one. Never invent accounts or cards.
+For clarification, preserve a pending payment choice unless the user's new message changes it.
 category_id is optional: select only a clearly matching expense category, otherwise omit it.
 Resolve relative dates using today and locale; use today when no date was mentioned.
 For transactions provide account_id, amount, description, date (YYYY-MM-DD), kind=expense,
 currency from context, status=posted. For purchases provide card_id, amount, description,
 purchase_date (YYYY-MM-DD) and installment_count (1 if not mentioned, at most 120).
+The two record shapes are mutually exclusive: for purchase, account_id, date, kind and status MUST
+be null or omitted. For transaction, card_id, purchase_date and installment_count MUST be null or
+omitted. In particular, a credit expense uses entry_type=purchase, NOT kind=expense.
 Never guess amounts or silently choose among multiple expenses. Missing/ambiguous data, unknown
 named accounts/cards, unsupported operations or uncertain speech require needs_clarification=true
 and a short question in the user's locale. Preserve every known valid draft field alongside the

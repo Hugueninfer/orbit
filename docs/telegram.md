@@ -6,6 +6,8 @@
 4. Envie uma mensagem de voz: “Gastei 35 reais no almoço, pela conta Nubank”. Use o nome cadastrado no Orbit.
 5. O bot responde com o registro ou pergunta o que falta. Responda por texto em até 30 minutos. Para abandonar o rascunho, envie `/cancelar`; para outra despesa, envie novo áudio.
 
+Quando não informar a forma de pagamento, o padrão é **crédito**. Pix, débito e dinheiro explícitos são registrados pela conta. Com um único cartão ativo, ele é usado; com vários, o bot pergunta qual. Sem cartão, cadastre um no Orbit. Compras no cartão também aparecem em **Despesas**, identificadas como crédito.
+
 Confira o lançamento no Orbit e corrija eventuais erros de interpretação. A demo do site continua usando exemplos simulados, sem enviar áudio real.
 
 ## Configuração do operador

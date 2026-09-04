@@ -22,3 +22,5 @@ A adoção visual não amplia automaticamente o escopo funcional. O JSON registr
 Portfólio é a prioridade principal, com uso diário real. Manter o núcleo executável sem serviços pagos, por Docker/Compose; separar dados demo de pessoais. AWS deve ser demonstrável sem impor infraestrutura paga permanente. Os provedores sugeridos no documento de deploy são recomendações a validar, não contratos já aprovados ou serviços existentes.
 
 Decisão Telegram em 2026-09-04: receber mensagens de voz em bot próprio e registrar despesas com Gemini, padrão validado `gemini-3.1-flash-lite`. Worker embutido no mesmo Docker; rascunho de esclarecimento de 30 minutos; demo simulada sem API real. Consultar `docs/telegram.md` e `docs/decisions/003-telegram-gemini.md`. Credenciais somente no ambiente privado. Essa decisão substitui o pedido anterior de remoção do Telegram.
+
+Preferência aprovada em 2026-09-04: Telegram assume crédito quando a forma de pagamento não é informada; forma explícita prevalece. Um só cartão ativo pode ser usado automaticamente; múltiplos cartões exigem esclarecimento. Compras no crédito aparecem também em Despesas; pagamento de fatura não deve duplicá-las.

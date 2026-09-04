@@ -24,6 +24,7 @@ import {
   CartesianGrid,
 } from "recharts";
 import { useApi, useActions } from "../api";
+import { financeEntries } from "../financeEntries";
 import type {
   Account,
   Category,
@@ -113,22 +114,131 @@ export default function Finance() {
   const ca = cards.data ?? [];
   const cats = categories.data ?? [];
   const tx = transactions.data ?? [];
-  const filtered = tx.filter(
-    (t) =>
-      t.date.startsWith(month) &&
-      t.description.toLowerCase().includes(search.toLowerCase()) &&
-      (tab === "all" || t.kind === tab),
-  );
+  const entries = financeEntries(tx, purchases.data ?? [], month, search, tab);
   const cardName = (id: string) =>
     ca.find((c) => c.id === id)?.name ?? "Cartão";
+  const renderPurchase = (p: Purchase) => (
+    <div className="transaction-row" key={p.id}>
+      <span className="icon-box">
+        <CreditCard size={18} />
+      </span>
+      <div className="row-content">
+        <strong>{p.description}</strong>
+        <small>
+          Crédito · {cardName(p.card_id)} · {p.installment_count} parcelas ·{" "}
+          {dateLabel(p.purchase_date)}
+        </small>
+      </div>
+      <Badge tone="red">Despesa · {statusNames[p.status]}</Badge>
+      <span className="mono">{money(p.amount)}</span>
+      {p.status === "active" &&
+        p.installments.every(
+          (i) =>
+            i.close_date >= today &&
+            !invoices.data?.find((invoice) => invoice.id === i.invoice_id)
+              ?.paid,
+        ) && (
+          <button
+            className="icon-button"
+            aria-label={`Editar compra ${p.description}`}
+            onClick={() => setEditPurchase(p)}
+          >
+            <Pencil size={15} />
+          </button>
+        )}
+      {p.status === "active" && (
+        <Button
+          variant="ghost"
+          onClick={() => {
+            setReverseKey(crypto.randomUUID());
+            setReverse({
+              id: p.id,
+              type: "purchase",
+              action: p.installments.every((i) => i.close_date >= today)
+                ? "cancel"
+                : "refund",
+            });
+          }}
+        >
+          Estornar
+        </Button>
+      )}
+    </div>
+  );
+  const renderTransaction = (t: Transaction) => (
+    <div className="transaction-row" key={t.id}>
+      <span className="icon-box">
+        {t.transfer_id ? (
+          <ArrowLeftRight size={18} />
+        ) : t.kind === "income" ? (
+          <ArrowDownLeft size={18} />
+        ) : (
+          <Receipt size={18} />
+        )}
+      </span>
+      <div className="row-content">
+        <strong className={t.kind === "income" ? "teal" : ""}>
+          {t.description}
+        </strong>
+        <small>
+          {cats.find((c) => c.id === t.category_id)?.name ??
+            (t.transfer_id ? "Transferência" : "Sem categoria")}{" "}
+          · {ac.find((a) => a.id === t.account_id)?.name}
+        </small>
+      </div>
+      <div className="mono muted desktop-only">{dateLabel(t.date)}</div>
+      <div className={`amount ${t.kind === "income" ? "teal" : ""}`}>
+        {t.kind === "income" ? "+" : "−"} {money(t.amount)}
+        <small className={t.is_overdue ? "red" : "muted"}>
+          {t.is_overdue ? "Vencida" : statusNames[t.status]}
+        </small>
+      </div>
+      {t.status === "planned" ? (
+        <button
+          className="icon-button"
+          onClick={() => setEditing(t)}
+          aria-label={`Editar ${t.description}`}
+        >
+          <Pencil size={15} />
+        </button>
+      ) : t.status === "posted" && !t.transfer_id && !t.invoice_id ? (
+        <button
+          className="icon-button"
+          aria-label={`Estornar ${t.description}`}
+          onClick={() => {
+            setReverseKey(crypto.randomUUID());
+            setReverse({ id: t.id, type: "transaction" });
+          }}
+        >
+          <Repeat2 size={15} />
+        </button>
+      ) : null}
+    </div>
+  );
   function exportCsv() {
     const safe = (s: string) =>
       '"' + (/^[=+\-@\t\r]/.test(s) ? "'" : "") + s.replaceAll('"', '""') + '"';
     const csv = [
-      "Data;Descrição;Tipo;Valor (centavos);Situação",
-      ...filtered.map((t) =>
-        [t.date, safe(t.description), t.kind, t.amount, t.status].join(";"),
-      ),
+      "Data;Descrição;Tipo;Valor (centavos);Situação;Pagamento",
+      ...entries.map((entry) => {
+        const record = entry.record;
+        const kind =
+          entry.type === "purchase"
+            ? "expense"
+            : entry.record.invoice_id
+              ? "invoice_payment"
+              : entry.record.transfer_id
+                ? "transfer"
+                : entry.record.kind;
+        return [
+          entry.date,
+          safe(record.description),
+          kind,
+          record.amount,
+          record.status,
+          entry.type === "purchase" ? "Crédito" : "Conta",
+        ].join(";");
+      }),
     ].join("\r\n");
     const url = URL.createObjectURL(
       new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" }),
@@ -431,7 +541,7 @@ export default function Finance() {
               ["all", "Todas"],
               ["expense", "Despesas"],
               ["income", "Receitas"],
-              ["purchases", "Compras"],
+              ["purchases", "No crédito"],
               ["invoices", "Faturas"],
               ["recurrences", "Recorrências"],
             ].map(([k, l]) => (
@@ -454,6 +564,13 @@ export default function Finance() {
             />
           </label>
         </div>
+        {tab === "expense" && (
+          <p className="form-help">
+            Inclui gastos da conta e compras no crédito. Pagamentos de fatura
+            ficam em Todas; os totais acima seguem a visão de caixa ou
+            competência selecionada.
+          </p>
+        )}
         {tab === "invoices" ? (
           (invoices.data ?? []).length ? (
             invoices.data?.map((i) => (
@@ -486,62 +603,6 @@ export default function Finance() {
           ) : (
             <Empty description="As faturas são criadas ao registrar compras no cartão." />
           )
-        ) : tab === "purchases" ? (
-          (purchases.data ?? [])
-            .filter((p) =>
-              p.description.toLowerCase().includes(search.toLowerCase()),
-            )
-            .map((p) => (
-              <div className="transaction-row" key={p.id}>
-                <span className="icon-box">
-                  <CreditCard size={18} />
-                </span>
-                <div className="row-content">
-                  <strong>{p.description}</strong>
-                  <small>
-                    {cardName(p.card_id)} · {p.installment_count} parcelas ·{" "}
-                    {dateLabel(p.purchase_date)}
-                  </small>
-                </div>
-                <Badge>{statusNames[p.status]}</Badge>
-                <span className="mono">{money(p.amount)}</span>
-                {p.status === "active" &&
-                  p.installments.every(
-                    (i) =>
-                      i.close_date >= today &&
-                      !invoices.data?.find(
-                        (invoice) => invoice.id === i.invoice_id,
-                      )?.paid,
-                  ) && (
-                    <button
-                      className="icon-button"
-                      aria-label={`Editar compra ${p.description}`}
-                      onClick={() => setEditPurchase(p)}
-                    >
-                      <Pencil size={15} />
-                    </button>
-                  )}
-                {p.status === "active" && (
-                  <Button
-                    variant="ghost"
-                    onClick={() => {
-                      setReverseKey(crypto.randomUUID());
-                      setReverse({
-                        id: p.id,
-                        type: "purchase",
-                        action: p.installments.every(
-                          (i) => i.close_date >= today,
-                        )
-                          ? "cancel"
-                          : "refund",
-                      });
-                    }}
-                  >
-                    Estornar
-                  </Button>
-                )}
-              </div>
-            ))
         ) : tab === "recurrences" ? (
           <>
             <div className="between" style={{ marginBottom: 18 }}>
@@ -622,57 +683,12 @@ export default function Finance() {
               />
             )}
           </>
-        ) : filtered.length ? (
-          filtered.map((t) => (
-            <div className="transaction-row" key={t.id}>
-              <span className="icon-box">
-                {t.transfer_id ? (
-                  <ArrowLeftRight size={18} />
-                ) : t.kind === "income" ? (
-                  <ArrowDownLeft size={18} />
-                ) : (
-                  <Receipt size={18} />
-                )}
-              </span>
-              <div className="row-content">
-                <strong className={t.kind === "income" ? "teal" : ""}>
-                  {t.description}
-                </strong>
-                <small>
-                  {cats.find((c) => c.id === t.category_id)?.name ??
-                    (t.transfer_id ? "Transferência" : "Sem categoria")}{" "}
-                  · {ac.find((a) => a.id === t.account_id)?.name}
-                </small>
-              </div>
-              <div className="mono muted desktop-only">{dateLabel(t.date)}</div>
-              <div className={`amount ${t.kind === "income" ? "teal" : ""}`}>
-                {t.kind === "income" ? "+" : "−"} {money(t.amount)}
-                <small className={t.is_overdue ? "red" : "muted"}>
-                  {t.is_overdue ? "Vencida" : statusNames[t.status]}
-                </small>
-              </div>
-              {t.status === "planned" ? (
-                <button
-                  className="icon-button"
-                  onClick={() => setEditing(t)}
-                  aria-label={`Editar ${t.description}`}
-                >
-                  <Pencil size={15} />
-                </button>
-              ) : t.status === "posted" && !t.transfer_id && !t.invoice_id ? (
-                <button
-                  className="icon-button"
-                  aria-label={`Estornar ${t.description}`}
-                  onClick={() => {
-                    setReverseKey(crypto.randomUUID());
-                    setReverse({ id: t.id, type: "transaction" });
-                  }}
-                >
-                  <Repeat2 size={15} />
-                </button>
-              ) : null}
-            </div>
-          ))
+        ) : entries.length ? (
+          entries.map((entry) =>
+            entry.type === "purchase"
+              ? renderPurchase(entry.record)
+              : renderTransaction(entry.record),
+          )
         ) : (
           <Empty
             title="Nenhuma transação neste período"
