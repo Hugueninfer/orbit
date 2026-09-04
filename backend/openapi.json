@@ -703,6 +703,49 @@
         "title": "ChecklistItem",
         "type": "object"
       },
+      "CollectionOut": {
+        "properties": {
+          "cycle": {
+            "title": "Cycle",
+            "type": "integer"
+          },
+          "total": {
+            "default": 10,
+            "title": "Total",
+            "type": "integer"
+          },
+          "used_count": {
+            "title": "Used Count",
+            "type": "integer"
+          },
+          "version": {
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "used_count",
+          "cycle",
+          "version"
+        ],
+        "title": "CollectionOut",
+        "type": "object"
+      },
+      "CollectionReset": {
+        "additionalProperties": false,
+        "properties": {
+          "version": {
+            "minimum": 0.0,
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "version"
+        ],
+        "title": "CollectionReset",
+        "type": "object"
+      },
       "DashboardOut": {
         "properties": {
           "accounts": {
@@ -1125,6 +1168,17 @@
             "title": "Status",
             "type": "string"
           },
+          "variant_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Variant Id"
+          },
           "version": {
             "title": "Version",
             "type": "integer"
@@ -1220,6 +1274,9 @@
               }
             ]
           },
+          "collection": {
+            "$ref": "#/components/schemas/CollectionOut"
+          },
           "server_now": {
             "format": "date-time",
             "title": "Server Now",
@@ -1230,6 +1287,7 @@
           }
         },
         "required": [
+          "collection",
           "active",
           "server_now",
           "stats"
@@ -5960,6 +6018,52 @@
           }
         ],
         "summary": "State",
+        "tags": [
+          "Focus"
+        ]
+      }
+    },
+    "/api/v1/focus/collection/reset": {
+      "post": {
+        "operationId": "reset_draw_api_v1_focus_collection_reset_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CollectionReset"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Reset Draw",
         "tags": [
           "Focus"
         ]

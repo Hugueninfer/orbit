@@ -474,10 +474,30 @@ class TelegramLink(Aggregate):
     chat_id: Mapped[str | None] = mapped_column(String(80))
 
 
+class FocusCollection(Aggregate):
+    __tablename__ = "focus_collections"
+    kind = "focus_collection"
+    __table_args__ = (
+        *constraints(
+            "focus_collections",
+            checks=(
+                "cycle > 0",
+                "last_variant IS NULL OR last_variant BETWEEN 0 AND 9",
+                "jsonb_array_length(used) <= 10",
+            ),
+        ),
+        UniqueConstraint("owner_id", name="uq_focus_collection_owner"),
+    )
+    used: Mapped[list[int]] = mapped_column(JSONB, default=list)
+    last_variant: Mapped[int | None] = mapped_column(Integer)
+    cycle: Mapped[int] = mapped_column(Integer, default=1)
+
+
 class FocusSession(Aggregate):
     __tablename__ = "focus_sessions"
     kind = "focus_session"
     __table_args__ = (
+        CheckConstraint("variant_id IS NULL OR variant_id BETWEEN 0 AND 9", name="ck_focus_variant"),
         *constraints(
             "focus_sessions",
             checks=(
@@ -498,6 +518,7 @@ class FocusSession(Aggregate):
         ),
         Index("ix_focus_owner_finished", "owner_id", "finished_at"),
     )
+    variant_id: Mapped[int | None] = mapped_column(Integer)
     session_kind: Mapped[str] = mapped_column(String(10))
     species: Mapped[str] = mapped_column(String(10))
     label: Mapped[str] = mapped_column(String(120))
@@ -554,6 +575,7 @@ class Outbox(Base):
 MODELS: dict[str, type[Aggregate]] = {
     cls.kind: cls
     for cls in [
+        FocusCollection,
         FocusSession,
         NoteFolder,
         Note,

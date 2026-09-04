@@ -13,12 +13,11 @@ test("garden is responsive, persists timer across navigation and reload, pauses 
       exact: true,
     })
     .click();
-  await expect(page.locator(".garden-plot")).toHaveCount(6);
+  await expect(page.locator(".garden-plot")).toHaveCount(10);
   await page
     .getByLabel("No que você quer focar?")
     .fill("Construir algo bonito");
   await page.getByLabel("Tempo de foco", { exact: true }).fill("1");
-  await page.getByRole("button", { name: "Cerejeira", exact: true }).click();
   await page.screenshot({
     path: `test-results/focus-${info.project.name}.png`,
     fullPage: true,
@@ -29,7 +28,7 @@ test("garden is responsive, persists timer across navigation and reload, pauses 
     ),
   ).toBe(true);
   await page
-    .getByRole("button", { name: "Plantar e focar", exact: true })
+    .getByRole("button", { name: "Sortear e focar", exact: true })
     .click();
   await expect(
     page.getByRole("button", { name: "Pausar", exact: true }),
@@ -87,9 +86,15 @@ test("garden is responsive, persists timer across navigation and reload, pauses 
     .click();
   await page.getByRole("button", { name: "Confirmar", exact: true }).click();
   await expect(
-    page.getByRole("button", { name: "Plantar e focar", exact: true }),
+    page.getByRole("button", { name: "Sortear e focar", exact: true }),
   ).toBeVisible();
-  await expect(page.locator(".garden-plot")).toHaveCount(6);
+  await expect(page.locator(".garden-plot")).toHaveCount(10);
+  await page
+    .getByRole("button", { name: "Reiniciar sorteio", exact: true })
+    .click();
+  await page.getByRole("button", { name: "Confirmar", exact: true }).click();
+  await expect(page.locator(".tree-draw-status")).toContainText("0 / 10");
+  await expect(page.locator(".garden-plot")).toHaveCount(10);
   await page.getByRole("button", { name: "Histórico", exact: true }).click();
   await expect(page.getByText("Interrompido", { exact: true })).toBeVisible();
   await page.getByRole("link", { name: "Minha conta", exact: true }).click();
@@ -113,7 +118,7 @@ test("a full minute grows one tree while using another Orbit page", async ({
   await page.getByRole("link", { name: "Jardim de Foco", exact: true }).click();
   await page.getByLabel("Tempo de foco", { exact: true }).fill("1");
   await page
-    .getByRole("button", { name: "Plantar e focar", exact: true })
+    .getByRole("button", { name: "Sortear e focar", exact: true })
     .click();
   await expect(
     page.getByRole("button", { name: "Pausar", exact: true }),
@@ -123,7 +128,7 @@ test("a full minute grows one tree while using another Orbit page", async ({
     page.getByRole("link", { name: "Abrir Jardim de Foco" }),
   ).toHaveText("Colheita pronta", { timeout: 75000 });
   await page.getByRole("link", { name: "Abrir Jardim de Foco" }).click();
-  await expect(page.locator(".garden-plot")).toHaveCount(7);
+  await expect(page.locator(".garden-plot")).toHaveCount(11);
   await expect(
     page.getByRole("button", { name: "Fazer intervalo", exact: true }),
   ).toBeVisible();
@@ -137,7 +142,7 @@ test("a full minute grows one tree while using another Orbit page", async ({
     .getByRole("button", { name: "Encerrar sessão", exact: true })
     .click();
   await page.getByRole("button", { name: "Confirmar", exact: true }).click();
-  await expect(page.locator(".garden-plot")).toHaveCount(7);
+  await expect(page.locator(".garden-plot")).toHaveCount(11);
   await page.getByRole("link", { name: "Minha conta", exact: true }).click();
   await page
     .getByRole("button", { name: "Sair da conta", exact: true })

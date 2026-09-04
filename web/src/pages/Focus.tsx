@@ -24,7 +24,7 @@ import {
   type FocusPage,
   type FocusSession,
 } from "../components/focus/FocusProvider";
-import { Tree, speciesNames, type Species } from "../components/focus/Tree";
+import { Tree, speciesNames } from "../components/focus/Tree";
 import { formatTimer, growthStage } from "../focusClock";
 
 const stages = ["Semente", "Broto", "Árvore jovem", "Árvore adulta"];
@@ -33,7 +33,7 @@ export default function Focus() {
   const focus = useFocus();
   const { active, remaining, completed, pending, error, query } = focus;
   const [minutes, setMinutes] = useState("25");
-  const [species, setSpecies] = useState<Species>("oak");
+  const [resetDraw, setResetDraw] = useState(false);
   const [label, setLabel] = useState("");
   const [breakMinutes, setBreakMinutes] = useState("5");
   const [cancel, setCancel] = useState(false);
@@ -62,7 +62,7 @@ export default function Focus() {
       ? 3
       : 0;
   const displaySpecies =
-    active?.species ?? (celebration ? completed.species : species);
+    active?.species ?? (celebration ? completed.species : "oak");
   const formatDate = (value: string) =>
     new Intl.DateTimeFormat(locale, {
       dateStyle: "medium",
@@ -73,7 +73,6 @@ export default function Focus() {
       duration_minutes:
         kind === "focus" ? Number(minutes) : Number(breakMinutes),
       session_kind: kind,
-      species,
       label: kind === "focus" ? label : "",
     });
   }
@@ -161,6 +160,10 @@ export default function Focus() {
             <span className="garden-spark spark-three">·</span>
             <Tree
               species={displaySpecies}
+              variantId={
+                active?.variant_id ??
+                (celebration ? completed.variant_id : null)
+              }
               stage={rest ? 3 : stage}
               animated={active?.status === "running"}
             />
@@ -252,7 +255,7 @@ export default function Focus() {
                     ? "Plantando…"
                     : celebration
                       ? "Plantar outra árvore"
-                      : "Plantar e focar",
+                      : "Sortear e focar",
                 )}
               </Button>
             </div>
@@ -358,29 +361,16 @@ export default function Focus() {
                 {t("Escolha de 1 a 180 minutos.")}
               </small>
               <span className="focus-label" id="tree-label">
-                {t("Escolha sua árvore")}
+                {t("Uma surpresa a cada cultivo")}
               </span>
-              <div
-                className="species-options"
-                role="group"
-                aria-labelledby="tree-label"
-              >
-                {(Object.keys(speciesNames) as Species[]).map((s) => (
-                  <button
-                    key={s}
-                    type="button"
-                    className={species === s ? "selected" : ""}
-                    aria-pressed={species === s}
-                    onClick={() => setSpecies(s)}
-                  >
-                    <Tree species={s} stage={3} island={false} />
-                    <span>{t(speciesNames[s])}</span>
-                    {species === s && (
-                      <Check className="species-check" size={13} />
-                    )}
-                  </button>
+              <div className="tree-surprise-preview" aria-hidden="true">
+                {[0, 4, 5].map((id) => (
+                  <Tree key={id} variantId={id} island={false} />
                 ))}
               </div>
+              <p className="tree-surprise-copy">
+                {t("10 árvores diferentes. Sua próxima é revelada ao iniciar.")}
+              </p>
               <div className="focus-tip">
                 <Sprout size={20} />
                 <p>
@@ -416,6 +406,21 @@ export default function Focus() {
               )}
             </>
           )}
+          <div className="tree-draw-status">
+            <div>
+              <strong>{t("Coleção surpresa")}</strong>
+              <span>{query.data.collection.used_count} / 10</span>
+            </div>
+            <progress max={10} value={query.data.collection.used_count} />
+            <p>{t("Sem repetir neste ciclo. Pausas não gastam sorteios.")}</p>
+            <button
+              type="button"
+              disabled={pending}
+              onClick={() => setResetDraw(true)}
+            >
+              {t("Reiniciar sorteio")}
+            </button>
+          </div>
           {error && (
             <div className="focus-error" role="alert">
               {error.message}
@@ -496,11 +501,13 @@ export default function Focus() {
                         "0",
                       )}
                     </span>
-                    <Tree species={row.species} />
+                    <Tree species={row.species} variantId={row.variant_id} />
                     <span className="plot-label">
                       {row.label || t(speciesNames[row.species])}
                     </span>
                     <span className="plot-meta">
+                      {row.variant_id != null &&
+                        `#${String(row.variant_id + 1).padStart(3, "0")} · `}
                       {row.duration_seconds / 60} min ·{" "}
                       {t(speciesNames[row.species])}
                     </span>
@@ -569,6 +576,21 @@ export default function Focus() {
         </p>
       </section>
       <Confirm
+        open={resetDraw}
+        title={t("Reiniciar o sorteio de árvores?")}
+        pending={pending}
+        onClose={() => setResetDraw(false)}
+        onConfirm={() =>
+          void focus.resetCollection().then((ok) => {
+            if (ok) setResetDraw(false);
+          })
+        }
+      >
+        {t(
+          "As 10 variações voltam ao sorteio. Seu jardim e a sessão atual são preservados; a próxima árvore será diferente da última.",
+        )}
+      </Confirm>
+      <Confirm
         open={cancel}
         title={t("Encerrar este cultivo?")}
         pending={pending}
@@ -593,9 +615,12 @@ export default function Focus() {
           <div className="tree-details">
             <Tree
               species={selected.species}
+              variantId={selected.variant_id}
               stage={selected.status === "completed" ? 3 : 1}
             />
             <h3>
+              {selected.variant_id != null &&
+                `#${String(selected.variant_id + 1).padStart(3, "0")} · `}
               {t(
                 selected.session_kind === "break"
                   ? "INTERVALO"

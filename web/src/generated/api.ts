@@ -335,6 +335,23 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/focus/collection/reset": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Reset Draw */
+    post: operations["reset_draw_api_v1_focus_collection_reset_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/v1/focus/history": {
     parameters: {
       query?: never;
@@ -1462,6 +1479,25 @@ export interface components {
       /** Text */
       text: string;
     };
+    /** CollectionOut */
+    CollectionOut: {
+      /** Cycle */
+      cycle: number;
+      /**
+       * Total
+       * @default 10
+       */
+      total: number;
+      /** Used Count */
+      used_count: number;
+      /** Version */
+      version: number;
+    };
+    /** CollectionReset */
+    CollectionReset: {
+      /** Version */
+      version: number;
+    };
     /** DashboardOut */
     DashboardOut: {
       /** Accounts */
@@ -1619,6 +1655,8 @@ export interface components {
        * @enum {string}
        */
       status: "running" | "paused" | "completed" | "cancelled";
+      /** Variant Id */
+      variant_id?: number | null;
       /** Version */
       version: number;
     };
@@ -1654,6 +1692,7 @@ export interface components {
     /** FocusState */
     FocusState: {
       active: components["schemas"]["FocusOut"] | null;
+      collection: components["schemas"]["CollectionOut"];
       /**
        * Server Now
        * Format: date-time
@@ -3812,6 +3851,39 @@ export interface operations {
         };
         content: {
           "application/json": components["schemas"]["FocusState"];
+        };
+      };
+    };
+  };
+  reset_draw_api_v1_focus_collection_reset_post: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["CollectionReset"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["CollectionOut"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
         };
       };
     };

@@ -6,6 +6,7 @@ from copy import deepcopy
 from datetime import date, datetime
 from functools import lru_cache
 from pathlib import Path
+from random import SystemRandom
 from uuid import UUID, uuid4
 
 from .clock import clock
@@ -51,6 +52,15 @@ def prepare_template(user):
         return value
 
     records = rebase(deepcopy(source["records"]))
+    focus = [r for r in records if r["kind"] == "focus_session"]
+    focus.sort(key=lambda r: r["data"]["finished_at"], reverse=True)
+    variants = SystemRandom().sample(range(10), len(focus))
+    for record, variant in zip(focus, variants, strict=True):
+        record["data"]["variant_id"] = variant
+        record["data"]["species"] = ("oak", "pine", "sakura")[variant % 3]
+    for record in records:
+        if record["kind"] == "focus_collection":
+            record["data"].update(used=variants, last_variant=variants[0] if variants else None)
     by_kind = {
         kind: {record["id"]: record["data"] for record in records if record["kind"] == kind}
         for kind in ("card", "purchase", "invoice")

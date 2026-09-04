@@ -1,4 +1,37 @@
 export const focusMessages: Record<string, { en: string; de: string }> = {
+  "Uma surpresa a cada cultivo": {
+    en: "A surprise with every planting",
+    de: "Eine Überraschung bei jedem Anbau",
+  },
+  "10 árvores diferentes. Sua próxima é revelada ao iniciar.": {
+    en: "10 different trees. Your next one is revealed when you start.",
+    de: "10 verschiedene Bäume. Dein nächster wird beim Start enthüllt.",
+  },
+  "Coleção surpresa": {
+    en: "Surprise collection",
+    de: "Überraschungskollektion",
+  },
+  "Sem repetir neste ciclo. Pausas não gastam sorteios.": {
+    en: "No repeats in this cycle. Breaks do not use draws.",
+    de: "Keine Wiederholung in diesem Zyklus. Pausen verbrauchen keine Ziehungen.",
+  },
+  "Reiniciar sorteio": {
+    en: "Reset draw cycle",
+    de: "Ziehungszyklus zurücksetzen",
+  },
+  "Reiniciar o sorteio de árvores?": {
+    en: "Reset the tree draw cycle?",
+    de: "Ziehungszyklus der Bäume zurücksetzen?",
+  },
+  "As 10 variações voltam ao sorteio. Seu jardim e a sessão atual são preservados; a próxima árvore será diferente da última.":
+    {
+      en: "All 10 variations return to the draw. Your garden and current session stay intact; the next tree will differ from the last.",
+      de: "Alle 10 Varianten kommen wieder in die Ziehung. Dein Garten und die aktuelle Sitzung bleiben erhalten; der nächste Baum unterscheidet sich vom letzten.",
+    },
+  "Sortear e focar": {
+    en: "Draw a tree and focus",
+    de: "Baum ziehen und fokussieren",
+  },
   "Intervalo concluído": { en: "Break complete", de: "Pause beendet" },
   "Jardim de Foco": {
     en: "Focus Garden",

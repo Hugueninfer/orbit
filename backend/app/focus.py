@@ -16,6 +16,7 @@ from .db import database
 from .identity import authenticated
 from .models import FocusSession, User
 from .store import idempotent, problem, public, today, versioned
+from .tree_collection import CollectionOut, allocate_variant, collection_out, get_collection, reset_collection
 
 router = APIRouter(tags=["Focus"])
 
@@ -24,6 +25,7 @@ class FocusStart(BaseModel):
     model_config = ConfigDict(extra="forbid")
     duration_minutes: int = Field(ge=1, le=180)
     session_kind: Literal["focus", "break"] = "focus"
+    # Kept for old clients; all new focus trees are drawn by the server.
     species: Literal["oak", "pine", "sakura"] = "oak"
     label: str = Field(default="", max_length=120)
 
@@ -34,6 +36,7 @@ class FocusCommand(BaseModel):
 
 
 class FocusOut(BaseModel):
+    variant_id: int | None = None
     id: UUID
     version: int
     session_kind: Literal["focus", "break"]
@@ -54,6 +57,7 @@ class FocusStats(BaseModel):
 
 
 class FocusState(BaseModel):
+    collection: CollectionOut
     active: FocusOut | None
     server_now: datetime
     stats: FocusStats
@@ -104,6 +108,7 @@ def state(user: User = Depends(authenticated), db: Session = Depends(database, s
     )
     active = active_session(db, user)
     return {
+        "collection": collection_out(get_collection(db, user)),
         "active": public(active) if active else None,
         "server_now": clock.now(),
         "stats": {"trees": trees, "minutes": seconds // 60, "today_minutes": day_seconds // 60},
@@ -143,10 +148,12 @@ def start(
         if active and not settle(active, now):
             problem(409, "Já existe uma sessão de foco ou intervalo em andamento.")
         db.flush()
+        variant = allocate_variant(db, user) if body.session_kind == "focus" else None
         row = FocusSession(
             owner_id=user.id,
             session_kind=body.session_kind,
-            species=body.species,
+            variant_id=variant,
+            species=("oak", "pine", "sakura")[variant % 3] if variant is not None else "oak",
             label=body.label.strip(),
             duration_seconds=body.duration_minutes * 60,
             remaining_seconds=body.duration_minutes * 60,
@@ -160,6 +167,21 @@ def start(
         return public(row)
 
     return idempotent(db, user, request, body.model_dump(), create)
+
+
+class CollectionReset(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    version: int = Field(ge=0)
+
+
+@router.post("/focus/collection/reset", response_model=CollectionOut)
+def reset_draw(
+    body: CollectionReset,
+    request: Request,
+    user: User = Depends(authenticated),
+    db: Session = Depends(database, scope="function"),
+):
+    return idempotent(db, user, request, body.model_dump(), lambda: reset_collection(db, user, body.version))
 
 
 @router.post("/focus/{identifier}/{action}", response_model=FocusOut)

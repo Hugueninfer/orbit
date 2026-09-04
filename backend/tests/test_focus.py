@@ -76,8 +76,8 @@ def test_demo_has_prepared_isolated_garden(client):
     a, b = demo(client), demo(client)
     first = get(client, a, "/focus/history?garden=true")["items"]
     second = get(client, b, "/focus/history?garden=true")["items"]
-    assert len(first) == 6
-    assert {row["species"] for row in first} == {"oak", "pine", "sakura"}
+    assert len(first) == 10
+    assert all(row["species"] in {"oak", "pine", "sakura"} for row in first)
     assert not {row["id"] for row in first} & {row["id"] for row in second}
     assert get(client, a, "/focus")["active"] is None
 
@@ -107,6 +107,6 @@ def test_focus_reset_preserves_other_owner_and_restores_base(client):
     reset = client.post("/api/v1/auth/demo/reset", headers=a, json={})
     assert reset.status_code in (200, 204), reset.text
     assert get(client, a, "/focus")["active"] is None
-    assert len(get(client, a, "/focus/history?garden=true")["items"]) == 6
+    assert len(get(client, a, "/focus/history?garden=true")["items"]) == 10
     assert get(client, b, "/focus")["active"]["id"] == other["id"]
     assert command(client, a, row, "cancel").status_code == 404

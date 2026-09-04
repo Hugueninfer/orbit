@@ -932,3 +932,61 @@
     transform: none;
   }
 }
+
+.tree-surprise-preview {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  background: radial-gradient(ellipse, #25463955, transparent);
+  border: 1px solid #34483d;
+  border-radius: 14px;
+  padding: 6px 8px 0;
+}
+.tree-surprise-preview svg {
+  width: 33%;
+  height: 110px;
+}
+.tree-surprise-copy {
+  font-size: 11px;
+  line-height: 1.7;
+  color: #adbfba;
+  margin: 10px 0 0;
+}
+.tree-draw-status {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+.tree-draw-status > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 11px;
+}
+.tree-draw-status span {
+  font: 11px var(--mono);
+  color: #a8dfb7;
+}
+.tree-draw-status progress {
+  width: 100%;
+  height: 5px;
+  margin-top: 12px;
+  accent-color: #9be1b7;
+}
+.tree-draw-status p {
+  font-size: 10px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 8px 0;
+}
+.tree-draw-status button {
+  border: 0;
+  background: transparent;
+  font-size: 10px;
+  color: #b7c4ff;
+  padding: 7px 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  min-height: 30px;
+}

@@ -23,7 +23,6 @@ function Consumer() {
         onClick={() =>
           void f.start({
             duration_minutes: 1,
-            species: "oak",
             label: "",
             session_kind: "focus",
           })

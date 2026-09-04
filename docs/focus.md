@@ -1,6 +1,6 @@
 # Jardim de Foco
 
-A seção `/foco` transforma sessões Pomodoro em um jardim pessoal. Escolha uma duração inteira entre 1 e 180 minutos, uma intenção opcional e carvalho, pinheiro ou cerejeira. Cada sessão de foco concluída adiciona exatamente uma árvore. As seis árvores da demo são exemplos fictícios prontos.
+A seção `/foco` transforma sessões Pomodoro em um jardim pessoal. Escolha uma duração inteira entre 1 e 180 minutos, uma intenção opcional e descubra um dos dez modelos de árvore sorteados pelo servidor. Cada sessão de foco concluída adiciona exatamente uma árvore. As dez árvores da demo são exemplos fictícios prontos.
 
 O crescimento visual passa por semente, broto, árvore jovem e adulta. A árvore adulta só é concedida após confirmação do servidor. Pausar congela os segundos restantes; encerrar antes do fim não concede árvore. Intervalos opcionais de 5, 10 ou 15 minutos não contam como foco e não geram árvores. Sem penalidades, publicidade ou serviços externos.
 
@@ -27,3 +27,5 @@ Regenerar demo somente offline por `python -m app.export_demo_template` a partir
 Testes: `backend/tests/test_focus.py`, teste de limite SQL de demo, `focusClock.test.ts`, `FocusProvider.test.tsx` e `web/e2e/focus.spec.ts`. O teste de conclusão usa um minuto real enquanto outra página do Orbit está aberta; não existe atalho de premiação em produção.
 
 Operação Neon: usar a conexão direta (host sem `-pooler`) para pg_dump e Alembic. A conexão agrupada é reservada ao aplicativo; ferramentas de manutenção podem alterar o search_path da sessão.
+
+Atualização: seleção manual substituída pelo sorteio privado sem repetição de dez modelos, com reinício de ciclo preservando jardim. Detalhes em `tree-collection.md`.

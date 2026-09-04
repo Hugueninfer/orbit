@@ -4630,7 +4630,15 @@
         "#16202f",
         "#44e2cd"
       ],
-      "implementation_guide": "docs/focus.md"
+      "implementation_guide": "docs/focus.md",
+      "tree_collection": {
+        "count": 10,
+        "selection": "server_random_without_replacement",
+        "reset": "preserve_garden_and_exclude_previous",
+        "demo": "ten_variants_shuffled",
+        "implementation": "web/src/components/focus/treeVariants.ts",
+        "guide": "docs/tree-collection.md"
+      }
     }
   ],
   "state_contract": {

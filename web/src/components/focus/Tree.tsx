@@ -1,3 +1,5 @@
+import { treeVariant } from "./treeVariants";
+import { VariantCrown } from "./VariantCrown";
 import { useId } from "react";
 export const speciesNames = {
   oak: "Carvalho",
@@ -7,20 +9,25 @@ export const speciesNames = {
 export type Species = keyof typeof speciesNames;
 export function Tree({
   species = "oak",
+  variantId,
   stage = 3,
   island = true,
   animated = false,
 }: {
   species?: Species;
+  variantId?: number | null;
   stage?: number;
   island?: boolean;
   animated?: boolean;
 }) {
   const id = useId().replace(/:/g, "");
-  const pink = species === "sakura";
-  const colors = pink
-    ? ["#f7b9d5", "#dc7eae", "#b7568e"]
-    : ["#83e3ac", "#42b990", "#238878"];
+  const variant = variantId == null ? null : treeVariant(variantId);
+  const pink = (variant?.species ?? species) === "sakura";
+  const colors =
+    variant?.colors ??
+    (pink
+      ? ["#f7b9d5", "#dc7eae", "#b7568e"]
+      : ["#83e3ac", "#42b990", "#238878"]);
   return (
     <svg
       viewBox="0 0 300 280"
@@ -107,7 +114,9 @@ export function Tree({
               strokeWidth="7"
               strokeLinecap="round"
             />
-            {species === "pine" ? (
+            {variantId != null ? (
+              <VariantCrown variantId={variantId} />
+            ) : species === "pine" ? (
               <>
                 <path
                   d="M150 46l-43 65h20l-36 47h25l-37 35q74 26 143 0l-40-35h26l-39-47h23Z"

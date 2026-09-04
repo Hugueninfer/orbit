@@ -18,7 +18,7 @@ import "../../styles/focus.css";
 export type FocusSession = components["schemas"]["FocusOut"];
 type State = components["schemas"]["FocusState"];
 export type FocusPage = components["schemas"]["FocusPage"];
-export type FocusStart = components["schemas"]["FocusStart"];
+export type FocusStart = Omit<components["schemas"]["FocusStart"], "species">;
 function useFocusController() {
   const client = useQueryClient();
   const mounted = useRef(true);
@@ -123,6 +123,31 @@ function useFocusController() {
       startIntent.current = { body: serialized, key: crypto.randomUUID() };
     return perform("/focus/start", body, startIntent.current.key);
   }
+  async function resetCollection() {
+    if (busy.current || !query.data) return false;
+    busy.current = true;
+    setPending(true);
+    setError(null);
+    try {
+      await request("/focus/collection/reset", {
+        method: "POST",
+        body: JSON.stringify({ version: query.data.collection.version }),
+        headers: { "Idempotency-Key": crypto.randomUUID() },
+      });
+      if (!mounted.current) return false;
+      await query.refetch();
+      return true;
+    } catch (e) {
+      if (mounted.current) {
+        setError(e as Error);
+        await query.refetch();
+      }
+      return false;
+    } finally {
+      busy.current = false;
+      if (mounted.current) setPending(false);
+    }
+  }
   useEffect(() => {
     const key = active ? `${active.id}:${active.version}` : "";
     if (
@@ -146,6 +171,7 @@ function useFocusController() {
     completed,
     command,
     start,
+    resetCollection,
   };
 }
 const FocusContext = createContext<ReturnType<
