@@ -81,3 +81,10 @@ No hosted tracing/OTLP exporter is configured. Data/control dependencies are loc
 ## External publication
 
 The repo and deploy artifacts do not create accounts, register domains or publish URLs. Configure one PostgreSQL database and combined service, create the personal account and validate the exact HTTPS origin, login/logout and mobile persistence. Verify that a demo in another tab cannot access or reset personal data. Record the public URL only after these checks pass.
+
+
+## npm audit unavailable during release
+
+The mandatory web audit runs through `node scripts/audit-web.mjs`. It keeps `--omit=dev --audit-level=high`, limits each network request to 20 seconds and each npm process to 60 seconds, and retries network failures up to three times. High/critical findings, invalid reports and configuration errors fail closed. Persistent registry failure also blocks publication and emits an explicit GitHub error annotation. `npm ci --no-audit` avoids a redundant advisory query during installation; it does not skip the separate required audit gate.
+
+A failed release remains attached to its original commit. After a workflow fix reaches main and verification passes, publish a new release with an unused tag; do not move an existing published tag. The failed first release used tag `1.0.0`, so `1.0.1` can be used if still available.

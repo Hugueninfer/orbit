@@ -47,10 +47,12 @@ jobs:
         working-directory: backend
       - run: uv run alembic upgrade head && uv run pytest -q
         working-directory: backend
-      - run: npm ci && npm run typecheck && npm test && npm run build
+      - run: node --test scripts/tests/audit-web.test.mjs
+      - run: npm ci --no-audit && npm run typecheck && npm test && npm run build
         working-directory: web
-      - run: npm audit --omit=dev --audit-level=high
-        working-directory: web
+      - name: Audit production dependencies (bounded network retries)
+        timeout-minutes: 4
+        run: node scripts/audit-web.mjs
       - run: uv export --frozen --no-dev --no-emit-project --output-file requirements-audit.txt > /dev/null && uv tool run pip-audit -r requirements-audit.txt --no-deps
         working-directory: backend
       - run: ./scripts/generate-api.sh && git diff --exit-code -- backend/openapi.json web/src/generated/api.ts
