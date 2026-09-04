@@ -10,7 +10,7 @@ O servidor aceita apenas documentos JSON limitados a 200 KB, 100.000 caracteres,
 
 ## Deploy e demo
 
-Migração aditiva `c713a0f92d81` cria notes/note_folders e índices por owner, atualização e data. Mesmo PostgreSQL, Docker e Render, sem nova variável. Fazer backup e executar scripts/migrate-remote.sh antes do deploy manual. Reset/expiração removem as novas tabelas na ordem correta. A fixture da demo inclui Faculdade, Presentes, dois registros de diário e uma nota com checklist. Regenerar com app.export_demo_template quando seed.py mudar.
+Migração aditiva `c713a0f92d81` cria notes/note_folders e índices por owner, atualização e data. Mesmo PostgreSQL, Docker e Render, sem nova variável. Fazer backup e executar scripts/migrate-remote.sh antes do deploy manual. Reset/expiração removem as novas tabelas na ordem correta. A fixture da demo inclui Trabalho, Vida, Mercado, Relacionamento e Viagens, com oito notas fictícias, sendo quatro registros de diário. O mais recente é a nota humorística de um recrutador imaginário; o registro do Homem-Aranha aparece no dia anterior. Regenerar com app.export_demo_template quando seed.py mudar.
 
 Referência visual: receita generic_collection, tarefas desktop e backlog mobile do Stitch. Desvio explícito necessário: composição de três painéis e toolbar de escrita para o novo fluxo solicitado. A navegação mobile passa a seis destinos, em uma linha.
 
