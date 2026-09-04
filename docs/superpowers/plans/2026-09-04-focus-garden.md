@@ -38,6 +38,8 @@ Files: backend/app/demo_focus.py, seed.py, demo fixture; docs/focus.md; docs/des
 - [x] Acrescentar árvores fictícias e regenerar fixture pelo exportador offline; executar testes demo inclusive limite de SQL.
 - [x] Executar backend Ruff/mypy/pytest, frontend testes/build, geração OpenAPI e Docker build.
 - [x] Revisão independente; corrigir problemas concretos e repetir verificações afetadas.
-- [ ] Backup PostgreSQL, migrar, integrar main, push e deploy direto Render; validar em demo descartável.
+- [x] Backup PostgreSQL, migrar, integrar main, push e deploy direto Render; validar em demo descartável.
 
-Validação: backend completo 134 testes e 2 casos adicionais de concorrência/reset; 41 testes frontend mais proteção pós-logout; testes Playwright desktop/mobile e sessão real de 1 minuto; Ruff/mypy; build Docker. Revisão independente corrigiu recuperação offline e reutilização de chave após resposta perdida. Backup validado e migração aplicada antes do deploy.
+Validação: backend completo 134 testes e 2 casos adicionais de concorrência/reset; 42 testes frontend; testes Playwright desktop/mobile e sessão real de 1 minuto; Ruff/mypy; build Docker. Revisão independente corrigiu recuperação offline e reutilização de chave após resposta perdida. Backup validado e migração aplicada antes do deploy.
+
+Entrega: commit 9c0cd6765b3990c6470f28fab5e81e9a4c94db73 publicado no Render, deploy dep-dadeaf9t0dsc7388nnig Live em 1m02s. Migração d904f0c05123. Demo online validou seis árvores, oito notas e iniciar/repetir/pausar/retomar/cancelar; encerrada após verificação.

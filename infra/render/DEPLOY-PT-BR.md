@@ -82,3 +82,7 @@ GitHub Actions continua como verificação de qualidade independente. O workflow
 Planos gratuitos têm cotas e podem suspender serviços por inatividade. Confira o plano selecionado e mantenha backups; não há promessa de disponibilidade contínua gratuita.
 
 Referências: [Docker no Render](https://render.com/docs/docker), [Web services](https://render.com/docs/web-services), [Blueprint](https://render.com/docs/blueprint-spec).
+
+### Manutenção no Neon
+
+Use a conexão **direta**, com host sem `-pooler`, em uma cópia privada do arquivo de ambiente ao executar `pg_dump` e migrações Alembic. Mantenha o pooler na configuração do aplicativo. Ferramentas de manutenção alteram estado da conexão, como `search_path`, e não devem compartilhar essas sessões agrupadas com o serviço. Nunca versionar arquivos de ambiente ou backups.
