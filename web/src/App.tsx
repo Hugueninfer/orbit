@@ -1,3 +1,4 @@
+import { FocusProvider, FocusBadge } from "./components/focus/FocusProvider";
 import { LanguageSwitcher } from "./components/LanguageSwitcher";
 import { t, useLocale, getLocale, setLocale } from "./i18n";
 import { useQueryClient } from "@tanstack/react-query";
@@ -17,6 +18,7 @@ import {
   Wallet,
   Dumbbell,
   NotebookPen,
+  Sprout,
   Cable,
   Settings as SettingsIcon,
   Search,
@@ -43,6 +45,7 @@ import {
 } from "./components/ui";
 import Login from "./pages/Login";
 const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Focus = lazy(() => import("./pages/Focus"));
 const Notes = lazy(() => import("./pages/Notes"));
 const Tasks = lazy(() => import("./pages/Tasks"));
 const Habits = lazy(() => import("./pages/Habits"));
@@ -59,6 +62,7 @@ const nav = [
   { to: "/habitos", label: "Hábitos", mobile: "Hábitos", icon: Repeat2 },
   { to: "/financas", label: "Finanças", mobile: "Finanças", icon: Wallet },
   { to: "/notas", label: "Notas & Diário", mobile: "Notas", icon: NotebookPen },
+  { to: "/foco", label: "Jardim de Foco", mobile: "Foco", icon: Sprout },
   { to: "/treinos", label: "Treinos", mobile: "Treinos", icon: Dumbbell },
 ];
 let callbackPromise:
@@ -141,7 +145,11 @@ export default function App() {
         }}
       />
     );
-  return <Shell />;
+  return (
+    <FocusProvider>
+      <Shell />
+    </FocusProvider>
+  );
 }
 function Shell() {
   useLocale();
@@ -277,6 +285,7 @@ function Shell() {
             <kbd>⌘K</kbd>
           </button>
           <div className="actions">
+            <FocusBadge />
             <LanguageSwitcher disabled={!d.data} />
             <Link
               className="icon-button"
@@ -312,6 +321,7 @@ function Shell() {
           <Suspense fallback={<Loading />}>
             <Routes>
               <Route path="/" element={<Dashboard />} />
+              <Route path="/foco" element={<Focus />} />
               <Route path="/notas" element={<Notes />} />
               <Route path="/tarefas" element={<Tasks />} />
               <Route path="/habitos" element={<Habits />} />

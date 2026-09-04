@@ -474,6 +474,41 @@ class TelegramLink(Aggregate):
     chat_id: Mapped[str | None] = mapped_column(String(80))
 
 
+class FocusSession(Aggregate):
+    __tablename__ = "focus_sessions"
+    kind = "focus_session"
+    __table_args__ = (
+        *constraints(
+            "focus_sessions",
+            checks=(
+                "duration_seconds BETWEEN 60 AND 10800",
+                "remaining_seconds BETWEEN 0 AND duration_seconds",
+                "status IN ('running', 'paused', 'completed', 'cancelled')",
+                "session_kind IN ('focus', 'break')",
+                "species IN ('oak', 'pine', 'sakura')",
+                "(status = 'running') = (deadline_at IS NOT NULL)",
+                "(status IN ('completed', 'cancelled')) = (finished_at IS NOT NULL)",
+            ),
+        ),
+        Index(
+            "uq_focus_active_owner",
+            "owner_id",
+            unique=True,
+            postgresql_where=text("status IN ('running', 'paused')"),
+        ),
+        Index("ix_focus_owner_finished", "owner_id", "finished_at"),
+    )
+    session_kind: Mapped[str] = mapped_column(String(10))
+    species: Mapped[str] = mapped_column(String(10))
+    label: Mapped[str] = mapped_column(String(120))
+    duration_seconds: Mapped[int] = mapped_column(Integer)
+    remaining_seconds: Mapped[int] = mapped_column(Integer)
+    status: Mapped[str] = mapped_column(String(12))
+    started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    deadline_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
 class Audit(Base):
     __tablename__ = "audit"
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
@@ -519,6 +554,7 @@ class Outbox(Base):
 MODELS: dict[str, type[Aggregate]] = {
     cls.kind: cls
     for cls in [
+        FocusSession,
         NoteFolder,
         Note,
         TaskList,

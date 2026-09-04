@@ -1035,6 +1035,231 @@
         "title": "Finish",
         "type": "object"
       },
+      "FocusCommand": {
+        "additionalProperties": false,
+        "properties": {
+          "version": {
+            "minimum": 1.0,
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "version"
+        ],
+        "title": "FocusCommand",
+        "type": "object"
+      },
+      "FocusOut": {
+        "properties": {
+          "deadline_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deadline At"
+          },
+          "duration_seconds": {
+            "title": "Duration Seconds",
+            "type": "integer"
+          },
+          "finished_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Finished At"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "remaining_seconds": {
+            "title": "Remaining Seconds",
+            "type": "integer"
+          },
+          "session_kind": {
+            "enum": [
+              "focus",
+              "break"
+            ],
+            "title": "Session Kind",
+            "type": "string"
+          },
+          "species": {
+            "enum": [
+              "oak",
+              "pine",
+              "sakura"
+            ],
+            "title": "Species",
+            "type": "string"
+          },
+          "started_at": {
+            "format": "date-time",
+            "title": "Started At",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "running",
+              "paused",
+              "completed",
+              "cancelled"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "session_kind",
+          "species",
+          "label",
+          "duration_seconds",
+          "remaining_seconds",
+          "status",
+          "started_at",
+          "deadline_at",
+          "finished_at"
+        ],
+        "title": "FocusOut",
+        "type": "object"
+      },
+      "FocusPage": {
+        "properties": {
+          "has_more": {
+            "title": "Has More",
+            "type": "boolean"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/FocusOut"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items",
+          "has_more"
+        ],
+        "title": "FocusPage",
+        "type": "object"
+      },
+      "FocusStart": {
+        "additionalProperties": false,
+        "properties": {
+          "duration_minutes": {
+            "maximum": 180.0,
+            "minimum": 1.0,
+            "title": "Duration Minutes",
+            "type": "integer"
+          },
+          "label": {
+            "default": "",
+            "maxLength": 120,
+            "title": "Label",
+            "type": "string"
+          },
+          "session_kind": {
+            "default": "focus",
+            "enum": [
+              "focus",
+              "break"
+            ],
+            "title": "Session Kind",
+            "type": "string"
+          },
+          "species": {
+            "default": "oak",
+            "enum": [
+              "oak",
+              "pine",
+              "sakura"
+            ],
+            "title": "Species",
+            "type": "string"
+          }
+        },
+        "required": [
+          "duration_minutes"
+        ],
+        "title": "FocusStart",
+        "type": "object"
+      },
+      "FocusState": {
+        "properties": {
+          "active": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FocusOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "server_now": {
+            "format": "date-time",
+            "title": "Server Now",
+            "type": "string"
+          },
+          "stats": {
+            "$ref": "#/components/schemas/FocusStats"
+          }
+        },
+        "required": [
+          "active",
+          "server_now",
+          "stats"
+        ],
+        "title": "FocusState",
+        "type": "object"
+      },
+      "FocusStats": {
+        "properties": {
+          "minutes": {
+            "title": "Minutes",
+            "type": "integer"
+          },
+          "today_minutes": {
+            "title": "Today Minutes",
+            "type": "integer"
+          },
+          "trees": {
+            "title": "Trees",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "trees",
+          "minutes",
+          "today_minutes"
+        ],
+        "title": "FocusStats",
+        "type": "object"
+      },
       "FolderBody": {
         "additionalProperties": false,
         "properties": {
@@ -5712,6 +5937,211 @@
           }
         ],
         "summary": "Report"
+      }
+    },
+    "/api/v1/focus": {
+      "get": {
+        "operationId": "state_api_v1_focus_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FocusState"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "State",
+        "tags": [
+          "Focus"
+        ]
+      }
+    },
+    "/api/v1/focus/history": {
+      "get": {
+        "operationId": "history_api_v1_focus_history_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "garden",
+            "required": false,
+            "schema": {
+              "default": false,
+              "title": "Garden",
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "maximum": 100000,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FocusPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "History",
+        "tags": [
+          "Focus"
+        ]
+      }
+    },
+    "/api/v1/focus/start": {
+      "post": {
+        "operationId": "start_api_v1_focus_start_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FocusStart"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FocusOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Start",
+        "tags": [
+          "Focus"
+        ]
+      }
+    },
+    "/api/v1/focus/{identifier}/{action}": {
+      "post": {
+        "operationId": "command_api_v1_focus__identifier___action__post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "identifier",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Identifier",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "action",
+            "required": true,
+            "schema": {
+              "enum": [
+                "pause",
+                "resume",
+                "complete",
+                "cancel"
+              ],
+              "title": "Action",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FocusCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FocusOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Command",
+        "tags": [
+          "Focus"
+        ]
       }
     },
     "/api/v1/habits": {

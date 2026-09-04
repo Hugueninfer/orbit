@@ -10,7 +10,19 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from starlette.exceptions import HTTPException
 
-from . import accounts, dashboard, finance, habits, identity, integrations, notes, resources, tasks, workouts
+from . import (
+    accounts,
+    dashboard,
+    finance,
+    focus,
+    habits,
+    identity,
+    integrations,
+    notes,
+    resources,
+    tasks,
+    workouts,
+)
 from .config import settings
 from .db import database
 from .identity import authenticated
@@ -119,6 +131,7 @@ def audit_log(user: User = Depends(authenticated), db: Session = Depends(databas
 # Static command routes are registered before generic /{identifier} resource routes.
 for router in [
     notes.router,
+    focus.router,
     accounts.router,
     identity.router,
     tasks.router,

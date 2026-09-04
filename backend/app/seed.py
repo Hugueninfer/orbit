@@ -246,9 +246,11 @@ def build_demo_source(db, user):
             "finished_at": (instant + timedelta(minutes=48)).isoformat(),
         }
         db.flush()
+    from .demo_focus import seed_focus
     from .demo_notes import seed_notes
 
     seed_notes(db, user, day)
+    seed_focus(db, user)
     recompute_all(db, user)
     start_session(db, user, routine["id"])
     db.flush()

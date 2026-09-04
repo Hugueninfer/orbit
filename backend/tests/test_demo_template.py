@@ -44,9 +44,9 @@ def test_template_copies_preserve_links_and_never_reuse_ids_or_mutate_the_base()
             assert row["data"]["habit_id"] in habits
         if row["kind"] in {"routine", "session"}:
             assert all(item["exercise_id"] in exercises for item in row["data"]["exercises"])
-    first[0]["data"]["name"] = "Visitor edit"
+    next(row for row in first if row["kind"] == "task_list")["data"]["name"] = "Visitor edit"
     assert json.dumps(load_template(), sort_keys=True) == source
-    assert second[0]["data"]["name"] != "Visitor edit"
+    assert next(row for row in second if row["kind"] == "task_list")["data"]["name"] != "Visitor edit"
 
 
 def test_template_calendar_tracks_local_today_and_real_invoice_months(monkeypatch):

@@ -147,6 +147,7 @@ def clear_user(db, user):
     # Child-first deletes honor relational foreign keys and leave other owners intact.
     db.execute(delete(Inbox).where(Inbox.owner_id == user.id))
     for kind in [
+        "focus_session",
         "note",
         "note_folder",
         "transaction",

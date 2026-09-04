@@ -4599,6 +4599,38 @@
         "mobile em um painel por vez"
       ],
       "deviation": "Novo módulo solicitado: três painéis no desktop, editor rico e sexto destino mobile. Preservar Geist, superfícies navy, bordas sutis e destaques azul/teal."
+    },
+    {
+      "id": "focus_garden",
+      "status": "derived_user_requested_2026_09_04",
+      "references": [
+        "orbit_h_bitos_consist_ncia",
+        "orbit_dashboard_vis_o_geral"
+      ],
+      "route": "/foco",
+      "composition": [
+        "cabeçalho Pomodoro",
+        "três indicadores de foco",
+        "ilha SVG com quatro estágios e cronômetro",
+        "configuração de duração/intenção/espécie",
+        "jardim e histórico paginados",
+        "drawer de detalhes"
+      ],
+      "extensions": [
+        "árvores SVG: carvalho/pinheiro/cerejeira",
+        "verde folhagem #9be1b7 e cerejeira #f7b9d5",
+        "movimento suave com prefers-reduced-motion",
+        "navegação móvel com sete destinos e mínimo de 44px por item",
+        "indicador persistente de foco ao lado do seletor de idioma"
+      ],
+      "tokens_preserved": [
+        "Geist",
+        "JetBrains Mono",
+        "#0a1422",
+        "#16202f",
+        "#44e2cd"
+      ],
+      "implementation_guide": "docs/focus.md"
     }
   ],
   "state_contract": {

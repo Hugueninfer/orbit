@@ -2,7 +2,7 @@
 
 Visitors continue to get distinct accounts and tokens, with an expiry of 24 hours by default. There is no shared public account: edits, resets, exports and logout apply only to that visitor. Personal accounts and their data are unaffected.
 
-The immutable fictitious dataset lives in `backend/app/fixtures/demo-base.json`. It contains 190 prepared domain/audit records; it has no password, access token, real account or personal data. It is shipped inside the Docker image (and Python package). Entering/resetting a demo rebases this snapshot in memory and inserts records in batches, rather than replaying hundreds of individual application operations.
+The immutable fictitious dataset lives in `backend/app/fixtures/demo-base.json`. It contains 196 prepared domain/audit records; it has no password, access token, real account or personal data. It is shipped inside the Docker image (and Python package). Entering/resetting a demo rebases this snapshot in memory and inserts records in batches, rather than replaying hundreds of individual application operations.
 
 `demo_template.py` creates new UUIDs for all records and nested workout references, shifts civil dates using the visitor's timezone, shifts timestamps relative to now, and recalculates card cycles with the normal calendar rules. Amounts remain integer BRL centavos. Insertion follows foreign-key table order and uses the ORM, preserving the quota hooks for every copied row. If any step fails, the transaction rolls back the account, token and copied records together.
 
@@ -25,3 +25,5 @@ The exporter creates a temporary fictitious account in a transaction and always 
 No additional service, scheduled reset job, environment variable or database migration is required. The Render Free service may still take time to wake after inactivity; the prepared base removes the expensive record-by-record demo initialization after the service is available.
 
 Demo notes include Trabalho, Vida, Mercado, Relacionamento and Viagens, each populated with fictional examples. Four journal entries end with a light-hearted fictional recruiter entry dated today; the Spider-Man diary is dated yesterday. Existing visitors receive the new examples on explicit demo reset or a new demo session.
+
+Demo focus includes six completed sessions, two of each tree species, totaling 225 minutes. All copies have distinct session IDs and no active timer. See `focus.md`.
