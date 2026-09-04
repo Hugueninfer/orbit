@@ -50,7 +50,7 @@ Do not use `docker compose down -v` on data you want to keep. For real data, cre
 - Workout routines, exercise library, independent session snapshots, sets with optional RPE/RIR, draft preservation, timer, history, volume and personal-record calculations.
 - Responsive dashboard with real account data, quick actions, empty/error/loading states, keyboard-accessible drawers and mobile navigation.
 
-The optional Telegram adapter includes linking, durable inbox/outbox, provider boundaries and an explicitly labeled fixture simulation. **Full live audio/conversation/receipt flow is not a validated release feature**; see [backend limitations](backend/README.md). No AI provider is required to run the core.
+The optional Telegram bot accepts voice expenses, extracts fields with Gemini, asks for missing details in the same chat and records through the financial domain services. Its embedded worker uses the existing PostgreSQL inbox/outbox; no separate paid worker is required. Demo uses an explicitly labeled fixture. See [setup and usage](docs/telegram.md). No AI provider is required to run the core.
 
 ## Technical choices
 

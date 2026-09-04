@@ -314,9 +314,11 @@ export function Integrations() {
   const [description, setDescription] = useState("Café da tarde");
   const [amount, setAmount] = useState("8,50");
   const [accountId, setAccountId] = useState("");
-  const [code, setCode] = useState<{ code: string; expires_at: string } | null>(
-    null,
-  );
+  const [code, setCode] = useState<{
+    code: string;
+    expires_at: string;
+    bot_url?: string | null;
+  } | null>(null);
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState("");
   const [error, setError] = useState("");
@@ -350,10 +352,19 @@ export function Integrations() {
           {data.provider_mode === "fixture"
             ? "Explore o fluxo com uma simulação identificada, sem enviar áudios ou acessar uma conta real."
             : data.enabled
-              ? "Vincule sua conta para registrar despesas pelo seu chat privado."
+              ? "Vincule sua conta ao bot e envie uma mensagem de voz pelo Telegram para registrar uma despesa."
               : "A integração de áudio ainda não está configurada nesta instalação. O restante do Orbit funciona normalmente."}
         </p>
         <div className="form-help">{data.status}</div>
+        {data.enabled && (
+          <p className="form-help" style={{ marginTop: 12 }}>
+            Cadastre sua conta ou cartão em Finanças antes do primeiro áudio.
+            Exemplo: “Gastei 35 reais no almoço, pela conta Nubank”. Seus áudios
+            e os nomes das contas, cartões e categorias são enviados ao Google
+            para interpretação. No nível gratuito, esse conteúdo pode ser usado
+            para melhorar os produtos do Google.
+          </p>
+        )}
         {data.enabled && (
           <div className="actions" style={{ marginTop: 22 }}>
             <Button
@@ -366,6 +377,7 @@ export function Integrations() {
                   const value = await action<{
                     code: string;
                     expires_at: string;
+                    bot_url?: string | null;
                   }>("/integrations/telegram/link", {});
                   setCode(value);
                 } catch (e) {
@@ -395,7 +407,19 @@ export function Integrations() {
         )}
         {code && (
           <div className="form-help" style={{ marginTop: 20 }}>
-            <p>Envie ao bot em uma conversa privada:</p>
+            {code.bot_url && (
+              <a
+                className="button primary"
+                href={code.bot_url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Abrir bot no Telegram
+              </a>
+            )}
+            <p>
+              Abra o bot, toque em Iniciar ou envie em uma conversa privada:
+            </p>
             <h2 className="mono teal" style={{ margin: "12px 0" }}>
               /start {code.code}
             </h2>
@@ -407,7 +431,7 @@ export function Integrations() {
         )}
       </Card>
       <Card>
-        <CardTitle>Fluxo previsto para o áudio</CardTitle>
+        <CardTitle>Como registrar pelo Telegram</CardTitle>
         <div className="stack">
           {[
             [

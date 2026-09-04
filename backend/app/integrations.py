@@ -10,7 +10,7 @@ from typing import Protocol
 import httpx
 from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import Field
-from sqlalchemy import delete, func, select, text
+from sqlalchemy import delete, func, select, text, update
 from sqlalchemy.orm import Session
 
 from .clock import clock
@@ -55,8 +55,7 @@ def enabled():
     return bool(
         config.telegram_bot_token
         and config.telegram_webhook_secret
-        and config.telegram_provider_url
-        and config.telegram_provider_key
+        and (config.gemini_api_key or (config.telegram_provider_url and config.telegram_provider_key))
     )
 
 
@@ -69,7 +68,7 @@ def status(user: User = Depends(authenticated), db: Session = Depends(database, 
         "provider_mode": "fixture" if demo else "live" if enabled() else "disabled",
         "status": "Simulação identificada; nenhum áudio é enviado."
         if demo
-        else "Provedor configurado; processamento pelo worker."
+        else "Envie áudios no chat privado do bot. O Gemini interpreta os dados para registrar a despesa."
         if enabled()
         else "Integração desativada: configure bot e provedor de áudio.",
     }
@@ -94,7 +93,12 @@ def link(user: User = Depends(authenticated), db: Session = Depends(database, sc
             "chat_id": None,
         },
     )
-    return {"code": code, "expires_at": expires.isoformat()}
+    username = settings().telegram_bot_username
+    return {
+        "code": code,
+        "expires_at": expires.isoformat(),
+        "bot_url": f"https://t.me/{username}?start={code}" if username else None,
+    }
 
 
 @router.delete("/integrations/telegram/link", response_model=Ok)
@@ -188,7 +192,7 @@ async def webhook(request: Request, db: Session = Depends(database, scope="funct
     message = body.get("message", {})
     if message.get("chat", {}).get("type") != "private":
         return {"ok": True}
-    db.execute(text("SELECT pg_advisory_xact_lock(7789103)"))
+    db.execute(text("SELECT pg_advisory_xact_lock(7789104)"))
     update_id = str(body["update_id"])
     if db.scalar(select(Inbox).where(Inbox.update_id == update_id)):
         return {"ok": True}
@@ -220,8 +224,25 @@ async def webhook(request: Request, db: Session = Depends(database, scope="funct
 def process_inbox(provider: ExpenseProvider | None = None):
     """One-shot worker; execute repeatedly via host scheduler or worker loop."""
     config = settings()
-    provider = provider or HttpExpenseProvider()
+    if provider is None:
+        if config.gemini_api_key:
+            from .gemini import GeminiExpenseProvider
+
+            provider = GeminiExpenseProvider()
+        else:
+            provider = HttpExpenseProvider()
     with SessionLocal.begin() as db:
+        # Serialize the small embedded queue across rolling deploys/CLI workers.
+        if not db.scalar(text("SELECT pg_try_advisory_xact_lock(7789105)")):
+            return False
+        db.execute(
+            update(Inbox)
+            .where(
+                Inbox.status == "needs_clarification",
+                Inbox.created_at <= clock.now() - timedelta(minutes=30),
+            )
+            .values(status="expired", payload={})
+        )
         inbox = db.scalar(
             select(Inbox)
             .where(Inbox.status == "pending")
@@ -242,7 +263,12 @@ def process_inbox(provider: ExpenseProvider | None = None):
             inbox.status = "ignored"
             inbox.payload = {"mode": "fixture"}
             return True
+        if inbox.owner_id and (link is None or link.owner_id != inbox.owner_id):
+            inbox.status = "ignored"
+            inbox.payload = {"reason": "link_changed"}
+            return True
         if text_body.startswith("/start "):
+            existing_link = link
             digest = hashlib.sha256(text_body[7:].strip().upper().encode()).hexdigest()
             link = db.scalar(
                 select(TelegramLink)
@@ -259,7 +285,9 @@ def process_inbox(provider: ExpenseProvider | None = None):
                 inbox.status = "ignored"
                 inbox.payload = {"mode": "fixture"}
                 return True
-            if link:
+            if link and existing_link and existing_link.id != link.id:
+                response = "Este chat já está vinculado. Desvincule no Orbit antes de usar outra conta."
+            elif link:
                 link.chat_id = chat_id
                 inbox.owner_id = link.owner_id
                 link.code_digest = secrets.token_hex(32)
@@ -276,51 +304,125 @@ def process_inbox(provider: ExpenseProvider | None = None):
                 response = "Sessão expirada. Vincule novamente."
             elif not enabled():
                 response = "Integração de áudio desativada. Nenhuma despesa foi registrada."
-            elif payload.get("voice"):
-                try:
-                    voice = payload["voice"]
-                    if voice.get("file_size", 0) > 10_000_000 or voice.get("duration", 0) > 180:
-                        raise ValueError("Áudio acima do limite de 10 MB ou 3 minutos")
-                    with httpx.Client(timeout=45) as client:
-                        meta = client.get(
-                            f"https://api.telegram.org/bot{config.telegram_bot_token}/getFile",
-                            params={"file_id": voice["file_id"]},
-                        )
-                        meta.raise_for_status()
-                        file_path = meta.json()["result"]["file_path"]
-                        content = client.get(
-                            f"https://api.telegram.org/file/bot{config.telegram_bot_token}/{file_path}"
-                        )
-                        content.raise_for_status()
-                        audio = content.content
-                    if len(audio) > 10_000_000:
-                        raise ValueError("Áudio acima de 10 MB")
-                    context = {
-                        "locale": user.profile["locale"],
-                        "accounts": [
-                            {"id": str(r.id), "name": r.data["name"]} for r in rows(db, user, "account")
-                        ],
-                        "categories": [
-                            {"id": str(r.id), "name": r.data["name"]} for r in rows(db, user, "category")
-                        ],
-                        "cards": [{"id": str(r.id), "name": r.data["name"]} for r in rows(db, user, "card")],
-                    }
-                    extracted = provider.extract(audio, context)
-                    del audio
-                    # Savepoint: malformed or ambiguous extraction never partially writes finance.
-                    with db.begin_nested():
-                        result = record_extraction(db, user, extracted)
-                    response = (
-                        f"Registrado: {result['description']} ({result['amount']} centavos). Abra o Orbit para editar ou desfazer."
-                        if result["recorded"]
-                        else result["question"]
+            elif payload.get("voice") or text_body:
+                pending_rows = list(
+                    db.scalars(
+                        select(Inbox)
+                        .where(Inbox.owner_id == user.id, Inbox.status == "needs_clarification")
+                        .order_by(Inbox.created_at.desc())
                     )
-                except (ValueError, KeyError, httpx.HTTPError, HTTPException):
-                    response = "Não foi possível validar a despesa. Confirme os campos no Orbit; nenhum registro parcial foi salvo."
+                )
+                pending = None
+                for previous in pending_rows:
+                    if (
+                        pending is None
+                        and not payload.get("voice")
+                        and previous.payload.get("chat_id") == chat_id
+                        and previous.created_at > clock.now() - timedelta(minutes=30)
+                    ):
+                        pending = previous.payload.get("pending")
+
+                def clear_drafts():
+                    for previous in pending_rows:
+                        previous.payload = {"chat_id": chat_id}
+                        previous.status = "processed"
+
+                # Replacement audio and cancellation explicitly abandon the old draft.
+                # A text retry preserves it until extraction and validation succeed.
+                if payload.get("voice") or text_body == "/cancelar":
+                    clear_drafts()
+                if not payload.get("voice") and not pending:
+                    response = "Envie um áudio de despesa. Para cancelar um esclarecimento, envie /cancelar."
+                elif text_body == "/cancelar":
+                    response = "Esclarecimento cancelado. Nenhuma despesa foi registrada."
+                elif (
+                    db.scalar(
+                        select(func.count())
+                        .select_from(Inbox)
+                        .where(
+                            Inbox.owner_id == user.id,
+                            Inbox.created_at >= clock.now() - timedelta(days=1),
+                            Inbox.status.in_(["processed", "needs_clarification"]),
+                        )
+                    )
+                    or 0
+                ) >= 50:
+                    response = "Limite diário de 50 mensagens atingido. Registre pelo Orbit ou tente amanhã."
+                else:
+                    try:
+                        audio = b""
+                        if payload.get("voice"):
+                            voice = payload["voice"]
+                            if voice.get("file_size", 0) > 10_000_000 or voice.get("duration", 0) > 180:
+                                raise ValueError("Áudio acima do limite de 10 MB ou 3 minutos")
+                            with httpx.Client(timeout=45) as client:
+                                meta = client.get(
+                                    f"https://api.telegram.org/bot{config.telegram_bot_token}/getFile",
+                                    params={"file_id": voice["file_id"]},
+                                )
+                                meta.raise_for_status()
+                                file_path = meta.json()["result"]["file_path"]
+                                # Stream with a hard cap; don't trust Telegram metadata alone.
+                                with client.stream(
+                                    "GET",
+                                    f"https://api.telegram.org/file/bot{config.telegram_bot_token}/{file_path}",
+                                ) as content:
+                                    content.raise_for_status()
+                                    chunks = []
+                                    size = 0
+                                    for chunk in content.iter_bytes():
+                                        size += len(chunk)
+                                        if size > 10_000_000:
+                                            raise ValueError("Áudio acima de 10 MB")
+                                        chunks.append(chunk)
+                                    audio = b"".join(chunks)
+                        context = {
+                            "locale": user.profile["locale"],
+                            "currency": user.profile["currency"],
+                            "today": today(user).isoformat(),
+                            "message": text_body,
+                            "pending": pending,
+                            "accounts": [
+                                {"id": str(r.id), "name": r.data["name"]}
+                                for r in rows(db, user, "account")
+                                if not r.data["archived"]
+                            ],
+                            "categories": [
+                                {"id": str(r.id), "name": r.data["name"]}
+                                for r in rows(db, user, "category")
+                                if not r.data["archived"] and r.data["category_kind"] == "expense"
+                            ],
+                            "cards": [
+                                {"id": str(r.id), "name": r.data["name"]}
+                                for r in rows(db, user, "card")
+                                if not r.data["archived"]
+                            ],
+                        }
+                        if not context["accounts"] and not context["cards"]:
+                            response = "Cadastre uma conta ou cartão em Finanças no Orbit antes de enviar sua despesa."
+                        else:
+                            extracted = provider.extract(audio, context)
+                            del audio
+                            with db.begin_nested():
+                                result = record_extraction(db, user, extracted)
+                            clear_drafts()
+                            if result["recorded"]:
+                                amount = f"{result['amount'] // 100},{result['amount'] % 100:02d}"
+                                response = f"Registrado: {result['description']} — {user.profile['currency']} {amount}. Abra o Orbit para conferir ou corrigir."
+                            else:
+                                response = (
+                                    result["question"]
+                                    + " Responda por texto em até 30 minutos ou envie /cancelar."
+                                )
+                                inbox.status = "needs_clarification"
+                                inbox.payload = {"chat_id": chat_id, "pending": extracted}
+                    except (ValueError, KeyError, TypeError, httpx.HTTPError, HTTPException):
+                        response = "Não consegui interpretar o áudio agora. Nenhuma despesa foi registrada. Tente novamente, informando valor, descrição e conta/cartão; verifique também se o áudio tem até 3 minutos."
             else:
                 response = "Envie um áudio de despesa. Esta integração não é um assistente geral."
-        inbox.status = "processed"
-        inbox.payload = {"chat_id": chat_id}  # Audio metadata/text removed after processing.
+        if inbox.status != "needs_clarification":
+            inbox.status = "processed"
+            inbox.payload = {"chat_id": chat_id}  # Audio metadata/text removed after processing.
         db.add(Outbox(inbox_id=inbox.id, payload={"chat_id": chat_id, "text": response}, status="pending"))
     return True
 
@@ -329,9 +431,14 @@ def deliver_outbox():
     if not settings().telegram_bot_token:
         return False
     with SessionLocal.begin() as db:
+        next_attempt = Outbox.payload["_next_attempt_at"].as_float()
         row = db.scalar(
             select(Outbox)
-            .where(Outbox.status == "pending", Outbox.attempts < 5)
+            .where(
+                Outbox.status == "pending",
+                Outbox.attempts < 5,
+                next_attempt.is_(None) | (next_attempt <= clock.now().timestamp()),
+            )
             .order_by(Outbox.created_at)
             .with_for_update(skip_locked=True)
             .limit(1)
@@ -347,16 +454,37 @@ def deliver_outbox():
         ):
             row.status = "simulated"
             return True
+        if inbox and inbox.owner_id and (link is None or link.owner_id != inbox.owner_id):
+            row.status = "ignored"
+            row.payload = {"reason": "link_changed"}
+            return True
         row.attempts += 1
+        payload = {key: value for key, value in row.payload.items() if key != "_next_attempt_at"}
+        response = None
         try:
             response = httpx.post(
                 f"https://api.telegram.org/bot{settings().telegram_bot_token}/sendMessage",
-                json=row.payload,
+                json=payload,
                 timeout=20,
             )
             response.raise_for_status()
             row.status = "sent"
+            row.payload = payload
         except httpx.HTTPError:
             if row.attempts >= 5:
                 row.status = "failed"
+                row.payload = payload
+            else:
+                delay = 30 * 2 ** (row.attempts - 1)
+                if response is not None:
+                    try:
+                        body = response.json()
+                    except ValueError:
+                        body = {}
+                    parameters = body.get("parameters") if isinstance(body, dict) else None
+                    retry_after = parameters.get("retry_after") if isinstance(parameters, dict) else None
+                    if type(retry_after) is int and retry_after > 0:
+                        delay = max(delay, retry_after)
+                # The schedule survives process restarts and never enters Telegram's request body.
+                row.payload = {**payload, "_next_attempt_at": clock.now().timestamp() + delay}
     return True

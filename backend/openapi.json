@@ -1651,6 +1651,17 @@
       },
       "LinkCode": {
         "properties": {
+          "bot_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bot Url"
+          },
           "code": {
             "title": "Code",
             "type": "string"

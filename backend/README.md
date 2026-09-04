@@ -33,7 +33,7 @@ uv run python -m app.jobs extend-recurrences --through 2026-12-31
 uv run python -m app.jobs telegram-worker
 ```
 
-Run through an external scheduler. Core jobs do not require Redis or a paid provider. Live Telegram needs all of `TELEGRAM_BOT_TOKEN`, `TELEGRAM_WEBHOOK_SECRET`, `TELEGRAM_PROVIDER_URL`, and `TELEGRAM_PROVIDER_KEY`; see the provider protocol in `app/integrations.py` and the explicit M10 limitations in `API.md`.
+Core jobs run through an external scheduler and do not require Redis or a paid provider. Telegram can instead run in the application process with `TELEGRAM_WORKER_ENABLED=true`. Configure `TELEGRAM_BOT_TOKEN`, `TELEGRAM_WEBHOOK_SECRET`, `TELEGRAM_BOT_USERNAME` and `GEMINI_API_KEY`; the default model is `gemini-3.1-flash-lite`. The legacy HTTP provider remains optional. See [Telegram setup](../docs/telegram.md) and remaining limitations in `API.md`.
 
 ## Verification
 

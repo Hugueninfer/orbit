@@ -340,6 +340,7 @@ class IntegrationStatus(BaseModel):
 class LinkCode(BaseModel):
     code: str
     expires_at: datetime
+    bot_url: str | None = None
 
 
 class SimulationOut(BaseModel):

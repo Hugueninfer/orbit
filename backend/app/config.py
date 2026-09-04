@@ -22,6 +22,10 @@ class Settings(BaseSettings):
     integration_unlinked_inbox_limit: int = 1000
     telegram_webhook_secret: str = ""
     telegram_bot_token: str = ""
+    telegram_bot_username: str = ""
+    telegram_worker_enabled: bool = False
+    gemini_api_key: str = ""
+    gemini_model: str = "gemini-3.1-flash-lite"
     telegram_provider_url: str = ""
     telegram_provider_key: str = ""
 

@@ -41,7 +41,7 @@ As 19 telas Stitch e o JSON visual estão preservados em [docs/design](design/LE
 
 O caminho online usa GitHub, Render e Neon. A pedido do usuário, Auth0 deixou de ser necessário; o Orbit oferece login próprio com conta criada por comando administrativo. O [guia de publicação](../infra/render/README.md) descreve os passos para uma instalação online no plano gratuito dentro das cotas dos provedores. Serviços gratuitos podem dormir e compartilham limites; não há promessa de disponibilidade contínua sem custo.
 
-O fluxo completo de Telegram/áudio é uma integração opcional ainda incompleta: há estrutura de captura, processamento e simulação, mas faltam conversas de esclarecimento, ações dos recibos e validação com os serviços reais. Não use essa integração como automação financeira pessoal em produção nesta versão.
+A integração opcional Telegram agora recebe áudio, extrai despesas pelo Gemini, conversa para preencher campos ausentes e registra usando os serviços financeiros do Orbit. O worker roda junto da aplicação. Um áudio sintético em português foi validado na API real do Gemini; o teste final pelo chat depende de vincular o Telegram pessoal. A correção de lançamentos é feita no Orbit; botões de edição/estorno no recibo ainda não foram implementados. Consulte `docs/telegram.md`.
 
 Validação concluída: **53 testes do backend no container Python3.14/PostgreSQL18, 6 testes de regras da interface e 8 jornadas de navegador em desktop/celular**. Login pessoal, renovação silenciosa, persistência e restauração de backup também foram exercitados localmente.
 

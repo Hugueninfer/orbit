@@ -20,8 +20,11 @@ from .responses import AuditOut, Health, RuntimeConfig
 
 @asynccontextmanager
 async def lifespan(app):
-    settings()  # Fail closed on invalid personal-mode configuration.
-    yield
+    config = settings()
+    from .telegram_worker import worker_lifespan
+
+    async with worker_lifespan(config.telegram_worker_enabled and integrations.enabled()):
+        yield
 
 
 app = FastAPI(

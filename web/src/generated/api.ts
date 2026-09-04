@@ -1717,6 +1717,8 @@ export interface components {
     };
     /** LinkCode */
     LinkCode: {
+      /** Bot Url */
+      bot_url?: string | null;
       /** Code */
       code: string;
       /**
