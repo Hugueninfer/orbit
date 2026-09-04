@@ -34,7 +34,7 @@ def seed_personal(db, user):
         )
 
 
-def seed_demo(db, user):
+def build_demo_source(db, user):
     from .store import rows
 
     day = today(user)
@@ -249,3 +249,10 @@ def seed_demo(db, user):
     recompute_all(db, user)
     start_session(db, user, routine["id"])
     db.flush()
+
+
+def seed_demo(db, user):
+    """Clone the prepared base; the source builder is only used by the offline exporter."""
+    from .demo_template import copy_demo_template
+
+    copy_demo_template(db, user)

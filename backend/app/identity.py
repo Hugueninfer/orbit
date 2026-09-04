@@ -134,14 +134,13 @@ def authenticated(
 
 def cleanup_demo(db):
     db.execute(text("SELECT pg_advisory_xact_lock(7789102)"))
-    expired = list(
-        db.scalars(select(User).where(User.expires_at.is_not(None), User.expires_at <= clock.now()))
-    )
-    for user in expired:
-        clear_user(db, user)
-        db.delete(user)
-    db.flush()
-    return len(expired)
+    cutoff = clock.now()
+    expired_ids = select(User.id).where(User.expires_at <= cutoff)
+    # Inbox has a non-cascading owner FK; its outbox children cascade on removal.
+    # All other owned rows cascade from users, including composite owner links.
+    db.execute(delete(Inbox).where(Inbox.owner_id.in_(expired_ids)))
+    removed = db.scalars(delete(User).where(User.expires_at <= cutoff).returning(User.id)).all()
+    return len(removed)
 
 
 def clear_user(db, user):
@@ -185,7 +184,6 @@ def demo(db: Session = Depends(database, scope="function")):
     config = settings()
     if config.app_mode not in {"demo", "combined"}:
         problem(404, "Demonstração indisponível")
-    db.execute(text("SELECT pg_advisory_xact_lock(7789102)"))
     cleanup_demo(db)
     count = db.scalar(select(func.count()).select_from(User).where(User.expires_at.is_not(None)))
     if (count or 0) >= config.demo_max_sessions:

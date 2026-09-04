@@ -26,3 +26,5 @@ Decisão Telegram em 2026-09-04: receber mensagens de voz em bot próprio e regi
 Preferência aprovada em 2026-09-04: Telegram assume crédito quando a forma de pagamento não é informada; forma explícita prevalece. Um só cartão ativo pode ser usado automaticamente; múltiplos cartões exigem esclarecimento. Compras no crédito aparecem também em Despesas; pagamento de fatura não deve duplicá-las.
 
 Idiomas e seletores (2026-09-04): interface pt-BR/en-US/de-DE, preview imediato e persistência no perfil ao salvar. Usar i18n.ts + catálogos por módulo; BRL e valores de domínio/dados do usuário não mudam. Todo select visual usa components/Select.tsx e option com value estável explícito. Valores monetários de edição usam moneyInput; não formatar com replace manual. Não usar texto localizado para cálculos de datas/horas.
+
+Demo pronta (2026-09-04): seed_demo copia fixtures/demo-base.json em lotes com IDs novos e datas atuais; build_demo_source é somente gerador offline. Preservar isolamento/expiração de 24h e quota ORM. Ao mudar exemplos, reexportar base e testar calendário das faturas e referências. Ver docs/demo.md.
