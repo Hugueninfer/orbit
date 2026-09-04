@@ -21,7 +21,7 @@ class ProfilePatch(Input):
     name: Name | None = None
     timezone: str | None = None
     currency: Currency | None = None
-    locale: Literal["pt-BR", "en-US"] | None = None
+    locale: Literal["pt-BR", "en-US", "de-DE"] | None = None
     week_start: Annotated[int, Field(ge=0, le=6)] | None = None
     weight_unit: Literal["kg", "lb"] | None = None
 

@@ -10,10 +10,13 @@ import type {
   Purchase,
 } from "../types";
 import { Button, Drawer, Field, useToast } from "../components/ui";
+import { Select } from "../components/Select";
+import { useT } from "../i18n";
 import {
   installmentParts,
   localDate,
   money,
+  moneyInput,
   parseMoney,
   parseBalance,
 } from "../format";
@@ -38,11 +41,7 @@ export function TransactionEditor({
     purchase ? "card" : (transaction?.kind ?? "expense"),
   );
   const [amount, setAmount] = useState(
-    transaction || purchase
-      ? ((transaction?.amount ?? purchase!.amount) / 100)
-          .toFixed(2)
-          .replace(".", ",")
-      : "",
+    transaction || purchase ? moneyInput(transaction?.amount ?? purchase!.amount) : "",
   );
   const [description, setDescription] = useState(
     transaction?.description ?? purchase?.description ?? "",
@@ -69,6 +68,7 @@ export function TransactionEditor({
   const [key] = useState(crypto.randomUUID());
   const actions = useActions();
   const toast = useToast();
+  const t = useT();
   let parts: number[] = [];
   try {
     parts = installmentParts(parseMoney(amount), count);
@@ -80,7 +80,7 @@ export function TransactionEditor({
     setBusy(true);
     try {
       const value = parseMoney(amount);
-      if (!description.trim()) throw new Error("Adicione uma descrição.");
+      if (!description.trim()) throw new Error(t("Adicione uma descrição."));
       if (type === "card") {
         await actions(
           purchase ? `/purchases/${purchase.id}` : "/purchases",
@@ -147,7 +147,7 @@ export function TransactionEditor({
           );
         } else await actions("/transactions", payload, "POST", key);
       }
-      toast(recurring ? "Recorrência criada" : "Transação salva");
+      toast(t(recurring ? "Recorrência criada" : "Transação salva"));
       onClose();
     } catch (e) {
       setError((e as Error).message);
@@ -159,25 +159,25 @@ export function TransactionEditor({
     <Drawer
       title={
         purchase
-          ? "Editar compra"
+          ? t("Editar compra")
           : transaction
-            ? "Editar transação"
-            : "Nova transação"
+            ? t("Editar transação")
+            : t("Nova transação")
       }
       open
       onClose={onClose}
-      description="Tudo sob controle, até o último centavo"
+      description={t("Tudo sob controle, até o último centavo")}
       footer={
         <>
-          <Button onClick={onClose}>Cancelar</Button>
+          <Button onClick={onClose}>{t("Cancelar")}</Button>
           <Button variant="primary" onClick={save} disabled={busy}>
             <Check size={17} />
-            {busy ? "Salvando…" : "Confirmar transação"}
+            {t(busy ? "Salvando…" : "Confirmar transação")}
           </Button>
         </>
       }
     >
-      <Field label="Tipo de operação">
+      <Field label={t("Tipo de operação")}>
         <div className="tabs">
           {[
             ["expense", "Despesa"],
@@ -194,37 +194,37 @@ export function TransactionEditor({
                 setCategory("");
               }}
             >
-              {label}
+              {t(label)}
             </button>
           ))}
         </div>
       </Field>
-      <Field label="Valor da operação · BRL">
+      <Field label={t("Valor da operação · BRL")}>
         <input
           className="money-input"
           inputMode="decimal"
           autoFocus
-          placeholder="0,00"
+          placeholder={moneyInput(0)}
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
         />
       </Field>
-      <Field label="Descrição">
+      <Field label={t("Descrição")}>
         <input
           value={description}
           maxLength={200}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Ex.: Almoço, mercado, salário…"
+          placeholder={t("Ex.: Almoço, mercado, salário…")}
         />
       </Field>
       <div className="form-grid">
         {type !== "transfer" && (
-          <Field label="Categoria">
-            <select
+          <Field label={t("Categoria")}>
+            <Select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
-              <option value="">Sem categoria</option>
+              <option value="">{t("Sem categoria")}</option>
               {categories
                 .filter(
                   (c) => c.kind === (type === "income" ? "income" : "expense"),
@@ -234,10 +234,10 @@ export function TransactionEditor({
                     {c.name}
                   </option>
                 ))}
-            </select>
+            </Select>
           </Field>
         )}
-        <Field label="Data">
+        <Field label={t("Data")}>
           <input
             type="date"
             value={date}
@@ -247,8 +247,8 @@ export function TransactionEditor({
       </div>
       {type === "card" ? (
         <>
-          <Field label="Cartão de crédito">
-            <select
+          <Field label={t("Cartão de crédito")}>
+            <Select
               disabled={!!purchase}
               value={card}
               onChange={(e) => setCard(e.target.value)}
@@ -258,17 +258,17 @@ export function TransactionEditor({
                   {c.name} (••{c.last_four})
                 </option>
               ))}
-            </select>
+            </Select>
             {!cards.length && (
-              <small>Crie um cartão na página de finanças primeiro.</small>
+              <small>{t("Crie um cartão na página de finanças primeiro.")}</small>
             )}
           </Field>
           <div className="form-help">
             <div className="row">
               <CreditCard size={17} className="teal" />
-              <strong>Compra parcelada</strong>
+              <strong>{t("Compra parcelada")}</strong>
             </div>
-            <Field label="Número de parcelas">
+            <Field label={t("Número de parcelas")}>
               <input
                 type="number"
                 min={1}
@@ -280,7 +280,7 @@ export function TransactionEditor({
             {parts.length > 0 && (
               <>
                 <small>
-                  As parcelas somam exatamente{" "}
+                  {t("As parcelas somam exatamente")} {" "}
                   {money(parts.reduce((a, b) => a + b, 0))}.
                 </small>
                 <div className="installments">
@@ -298,8 +298,8 @@ export function TransactionEditor({
         </>
       ) : (
         <>
-          <Field label={type === "transfer" ? "Conta de origem" : "Conta"}>
-            <select
+          <Field label={t(type === "transfer" ? "Conta de origem" : "Conta")}>
+            <Select
               value={account}
               onChange={(e) => setAccount(e.target.value)}
             >
@@ -308,18 +308,18 @@ export function TransactionEditor({
                   {a.name}
                 </option>
               ))}
-            </select>
+            </Select>
             {!accounts.length && (
-              <small>Crie uma conta na página de finanças primeiro.</small>
+              <small>{t("Crie uma conta na página de finanças primeiro.")}</small>
             )}
           </Field>
           {type === "transfer" ? (
-            <Field label="Conta de destino">
-              <select
+            <Field label={t("Conta de destino")}>
+              <Select
                 value={destination}
                 onChange={(e) => setDestination(e.target.value)}
               >
-                <option value="">Selecione a conta</option>
+                <option value="">{t("Selecione a conta")}</option>
                 {accounts
                   .filter((a) => a.id !== account)
                   .map((a) => (
@@ -327,22 +327,22 @@ export function TransactionEditor({
                       {a.name}
                     </option>
                   ))}
-              </select>
+              </Select>
             </Field>
           ) : (
             <>
-              <Field label="Situação">
-                <select
+              <Field label={t("Situação")}>
+                <Select
                   disabled={recurring}
                   value={status}
                   onChange={(e) =>
                     setStatus(e.target.value as Transaction["status"])
                   }
                 >
-                  <option value="posted">Realizada</option>
-                  <option value="planned">Prevista</option>
-                  {transaction && <option value="cancelled">Cancelada</option>}
-                </select>
+                  <option value="posted">{t("Realizada")}</option>
+                  <option value="planned">{t("Prevista")}</option>
+                  {transaction && <option value="cancelled">{t("Cancelada")}</option>}
+                </Select>
               </Field>
               {!transaction && (
                 <label className="checkbox-label">
@@ -351,7 +351,7 @@ export function TransactionEditor({
                     checked={recurring}
                     onChange={(e) => setRecurring(e.target.checked)}
                   />
-                  Repetir esta transação
+                  {t("Repetir esta transação")}
                 </label>
               )}
               {recurring && (
@@ -366,8 +366,7 @@ export function TransactionEditor({
                     minDate={date}
                   />
                   <p className="form-help">
-                    Os próximos lançamentos serão criados como previstos.
-                    Confirme cada um quando o pagamento acontecer.
+                    {t("Os próximos lançamentos serão criados como previstos. Confirme cada um quando o pagamento acontecer.")}
                   </p>
                 </>
               )}
@@ -406,20 +405,21 @@ export function FinanceResourceEditor({
   const [error, setError] = useState("");
   const actions = useActions();
   const toast = useToast();
+  const t = useT();
   return (
     <Drawer
       title={
         kind === "accounts"
-          ? "Nova conta"
+          ? t("Nova conta")
           : kind === "categories"
-            ? "Nova categoria"
-            : "Novo cartão"
+            ? t("Nova categoria")
+            : t("Novo cartão")
       }
       open
       onClose={onClose}
       footer={
         <>
-          <Button onClick={onClose}>Cancelar</Button>
+          <Button onClick={onClose}>{t("Cancelar")}</Button>
           <Button
             variant="primary"
             disabled={busy || !name.trim()}
@@ -448,7 +448,7 @@ export function FinanceResourceEditor({
                           color: "#b7c4ff",
                         };
                 await actions("/" + kind, payload);
-                toast("Registro criado");
+                toast(t("Registro criado"));
                 onClose();
               } catch (e) {
                 setError((e as Error).message);
@@ -457,12 +457,12 @@ export function FinanceResourceEditor({
               }
             }}
           >
-            Salvar
+            {t("Salvar")}
           </Button>
         </>
       }
     >
-      <Field label="Nome">
+      <Field label={t("Nome")}>
         <input
           autoFocus
           maxLength={100}
@@ -472,17 +472,17 @@ export function FinanceResourceEditor({
       </Field>
       {kind === "accounts" && (
         <>
-          <Field label="Tipo de conta">
-            <select value={type} onChange={(e) => setType(e.target.value)}>
-              <option value="checking">Conta corrente</option>
-              <option value="savings">Reserva / Poupança</option>
-              <option value="cash">Dinheiro</option>
-            </select>
+          <Field label={t("Tipo de conta")}>
+            <Select value={type} onChange={(e) => setType(e.target.value)}>
+              <option value="checking">{t("Conta corrente")}</option>
+              <option value="savings">{t("Reserva / Poupança")}</option>
+              <option value="cash">{t("Dinheiro")}</option>
+            </Select>
           </Field>
-          <Field label="Saldo inicial (R$)">
+          <Field label={t("Saldo inicial (R$)")}>
             <input
               inputMode="decimal"
-              placeholder="0,00"
+              placeholder={moneyInput(0)}
               value={opening}
               onChange={(e) => setOpening(e.target.value)}
             />
@@ -490,16 +490,16 @@ export function FinanceResourceEditor({
         </>
       )}
       {kind === "categories" && (
-        <Field label="Tipo">
-          <select value={type} onChange={(e) => setType(e.target.value)}>
-            <option value="expense">Despesa</option>
-            <option value="income">Receita</option>
-          </select>
+        <Field label={t("Tipo")}>
+          <Select value={type} onChange={(e) => setType(e.target.value)}>
+            <option value="expense">{t("Despesa")}</option>
+            <option value="income">{t("Receita")}</option>
+          </Select>
         </Field>
       )}
       {kind === "cards" && (
         <>
-          <Field label="Últimos quatro dígitos">
+          <Field label={t("Últimos quatro dígitos")}>
             <input
               inputMode="numeric"
               maxLength={4}
@@ -509,7 +509,7 @@ export function FinanceResourceEditor({
             />
           </Field>
           <div className="form-grid">
-            <Field label="Dia de fechamento">
+            <Field label={t("Dia de fechamento")}>
               <input
                 type="number"
                 min={1}
@@ -518,7 +518,7 @@ export function FinanceResourceEditor({
                 onChange={(e) => setCloseDay(e.target.value)}
               />
             </Field>
-            <Field label="Dia de vencimento">
+            <Field label={t("Dia de vencimento")}>
               <input
                 type="number"
                 min={1}
@@ -528,29 +528,28 @@ export function FinanceResourceEditor({
               />
             </Field>
           </div>
-          <Field label="Limite (R$) · opcional">
+          <Field label={t("Limite (R$) · opcional")}>
             <input
               inputMode="decimal"
               value={limit}
               onChange={(e) => setLimit(e.target.value)}
             />
           </Field>
-          <Field label="Conta de pagamento">
-            <select
+          <Field label={t("Conta de pagamento")}>
+            <Select
               value={account}
               onChange={(e) => setAccount(e.target.value)}
             >
-              <option value="">Selecionar ao pagar</option>
+              <option value="">{t("Selecionar ao pagar")}</option>
               {accounts.map((a) => (
                 <option key={a.id} value={a.id}>
                   {a.name}
                 </option>
               ))}
-            </select>
+            </Select>
           </Field>
           <p className="form-help">
-            Informe somente os últimos quatro dígitos. O Orbit não precisa do
-            número completo nem do código de segurança.
+            {t("Informe somente os últimos quatro dígitos. O Orbit não precisa do número completo nem do código de segurança.")}
           </p>
         </>
       )}
@@ -569,8 +568,9 @@ export function RecurrenceEditor({
   recurrence: Recurrence;
   onClose: () => void;
 }) {
+  const t = useT();
   const [amount, setAmount] = useState(
-    (recurrence.amount / 100).toFixed(2).replace(".", ","),
+    moneyInput(recurrence.amount),
   );
   const [description, setDescription] = useState(recurrence.description);
   const [frequency, setFrequency] = useState<Frequency>(recurrence.frequency);
@@ -584,11 +584,11 @@ export function RecurrenceEditor({
   return (
     <Drawer
       open
-      title="Editar recorrência"
+      title={t("Editar recorrência")}
       onClose={onClose}
       footer={
         <>
-          <Button onClick={onClose}>Cancelar</Button>
+          <Button onClick={onClose}>{t("Cancelar")}</Button>
           <Button
             variant="primary"
             disabled={busy}
@@ -608,7 +608,7 @@ export function RecurrenceEditor({
                   },
                   "PATCH",
                 );
-                toast("Recorrência atualizada");
+                toast(t("Recorrência atualizada"));
                 onClose();
               } catch (e) {
                 setError((e as Error).message);
@@ -617,18 +617,18 @@ export function RecurrenceEditor({
               }
             }}
           >
-            Salvar
+            {t("Salvar")}
           </Button>
         </>
       }
     >
-      <Field label="Descrição">
+      <Field label={t("Descrição")}>
         <input
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
       </Field>
-      <Field label="Valor (R$)">
+      <Field label={t("Valor (R$)")}>
         <input
           inputMode="decimal"
           value={amount}
@@ -645,7 +645,7 @@ export function RecurrenceEditor({
         minDate={recurrence.start_date}
       />
       {frequency === "monthly" && (
-        <Field label="Dia do mês">
+        <Field label={t("Dia do mês")}>
           <input
             type="number"
             min={1}
@@ -656,9 +656,7 @@ export function RecurrenceEditor({
         </Field>
       )}
       <p className="form-help">
-        Os lançamentos já realizados permanecem no histórico. As alterações
-        atualizam os lançamentos futuros previstos. O histórico já realizado é
-        preservado.
+        {t("Os lançamentos já realizados permanecem no histórico. As alterações atualizam os lançamentos futuros previstos. O histórico já realizado é preservado.")}
       </p>
       {error && <p className="form-error">{error}</p>}
     </Drawer>
@@ -689,10 +687,11 @@ function RecurrenceFields({
   setEndDate: (v: string) => void;
   minDate: string;
 }) {
+  const t = useT();
   return (
     <>
       <div className="form-grid">
-        <Field label="Repetir a cada">
+        <Field label={t("Repetir a cada")}>
           <input
             type="number"
             min={1}
@@ -701,20 +700,20 @@ function RecurrenceFields({
             onChange={(e) => setInterval(Number(e.target.value))}
           />
         </Field>
-        <Field label="Frequência">
-          <select
+        <Field label={t("Frequência")}>
+          <Select
             value={frequency}
             onChange={(e) => setFrequency(e.target.value as Frequency)}
           >
             {Object.entries(frequencyNames).map(([value, label]) => (
               <option value={value} key={value}>
-                {label}
+                {t(label)}
               </option>
             ))}
-          </select>
+          </Select>
         </Field>
       </div>
-      <Field label="Data final (opcional)">
+      <Field label={t("Data final (opcional)")}>
         <input
           type="date"
           min={minDate}

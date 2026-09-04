@@ -111,3 +111,9 @@ ORBIT_BASE_URL=http://127.0.0.1:8080 npm run e2e
 - [Optional AWS laboratory](infra/aws/README.md). Terraform validation is not a claim of a deployed AWS environment.
 
 The workflow verifies code, contracts and a real container journey. Render can build the Dockerfile directly from this repository without waiting for GitHub Actions or creating a release. The optional GitHub release workflow still publishes a versioned container to GHCR; it does not provision cloud services or migrate databases automatically.
+
+## Interface languages and select controls
+
+Choose Português, English or Deutsch on the login screen, or in Settings → Language → Save changes. The preview is immediate; saving stores the preference in the account. Existing names, descriptions and financial records are preserved. Currency remains BRL; display dates/numbers and money entry follow the selected locale (English `1234.56`, Portuguese/German `1234,56`).
+
+New UI text belongs in `web/src/locales/` and must use the locale hooks in `web/src/i18n.ts`. Keep placeholders identical across languages and never translate stored enum values or user content. Every dropdown uses `web/src/components/Select.tsx`, with explicit invariant option values and translated labels. The shared component supports keyboard navigation, required validation and drawers with the Orbit dark theme.

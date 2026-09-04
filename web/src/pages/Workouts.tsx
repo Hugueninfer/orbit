@@ -33,7 +33,10 @@ import {
   useToast,
 } from "../components/ui";
 import { dateLabel, decimal, displayLoad, canonicalLoad } from "../format";
+import { Select } from "../components/Select";
+import { useT } from "../i18n";
 export default function Workouts() {
+  const t = useT();
   const profile = useApi<Profile>("/me");
   const unit = profile.data?.weight_unit ?? "kg";
   const routines = useApi<Routine[]>("/routines");
@@ -83,35 +86,35 @@ export default function Workouts() {
       {active.data ? (
         <div className="hero">
           <div>
-            <Badge tone="teal">● Treino em andamento</Badge>
+            <Badge tone="teal">● {t("Treino em andamento")}</Badge>
             <h1>{active.data.name}</h1>
-            <p>Sua sessão está salva. Continue de onde parou.</p>
+            <p>{t("Sua sessão está salva. Continue de onde parou.")}</p>
           </div>
           <Button
             variant="primary"
             onClick={() => navigate(`/treinos/sessao/${active.data!.id}`)}
           >
             <Play size={17} />
-            Retomar treino
+            {t("Retomar treino")}
           </Button>
         </div>
       ) : suggested ? (
         <div className="hero">
           <div>
-            <Badge tone="teal">Sua próxima sessão</Badge>
+            <Badge tone="teal">{t("Sua próxima sessão")}</Badge>
             <h1>{suggested.name}</h1>
             <p>
               {suggested.description ||
-                "Mantenha a constância e acompanhe sua evolução a cada série."}
+                t("Mantenha a constância e acompanhe sua evolução a cada série.")}
             </p>
             <div className="actions" style={{ marginTop: 22 }}>
               <span className="row muted">
                 <ListTodo size={17} />
-                {suggested.exercises.length} exercícios
+                {t("{{count}} exercícios", { count: suggested.exercises.length })}
               </span>
               <span className="row muted">
                 <Dumbbell size={17} />
-                {suggested.exercises.reduce((s, e) => s + e.sets, 0)} séries
+                {t("{{count}} séries", { count: suggested.exercises.reduce((s, e) => s + e.sets, 0) })}
               </span>
             </div>
             <label className="checkbox-label">
@@ -120,7 +123,7 @@ export default function Workouts() {
                 checked={copyLast}
                 onChange={(e) => setCopyLast(e.target.checked)}
               />
-              Copiar cargas e repetições do último treino
+              {t("Copiar cargas e repetições do último treino")}
             </label>
             <div className="actions">
               <Button
@@ -129,11 +132,11 @@ export default function Workouts() {
                 onClick={() => start(suggested)}
               >
                 <Play size={17} />
-                Iniciar treino agora
+                {t("Iniciar treino agora")}
               </Button>
               <Button onClick={() => setHistory(true)}>
                 <History size={17} />
-                Ver histórico
+                {t("Ver histórico")}
               </Button>
             </div>
           </div>
@@ -142,12 +145,12 @@ export default function Workouts() {
             style={{ minWidth: 240, gap: 24, border: 0 }}
           >
             <div>
-              <span className="caps muted">Sessões</span>
+              <span className="caps muted">{t("Sessões")}</span>
               <h1 className="teal">{finished.length}</h1>
-              <small>concluídas</small>
+              <small>{t("concluídas")}</small>
             </div>
             <div>
-              <span className="caps muted">Volume total</span>
+              <span className="caps muted">{t("Volume total")}</span>
               <h1 style={{ fontSize: 25 }}>
                 {decimal(
                   Number(
@@ -158,18 +161,18 @@ export default function Workouts() {
                   ),
                 )}
               </h1>
-              <small>{unit} registrados</small>
+              <small>{t("{{unit}} registrados", { unit })}</small>
             </div>
           </div>
         </div>
       ) : (
         <Card>
           <Empty
-            title="Seu próximo recorde começa aqui"
-            description="Monte sua primeira rotina e registre sua evolução com clareza."
+            title={t("Seu próximo recorde começa aqui")}
+            description={t("Monte sua primeira rotina e registre sua evolução com clareza.")}
             action={
               <AddButton onClick={() => setParams({ new: "1" })}>
-                Criar rotina
+                {t("Criar rotina")}
               </AddButton>
             }
           />
@@ -177,15 +180,15 @@ export default function Workouts() {
       )}
       <div className="between">
         <h2>
-          Rotinas operacionais <Badge>{all.length} ativas</Badge>
+          {t("Rotinas operacionais")} <Badge>{t("{{count}} ativas", { count: all.length })}</Badge>
         </h2>
         <div className="actions">
           <Button onClick={() => setHistory(true)}>
             <History size={16} />
-            Histórico
+            {t("Histórico")}
           </Button>
           <AddButton onClick={() => setParams({ new: "1" })}>
-            Nova rotina
+            {t("Nova rotina")}
           </AddButton>
         </div>
       </div>
@@ -194,11 +197,11 @@ export default function Workouts() {
           <Card key={r.id} className="routine-card">
             <div className="between">
               <Badge tone="blue">
-                {r.exercises[0]?.muscle_group || "Treino"}
+                {t(r.exercises[0]?.muscle_group || "Treino")}
               </Badge>
               <button
                 className="icon-button"
-                aria-label={`Editar ${r.name}`}
+                aria-label={t("Editar {{name}}", { name: r.name })}
                 onClick={() => setEditing(r)}
               >
                 <Pencil size={16} />
@@ -211,26 +214,26 @@ export default function Workouts() {
             <div className="routine-metrics">
               <div>
                 <strong>{r.exercises.length}</strong>
-                <small>exercícios</small>
+                <small>{t("exercícios")}</small>
               </div>
               <div>
                 <strong>{r.exercises.reduce((s, e) => s + e.sets, 0)}</strong>
-                <small>séries</small>
+                <small>{t("séries")}</small>
               </div>
               <div>
                 <strong>{r.exercises[0]?.rest_seconds ?? 90}s</strong>
-                <small>descanso</small>
+                <small>{t("descanso")}</small>
               </div>
             </div>
             <div className="between">
               <small className="mono">
                 {finished.find((s) => s.routine_id === r.id)
-                  ? `Última: ${dateLabel(finished.find((s) => s.routine_id === r.id)?.finished_at)}`
-                  : "Pronta para começar"}
+                  ? t("Última: {{date}}", { date: dateLabel(finished.find((s) => s.routine_id === r.id)?.finished_at) })
+                  : t("Pronta para começar")}
               </small>
               <Button disabled={busy} onClick={() => start(r)}>
                 <Play size={14} />
-                Iniciar
+                {t("Iniciar")}
               </Button>
             </div>
           </Card>
@@ -244,8 +247,8 @@ export default function Workouts() {
             style={{ margin: "0 auto", color: "var(--primary)" }}
           />
           <div>
-            <h3>Criar nova rotina</h3>
-            <p>Defina seus exercícios, séries e metas de carga.</p>
+            <h3>{t("Criar nova rotina")}</h3>
+            <p>{t("Defina seus exercícios, séries e metas de carga.")}</p>
           </div>
         </button>
       </div>
@@ -255,20 +258,20 @@ export default function Workouts() {
             action={
               <Button onClick={() => setNewExercise(true)}>
                 <Plus size={15} />
-                Novo exercício
+                {t("Novo exercício")}
               </Button>
             }
           >
             <BookOpen />
-            Biblioteca de exercícios
+            {t("Biblioteca de exercícios")}
           </CardTitle>
           <label className="search" style={{ marginBottom: 18 }}>
             <Search size={16} />
             <input
-              aria-label="Buscar exercícios"
+              aria-label={t("Buscar exercícios")}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Buscar exercício, grupo muscular…"
+              placeholder={t("Buscar exercício, grupo muscular…")}
             />
           </label>
           {(exercises.data ?? [])
@@ -283,17 +286,17 @@ export default function Workouts() {
                 <div className="row-content">
                   <strong>{e.name}</strong>
                   <small>
-                    {e.muscle_group} · {e.equipment || "Livre"}
+                    {t(e.muscle_group)} · {e.equipment || t("Livre")}
                   </small>
                 </div>
-                <Badge>{e.is_global ? "Catálogo" : "Pessoal"}</Badge>
+                <Badge>{t(e.is_global ? "Catálogo" : "Pessoal")}</Badge>
               </div>
             ))}
         </Card>
         <Card>
           <CardTitle>
             <Trophy />
-            Evolução recente
+            {t("Evolução recente")}
           </CardTitle>
           {finished.slice(0, 5).map((s) => (
             <Link
@@ -307,7 +310,7 @@ export default function Workouts() {
               <div className="row-content">
                 <strong>{s.name}</strong>
                 <small>
-                  {dateLabel(s.finished_at)} · {s.pr_count} recordes
+                  {t("{{date}} · {{count}} recordes", { date: dateLabel(s.finished_at), count: s.pr_count })}
                 </small>
               </div>
               <span className="mono teal">
@@ -317,8 +320,8 @@ export default function Workouts() {
           ))}
           {!finished.length && (
             <Empty
-              title="Sua evolução, visível"
-              description="Conclua uma sessão para acompanhar volume e recordes."
+              title={t("Sua evolução, visível")}
+              description={t("Conclua uma sessão para acompanhar volume e recordes.")}
             />
           )}
         </Card>
@@ -334,7 +337,7 @@ export default function Workouts() {
         />
       )}
       <Drawer
-        title="Histórico de treinos"
+        title={t("Histórico de treinos")}
         open={history}
         onClose={() => setHistory(false)}
       >
@@ -345,10 +348,10 @@ export default function Workouts() {
                 <h3>{s.name}</h3>
                 <Badge tone={s.status === "finished" ? "teal" : "muted"}>
                   {s.status === "finished"
-                    ? "Concluído"
+                    ? t("Concluído")
                     : s.status === "active"
-                      ? "Ativo"
-                      : "Cancelado"}
+                      ? t("Ativo")
+                      : t("Cancelado")}
                 </Badge>
               </div>
               <p className="muted" style={{ marginTop: 12 }}>
@@ -358,7 +361,7 @@ export default function Workouts() {
             </Link>
           ))}
           {!sessions.data?.length && (
-            <Empty description="Seus treinos aparecerão aqui." />
+            <Empty description={t("Seus treinos aparecerão aqui.")} />
           )}
         </div>
       </Drawer>
@@ -375,6 +378,7 @@ function RoutineEditor({
   exercises: Exercise[];
   onClose: () => void;
 }) {
+  const t = useT();
   const profile = useApi<Profile>("/me");
   const unit = profile.data?.weight_unit ?? "kg";
   const [name, setName] = useState(routine?.name ?? "");
@@ -392,8 +396,8 @@ function RoutineEditor({
   return (
     <Drawer
       open
-      title={routine ? "Editar rotina" : "Nova rotina de treino"}
-      description="Prepare sua próxima sessão"
+      title={routine ? t("Editar rotina") : t("Nova rotina de treino")}
+      description={t("Prepare sua próxima sessão")}
       onClose={onClose}
       footer={
         <>
@@ -408,17 +412,17 @@ function RoutineEditor({
                     { version: routine.version, archived: true },
                     "PATCH",
                   );
-                  toast("Rotina arquivada");
+                  toast(t("Rotina arquivada"));
                   onClose();
                 } catch (e) {
                   setError((e as Error).message);
                 }
               }}
             >
-              Arquivar
+              {t("Arquivar")}
             </Button>
           )}
-          <Button onClick={onClose}>Cancelar</Button>
+          <Button onClick={onClose}>{t("Cancelar")}</Button>
           <Button
             variant="primary"
             disabled={busy || !name.trim() || !items.length}
@@ -443,7 +447,7 @@ function RoutineEditor({
                   routine ? { ...payload, version: routine.version } : payload,
                   routine ? "PATCH" : "POST",
                 );
-                toast("Rotina salva");
+                toast(t("Rotina salva"));
                 onClose();
               } catch (e) {
                 setError((e as Error).message);
@@ -452,42 +456,42 @@ function RoutineEditor({
               }
             }}
           >
-            {busy ? "Salvando…" : "Salvar rotina"}
+            {busy ? t("Salvando…") : t("Salvar rotina")}
           </Button>
         </>
       }
     >
-      <Field label="Nome da rotina">
+      <Field label={t("Nome da rotina")}>
         <input
           autoFocus
           value={name}
           maxLength={120}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Ex.: Push Day A"
+          placeholder={t("Ex.: Push Day A")}
         />
       </Field>
-      <Field label="Foco / descrição">
+      <Field label={t("Foco / descrição")}>
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Peito, ombros e tríceps…"
+          placeholder={t("Peito, ombros e tríceps…")}
         />
       </Field>
       <div className="divider" />
-      <h3 style={{ marginBottom: 18 }}>Exercícios da rotina</h3>
+      <h3 style={{ marginBottom: 18 }}>{t("Exercícios da rotina")}</h3>
       {items.map((item, i) => (
         <Card key={i} className="routine-exercise">
           <div className="between" style={{ marginBottom: 16 }}>
-            <Badge tone="teal">Exercício {i + 1}</Badge>
+            <Badge tone="teal">{t("Exercício {{count}}", { count: i + 1 })}</Badge>
             <Button
               variant="ghost"
               onClick={() => setItems(items.filter((_, index) => index !== i))}
             >
-              Remover
+              {t("Remover")}
             </Button>
           </div>
-          <Field label="Exercício">
-            <select
+          <Field label={t("Exercício")}>
+            <Select
               value={item.exercise_id}
               onChange={(e) => patch(i, { exercise_id: e.target.value })}
             >
@@ -496,10 +500,10 @@ function RoutineEditor({
                   {e.name}
                 </option>
               ))}
-            </select>
+            </Select>
           </Field>
           <div className="form-grid">
-            <Field label="Séries">
+            <Field label={t("Séries")}>
               <input
                 type="number"
                 min={1}
@@ -508,7 +512,7 @@ function RoutineEditor({
                 onChange={(e) => patch(i, { sets: Number(e.target.value) })}
               />
             </Field>
-            <Field label="Repetições">
+            <Field label={t("Repetições")}>
               <input
                 type="number"
                 min={1}
@@ -517,7 +521,7 @@ function RoutineEditor({
                 onChange={(e) => patch(i, { reps: Number(e.target.value) })}
               />
             </Field>
-            <Field label={`Carga (${unit})`}>
+            <Field label={t("Carga ({{unit}})", { unit })}>
               <input
                 type="number"
                 min={0}
@@ -528,7 +532,7 @@ function RoutineEditor({
                 }
               />
             </Field>
-            <Field label="Descanso (s)">
+            <Field label={t("Descanso (s)")}>
               <input
                 type="number"
                 min={0}
@@ -559,12 +563,11 @@ function RoutineEditor({
         }
       >
         <Plus size={17} />
-        Adicionar exercício
+        {t("Adicionar exercício")}
       </Button>
       {routine && (
         <p className="form-help" style={{ marginTop: 20 }}>
-          As alterações valem para novos treinos. Sessões anteriores preservam a
-          rotina usada naquele dia.
+          {t("As alterações valem para novos treinos. Sessões anteriores preservam a rotina usada naquele dia.")}
         </p>
       )}
       {error && (
@@ -576,6 +579,7 @@ function RoutineEditor({
   );
 }
 function ExerciseEditor({ onClose }: { onClose: () => void }) {
+  const t = useT();
   const [name, setName] = useState("");
   const [muscle, setMuscle] = useState("Peito");
   const [equipment, setEquipment] = useState("");
@@ -587,11 +591,11 @@ function ExerciseEditor({ onClose }: { onClose: () => void }) {
   return (
     <Drawer
       open
-      title="Novo exercício"
+      title={t("Novo exercício")}
       onClose={onClose}
       footer={
         <>
-          <Button onClick={onClose}>Cancelar</Button>
+          <Button onClick={onClose}>{t("Cancelar")}</Button>
           <Button
             variant="primary"
             disabled={busy || !name.trim()}
@@ -604,7 +608,7 @@ function ExerciseEditor({ onClose }: { onClose: () => void }) {
                   equipment,
                   instructions,
                 });
-                toast("Exercício criado");
+                toast(t("Exercício criado"));
                 onClose();
               } catch (e) {
                 setError((e as Error).message);
@@ -613,20 +617,20 @@ function ExerciseEditor({ onClose }: { onClose: () => void }) {
               }
             }}
           >
-            Salvar exercício
+            {t("Salvar exercício")}
           </Button>
         </>
       }
     >
-      <Field label="Nome">
+      <Field label={t("Nome")}>
         <input
           autoFocus
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
       </Field>
-      <Field label="Grupo muscular">
-        <select value={muscle} onChange={(e) => setMuscle(e.target.value)}>
+      <Field label={t("Grupo muscular")}>
+        <Select value={muscle} onChange={(e) => setMuscle(e.target.value)}>
           {[
             "Peito",
             "Costas",
@@ -636,18 +640,20 @@ function ExerciseEditor({ onClose }: { onClose: () => void }) {
             "Core",
             "Corpo inteiro",
           ].map((g) => (
-            <option key={g}>{g}</option>
+            <option key={g} value={g}>
+              {t(g)}
+            </option>
           ))}
-        </select>
+        </Select>
       </Field>
-      <Field label="Equipamento">
+      <Field label={t("Equipamento")}>
         <input
           value={equipment}
           onChange={(e) => setEquipment(e.target.value)}
-          placeholder="Halteres, barra, máquina…"
+          placeholder={t("Halteres, barra, máquina…")}
         />
       </Field>
-      <Field label="Instruções">
+      <Field label={t("Instruções")}>
         <textarea
           value={instructions}
           onChange={(e) => setInstructions(e.target.value)}

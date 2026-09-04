@@ -83,3 +83,25 @@ test("expired server demo logout does not reject or restore personal session", a
   );
   await expect(api.request("/me")).rejects.toThrow();
 });
+
+test("German validation errors use a localized fallback and retain known domain messages", async () => {
+  const { setLocale } = await import("./i18n");
+  setLocale("de-DE");
+  const api = await import("./api");
+  vi.stubGlobal("fetch", async () =>
+    Response.json(
+      { detail: "body.target_quantity: Input should be greater than 0" },
+      { status: 422 },
+    ),
+  );
+  await expect(api.request("/habits", { method: "POST" })).rejects.toThrow(
+    "Prüfe die Pflichtfelder und die eingegebenen Werte.",
+  );
+  vi.stubGlobal("fetch", async () =>
+    Response.json({ detail: "E-mail ou senha inválidos." }, { status: 422 }),
+  );
+  await expect(api.request("/habits", { method: "POST" })).rejects.toThrow(
+    "E-Mail oder Passwort ungültig.",
+  );
+  setLocale("pt-BR");
+});

@@ -1,5 +1,6 @@
+import { t, useLocale, getLocale, setLocale } from "./i18n";
 import { useQueryClient } from "@tanstack/react-query";
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState, useRef } from "react";
 import {
   Link,
   NavLink,
@@ -61,6 +62,8 @@ let callbackPromise:
   | undefined;
 let silentCallbackPromise: Promise<void> | undefined;
 export default function App() {
+  useLocale();
+
   const queryClient = useQueryClient();
   const [config, setConfig] = useState<Config>();
   const [auth, setAuth] = useState<boolean | null>(null);
@@ -137,19 +140,31 @@ export default function App() {
   return <Shell />;
 }
 function Shell() {
+  useLocale();
+
   const location = useLocation();
   const d = useApi<DashboardData>("/dashboard");
+  const localeOwner = useRef<string | null>(null);
+  useEffect(() => {
+    const profile = d.data?.profile;
+    if (profile && localeOwner.current !== profile.id) {
+      localeOwner.current = profile.id;
+      if (!profile.is_demo) setLocale(profile.locale);
+    }
+  }, [d.data?.profile.id, d.data?.profile.locale]);
   const [quick, setQuick] = useState(false);
   const [search, setSearch] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
-  const title = location.pathname.startsWith("/treinos/sessao")
-    ? "Treino em andamento"
-    : (nav.find((n) => n.to === location.pathname)?.label ??
-      (location.pathname === "/configuracoes"
-        ? "Configurações"
-        : location.pathname === "/integracoes"
-          ? "Integrações"
-          : "Orbit"));
+  const title = t(
+    location.pathname.startsWith("/treinos/sessao")
+      ? t("Treino em andamento")
+      : (nav.find((n) => n.to === location.pathname)?.label ??
+          (location.pathname === "/configuracoes"
+            ? t("Configurações")
+            : location.pathname === "/integracoes"
+              ? t("Integrações")
+              : "Orbit")),
+  );
   useEffect(() => {
     document.title = `${title} · Orbit`;
     window.scrollTo({ top: 0 });
@@ -164,8 +179,8 @@ function Shell() {
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, []);
-  const name = d.data?.profile.name ?? "Minha conta";
-  const date = new Intl.DateTimeFormat("pt-BR", {
+  const name = d.data?.profile.name ?? t("Minha conta");
+  const date = new Intl.DateTimeFormat(getLocale(), {
     weekday: "long",
     day: "numeric",
     month: "long",
@@ -174,15 +189,15 @@ function Shell() {
   return (
     <>
       <a className="sr-only" href="#content">
-        Pular para o conteúdo
+        {t("Pular para o conteúdo")}
       </a>
       <aside className="sidebar">
         <Brand />
         <Button onClick={() => setQuick(true)}>
           <Plus size={18} />
-          Adicionar
+          {t("Adicionar")}
         </Button>
-        <nav aria-label="Navegação principal">
+        <nav aria-label={t("Navegação principal")}>
           {nav.map((n) => (
             <NavLink
               key={n.to}
@@ -193,7 +208,7 @@ function Shell() {
               }
             >
               <n.icon size={22} />
-              <span>{n.label}</span>
+              <span>{t(n.label)}</span>
               {n.to === "/tarefas" && d.data && (
                 <Badge>
                   {
@@ -212,14 +227,14 @@ function Shell() {
             className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
           >
             <Cable size={20} />
-            Telegram Áudio
+            {t("Telegram Áudio")}
           </NavLink>
           <NavLink
             to="/configuracoes"
             className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
           >
             <SettingsIcon size={20} />
-            Configurações
+            {t("Configurações")}
           </NavLink>
           <Link to="/configuracoes" className="user-link">
             <span className="avatar">
@@ -232,7 +247,9 @@ function Shell() {
             <div>
               <strong>{name}</strong>
               <small>
-                {d.data?.profile.is_demo ? "Demonstração" : "Central pessoal"}
+                {d.data?.profile.is_demo
+                  ? t("Demonstração")
+                  : t("Central pessoal")}
               </small>
             </div>
           </Link>
@@ -251,7 +268,7 @@ function Shell() {
           >
             <Search size={16} />
             <span style={{ flex: 1, fontSize: 12 }}>
-              Pesquisar na sua órbita…
+              {t("Pesquisar na sua órbita…")}
             </span>
             <kbd>⌘K</kbd>
           </button>
@@ -259,28 +276,30 @@ function Shell() {
             <Link
               className="icon-button"
               to="/configuracoes"
-              aria-label="Minha conta"
+              aria-label={t("Minha conta")}
             >
               <UserRound size={20} />
             </Link>
             <Button
               variant="primary"
-              aria-label="Adicionar"
+              aria-label={t("Adicionar")}
               onClick={() => setQuick(true)}
             >
               <Plus size={18} />
-              <span>Adicionar</span>
+              <span>{t("Adicionar")}</span>
             </Button>
           </div>
         </header>
         {d.data?.profile.is_demo && (
           <div className="demo-banner">
-            Demonstração · seus dados fictícios ficam neste espaço por 24 horas.
+            {t(
+              "Demonstração · seus dados fictícios ficam neste espaço por 24 horas.",
+            )}
             <Link
               to="/configuracoes"
               style={{ marginLeft: 7, textDecoration: "underline" }}
             >
-              Gerenciar
+              {t("Gerenciar")}
             </Link>
           </div>
         )}
@@ -300,13 +319,14 @@ function Shell() {
                 element={
                   <div className="page not-found">
                     <strong>404</strong>
-                    <h1>Fora de órbita por um instante.</h1>
+                    <h1>{t("Fora de órbita por um instante.")}</h1>
                     <p className="muted">
-                      Esta página não foi encontrada. Sua central continua no
-                      mesmo lugar.
+                      {t(
+                        "Esta página não foi encontrada. Sua central continua no mesmo lugar.",
+                      )}
                     </p>
                     <Link className="button primary" to="/">
-                      Voltar à visão geral
+                      {t("Voltar à visão geral")}
                       <ArrowRight size={17} />
                     </Link>
                   </div>
@@ -316,7 +336,7 @@ function Shell() {
           </Suspense>
         </main>
       </div>
-      <nav className="bottom-nav" aria-label="Navegação mobile">
+      <nav className="bottom-nav" aria-label={t("Navegação mobile")}>
         {nav.map((n) => (
           <NavLink
             key={n.to}
@@ -325,13 +345,13 @@ function Shell() {
             className={({ isActive }) => (isActive ? "active" : "")}
           >
             <n.icon />
-            <span>{n.mobile}</span>
+            <span>{t(n.mobile)}</span>
           </NavLink>
         ))}
       </nav>
       <Drawer
-        title="O que vamos organizar?"
-        description="Um novo passo na sua órbita"
+        title={t("O que vamos organizar?")}
+        description={t("Um novo passo na sua órbita")}
         open={quick}
         onClose={() => setQuick(false)}
       >
@@ -340,26 +360,26 @@ function Shell() {
             {
               to: "/tarefas?new=1",
               icon: CircleCheck,
-              title: "Nova tarefa",
-              text: "Tire uma ideia da cabeça",
+              title: t("Nova tarefa"),
+              text: t("Tire uma ideia da cabeça"),
             },
             {
               to: "/habitos?new=1",
               icon: Repeat2,
-              title: "Novo hábito",
-              text: "Construa sua consistência",
+              title: t("Novo hábito"),
+              text: t("Construa sua consistência"),
             },
             {
               to: "/financas?new=1",
               icon: Wallet,
-              title: "Nova transação",
-              text: "Registre uma receita ou despesa",
+              title: t("Nova transação"),
+              text: t("Registre uma receita ou despesa"),
             },
             {
               to: "/treinos?new=1",
               icon: Dumbbell,
-              title: "Nova rotina",
-              text: "Prepare seu próximo treino",
+              title: t("Nova rotina"),
+              text: t("Prepare seu próximo treino"),
             },
           ].map((item) => (
             <Link key={item.to} to={item.to} onClick={() => setQuick(false)}>
@@ -376,7 +396,7 @@ function Shell() {
         </div>
       </Drawer>
       <Drawer
-        title="Pesquisar na sua órbita"
+        title={t("Pesquisar na sua órbita")}
         open={searchOpen}
         onClose={() => setSearchOpen(false)}
       >
@@ -386,13 +406,13 @@ function Shell() {
             autoFocus
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Tarefas, hábitos, páginas…"
-            aria-label="Pesquisa global"
+            placeholder={t("Tarefas, hábitos, páginas…")}
+            aria-label={t("Pesquisa global")}
           />
         </label>
         <div className="search-results">
           {[
-            ...nav.map((n) => ({ id: n.to, title: n.label, to: n.to })),
+            ...nav.map((n) => ({ id: n.to, title: t(n.label), to: n.to })),
             ...(d.data?.tasks ?? []).map((t) => ({
               id: t.id,
               title: t.title,

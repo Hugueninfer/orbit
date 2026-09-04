@@ -1,3 +1,4 @@
+import { getLocale, t } from "./i18n";
 export function parseMoney(value: string): number {
   return parseLocalizedMoney(value, false);
 }
@@ -8,20 +9,28 @@ function parseLocalizedMoney(value: string, signed: boolean): number {
   const raw = value.trim().replace(/\s|R\$/g, "");
   const negative = signed && raw.startsWith("-");
   const normalized = negative ? raw.slice(1) : raw;
-  if (!/^(?:\d+|\d{1,3}(?:\.\d{3})+)(?:,\d{1,2})?$/.test(normalized))
-    throw new Error("Informe um valor como 123,45.");
-  const [whole, cents = ""] = normalized.replaceAll(".", "").split(",");
+  const english = getLocale() === "en-US";
+  const pattern = english
+    ? /^(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d{1,2})?$/
+    : /^(?:\d+|\d{1,3}(?:\.\d{3})+)(?:,\d{1,2})?$/;
+  if (!pattern.test(normalized))
+    throw new Error(t("Informe um valor como 123,45."));
+  const [whole, cents = ""] = normalized
+    .replaceAll(english ? "," : ".", "")
+    .split(english ? "." : ",");
   const minor = Number(whole) * 100 + Number(cents.padEnd(2, "0"));
   if (!Number.isSafeInteger(minor) || (!signed && minor <= 0))
-    throw new Error("O valor deve ser maior que zero.");
+    throw new Error(t("O valor deve ser maior que zero."));
   return negative ? -minor : minor;
 }
 export const money = (value: number, currency = "BRL") =>
-  new Intl.NumberFormat("pt-BR", { style: "currency", currency }).format(
+  new Intl.NumberFormat(getLocale(), { style: "currency", currency }).format(
     value / 100,
   );
 export const decimal = (value: number) =>
-  new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value);
+  new Intl.NumberFormat(getLocale(), { maximumFractionDigits: 2 }).format(
+    value,
+  );
 export function localDate(
   timeZone = "America/Sao_Paulo",
   now = new Date(),
@@ -40,14 +49,14 @@ export function dateLabel(
   date: string | undefined | null,
   options: Intl.DateTimeFormatOptions = { day: "2-digit", month: "short" },
 ) {
-  if (!date) return "Sem prazo";
-  return new Intl.DateTimeFormat("pt-BR", options).format(
+  if (!date) return t("Sem prazo");
+  return new Intl.DateTimeFormat(getLocale(), options).format(
     new Date(date.length === 10 ? `${date}T12:00:00` : date),
   );
 }
 export function installmentParts(total: number, count: number): number[] {
   if (!Number.isInteger(count) || count < 1 || count > total)
-    throw new Error("Parcelamento inválido");
+    throw new Error(t("Parcelamento inválido"));
   const base = Math.floor(total / count);
   return Array.from(
     { length: count },
@@ -86,4 +95,10 @@ export function weekDates(date: string, weekStart = 0): string[] {
     day.setUTCDate(day.getUTCDate() + i);
     return day.toISOString().slice(0, 10);
   });
+}
+
+export function moneyInput(value: number): string {
+  return (value / 100)
+    .toFixed(2)
+    .replace(".", getLocale() === "en-US" ? "." : ",");
 }

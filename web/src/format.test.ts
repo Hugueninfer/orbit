@@ -54,3 +54,19 @@ it("accepts zero and overdraft opening balances without permitting negative expe
   expect(parseBalance("-1.234,56")).toBe(-123456);
   expect(() => parseMoney("-1.234,56")).toThrow();
 });
+
+import { setLocale } from "./i18n";
+import { afterEach } from "vitest";
+import { money, decimal } from "./format";
+afterEach(() => setLocale("pt-BR"));
+it("parses English and German money without changing currency or minor units", () => {
+  setLocale("en-US");
+  expect(parseMoney("1,234.56")).toBe(123456);
+  expect(parseBalance("-1,234.56")).toBe(-123456);
+  expect(() => parseMoney("1.234,56")).toThrow();
+  expect(decimal(12.5)).toBe("12.5");
+  expect(money(123456)).toContain("1,234.56");
+  setLocale("de-DE");
+  expect(parseMoney("1.234,56")).toBe(123456);
+  expect(decimal(12.5)).toBe("12,5");
+});

@@ -43,11 +43,13 @@ import {
 } from "../components/ui";
 import { TaskRow } from "./Tasks";
 import { dateLabel, money } from "../format";
+import { getLocale, useT } from "../i18n";
 export default function Dashboard() {
   const query = useApi<DashboardData>("/dashboard");
   const tx = useApi<Transaction[]>("/transactions");
   const actions = useActions();
   const toast = useToast();
+  const t = useT();
   const navigate = useNavigate();
   if (query.isLoading) return <Loading />;
   if (query.error)
@@ -93,7 +95,7 @@ export default function Dashboard() {
         },
         "PATCH",
       );
-      toast(task.status === "done" ? "Tarefa reaberta" : "Tarefa concluída");
+      toast(t(task.status === "done" ? "Tarefa reaberta" : "Tarefa concluída"));
     } catch (e) {
       toast((e as Error).message, true);
     }
@@ -121,59 +123,60 @@ export default function Dashboard() {
   }
   const firstName = d.profile.name.split(" ")[0];
   const hour = Number(
-    new Intl.DateTimeFormat("en-US", {
+    new Intl.DateTimeFormat(getLocale(), {
       timeZone: d.profile.timezone,
       hour: "numeric",
       hourCycle: "h23",
-    }).format(new Date()),
+    })
+      .formatToParts(new Date())
+      .find((part) => part.type === "hour")?.value,
   );
   return (
     <div className="page">
       <section className="hero">
         <div>
           <div className="row">
-            <Badge tone="teal">UM DIA DE CADA VEZ</Badge>
-            <span className="mono muted desktop-only">Seu espaço de foco</span>
+            <Badge tone="teal">{t("UM DIA DE CADA VEZ")}</Badge>
+            <span className="mono muted desktop-only">{t("Seu espaço de foco")}</span>
           </div>
           <h1>
-            {hour < 12 ? "Bom dia" : hour < 18 ? "Boa tarde" : "Boa noite"},{" "}
+            {t(hour < 12 ? "Bom dia" : hour < 18 ? "Boa tarde" : "Boa noite")},{" "}
             {firstName}.
           </h1>
           <p>
             <span className="teal">
-              {urgent.length}{" "}
-              {urgent.length === 1 ? "prioridade exige" : "prioridades exigem"}
+              {t(urgent.length === 1 ? "{{count}} prioridade exige" : "{{count}} prioridades exigem", { count: urgent.length })}
             </span>{" "}
-            sua atenção hoje.
+            {t("sua atenção hoje.")}
             <br />
-            Sua rotina, com mais clareza e intenção.
+            {t("Sua rotina, com mais clareza e intenção.")}
           </p>
         </div>
         <div className="actions">
           <Link className="button" to="/tarefas?new=1">
             <CircleCheck size={18} className="blue" />
-            Nova tarefa
+            {t("Nova tarefa")}
           </Link>
           <Link className="button" to="/habitos">
             <Flame size={18} className="teal" />
-            Marcar hábito
+            {t("Marcar hábito")}
           </Link>
           <Link className="button" to="/financas?new=1">
             <Receipt size={18} className="teal" />
-            Registrar despesa
+            {t("Registrar despesa")}
           </Link>
           <Button onClick={start}>
             <Play size={18} className="blue" />
-            {d.active_session ? "Retomar treino" : "Iniciar treino"}
+            {t(d.active_session ? "Retomar treino" : "Iniciar treino")}
           </Button>
         </div>
       </section>
       <div className="stats">
         <Stat
-          label="FOCO DO DIA"
+          label={t("FOCO DO DIA")}
           value={
             <>
-              {completed} de {tasks.length} concluídas
+              {t("{{completed}} de {{total}} concluídas", { completed, total: tasks.length })}
             </>
           }
           icon={<CircleCheck />}
@@ -182,11 +185,11 @@ export default function Dashboard() {
             value={tasks.length ? (completed / tasks.length) * 100 : 0}
           />
           <p>
-            {urgent[0]?.title ?? "Tudo em dia. Espaço para o próximo passo."}
+            {urgent[0]?.title ?? t("Tudo em dia. Espaço para o próximo passo.")}
           </p>
         </Stat>
         <Stat
-          label="HÁBITOS & CONSISTÊNCIA"
+          label={t("HÁBITOS & CONSISTÊNCIA")}
           value={
             <div className="row">
               <div
@@ -199,45 +202,45 @@ export default function Dashboard() {
               </div>
               <div>
                 {habitsDone}/{d.habits.length}
-                <p>Concluídos hoje</p>
+                <p>{t("Concluídos hoje")}</p>
               </div>
             </div>
           }
           icon={<Flame />}
         >
-          <p>Pequenas ações, progresso contínuo.</p>
+          <p>{t("Pequenas ações, progresso contínuo.")}</p>
         </Stat>
         <Stat
-          label="SAÚDE FINANCEIRA"
+          label={t("SAÚDE FINANCEIRA")}
           value={money(d.accounts.reduce((s, a) => s + a.current_balance, 0))}
           icon={<Wallet />}
         >
-          <p>Saldo consolidado das suas contas</p>
+          <p>{t("Saldo consolidado das suas contas")}</p>
           <span className="mono teal">
-            Despesas: {money(d.monthly.expenses)}
+            {t("Despesas: {{amount}}", { amount: money(d.monthly.expenses) })}
           </span>
         </Stat>
         <Stat
           label={
-            d.active_session ? "SESSÃO EM ANDAMENTO" : "SUA PRÓXIMA SESSÃO"
+            t(d.active_session ? "SESSÃO EM ANDAMENTO" : "SUA PRÓXIMA SESSÃO")
           }
           value={
             <span style={{ fontSize: 18 }}>
               {d.active_session?.name ??
                 d.suggested_routine?.name ??
-                "Vamos começar?"}
+                t("Vamos começar?")}
             </span>
           }
           icon={<Timer />}
         >
           <p>
             {d.suggested_routine
-              ? `${d.suggested_routine.exercises.length} exercícios programados`
-              : "Crie uma rotina do seu jeito"}
+              ? t("{{count}} exercícios programados", { count: d.suggested_routine.exercises.length })
+              : t("Crie uma rotina do seu jeito")}
           </p>
           <Button onClick={start} style={{ alignSelf: "flex-start" }}>
             <Play size={14} />
-            {d.active_session ? "Retomar" : "Iniciar"}
+            {t(d.active_session ? "Retomar" : "Iniciar")}
           </Button>
         </Stat>
       </div>
@@ -247,13 +250,13 @@ export default function Dashboard() {
             <CardTitle
               action={
                 <Link className="button" to="/tarefas">
-                  Ver todas
+                  {t("Ver todas")}
                   <ArrowRight size={14} />
                 </Link>
               }
             >
               <ListTodo />
-              Tarefas prioritárias de hoje
+              {t("Tarefas prioritárias de hoje")}
             </CardTitle>
             {tasks.length ? (
               tasks
@@ -273,21 +276,21 @@ export default function Dashboard() {
                 ))
             ) : (
               <Empty
-                title="Sua mente merece espaço"
-                description="Tire as ideias da cabeça e organize seus próximos passos."
+                title={t("Sua mente merece espaço")}
+                description={t("Tire as ideias da cabeça e organize seus próximos passos.")}
                 action={
                   <Link className="button primary" to="/tarefas?new=1">
                     <Plus size={16} />
-                    Criar tarefa
+                    {t("Criar tarefa")}
                   </Link>
                 }
               />
             )}
           </Card>
           <Card>
-            <CardTitle>Fluxo financeiro semanal</CardTitle>
+            <CardTitle>{t("Fluxo financeiro semanal")}</CardTitle>
             <p className="muted" style={{ fontSize: 12, marginBottom: 20 }}>
-              Receitas e despesas realizadas nos últimos 7 dias
+              {t("Receitas e despesas realizadas nos últimos 7 dias")}
             </p>
             <div className="chart">
               {tx.error ? (
@@ -315,7 +318,7 @@ export default function Dashboard() {
                     />
                     <Bar
                       isAnimationActive={false}
-                      name="Entradas"
+                      name={t("Entradas")}
                       dataKey="income"
                       fill="#44e2cd"
                       radius={[4, 4, 0, 0]}
@@ -323,7 +326,7 @@ export default function Dashboard() {
                     />
                     <Bar
                       isAnimationActive={false}
-                      name="Saídas"
+                      name={t("Saídas")}
                       dataKey="expense"
                       fill="#7692ff"
                       radius={[4, 4, 0, 0]}
@@ -337,14 +340,14 @@ export default function Dashboard() {
               className="actions mono muted"
               style={{ justifyContent: "center" }}
             >
-              <span className="teal">● Entradas</span>
-              <span className="blue">● Saídas</span>
+              <span className="teal">● {t("Entradas")}</span>
+              <span className="blue">● {t("Saídas")}</span>
             </div>
             <div className="divider" />
             <Link to="/financas" className="between">
               <span className="row">
                 <Wallet size={18} className="teal" />
-                Ver movimentações e faturas
+                {t("Ver movimentações e faturas")}
               </span>
               <ArrowRight size={17} />
             </Link>
@@ -355,12 +358,12 @@ export default function Dashboard() {
             <CardTitle
               action={
                 <span className="mono teal">
-                  {habitsDone}/{d.habits.length} hoje
+                  {t("{{done}}/{{total}} hoje", { done: habitsDone, total: d.habits.length })}
                 </span>
               }
             >
               <Repeat2 />
-              Check-in de hábitos
+              {t("Check-in de hábitos")}
             </CardTitle>
             {d.habits.map((h) => {
               const done =
@@ -370,7 +373,7 @@ export default function Dashboard() {
                 <div className="habit-row" key={h.id}>
                   <CheckButton
                     checked={done}
-                    label={`Registrar ${h.name}`}
+                    label={t("Registrar {{name}}", { name: h.name })}
                     onClick={async () => {
                       if (h.target_quantity > 1 || done) {
                         navigate("/habitos");
@@ -382,7 +385,7 @@ export default function Dashboard() {
                           { quantity: 1, note: "" },
                           "PUT",
                         );
-                        toast("Hábito registrado");
+                        toast(t("Hábito registrado"));
                       } catch (e) {
                         toast((e as Error).message, true);
                       }
@@ -399,11 +402,11 @@ export default function Dashboard() {
             })}
             {!d.habits.length && (
               <Empty
-                title="Encontre seu ritmo"
-                description="Crie o primeiro hábito para começar."
+                title={t("Encontre seu ritmo")}
+                description={t("Crie o primeiro hábito para começar.")}
                 action={
                   <Link className="button" to="/habitos?new=1">
-                    Novo hábito
+                    {t("Novo hábito")}
                   </Link>
                 }
               />
@@ -412,7 +415,7 @@ export default function Dashboard() {
           <Card>
             <CardTitle>
               <CalendarDays />
-              Próximos vencimentos
+              {t("Próximos vencimentos")}
             </CardTitle>
             {d.invoices
               .filter((i) => i.remaining > 0)
@@ -422,7 +425,7 @@ export default function Dashboard() {
                   <div className="row-content">
                     <strong>
                       {d.cards.find((c) => c.id === i.card_id)?.name ??
-                        "Fatura"}
+                        t("Fatura")}
                     </strong>
                     <small>{dateLabel(i.due_date)}</small>
                   </div>
@@ -430,14 +433,14 @@ export default function Dashboard() {
                 </Link>
               ))}
             {!d.invoices.some((i) => i.remaining > 0) && (
-              <p className="muted">Nenhuma fatura pendente. Tudo em ordem.</p>
+              <p className="muted">{t("Nenhuma fatura pendente. Tudo em ordem.")}</p>
             )}
           </Card>
           <Link className="card between" to="/integracoes">
             <div>
-              <strong>Telegram Áudio</strong>
+              <strong>{t("Telegram Áudio")}</strong>
               <p className="muted" style={{ fontSize: 12, marginTop: 6 }}>
-                Explore a captura de despesas
+                {t("Explore a captura de despesas")}
               </p>
             </div>
             <ArrowRight size={18} className="teal" />

@@ -30,6 +30,8 @@ import {
   useToast,
 } from "../components/ui";
 import { dateLabel, localDate } from "../format";
+import { useT } from "../i18n";
+import { Select } from "../components/Select";
 const priorities = {
   none: "Normal",
   low: "Baixa",
@@ -47,12 +49,13 @@ export function TaskRow({
   onToggle: () => void;
   listName?: string;
 }) {
+  const t = useT();
   return (
     <div className={`task-row ${task.status === "done" ? "done" : ""}`}>
       <CheckButton
         checked={task.status === "done"}
         onClick={onToggle}
-        label={`${task.status === "done" ? "Reabrir" : "Concluir"} ${task.title}`}
+        label={t(task.status === "done" ? "Reabrir {{name}}" : "Concluir {{name}}", { name: task.title })}
       />
       <div className="row-content">
         <button className="task-title" onClick={onEdit}>
@@ -66,7 +69,7 @@ export function TaskRow({
           {dateLabel(task.due_date)}
           {listName && ` · ${listName}`}
           {task.checklist.length > 0 &&
-            ` · ${task.checklist.filter((c) => c.done).length}/${task.checklist.length} subtarefas`}
+            ` · ${t("{{done}}/{{total}} subtarefas", { done: task.checklist.filter((c) => c.done).length, total: task.checklist.length })}`}
         </small>
       </div>
       <div className="tags">
@@ -79,7 +82,7 @@ export function TaskRow({
                 : "muted"
           }
         >
-          {priorities[task.priority]}
+          {t(priorities[task.priority])}
         </Badge>
         {task.tags.slice(0, 1).map((t) => (
           <Badge key={t}>{t}</Badge>
@@ -93,6 +96,7 @@ export default function Tasks() {
   const lists = useApi<TaskList[]>("/task-lists");
   const actions = useActions();
   const toast = useToast();
+  const t = useT();
   const [params, setParams] = useSearchParams();
   const [editing, setEditing] = useState<Task | null>(null);
   const [tab, setTab] = useState("today");
@@ -120,7 +124,7 @@ export default function Tasks() {
         },
         "PATCH",
       );
-      toast(task.status === "done" ? "Tarefa reaberta" : "Tarefa concluída");
+      toast(t(task.status === "done" ? "Tarefa reaberta" : "Tarefa concluída"));
     } catch (e) {
       toast((e as Error).message, true);
     }
@@ -152,12 +156,12 @@ export default function Tasks() {
   return (
     <div className="page">
       <div className="stats">
-        <Stat label="TAREFAS ATIVAS" value={active.length} icon={<ListTodo />}>
+        <Stat label={t("TAREFAS ATIVAS")} value={active.length} icon={<ListTodo />}>
           <Progress value={100} tone="blue" />
-          <p>Uma prioridade de cada vez.</p>
+          <p>{t("Uma prioridade de cada vez.")}</p>
         </Stat>
         <Stat
-          label="CONCLUÍDAS"
+          label={t("CONCLUÍDAS")}
           value={
             <>
               {completed.length}
@@ -171,11 +175,11 @@ export default function Tasks() {
           />
           <p>
             {all.length ? Math.round((completed.length / all.length) * 100) : 0}
-            % do seu backlog concluído
+            {t("% do seu backlog concluído")}
           </p>
         </Stat>
         <Stat
-          label="EXIGEM ATENÇÃO"
+          label={t("EXIGEM ATENÇÃO")}
           value={
             <span className={active.some((t) => t.is_overdue) ? "red" : ""}>
               {active.filter((t) => t.is_overdue).length}
@@ -183,16 +187,16 @@ export default function Tasks() {
           }
           icon={<Clock3 />}
         >
-          <p>Tarefas com prazo vencido</p>
+          <p>{t("Tarefas com prazo vencido")}</p>
         </Stat>
         <Stat
-          label="LISTAS DE OPERAÇÃO"
+          label={t("LISTAS DE OPERAÇÃO")}
           value={lists.data?.length ?? 0}
           icon={<CalendarDays />}
         >
           <Button variant="ghost" onClick={() => setNewList(true)}>
             <Plus size={15} />
-            Criar lista
+            {t("Criar lista")}
           </Button>
         </Stat>
       </div>
@@ -210,111 +214,111 @@ export default function Tasks() {
               className={tab === key ? "active" : ""}
               onClick={() => setTab(key)}
             >
-              {label}
+              {t(label)}
             </button>
           ))}
         </div>
         <AddButton onClick={() => setParams({ new: "1" })}>
-          Nova tarefa
+          {t("Nova tarefa")}
         </AddButton>
       </div>
       <div className="toolbar">
         <label className="search">
           <Search size={16} />
           <input
-            aria-label="Buscar tarefas"
-            placeholder="Buscar tarefas…"
+            aria-label={t("Buscar tarefas")}
+            placeholder={t("Buscar tarefas…")}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </label>
-        <select
+        <Select
           className="control"
-          aria-label="Filtrar por lista"
+          aria-label={t("Filtrar por lista")}
           value={list}
           onChange={(e) => setList(e.target.value)}
         >
-          <option value="">Todas as listas</option>
+          <option value="">{t("Todas as listas")}</option>
           {lists.data?.map((l) => (
             <option value={l.id} key={l.id}>
               {l.name}
             </option>
           ))}
-        </select>
-        <select
+        </Select>
+        <Select
           className="control"
-          aria-label="Filtrar por prioridade"
+          aria-label={t("Filtrar por prioridade")}
           value={priorityFilter}
           onChange={(e) => setPriorityFilter(e.target.value)}
         >
-          <option value="">Todas as prioridades</option>
+          <option value="">{t("Todas as prioridades")}</option>
           {Object.entries(priorities).map(([k, v]) => (
             <option key={k} value={k}>
-              {v}
+              {t(v)}
             </option>
           ))}
-        </select>
-        <select
+        </Select>
+        <Select
           className="control"
-          aria-label="Filtrar por tag"
+          aria-label={t("Filtrar por tag")}
           value={tagFilter}
           onChange={(e) => setTagFilter(e.target.value)}
         >
-          <option value="">Todas as tags</option>
+          <option value="">{t("Todas as tags")}</option>
           {[...new Set((tasks.data ?? []).flatMap((t) => t.tags))]
             .sort()
             .map((tag) => (
               <option key={tag}>{tag}</option>
             ))}
-        </select>
+        </Select>
       </div>
       <section>
         <h2 className="section-heading">
           <Zap />
           {tab === "today"
-            ? "Hoje — Seu foco principal"
+            ? t("Hoje — Seu foco principal")
             : tab === "done"
-              ? "Tarefas concluídas"
+              ? t("Tarefas concluídas")
               : tab === "upcoming"
-                ? "Próximos dias — Em órbita"
-                : "Todas as tarefas"}
-          <Badge>{filtered.length} tarefas</Badge>
+                ? t("Próximos dias — Em órbita")
+                : t("Todas as tarefas")}
+          <Badge>{t("{{count}} tarefas", { count: filtered.length })}</Badge>
         </h2>
         {filtered.length ? (
-          filtered.map((t) => (
-            <div key={t.id} className="row" style={{ gap: 4 }}>
+          filtered.map((task) => (
+            <div key={task.id} className="row" style={{ gap: 4 }}>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <TaskRow
-                  task={t}
-                  listName={lists.data?.find((l) => l.id === t.list_id)?.name}
-                  onEdit={() => setEditing(t)}
+                  task={task}
+                  listName={lists.data?.find((l) => l.id === task.list_id)?.name}
+                  onEdit={() => setEditing(task)}
                   onToggle={() => {
-                    if (!t.archived) void toggle(t);
+                    if (!task.archived) void toggle(task);
                   }}
                 />
               </div>
-              {t.archived && (
+              {task.archived && (
                 <Button
                   onClick={async () => {
                     try {
                       await actions(
-                        `/tasks/${t.id}`,
-                        { version: t.version, archived: false },
+                        `/tasks/${task.id}`,
+                        { version: task.version, archived: false },
                         "PATCH",
                       );
-                      toast("Tarefa restaurada");
+                      toast(t("Tarefa restaurada"));
                     } catch (e) {
                       toast((e as Error).message, true);
                     }
                   }}
                 >
-                  Restaurar
+                  {t("Restaurar")}
                 </Button>
               )}
               {list && tab === "all" && (
                 <button
                   className="icon-button"
-                  aria-label={`Mover ${t.title} para o topo`}
+                  aria-label={t("Mover {{name}} para o topo", { name: task.title })}
                   onClick={async () => {
                     const ordered = all
                       .filter((x) => x.list_id === list)
@@ -322,11 +326,11 @@ export default function Tasks() {
                     try {
                       await actions("/tasks/reorder", {
                         list_id: list,
-                        items: [t, ...ordered.filter((x) => x.id !== t.id)].map(
+                        items: [task, ...ordered.filter((x) => x.id !== task.id)].map(
                           (x) => ({ id: x.id, version: x.version }),
                         ),
                       });
-                      toast("Ordem atualizada");
+                      toast(t("Ordem atualizada"));
                     } catch (e) {
                       toast((e as Error).message, true);
                     }
@@ -342,17 +346,17 @@ export default function Tasks() {
             <Empty
               title={
                 search
-                  ? "Nenhuma tarefa encontrada"
-                  : "Espaço para o que importa"
+                  ? t("Nenhuma tarefa encontrada")
+                  : t("Espaço para o que importa")
               }
               description={
                 search
-                  ? "Tente outro termo ou ajuste os filtros."
-                  : "Organize suas ideias e transforme seus próximos passos em tarefas."
+                  ? t("Tente outro termo ou ajuste os filtros.")
+                  : t("Organize suas ideias e transforme seus próximos passos em tarefas.")
               }
               action={
                 <AddButton onClick={() => setParams({ new: "1" })}>
-                  Criar tarefa
+                  {t("Criar tarefa")}
                 </AddButton>
               }
             />
@@ -363,7 +367,7 @@ export default function Tasks() {
         <TaskEditor task={editing} lists={lists.data ?? []} onClose={close} />
       )}
       <Drawer
-        title="Nova lista"
+        title={t("Nova lista")}
         open={newList}
         onClose={() => setNewList(false)}
         footer={
@@ -379,7 +383,7 @@ export default function Tasks() {
                 });
                 setNewList(false);
                 setListName("");
-                toast("Lista criada");
+                toast(t("Lista criada"));
               } catch (e) {
                 toast((e as Error).message, true);
               } finally {
@@ -387,17 +391,17 @@ export default function Tasks() {
               }
             }}
           >
-            Criar lista
+            {t("Criar lista")}
           </Button>
         }
       >
-        <Field label="Nome da lista">
+        <Field label={t("Nome da lista")}>
           <input
             autoFocus
             value={listName}
             maxLength={100}
             onChange={(e) => setListName(e.target.value)}
-            placeholder="Ex.: Trabalho, Pessoal, Estudos"
+            placeholder={t("Ex.: Trabalho, Pessoal, Estudos")}
           />
         </Field>
       </Drawer>
@@ -413,6 +417,7 @@ function TaskEditor({
   lists: TaskList[];
   onClose: () => void;
 }) {
+  const t = useT();
   const actions = useActions();
   const toast = useToast();
   const [title, setTitle] = useState(task?.title ?? "");
@@ -433,7 +438,7 @@ function TaskEditor({
   async function save() {
     setError("");
     if (!title.trim() || !listId) {
-      setError("Informe um título e selecione uma lista.");
+      setError(t("Informe um título e selecione uma lista."));
       return;
     }
     setBusy(true);
@@ -457,7 +462,7 @@ function TaskEditor({
         task ? { ...payload, version: task.version, status } : payload,
         task ? "PATCH" : "POST",
       );
-      toast(task ? "Tarefa atualizada" : "Tarefa criada");
+      toast(t(task ? "Tarefa atualizada" : "Tarefa criada"));
       onClose();
     } catch (e) {
       setError((e as Error).message);
@@ -469,11 +474,11 @@ function TaskEditor({
     <>
       <Drawer
         open
-        title={task ? "Editar tarefa" : "Nova tarefa"}
+        title={t(task ? "Editar tarefa" : "Nova tarefa")}
         description={
           task
-            ? "Organize os detalhes do seu próximo passo"
-            : "Transforme uma ideia em ação"
+            ? t("Organize os detalhes do seu próximo passo")
+            : t("Transforme uma ideia em ação")
         }
         onClose={onClose}
         footer={
@@ -485,65 +490,65 @@ function TaskEditor({
                 onClick={() => setRemove(true)}
               >
                 <Trash2 size={17} />
-                <span>Arquivar</span>
+                <span>{t("Arquivar")}</span>
               </Button>
             )}
-            <Button onClick={onClose}>Cancelar</Button>
+            <Button onClick={onClose}>{t("Cancelar")}</Button>
             <Button variant="primary" onClick={save} disabled={busy}>
-              {busy ? "Salvando…" : task ? "Salvar alterações" : "Criar tarefa"}
+              {t(busy ? "Salvando…" : task ? "Salvar alterações" : "Criar tarefa")}
             </Button>
           </>
         }
       >
-        <Field label="Título da tarefa">
+        <Field label={t("Título da tarefa")}>
           <input
             autoFocus
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             maxLength={160}
-            placeholder="O que precisa ser feito?"
+            placeholder={t("O que precisa ser feito?")}
           />
         </Field>
-        <Field label="Descrição & notas">
+        <Field label={t("Descrição & notas")}>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="Contexto, ideias e detalhes importantes…"
+            placeholder={t("Contexto, ideias e detalhes importantes…")}
           />
         </Field>
         <div className="divider" />
         <div className="form-grid">
-          <Field label="Lista / Projeto">
-            <select value={listId} onChange={(e) => setListId(e.target.value)}>
+          <Field label={t("Lista / Projeto")}>
+            <Select value={listId} onChange={(e) => setListId(e.target.value)}>
               {lists.map((l) => (
                 <option key={l.id} value={l.id}>
                   {l.name}
                 </option>
               ))}
-            </select>
+            </Select>
           </Field>
-          <Field label="Prioridade">
-            <select
+          <Field label={t("Prioridade")}>
+            <Select
               value={priority}
               onChange={(e) => setPriority(e.target.value as Task["priority"])}
             >
               {Object.entries(priorities).map(([k, v]) => (
                 <option key={k} value={k}>
-                  {v}
+                  {t(v)}
                 </option>
               ))}
-            </select>
+            </Select>
           </Field>
         </div>
         <div className="form-grid">
-          <Field label="Data de início">
+          <Field label={t("Data de início")}>
             <input
               type="date"
               value={start}
               onChange={(e) => setStart(e.target.value)}
             />
           </Field>
-          <Field label="Prazo">
+          <Field label={t("Prazo")}>
             <input
               type="date"
               value={due}
@@ -552,7 +557,7 @@ function TaskEditor({
           </Field>
         </div>
         <div className="form-grid">
-          <Field label="Estimativa (min)">
+          <Field label={t("Estimativa (min)")}>
             <input
               type="number"
               min={1}
@@ -561,22 +566,22 @@ function TaskEditor({
               onChange={(e) => setEstimate(e.target.value)}
             />
           </Field>
-          <Field label="Estado">
-            <select
+          <Field label={t("Estado")}>
+            <Select
               value={status}
               onChange={(e) => setStatus(e.target.value as Task["status"])}
               disabled={!task}
             >
-              <option value="todo">A fazer</option>
-              <option value="in_progress">Em andamento</option>
-              <option value="done">Concluída</option>
-              <option value="cancelled">Cancelada</option>
-            </select>
+              <option value="todo">{t("A fazer")}</option>
+              <option value="in_progress">{t("Em andamento")}</option>
+              <option value="done">{t("Concluída")}</option>
+              <option value="cancelled">{t("Cancelada")}</option>
+            </Select>
           </Field>
         </div>
         <div className="divider" />
         <div className="between" style={{ marginBottom: 16 }}>
-          <span className="caps muted">Subtarefas</span>
+          <span className="caps muted">{t("Subtarefas")}</span>
           <span className="mono teal">
             {checklist.filter((c) => c.done).length}/{checklist.length}
           </span>
@@ -585,7 +590,7 @@ function TaskEditor({
           <div className="row" key={c.id} style={{ marginBottom: 10 }}>
             <CheckButton
               checked={c.done}
-              label={`Concluir subtarefa ${index + 1}`}
+              label={t("Concluir subtarefa {{index}}", { index: index + 1 })}
               onClick={() =>
                 setChecklist(
                   checklist.map((x) =>
@@ -596,7 +601,7 @@ function TaskEditor({
             />
             <input
               className="control"
-              aria-label={`Subtarefa ${index + 1}`}
+              aria-label={t("Subtarefa {{index}}", { index: index + 1 })}
               value={c.text}
               onChange={(e) =>
                 setChecklist(
@@ -608,7 +613,7 @@ function TaskEditor({
             />
             <button
               className="icon-button"
-              aria-label={`Remover subtarefa ${index + 1}`}
+              aria-label={t("Remover subtarefa {{index}}", { index: index + 1 })}
               onClick={() =>
                 setChecklist(checklist.filter((x) => x.id !== c.id))
               }
@@ -627,14 +632,14 @@ function TaskEditor({
           }
         >
           <Plus size={16} />
-          Adicionar subtarefa
+          {t("Adicionar subtarefa")}
         </Button>
         <div className="divider" />
-        <Field label="Tags" hint="Separe as tags por vírgula.">
+        <Field label={t("Tags")} hint={t("Separe as tags por vírgula.")}>
           <input
             value={tags}
             onChange={(e) => setTags(e.target.value)}
-            placeholder="trabalho, pessoal, importante"
+            placeholder={t("trabalho, pessoal, importante")}
           />
         </Field>
         {error && (
@@ -646,13 +651,13 @@ function TaskEditor({
       <Confirm
         open={remove}
         onClose={() => setRemove(false)}
-        title="Arquivar esta tarefa?"
+        title={t("Arquivar esta tarefa?")}
         pending={busy}
         onConfirm={async () => {
           setBusy(true);
           try {
             await actions(`/tasks/${task!.id}`, {}, "DELETE");
-            toast("Tarefa arquivada");
+            toast(t("Tarefa arquivada"));
             onClose();
           } catch (e) {
             setError((e as Error).message);
@@ -662,7 +667,7 @@ function TaskEditor({
           }
         }}
       >
-        A tarefa sairá das listas ativas e seu histórico será preservado.
+        {t("A tarefa sairá das listas ativas e seu histórico será preservado.")}
       </Confirm>
     </>
   );

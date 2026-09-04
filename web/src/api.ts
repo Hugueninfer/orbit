@@ -1,3 +1,4 @@
+import { t, setLocale, messages } from "./i18n";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { UserManager, WebStorageStateStore } from "oidc-client-ts";
 import type { Config } from "./types";
@@ -51,7 +52,7 @@ export async function request<T>(
   const headers = new Headers(options.headers);
   const publicPath = ["/config", "/auth/login", "/auth/demo"].includes(path);
   if (!publicPath && !token && ["demo", "signed-out"].includes(intent() ?? ""))
-    throw new Error("Sua sessão terminou. Entre novamente para continuar.");
+    throw new Error(t("Sua sessão terminou. Entre novamente para continuar."));
   if (!publicPath && token) headers.set("Authorization", `Bearer ${token}`);
   else headers.delete("Authorization");
   if (options.body) headers.set("Content-Type", "application/json");
@@ -68,7 +69,9 @@ export async function request<T>(
           : "same-origin",
   });
   if (!response.ok) {
-    let message = `Não foi possível concluir (${response.status}).`;
+    let message = t("Não foi possível concluir ({{status}}).", {
+      status: response.status,
+    });
     try {
       const body = await response.json();
       message =
@@ -76,16 +79,19 @@ export async function request<T>(
     } catch {
       /* non-JSON infrastructure errors */
     }
+    if (response.status === 422 && !Object.hasOwn(messages, message))
+      message = t("Confira os campos obrigatórios e os valores informados.");
     if (path === "/auth/login" && response.status === 401)
-      message = "E-mail ou senha inválidos.";
+      message = t("E-mail ou senha inválidos.");
     if (path === "/auth/login" && response.status === 429)
-      message =
-        "Muitas tentativas. Aguarde alguns minutos antes de tentar novamente.";
+      message = t(
+        "Muitas tentativas. Aguarde alguns minutos antes de tentar novamente.",
+      );
     if (response.status === 401 && !publicPath) {
       signOutLocally();
       window.dispatchEvent(new Event("orbit:unauthorized"));
     }
-    throw new ApiError(message, response.status);
+    throw new ApiError(t(message), response.status);
   }
   if (response.status === 204) return undefined as T;
   return response.json() as Promise<T>;
@@ -96,7 +102,7 @@ export async function getOidc() {
   const cfg = await getConfig();
   if (!cfg.oidc_authority || !cfg.oidc_client_id)
     throw new Error(
-      "O acesso pessoal precisa de um provedor de identidade configurado.",
+      t("O acesso pessoal precisa de um provedor de identidade configurado."),
     );
   if (!oidc) {
     oidc = new UserManager({
@@ -140,8 +146,10 @@ export async function restoreAuth() {
     if (response.status === 401) return false;
     if (!response.ok)
       throw new Error(
-        "Não foi possível verificar sua sessão. Tente novamente.",
+        t("Não foi possível verificar sua sessão. Tente novamente."),
       );
+    const profile = await response.json();
+    if (profile.locale) setLocale(profile.locale);
     sessionStorage.setItem(INTENT_STORAGE, "personal");
     return true;
   }

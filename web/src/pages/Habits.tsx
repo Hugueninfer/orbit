@@ -34,8 +34,11 @@ import {
   useToast,
 } from "../components/ui";
 import { dateLabel, localDate, weekDates } from "../format";
-const weekdays = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
+import { Select } from "../components/Select";
+import { useT } from "../i18n";
+const weekdayKeys = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
 export default function Habits() {
+  const t = useT();
   const habits = useApi<Habit[]>("/habits");
   const me = useApi<Profile>("/me");
   const today = localDate(me.data?.timezone);
@@ -104,7 +107,7 @@ export default function Habits() {
         { quantity: 1, note: "" },
         "PUT",
       );
-      toast("Check-in registrado");
+      toast(t("Check-in registrado"));
     } catch (e) {
       toast((e as Error).message, true);
     }
@@ -123,7 +126,7 @@ export default function Habits() {
   const week = weekDates(selected, weekStart);
   const calendarWeekdays = Array.from(
     { length: 7 },
-    (_, i) => weekdays[(i + weekStart) % 7],
+    (_, i) => t(weekdayKeys[(i + weekStart) % 7]),
   );
   return (
     <div className="page">
@@ -137,7 +140,7 @@ export default function Habits() {
       )}
       <div className="stats">
         <Stat
-          label="CONCLUSÃO DO DIA"
+          label={t("CONCLUSÃO DO DIA")}
           value={
             <span>
               {active.length ? Math.round((done / active.length) * 100) : 0}%
@@ -147,33 +150,33 @@ export default function Habits() {
         >
           <Progress value={active.length ? (done / active.length) * 100 : 0} />
           <p>
-            {done} de {active.length} hábitos cumpridos
+            {t("{{done}} de {{total}} hábitos cumpridos", { done, total: active.length })}
           </p>
         </Stat>
         <Stat
-          label="SEQUÊNCIA ATIVA"
+          label={t("SEQUÊNCIA ATIVA")}
           value={
             <>
               {Math.max(0, ...stats.map((s) => s.data?.current_streak ?? 0))}
-              <small> ciclos</small>
+              <small>{t(" ciclos")}</small>
             </>
           }
           icon={<Flame />}
         >
-          <p>Maior sequência entre seus hábitos</p>
+          <p>{t("Maior sequência entre seus hábitos")}</p>
         </Stat>
         <Stat
-          label="ADERÊNCIA NO PERÍODO"
+          label={t("ADERÊNCIA NO PERÍODO")}
           value={<span className="teal">{Math.round(adherence)}%</span>}
           icon={<Target />}
         >
           <Progress value={adherence} />
-          <p>Considera os dias agendados</p>
+          <p>{t("Considera os dias agendados")}</p>
         </Stat>
-        <Stat label="SEU RITMO" value={active.length} icon={<CalendarDays />}>
-          <p>Hábitos ativos na sua órbita</p>
+        <Stat label={t("SEU RITMO")} value={active.length} icon={<CalendarDays />}>
+          <p>{t("Hábitos ativos na sua órbita")}</p>
           <AddButton onClick={() => setParams({ new: "1" })}>
-            Novo hábito
+            {t("Novo hábito")}
           </AddButton>
         </Stat>
       </div>
@@ -181,10 +184,10 @@ export default function Habits() {
         <div className="stack">
           <Card>
             <div className="between" style={{ marginBottom: 16 }}>
-              <span className="caps muted">Horizonte semanal</span>
+              <span className="caps muted">{t("Horizonte semanal")}</span>
               <input
                 type="date"
-                aria-label="Data do check-in"
+                aria-label={t("Data do check-in")}
                 value={selected}
                 max={today}
                 onChange={(e) => {
@@ -213,7 +216,7 @@ export default function Habits() {
                   <small>{calendarWeekdays[i]}</small>
                   <strong>{d.slice(-2)}</strong>
                   {d === today ? (
-                    <Badge tone="teal">Hoje</Badge>
+                    <Badge tone="teal">{t("Hoje")}</Badge>
                   ) : (
                     <span>•</span>
                   )}
@@ -222,14 +225,14 @@ export default function Habits() {
             </div>
           </Card>
           <div className="toolbar">
-            <h2 style={{ flex: 1 }}>Sua rotina, com constância</h2>
+            <h2 style={{ flex: 1 }}>{t("Sua rotina, com constância")}</h2>
             <label className="search">
               <Search size={15} />
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                aria-label="Buscar hábito"
-                placeholder="Buscar hábito…"
+                aria-label={t("Buscar hábito")}
+                placeholder={t("Buscar hábito…")}
               />
             </label>
           </div>
@@ -256,7 +259,7 @@ export default function Habits() {
                           !data
                         }
                         onClick={() => mark(h)}
-                        label={`Registrar ${h.name}`}
+                        label={t("Registrar {{name}}", { name: h.name })}
                       />
                       <span
                         className="icon-box"
@@ -269,22 +272,21 @@ export default function Habits() {
                           {h.name}{" "}
                           <span className="mono teal" style={{ marginLeft: 6 }}>
                             <Flame size={12} /> {data?.current_streak ?? 0}{" "}
-                            {data?.streak_unit === "weeks" ? "sem." : "dias"}
+                            {data?.streak_unit === "weeks" ? t("sem.") : t("dias")}
                           </span>
                         </strong>
                         <small>
-                          Meta: {entry?.target ?? h.target_quantity} {h.unit} ·{" "}
-                          {h.schedule.kind === "daily"
-                            ? "Todos os dias"
+                          {t("Meta: {{target}} {{unit}} · {{schedule}}", { target: entry?.target ?? h.target_quantity, unit: h.unit, schedule: h.schedule.kind === "daily"
+                            ? t("Todos os dias")
                             : h.schedule.kind === "times_per_week"
-                              ? `${h.schedule.times_per_week}× por semana`
+                              ? t("{{count}}× por semana", { count: h.schedule.times_per_week })
                               : (h.schedule.weekdays ?? [])
-                                  .map((d) => weekdays[d])
-                                  .join(", ")}
+                                  .map((d) => t(weekdayKeys[d]))
+                                  .join(", ") })}
                         </small>
                         {entry && entry.quantity > 0 && (
                           <small className="teal">
-                            {entry.quantity} {h.unit} registrados
+                            {t("{{quantity}} {{unit}} registrados", { quantity: entry.quantity, unit: h.unit })}
                           </small>
                         )}
                       </div>
@@ -299,7 +301,7 @@ export default function Habits() {
                       </div>
                       <button
                         className="icon-button"
-                        aria-label={`Editar ${h.name}`}
+                        aria-label={t("Editar {{name}}", { name: h.name })}
                         onClick={() => setEditing(h)}
                       >
                         <Pencil size={16} />
@@ -311,11 +313,11 @@ export default function Habits() {
           ) : (
             <Card>
               <Empty
-                title="Pequenos passos. Grandes mudanças."
-                description="Crie um hábito e acompanhe sua consistência, um dia de cada vez."
+                title={t("Pequenos passos. Grandes mudanças.")}
+                description={t("Crie um hábito e acompanhe sua consistência, um dia de cada vez.")}
                 action={
                   <AddButton onClick={() => setParams({ new: "1" })}>
-                    Criar hábito
+                    {t("Criar hábito")}
                   </AddButton>
                 }
               />
@@ -329,14 +331,14 @@ export default function Habits() {
                 <div className="row">
                   <button
                     className="icon-button"
-                    aria-label="Mês anterior"
+                    aria-label={t("Mês anterior")}
                     onClick={() => changeMonth(-1)}
                   >
                     <ChevronLeft size={16} />
                   </button>
                   <button
                     className="icon-button"
-                    aria-label="Próximo mês"
+                    aria-label={t("Próximo mês")}
                     onClick={() => changeMonth(1)}
                     disabled={month >= today.slice(0, 7)}
                   >
@@ -345,7 +347,7 @@ export default function Habits() {
                 </div>
               }
             >
-              Matriz de consistência
+              {t("Matriz de consistência")}
             </CardTitle>
             <h3 style={{ marginBottom: 22, textTransform: "capitalize" }}>
               {dateLabel(`${month}-01`, { month: "long", year: "numeric" })}
@@ -375,7 +377,7 @@ export default function Habits() {
                 return (
                   <button
                     key={d}
-                    aria-label={`Ver ${dateLabel(d)}`}
+                    aria-label={t("Ver {{date}}", { date: dateLabel(d) })}
                     disabled={d > today}
                     className={`${count ? "filled" : ""} ${d === selected ? "selected" : ""}`}
                     style={
@@ -399,20 +401,20 @@ export default function Habits() {
             </div>
             <div className="divider" />
             <div className="between">
-              <small>Menos</small>
+              <small>{t("Menos")}</small>
               <div className="mini-bars">
                 <i />
                 <i className="filled" style={{ opacity: 0.3 }} />
                 <i className="filled" style={{ opacity: 0.6 }} />
                 <i className="filled" />
               </div>
-              <small className="teal">Mais consistente</small>
+              <small className="teal">{t("Mais consistente")}</small>
             </div>
           </Card>
           <Card>
             <CardTitle>
               <Target />
-              Aderência por hábito
+              {t("Aderência por hábito")}
             </CardTitle>
             {active.map((h) => (
               <div key={h.id} style={{ marginBottom: 20 }}>
@@ -426,8 +428,7 @@ export default function Habits() {
               </div>
             ))}
             <p className="form-help">
-              Consistência se constrói com tempo. Dias fora da sua agenda não
-              interrompem sua sequência.
+              {t("Consistência se constrói com tempo. Dias fora da sua agenda não interrompem sua sequência.")}
             </p>
           </Card>
         </div>
@@ -442,7 +443,7 @@ export default function Habits() {
         />
       )}
       <Drawer
-        title={checkin?.name ?? "Check-in"}
+        title={checkin?.name ?? t("Check-in")}
         description={dateLabel(selected, { day: "numeric", month: "long" })}
         open={!!checkin}
         onClose={() => setCheckin(null)}
@@ -460,7 +461,7 @@ export default function Habits() {
                     "DELETE",
                   );
                   setCheckin(null);
-                  toast("Check-in removido");
+                  toast(t("Check-in removido"));
                 } catch (e) {
                   toast((e as Error).message, true);
                 } finally {
@@ -468,7 +469,7 @@ export default function Habits() {
                 }
               }}
             >
-              Remover registro
+              {t("Remover registro")}
             </Button>
             <Button
               variant="primary"
@@ -482,7 +483,7 @@ export default function Habits() {
                     "PUT",
                   );
                   setCheckin(null);
-                  toast("Check-in salvo");
+                  toast(t("Check-in salvo"));
                 } catch (e) {
                   toast((e as Error).message, true);
                 } finally {
@@ -491,12 +492,12 @@ export default function Habits() {
               }}
             >
               <Check size={17} />
-              Salvar check-in
+              {t("Salvar check-in")}
             </Button>
           </>
         }
       >
-        <Field label={`Quantidade (${checkin?.unit})`}>
+        <Field label={t("Quantidade ({{unit}})", { unit: checkin?.unit ?? "" })}>
           <input
             type="number"
             min={1}
@@ -504,11 +505,11 @@ export default function Habits() {
             onChange={(e) => setQuantity(e.target.value)}
           />
         </Field>
-        <Field label="Como foi hoje?">
+        <Field label={t("Como foi hoje?")}>
           <textarea
             value={note}
             onChange={(e) => setNote(e.target.value)}
-            placeholder="Uma observação para acompanhar sua evolução…"
+            placeholder={t("Uma observação para acompanhar sua evolução…")}
           />
         </Field>
       </Drawer>
@@ -522,10 +523,11 @@ function HabitEditor({
   habit: Habit | null;
   onClose: () => void;
 }) {
+  const t = useT();
   const [name, setName] = useState(habit?.name ?? "");
   const [description, setDescription] = useState(habit?.description ?? "");
   const [target, setTarget] = useState(String(habit?.target_quantity ?? 1));
-  const [unit, setUnit] = useState(habit?.unit ?? "vezes");
+  const [unit, setUnit] = useState(habit?.unit ?? t("vezes"));
   const [schedule, setSchedule] = useState<Schedule>(
     habit
       ? { ...habit.schedule, weekdays: habit.schedule.weekdays ?? [] }
@@ -539,8 +541,8 @@ function HabitEditor({
   return (
     <Drawer
       open
-      title={habit ? "Editar hábito" : "Novo hábito"}
-      description="Pequenos passos, uma órbita consistente"
+      title={habit ? t("Editar hábito") : t("Novo hábito")}
+      description={t("Pequenos passos, uma órbita consistente")}
       onClose={onClose}
       footer={
         <>
@@ -555,16 +557,16 @@ function HabitEditor({
                     "PATCH",
                   );
                   onClose();
-                  toast("Hábito arquivado");
+                  toast(t("Hábito arquivado"));
                 } catch (e) {
                   setError((e as Error).message);
                 }
               }}
             >
-              Arquivar
+              {t("Arquivar")}
             </Button>
           )}
-          <Button onClick={onClose}>Cancelar</Button>
+          <Button onClick={onClose}>{t("Cancelar")}</Button>
           <Button
             variant="primary"
             disabled={busy || !name.trim()}
@@ -585,7 +587,7 @@ function HabitEditor({
                   habit ? { ...payload, version: habit.version } : payload,
                   habit ? "PATCH" : "POST",
                 );
-                toast(habit ? "Hábito atualizado" : "Hábito criado");
+                toast(t(habit ? "Hábito atualizado" : "Hábito criado"));
                 onClose();
               } catch (e) {
                 setError((e as Error).message);
@@ -594,29 +596,29 @@ function HabitEditor({
               }
             }}
           >
-            {busy ? "Salvando…" : "Salvar hábito"}
+            {busy ? t("Salvando…") : t("Salvar hábito")}
           </Button>
         </>
       }
     >
-      <Field label="Nome do hábito">
+      <Field label={t("Nome do hábito")}>
         <input
           autoFocus
           value={name}
           onChange={(e) => setName(e.target.value)}
           maxLength={120}
-          placeholder="Ex.: Leitura diária"
+          placeholder={t("Ex.: Leitura diária")}
         />
       </Field>
-      <Field label="Descrição">
+      <Field label={t("Descrição")}>
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Qual é o seu propósito?"
+          placeholder={t("Qual é o seu propósito?")}
         />
       </Field>
       <div className="form-grid">
-        <Field label="Meta diária">
+        <Field label={t("Meta diária")}>
           <input
             min={1}
             type="number"
@@ -624,18 +626,18 @@ function HabitEditor({
             onChange={(e) => setTarget(e.target.value)}
           />
         </Field>
-        <Field label="Unidade">
+        <Field label={t("Unidade")}>
           <input
             value={unit}
             onChange={(e) => setUnit(e.target.value)}
             maxLength={30}
-            placeholder="minutos, ml, páginas…"
+            placeholder={t("minutos, ml, páginas…")}
           />
         </Field>
       </div>
       <div className="divider" />
-      <Field label="Frequência">
-        <select
+      <Field label={t("Frequência")}>
+        <Select
           value={schedule.kind}
           onChange={(e) =>
             setSchedule({
@@ -644,14 +646,14 @@ function HabitEditor({
             })
           }
         >
-          <option value="daily">Todos os dias</option>
-          <option value="weekdays">Dias específicos</option>
-          <option value="times_per_week">Vezes por semana</option>
-        </select>
+          <option value="daily">{t("Todos os dias")}</option>
+          <option value="weekdays">{t("Dias específicos")}</option>
+          <option value="times_per_week">{t("Vezes por semana")}</option>
+        </Select>
       </Field>
       {schedule.kind === "weekdays" && (
         <div className="actions" style={{ marginBottom: 24 }}>
-          {weekdays.map((d, i) => (
+          {weekdayKeys.map((d, i) => (
             <Button
               key={d}
               variant={schedule.weekdays.includes(i) ? "primary" : "secondary"}
@@ -664,13 +666,13 @@ function HabitEditor({
                 })
               }
             >
-              {d}
+              {t(d)}
             </Button>
           ))}
         </div>
       )}
       {schedule.kind === "times_per_week" && (
-        <Field label="Dias por semana">
+        <Field label={t("Dias por semana")}>
           <input
             type="number"
             min={1}
@@ -685,7 +687,7 @@ function HabitEditor({
           />
         </Field>
       )}
-      <Field label="Cor do hábito">
+      <Field label={t("Cor do hábito")}>
         <input
           type="color"
           value={color}
@@ -694,8 +696,7 @@ function HabitEditor({
       </Field>
       {habit && (
         <p className="form-help">
-          Alterações na agenda valem a partir de amanhã. Seus registros
-          anteriores são preservados.
+          {t("Alterações na agenda valem a partir de amanhã. Seus registros anteriores são preservados.")}
         </p>
       )}
       {error && (

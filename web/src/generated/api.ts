@@ -1838,7 +1838,7 @@ export interface components {
       /** Currency */
       currency?: string | null;
       /** Locale */
-      locale?: ("pt-BR" | "en-US") | null;
+      locale?: ("pt-BR" | "en-US" | "de-DE") | null;
       /** Name */
       name?: string | null;
       /** Timezone */

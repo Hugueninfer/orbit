@@ -26,6 +26,8 @@ import {
   useToast,
 } from "../components/ui";
 import { decimal, minutes, displayLoad, canonicalLoad } from "../format";
+import { Select } from "../components/Select";
+import { useT } from "../i18n";
 type SetDraft = {
   load: string;
   loadChanged: boolean;
@@ -35,6 +37,7 @@ type SetDraft = {
   rir: string;
 };
 export default function WorkoutSession() {
+  const t = useT();
   const { id } = useParams();
   const profile = useApi<Profile>("/me");
   const unit = profile.data?.weight_unit ?? "kg";
@@ -59,7 +62,7 @@ export default function WorkoutSession() {
     return <ErrorState error={query.error} retry={() => query.refetch()} />;
   const session = query.data!;
   const exercise = session.exercises[exerciseIndex];
-  if (!exercise) return <Empty title="Nenhum exercício nesta sessão" />;
+  if (!exercise) return <Empty title={t("Nenhum exercício nesta sessão")} />;
   const sets = session.exercises.flatMap((e) => e.sets);
   const completed = sets.filter((s) => s.completed_at).length;
   const active = session.status === "active";
@@ -78,10 +81,10 @@ export default function WorkoutSession() {
             <Badge tone="teal">
               ●{" "}
               {active
-                ? "Ativo"
+                ? t("Ativo")
                 : session.status === "finished"
-                  ? "Concluído"
-                  : "Cancelado"}
+                  ? t("Concluído")
+                  : t("Cancelado")}
             </Badge>
             <span className="mono muted">
               <Clock3 size={13} />{" "}
@@ -94,48 +97,44 @@ export default function WorkoutSession() {
           </div>
           <h1>{session.name}</h1>
           <p className="muted" style={{ marginTop: 6 }}>
-            Exercício {exerciseIndex + 1} de {session.exercises.length} ·{" "}
-            <span className="teal">
-              {completed}/{sets.length} séries concluídas
-            </span>
+            {t("Exercício {{current}} de {{total}} · {{completed}}/{{sets}} séries concluídas", { current: exerciseIndex + 1, total: session.exercises.length, completed, sets: sets.length })}
           </p>
         </div>
         {active ? (
           <Button variant="danger" onClick={() => setFinish(true)}>
             <Flag size={16} />
-            Finalizar
+            {t("Finalizar")}
           </Button>
         ) : (
           <Link className="button" to="/treinos">
             <ArrowLeft size={16} />
-            Voltar
+            {t("Voltar")}
           </Link>
         )}
       </div>
       <Progress value={sets.length ? (completed / sets.length) * 100 : 0} />
       <Card>
-        <span className="caps blue">Exercício atual</span>
+        <span className="caps blue">{t("Exercício atual")}</span>
         <h1 style={{ margin: "12px 0" }}>{exercise.name}</h1>
-        <Badge>{exercise.muscle_group}</Badge>
+        <Badge>{t(exercise.muscle_group)}</Badge>
         <div className="divider" />
         <div className="between">
-          <small>Descanso entre séries</small>
+          <small>{t("Descanso entre séries")}</small>
           <span className="mono teal">{minutes(exercise.rest_seconds)}</span>
         </div>
         {!active && (
           <p className="form-help" style={{ marginTop: 16 }}>
-            Histórico preservado. Correções de séries exigem um motivo e ficam
-            registradas.
+            {t("Histórico preservado. Correções de séries exigem um motivo e ficam registradas.")}
           </p>
         )}
       </Card>
       <div>
-        <h2 className="section-heading">Controle de séries</h2>
+        <h2 className="section-heading">{t("Controle de séries")}</h2>
         <div className="set-head">
-          <span>Série</span>
-          <span>Tipo</span>
-          <span>Carga ({unit})</span>
-          <span>Reps</span>
+          <span>{t("Série")}</span>
+          <span>{t("Tipo")}</span>
+          <span>{t("Carga ({{unit}})", { unit })}</span>
+          <span>{t("Reps")}</span>
           <span>OK</span>
         </div>
         {exercise.sets.map((set, i) => (
@@ -173,7 +172,7 @@ export default function WorkoutSession() {
                   reps: last?.reps ?? 10,
                   type: "normal",
                 });
-                toast("Série adicionada");
+                toast(t("Série adicionada"));
               } catch (e) {
                 toast((e as Error).message, true);
               } finally {
@@ -182,23 +181,23 @@ export default function WorkoutSession() {
             }}
           >
             <Plus size={17} />
-            Adicionar série
+            {t("Adicionar série")}
           </Button>
         )}
       </div>
       {active ? (
         <Card className="timer">
           <div className="between">
-            <span className="caps teal">● Cronômetro de descanso</span>
+            <span className="caps teal">● {t("Cronômetro de descanso")}</span>
             <span className="mono muted">
-              Meta: {minutes(exercise.rest_seconds)}
+              {t("Meta: {{time}}", { time: minutes(exercise.rest_seconds) })}
             </span>
           </div>
           <div className="timer-clock">{minutes(remaining)}</div>
           <p className="muted">
             {remaining
-              ? "Respire. Prepare sua próxima série."
-              : "Pronto para a próxima série"}
+              ? t("Respire. Prepare sua próxima série.")
+              : t("Pronto para a próxima série")}
           </p>
           <div className="actions" style={{ marginTop: 22 }}>
             <Button
@@ -216,29 +215,29 @@ export default function WorkoutSession() {
             >
               +30s
             </Button>
-            <Button onClick={() => setRestOverride(Date.now())}>Pular</Button>
+            <Button onClick={() => setRestOverride(Date.now())}>{t("Pular")}</Button>
           </div>
         </Card>
       ) : (
         <Card>
           <CardTitle>
             <Trophy />
-            Resumo da sessão
+            {t("Resumo da sessão")}
           </CardTitle>
           <div className="routine-metrics">
             <div>
               <strong>
                 {decimal(Number(displayLoad(session.volume, unit)))} {unit}
               </strong>
-              <small>volume</small>
+              <small>{t("volume")}</small>
             </div>
             <div>
               <strong>{completed}</strong>
-              <small>séries</small>
+              <small>{t("séries")}</small>
             </div>
             <div>
               <strong>{session.pr_count}</strong>
-              <small>recordes</small>
+              <small>{t("recordes")}</small>
             </div>
           </div>
           {session.notes && (
@@ -254,7 +253,7 @@ export default function WorkoutSession() {
           onClick={() => setExerciseIndex((i) => i - 1)}
         >
           <ArrowLeft size={17} />
-          Anterior
+          {t("Anterior")}
         </Button>
         <div className="mini-bars">
           {session.exercises.map((e, i) => (
@@ -269,7 +268,7 @@ export default function WorkoutSession() {
           disabled={busy || exerciseIndex === session.exercises.length - 1}
           onClick={() => setExerciseIndex((i) => i + 1)}
         >
-          Próximo
+          {t("Próximo")}
           <ArrowRight size={17} />
         </Button>
       </div>
@@ -284,7 +283,7 @@ export default function WorkoutSession() {
                 await actions(`/sessions/${id}/copy-last`, {
                   version: session.version,
                 });
-                toast("Dados do treino anterior copiados");
+                toast(t("Dados do treino anterior copiados"));
               } catch (e) {
                 toast((e as Error).message, true);
               } finally {
@@ -292,20 +291,20 @@ export default function WorkoutSession() {
               }
             }}
           >
-            Copiar último treino
+            {t("Copiar último treino")}
           </Button>
           <Button variant="ghost" onClick={() => setCancel(true)}>
-            Cancelar sessão
+            {t("Cancelar sessão")}
           </Button>
         </div>
       )}
       <Drawer
         open={finish}
-        title="Finalizar treino"
+        title={t("Finalizar treino")}
         onClose={() => setFinish(false)}
         footer={
           <>
-            <Button onClick={() => setFinish(false)}>Continuar treino</Button>
+            <Button onClick={() => setFinish(false)}>{t("Continuar treino")}</Button>
             <Button
               variant="primary"
               disabled={busy || !completed || Object.keys(drafts).length > 0}
@@ -316,7 +315,7 @@ export default function WorkoutSession() {
                     version: session.version,
                     notes,
                   });
-                  toast("Treino concluído. Bom trabalho!");
+                  toast(t("Treino concluído. Bom trabalho!"));
                   setFinish(false);
                 } catch (e) {
                   toast((e as Error).message, true);
@@ -326,37 +325,36 @@ export default function WorkoutSession() {
               }}
             >
               <Check size={17} />
-              Concluir sessão
+              {t("Concluir sessão")}
             </Button>
           </>
         }
       >
-        <h1>{completed} séries concluídas</h1>
+        <h1>{t("{{count}} séries concluídas", { count: completed })}</h1>
         {Object.keys(drafts).length > 0 && (
           <p className="form-error">
-            Salve as séries editadas antes de finalizar o treino.
+            {t("Salve as séries editadas antes de finalizar o treino.")}
           </p>
         )}
         <p className="muted" style={{ margin: "12px 0 26px" }}>
-          Volume registrado:{" "}
-          {decimal(Number(displayLoad(session.volume, unit)))} {unit}
+          {t("Volume registrado: {{volume}} {{unit}}", { volume: decimal(Number(displayLoad(session.volume, unit))), unit })}
         </p>
-        <Field label="Notas do treino">
+        <Field label={t("Notas do treino")}>
           <textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            placeholder="Como foi seu treino hoje?"
+            placeholder={t("Como foi seu treino hoje?")}
           />
         </Field>
         {!completed && (
           <p className="form-error">
-            Conclua pelo menos uma série antes de finalizar.
+            {t("Conclua pelo menos uma série antes de finalizar.")}
           </p>
         )}
       </Drawer>
       <Confirm
         open={cancel}
-        title="Cancelar esta sessão?"
+        title={t("Cancelar esta sessão?")}
         onClose={() => setCancel(false)}
         pending={busy}
         onConfirm={async () => {
@@ -366,7 +364,7 @@ export default function WorkoutSession() {
               version: session.version,
             });
             setCancel(false);
-            toast("Sessão cancelada");
+            toast(t("Sessão cancelada"));
           } catch (e) {
             toast((e as Error).message, true);
           } finally {
@@ -374,7 +372,7 @@ export default function WorkoutSession() {
           }
         }}
       >
-        Esta sessão ficará marcada como cancelada no histórico.
+        {t("Esta sessão ficará marcada como cancelada no histórico.")}
       </Confirm>
     </div>
   );
@@ -398,6 +396,7 @@ function SetRow({
   disabled: boolean;
   onBusy: (b: boolean) => void;
 }) {
+  const t = useT();
   const [load, setLoad] = useState(draft?.load ?? displayLoad(set.load, unit));
   const [loadChanged, setLoadChanged] = useState(draft?.loadChanged ?? false);
   const [reps, setReps] = useState(draft?.reps ?? String(set.reps));
@@ -439,7 +438,7 @@ function SetRow({
       );
       onDraft(undefined);
       setEdit(false);
-      toast("Série registrada");
+      toast(t("Série registrada"));
     } catch (e) {
       toast((e as Error).message, true);
     } finally {
@@ -450,8 +449,8 @@ function SetRow({
     <>
       <div className={`set-row ${set.completed_at ? "completed" : ""}`}>
         <span className="mono">{index + 1}</span>
-        <select
-          aria-label={`Tipo da série ${index + 1}`}
+        <Select
+          aria-label={t("Tipo da série {{count}}", { count: index + 1 })}
           value={type}
           onChange={(e) => {
             const value = e.target.value as WorkoutSet["type"];
@@ -468,13 +467,13 @@ function SetRow({
             fontSize: 10,
           }}
         >
-          <option value="normal">Normal</option>
-          <option value="warmup">Aquec.</option>
-          <option value="drop">Drop</option>
-          <option value="failure">Falha</option>
-        </select>
+          <option value="normal">{t("Normal")}</option>
+          <option value="warmup">{t("Aquec.")}</option>
+          <option value="drop">{t("Drop")}</option>
+          <option value="failure">{t("Falha")}</option>
+        </Select>
         <input
-          aria-label={`Carga da série ${index + 1}`}
+          aria-label={t("Carga da série {{count}}", { count: index + 1 })}
           type="number"
           min={0}
           step="0.5"
@@ -487,7 +486,7 @@ function SetRow({
           }}
         />
         <input
-          aria-label={`Repetições da série ${index + 1}`}
+          aria-label={t("Repetições da série {{count}}", { count: index + 1 })}
           type="number"
           min={0}
           max={1000}
@@ -501,7 +500,7 @@ function SetRow({
         <button
           className={`check-button ${set.completed_at ? "checked" : ""}`}
           disabled={disabled}
-          aria-label={`Salvar série ${index + 1}`}
+          aria-label={t("Salvar série {{count}}", { count: index + 1 })}
           onClick={() =>
             session.status === "finished" ? setEdit(true) : save()
           }
@@ -519,15 +518,15 @@ function SetRow({
           disabled={disabled}
           onClick={() => onDraft(undefined)}
         >
-          Descartar alterações da série {index + 1}
+          {t("Descartar alterações da série {{count}}", { count: index + 1 })}
         </Button>
       )}
       <details className="set-effort">
-        <summary>Esforço · série {index + 1} (opcional)</summary>
+        <summary>{t("Esforço · série {{count}} (opcional)", { count: index + 1 })}</summary>
         <div className="form-grid">
           <Field
-            label={`RPE da série ${index + 1}`}
-            hint="Esforço percebido, de 0 a 10"
+            label={t("RPE da série {{count}}", { count: index + 1 })}
+            hint={t("Esforço percebido, de 0 a 10")}
           >
             <input
               type="number"
@@ -543,8 +542,8 @@ function SetRow({
             />
           </Field>
           <Field
-            label={`RIR da série ${index + 1}`}
-            hint="Repetições que ainda conseguiria fazer"
+            label={t("RIR da série {{count}}", { count: index + 1 })}
+            hint={t("Repetições que ainda conseguiria fazer")}
           >
             <input
               type="number"
@@ -563,26 +562,25 @@ function SetRow({
       </details>
       <Drawer
         open={edit}
-        title="Corrigir série do histórico"
+        title={t("Corrigir série do histórico")}
         onClose={() => setEdit(false)}
         footer={
           <>
-            <Button onClick={() => setEdit(false)}>Cancelar</Button>
+            <Button onClick={() => setEdit(false)}>{t("Cancelar")}</Button>
             <Button
               variant="primary"
               disabled={!reason.trim() || disabled}
               onClick={save}
             >
-              Salvar correção
+              {t("Salvar correção")}
             </Button>
           </>
         }
       >
         <p className="form-help" style={{ marginBottom: 24 }}>
-          Nova carga: {load} {unit} · {reps} repetições. O volume e os recordes
-          serão recalculados.
+          {t("Nova carga: {{load}} {{unit}} · {{reps}} repetições. O volume e os recordes serão recalculados.", { load, unit, reps })}
         </p>
-        <Field label="Motivo da correção">
+        <Field label={t("Motivo da correção")}>
           <textarea
             value={reason}
             onChange={(e) => setReason(e.target.value)}

@@ -1913,7 +1913,8 @@
               {
                 "enum": [
                   "pt-BR",
-                  "en-US"
+                  "en-US",
+                  "de-DE"
                 ],
                 "type": "string"
               },

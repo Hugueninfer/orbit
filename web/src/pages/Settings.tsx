@@ -1,4 +1,6 @@
-import { money, parseMoney } from "../format";
+import { Select } from "../components/Select";
+import { t, useLocale, getLocale, setLocale, locales } from "../i18n";
+import { money, parseMoney, moneyInput } from "../format";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -24,7 +26,46 @@ import {
   Loading,
   useToast,
 } from "../components/ui";
+const auditActions: Record<string, string> = {
+  created: "Criado",
+  updated: "Atualizado",
+  deleted: "Excluído",
+  archived: "Arquivado",
+  restored: "Restaurado",
+  transferred: "Transferido",
+  purchased: "Compra registrada",
+  payment_created: "Pagamento",
+  reversal_reason: "Estorno",
+  correction_reason: "Histórico corrigido",
+  history_edit_reason: "Histórico corrigido",
+  session_started: "Treino iniciado",
+  purchase_plan_regenerated: "Parcelas recalculadas",
+  checkin_created: "Hábito marcado",
+  checkin_removed: "Marcação removida",
+};
+const auditEntities: Record<string, string> = {
+  profile: "Perfil",
+  account: "Conta",
+  category: "Categoria",
+  card: "Cartão",
+  transaction: "Transação",
+  purchase: "Compra",
+  invoice: "Fatura",
+  recurrence: "Recorrência",
+  task: "Tarefa",
+  habit: "Hábito",
+  exercise: "Exercício",
+  routine: "Rotina",
+  session: "Sessão",
+  task_list: "Lista de tarefas",
+  workout_set: "Série",
+  session_exercise: "Exercício da sessão",
+  installment: "Parcela",
+  telegram_link: "Vínculo Telegram",
+};
 export default function Settings() {
+  const locale = useLocale();
+
   const me = useApi<Profile>("/me");
   const [name, setName] = useState("");
   const [timezone, setTimezone] = useState("America/Sao_Paulo");
@@ -55,8 +96,8 @@ export default function Settings() {
     <div className="page settings">
       <div className="page-heading">
         <div>
-          <h1>Seu Orbit, do seu jeito</h1>
-          <p>Perfil, preferências e segurança.</p>
+          <h1>{t("Seu Orbit, do seu jeito")}</h1>
+          <p>{t("Perfil, preferências e segurança.")}</p>
         </div>
         <Button
           variant="primary"
@@ -73,10 +114,11 @@ export default function Settings() {
                   timezone,
                   week_start: week,
                   weight_unit: weight,
+                  locale,
                 },
                 "PATCH",
               );
-              toast("Preferências salvas");
+              toast(t("Preferências salvas"));
             } catch (e) {
               setError((e as Error).message);
             } finally {
@@ -85,7 +127,7 @@ export default function Settings() {
           }}
         >
           <Save size={16} />
-          Salvar alterações
+          {t("Salvar alterações")}
         </Button>
       </div>
       {error && (
@@ -96,7 +138,7 @@ export default function Settings() {
       <Card>
         <CardTitle>
           <CircleUserRound />
-          Perfil & identidade
+          {t("Perfil & identidade")}
         </CardTitle>
         <div className="row" style={{ margin: "20px 0 28px" }}>
           <span className="avatar">
@@ -110,12 +152,12 @@ export default function Settings() {
             <h3>{name}</h3>
             <small>
               {profile.is_demo
-                ? "Seu espaço de demonstração"
-                : "Sua central pessoal"}
+                ? t("Seu espaço de demonstração")
+                : t("Sua central pessoal")}
             </small>
           </div>
         </div>
-        <Field label="Nome completo">
+        <Field label={t("Nome completo")}>
           <input
             value={name}
             maxLength={100}
@@ -123,8 +165,8 @@ export default function Settings() {
           />
         </Field>
         <div className="form-grid">
-          <Field label="Fuso horário">
-            <select
+          <Field label={t("Fuso horário")}>
+            <Select
               value={timezone}
               onChange={(e) => setTimezone(e.target.value)}
             >
@@ -145,109 +187,117 @@ export default function Settings() {
               ).map((z) => (
                 <option key={z}>{z}</option>
               ))}
-            </select>
+            </Select>
           </Field>
-          <Field label="Idioma">
-            <select value="pt-BR" disabled>
-              <option>pt-BR</option>
-            </select>
+          <Field label={t("Idioma")}>
+            <Select value={locale} onChange={(e) => setLocale(e.target.value)}>
+              {locales.map((item) => (
+                <option key={item.value} value={item.value}>
+                  {item.label}
+                </option>
+              ))}
+            </Select>
           </Field>
         </div>
       </Card>
       <Card>
         <CardTitle>
           <Settings2 />
-          Preferências operacionais
+          {t("Preferências operacionais")}
         </CardTitle>
-        <p>Ajuste os detalhes da sua rotina.</p>
+        <p>{t("Ajuste os detalhes da sua rotina.")}</p>
         <div className="form-grid">
-          <Field label="Primeiro dia da semana">
-            <select
+          <Field label={t("Primeiro dia da semana")}>
+            <Select
               value={week}
               onChange={(e) => setWeek(Number(e.target.value))}
             >
               {[
-                "Segunda-feira",
-                "Terça-feira",
-                "Quarta-feira",
-                "Quinta-feira",
-                "Sexta-feira",
-                "Sábado",
-                "Domingo",
+                t("Segunda-feira"),
+                t("Terça-feira"),
+                t("Quarta-feira"),
+                t("Quinta-feira"),
+                t("Sexta-feira"),
+                t("Sábado"),
+                t("Domingo"),
               ].map((d, i) => (
                 <option key={d} value={i}>
                   {d}
                 </option>
               ))}
-            </select>
+            </Select>
           </Field>
-          <Field label="Unidade de peso">
-            <select value={weight} onChange={(e) => setWeight(e.target.value)}>
-              <option value="kg">Quilogramas (kg)</option>
-              <option value="lb">Libras (lb)</option>
-            </select>
+          <Field label={t("Unidade de peso")}>
+            <Select value={weight} onChange={(e) => setWeight(e.target.value)}>
+              <option value="kg">{t("Quilogramas (kg)")}</option>
+              <option value="lb">{t("Libras (lb)")}</option>
+            </Select>
           </Field>
         </div>
         <div className="form-grid">
-          <Field label="Moeda padrão">
-            <select value="BRL" disabled>
-              <option value="BRL">Real brasileiro (BRL)</option>
-            </select>
+          <Field label={t("Moeda padrão")}>
+            <Select value="BRL" disabled>
+              <option value="BRL">{t("Real brasileiro (BRL)")}</option>
+            </Select>
           </Field>
-          <Field label="Aparência">
-            <select value="dark" disabled>
-              <option value="dark">Dark Orbital</option>
-            </select>
+          <Field label={t("Aparência")}>
+            <Select value="dark" disabled>
+              <option value="dark">{t("Dark Orbital")}</option>
+            </Select>
           </Field>
         </div>
       </Card>
       <Card>
         <CardTitle>
           <ShieldCheck />
-          Segurança & acesso
+          {t("Segurança & acesso")}
         </CardTitle>
         <p>
           {profile.is_demo
-            ? "Esta sessão é temporária e contém apenas dados fictícios."
-            : "Seu acesso é individual. Encerre a sessão ao terminar em um dispositivo compartilhado."}
+            ? t("Esta sessão é temporária e contém apenas dados fictícios.")
+            : t(
+                "Seu acesso é individual. Encerre a sessão ao terminar em um dispositivo compartilhado.",
+              )}
         </p>
         <div className="between">
           <Badge tone="teal">
-            {profile.is_demo ? "Demonstração isolada" : "Acesso individual"}
+            {profile.is_demo
+              ? t("Demonstração isolada")
+              : t("Acesso individual")}
           </Badge>
           <Button onClick={() => logout()}>
             <LogOut size={16} />
-            Sair da conta
+            {t("Sair da conta")}
           </Button>
         </div>
       </Card>
       <Card>
         <CardTitle>
           <Cable />
-          Integrações
+          {t("Integrações")}
         </CardTitle>
         <Link className="between" to="/integracoes">
           <div>
-            <h3>Telegram Áudio</h3>
+            <h3>{t("Telegram Áudio")}</h3>
             <p className="muted" style={{ marginTop: 7 }}>
-              Registro de despesas por mensagem de voz.
+              {t("Registro de despesas por mensagem de voz.")}
             </p>
           </div>
-          <span className="button">Configurar</span>
+          <span className="button">{t("Configurar")}</span>
         </Link>
       </Card>
       <Card>
         <CardTitle
           action={
             <Button onClick={() => setShowAudit(!showAudit)}>
-              {showAudit ? "Ocultar" : "Ver atividade"}
+              {showAudit ? t("Ocultar") : t("Ver atividade")}
             </Button>
           }
         >
           <History />
-          Histórico de alterações
+          {t("Histórico de alterações")}
         </CardTitle>
-        <p>Correções e ações importantes ficam registradas.</p>
+        <p>{t("Correções e ações importantes ficam registradas.")}</p>
         {showAudit &&
           (audit.isLoading ? (
             <Loading />
@@ -257,11 +307,11 @@ export default function Settings() {
             audit.data?.map((a) => (
               <div key={a.id} className="transaction-row">
                 <div className="row-content">
-                  <strong>{a.action}</strong>
-                  <small>{a.entity_type}</small>
+                  <strong>{t(auditActions[a.action] ?? "Atualizado")}</strong>
+                  <small>{t(auditEntities[a.entity_type] ?? "Registro")}</small>
                 </div>
                 <small>
-                  {new Date(a.created_at).toLocaleString("pt-BR", {
+                  {new Date(a.created_at).toLocaleString(getLocale(), {
                     timeZone: timezone,
                   })}
                 </small>
@@ -273,19 +323,20 @@ export default function Settings() {
         <Card>
           <CardTitle>
             <RotateCcw />
-            Recomeçar a demonstração
+            {t("Recomeçar a demonstração")}
           </CardTitle>
           <p>
-            Restaure os dados fictícios desta sessão para explorar o Orbit
-            novamente.
+            {t(
+              "Restaure os dados fictícios desta sessão para explorar o Orbit novamente.",
+            )}
           </p>
           <Button variant="danger" onClick={() => setReset(true)}>
-            Restaurar minha demo
+            {t("Restaurar minha demo")}
           </Button>
         </Card>
       )}
       <Confirm
-        title="Restaurar os dados da demonstração?"
+        title={t("Restaurar os dados da demonstração?")}
         open={reset}
         onClose={() => setReset(false)}
         pending={busy}
@@ -294,7 +345,7 @@ export default function Settings() {
           try {
             await action("/auth/demo/reset", {});
             setReset(false);
-            toast("Sua demonstração foi restaurada");
+            toast(t("Sua demonstração foi restaurada"));
           } catch (e) {
             toast((e as Error).message, true);
           } finally {
@@ -302,17 +353,20 @@ export default function Settings() {
           }
         }}
       >
-        As alterações feitas nesta sessão serão substituídas pelos exemplos
-        iniciais. Isso afeta somente seu espaço de demonstração.
+        {t(
+          "As alterações feitas nesta sessão serão substituídas pelos exemplos iniciais. Isso afeta somente seu espaço de demonstração.",
+        )}
       </Confirm>
     </div>
   );
 }
 export function Integrations() {
+  useLocale();
+
   const status = useApi<Telegram>("/integrations/telegram");
   const accounts = useApi<Account[]>("/accounts");
-  const [description, setDescription] = useState("Café da tarde");
-  const [amount, setAmount] = useState("8,50");
+  const [description, setDescription] = useState(t("Café da tarde"));
+  const [amount, setAmount] = useState(() => moneyInput(850));
   const [accountId, setAccountId] = useState("");
   const [code, setCode] = useState<{
     code: string;
@@ -332,37 +386,41 @@ export function Integrations() {
     <div className="page settings">
       <div className="page-heading">
         <div>
-          <h1>Telegram & despesas por áudio</h1>
-          <p>Menos digitação. Mais clareza nas suas finanças.</p>
+          <h1>{t("Telegram & despesas por áudio")}</h1>
+          <p>{t("Menos digitação. Mais clareza nas suas finanças.")}</p>
         </div>
         <Badge tone={data.linked ? "teal" : "muted"}>
           {data.linked
-            ? "Vinculado"
+            ? t("Vinculado")
             : data.provider_mode === "fixture"
-              ? "Simulação"
-              : "Não vinculado"}
+              ? t("Simulação")
+              : t("Não vinculado")}
         </Badge>
       </div>
       <Card>
         <CardTitle>
           <Cable />
-          Conexão com o Telegram
+          {t("Conexão com o Telegram")}
         </CardTitle>
         <p>
           {data.provider_mode === "fixture"
-            ? "Explore o fluxo com uma simulação identificada, sem enviar áudios ou acessar uma conta real."
+            ? t(
+                "Explore o fluxo com uma simulação identificada, sem enviar áudios ou acessar uma conta real.",
+              )
             : data.enabled
-              ? "Vincule sua conta ao bot e envie uma mensagem de voz pelo Telegram para registrar uma despesa."
-              : "A integração de áudio ainda não está configurada nesta instalação. O restante do Orbit funciona normalmente."}
+              ? t(
+                  "Vincule sua conta ao bot e envie uma mensagem de voz pelo Telegram para registrar uma despesa.",
+                )
+              : t(
+                  "A integração de áudio ainda não está configurada nesta instalação. O restante do Orbit funciona normalmente.",
+                )}
         </p>
-        <div className="form-help">{data.status}</div>
+        <div className="form-help">{t(data.status)}</div>
         {data.enabled && (
           <p className="form-help" style={{ marginTop: 12 }}>
-            Cadastre sua conta ou cartão em Finanças antes do primeiro áudio.
-            Exemplo: “Gastei 35 reais no almoço, pela conta Nubank”. Seus áudios
-            e os nomes das contas, cartões e categorias são enviados ao Google
-            para interpretação. No nível gratuito, esse conteúdo pode ser usado
-            para melhorar os produtos do Google.
+            {t(
+              "Cadastre sua conta ou cartão em Finanças antes do primeiro áudio. Exemplo: “Gastei 35 reais no almoço, pela conta Nubank”. Seus áudios e os nomes das contas, cartões e categorias são enviados ao Google para interpretação. No nível gratuito, esse conteúdo pode ser usado para melhorar os produtos do Google.",
+            )}
           </p>
         )}
         {data.enabled && (
@@ -387,20 +445,20 @@ export function Integrations() {
                 }
               }}
             >
-              Gerar código de vínculo
+              {t("Gerar código de vínculo")}
             </Button>
             {data.linked && (
               <Button
                 onClick={async () => {
                   try {
                     await action("/integrations/telegram/link", {}, "DELETE");
-                    toast("Telegram desvinculado");
+                    toast(t("Telegram desvinculado"));
                   } catch (e) {
                     setError((e as Error).message);
                   }
                 }}
               >
-                Desvincular
+                {t("Desvincular")}
               </Button>
             )}
           </div>
@@ -414,40 +472,46 @@ export function Integrations() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Abrir bot no Telegram
+                {t("Abrir bot no Telegram")}
               </a>
             )}
             <p>
-              Abra o bot, toque em Iniciar ou envie em uma conversa privada:
+              {t(
+                "Abra o bot, toque em Iniciar ou envie em uma conversa privada:",
+              )}
             </p>
             <h2 className="mono teal" style={{ margin: "12px 0" }}>
               /start {code.code}
             </h2>
             <small>
-              Válido até {new Date(code.expires_at).toLocaleTimeString("pt-BR")}
-              .
+              {t("Válido até")}{" "}
+              {new Date(code.expires_at).toLocaleTimeString(getLocale())}.
             </small>
           </div>
         )}
       </Card>
       <Card>
-        <CardTitle>Como registrar pelo Telegram</CardTitle>
+        <CardTitle>{t("Como registrar pelo Telegram")}</CardTitle>
         <div className="stack">
           {[
             [
               "01",
-              "Envie uma mensagem de voz",
-              "Conte o valor, a descrição e a conta ou cartão usado.",
+              t("Envie uma mensagem de voz"),
+              t("Conte o valor, a descrição e a conta ou cartão usado."),
             ],
             [
               "02",
-              "Confira os dados",
-              "Se algo estiver ambíguo, o Orbit pede a informação que falta.",
+              t("Confira os dados"),
+              t(
+                "Se algo estiver ambíguo, o Orbit pede a informação que falta.",
+              ),
             ],
             [
               "03",
-              "Veja o registro nas suas finanças",
-              "Parcelas, categorias e faturas seguem as mesmas regras do aplicativo.",
+              t("Veja o registro nas suas finanças"),
+              t(
+                "Parcelas, categorias e faturas seguem as mesmas regras do aplicativo.",
+              ),
             ],
           ].map(([n, title, text]) => (
             <div className="row" key={n}>
@@ -464,27 +528,28 @@ export function Integrations() {
       </Card>
       {data.provider_mode === "fixture" && (
         <Card>
-          <CardTitle>Simulação de captura</CardTitle>
+          <CardTitle>{t("Simulação de captura")}</CardTitle>
           <p>
-            Este cenário usa dados estruturados de teste. Não há transcrição de
-            áudio nem inteligência artificial nesta demonstração.
+            {t(
+              "Este cenário usa dados estruturados de teste. Não há transcrição de áudio nem inteligência artificial nesta demonstração.",
+            )}
           </p>
-          <Field label="Despesa de exemplo">
+          <Field label={t("Despesa de exemplo")}>
             <input
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </Field>
           <div className="form-grid">
-            <Field label="Valor (R$)">
+            <Field label={t("Valor (R$)")}>
               <input
                 inputMode="decimal"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
               />
             </Field>
-            <Field label="Conta da demonstração">
-              <select
+            <Field label={t("Conta da demonstração")}>
+              <Select
                 value={accountId || accounts.data?.[0]?.id || ""}
                 onChange={(e) => setAccountId(e.target.value)}
               >
@@ -493,7 +558,7 @@ export function Integrations() {
                     {a.name}
                   </option>
                 ))}
-              </select>
+              </Select>
             </Field>
           </div>
           <Button
@@ -520,10 +585,17 @@ export function Integrations() {
                 });
                 setResult(
                   value.result.recorded
-                    ? `${value.result.description}: ${money(value.result.amount ?? 0)} registrado na sua demonstração.`
-                    : (value.result.question ?? "Confira os dados informados."),
+                    ? t(
+                        "{{description}}: {{amount}} registrado na sua demonstração.",
+                        {
+                          description: value.result.description ?? "",
+                          amount: money(value.result.amount ?? 0),
+                        },
+                      )
+                    : (value.result.question ??
+                        t("Confira os dados informados.")),
                 );
-                toast("Simulação processada");
+                toast(t("Simulação processada"));
               } catch (e) {
                 setError((e as Error).message);
               } finally {
@@ -531,7 +603,7 @@ export function Integrations() {
               }
             }}
           >
-            Executar simulação
+            {t("Executar simulação")}
           </Button>
           {result && (
             <p

@@ -1,3 +1,5 @@
+import { Select } from "../components/Select";
+import { t, useLocale, setLocale, locales } from "../i18n";
 import { useState } from "react";
 import {
   ArrowRight,
@@ -22,6 +24,8 @@ export default function Login({
   config: Config;
   onLogin: () => void;
 }) {
+  const locale = useLocale();
+
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
@@ -55,24 +59,25 @@ export default function Login({
           </div>
           <div className="between">
             <Brand />
-            <Badge tone="teal">Personal Hub</Badge>
+            <Badge tone="teal">{t("Personal Hub")}</Badge>
           </div>
           <div>
             <h1>
-              Tudo o que importa,
+              {t("Tudo o que importa,")}
               <br />
-              em uma única órbita.
+              {t("em uma única órbita.")}
             </h1>
             <p>
-              Centralize suas tarefas, rotinas de hábitos, finanças e treinos em
-              um só lugar. Mais clareza para o seu dia.
+              {t(
+                "Centralize suas tarefas, rotinas de hábitos, finanças e treinos em um só lugar. Mais clareza para o seu dia.",
+              )}
             </p>
             <div className="login-features">
               {[
-                [CircleCheck, "Tarefas", "Foco & Priorização"],
-                [Repeat2, "Hábitos", "Sequências & Consistência"],
-                [Wallet, "Finanças", "Contas & Planejamento"],
-                [Dumbbell, "Treinos", "Rotinas & Evolução"],
+                [CircleCheck, t("Tarefas"), t("Foco & Priorização")],
+                [Repeat2, t("Hábitos"), t("Sequências & Consistência")],
+                [Wallet, t("Finanças"), t("Contas & Planejamento")],
+                [Dumbbell, t("Treinos"), t("Rotinas & Evolução")],
               ].map(([Icon, title, subtitle]) => {
                 const I = Icon as typeof CircleCheck;
                 return (
@@ -88,23 +93,37 @@ export default function Login({
             </div>
           </div>
           <small className="mono" style={{ marginTop: 28 }}>
-            Seu espaço. Seu ritmo. Sua órbita.
+            {t("Seu espaço. Seu ritmo. Sua órbita.")}
           </small>
         </section>
         <section className="login-form">
+          <label className="field" style={{ marginBottom: 20 }}>
+            <span>{t("Idioma")}</span>
+            <Select value={locale} onChange={(e) => setLocale(e.target.value)}>
+              {locales.map((item) => (
+                <option key={item.value} value={item.value}>
+                  {item.label}
+                </option>
+              ))}
+            </Select>
+          </label>
           <div className="between">
-            <span className="caps teal">● Acesso ao Orbit</span>
+            <span className="caps teal">{t("● Acesso ao Orbit")}</span>
             <LockKeyhole size={18} className="muted" />
           </div>
           <h1>
             {config.app_mode === "demo"
-              ? "Conheça sua nova órbita"
-              : "Bem-vindo de volta"}
+              ? t("Conheça sua nova órbita")
+              : t("Bem-vindo de volta")}
           </h1>
           <p>
             {config.app_mode === "demo"
-              ? "Experimente o Orbit com dados fictícios. Seu espaço de demonstração é exclusivo e você pode explorar à vontade."
-              : "Entre com sua conta para acessar sua central pessoal, no computador ou no celular."}
+              ? t(
+                  "Experimente o Orbit com dados fictícios. Seu espaço de demonstração é exclusivo e você pode explorar à vontade.",
+                )
+              : t(
+                  "Entre com sua conta para acessar sua central pessoal, no computador ou no celular.",
+                )}
           </p>
           <form
             className="login-credentials"
@@ -117,7 +136,7 @@ export default function Login({
               <>
                 <div className="field">
                   <label htmlFor="login-email">
-                    E-mail profissional ou pessoal
+                    {t("E-mail profissional ou pessoal")}
                   </label>
                   <div className="login-input">
                     <Mail size={18} aria-hidden="true" />
@@ -129,13 +148,13 @@ export default function Login({
                       required
                       value={email}
                       onChange={(event) => setEmail(event.target.value)}
-                      placeholder="seu@email.com"
+                      placeholder={t("seu@email.com")}
                       disabled={busy}
                     />
                   </div>
                 </div>
                 <div className="field">
-                  <label htmlFor="login-password">Senha</label>
+                  <label htmlFor="login-password">{t("Senha")}</label>
                   <div className="login-input">
                     <LockKeyhole size={18} aria-hidden="true" />
                     <input
@@ -152,7 +171,7 @@ export default function Login({
                       type="button"
                       className="login-password-toggle"
                       aria-label={
-                        showPassword ? "Ocultar senha" : "Mostrar senha"
+                        showPassword ? t("Ocultar senha") : t("Mostrar senha")
                       }
                       aria-pressed={showPassword}
                       onClick={() => setShowPassword(!showPassword)}
@@ -172,26 +191,28 @@ export default function Login({
                 <LockKeyhole size={18} />
               )}{" "}
               {busy
-                ? "Preparando sua órbita…"
+                ? t("Preparando sua órbita…")
                 : config.app_mode === "demo"
-                  ? "Experimentar demonstração"
-                  : "Entrar no Orbit"}
+                  ? t("Experimentar demonstração")
+                  : t("Entrar no Orbit")}
               {!busy && <ArrowRight size={18} />}
             </Button>
           </form>
           {config.app_mode !== "personal" && config.app_mode !== "demo" && (
             <>
-              <div className="login-separator">OU CONHEÇA O ORBIT</div>
+              <div className="login-separator">{t("OU CONHEÇA O ORBIT")}</div>
               <Button
                 type="button"
                 disabled={busy}
                 onClick={() => void enter(true)}
               >
-                <Sparkles size={18} /> Experimentar demonstração
+                <Sparkles size={18} />
+                {t("Experimentar demonstração")}
               </Button>
               <p className="muted" style={{ fontSize: 12, marginTop: 10 }}>
-                Sem cadastro. Dados fictícios em um espaço exclusivo por 24
-                horas.
+                {t(
+                  "Sem cadastro. Dados fictícios em um espaço exclusivo por 24 horas.",
+                )}
               </p>
             </>
           )}
@@ -202,27 +223,33 @@ export default function Login({
           )}
           <div className="login-separator">
             {config.app_mode === "demo"
-              ? "PRONTO PARA EXPLORAR"
-              : "ACESSO PESSOAL"}
+              ? t("PRONTO PARA EXPLORAR")
+              : t("ACESSO PESSOAL")}
           </div>
           <div className="form-help">
             <strong className="teal">
               {config.app_mode === "demo"
-                ? "Uma experiência completa, sem cadastro."
-                : "Seus dados acompanham você."}
+                ? t("Uma experiência completa, sem cadastro.")
+                : t("Seus dados acompanham você.")}
             </strong>
             <p style={{ marginTop: 8 }}>
               {config.app_mode === "demo"
-                ? "Crie uma tarefa, acompanhe hábitos, simule uma compra parcelada e registre seu treino. A demonstração expira em 24 horas."
+                ? t(
+                    "Crie uma tarefa, acompanhe hábitos, simule uma compra parcelada e registre seu treino. A demonstração expira em 24 horas.",
+                  )
                 : localLogin
-                  ? "Sua sessão fica conectada por até 7 dias. Use Sair quando terminar em um dispositivo compartilhado."
-                  : "Você será direcionado ao provedor de identidade para entrar com segurança. Depois, volta automaticamente para o Orbit."}
+                  ? t(
+                      "Sua sessão fica conectada por até 7 dias. Use Sair quando terminar em um dispositivo compartilhado.",
+                    )
+                  : t(
+                      "Você será direcionado ao provedor de identidade para entrar com segurança. Depois, volta automaticamente para o Orbit.",
+                    )}
             </p>
           </div>
           <div className="login-footer">
             {config.app_mode === "demo"
-              ? "DADOS FICTÍCIOS · ESPAÇO ISOLADO · SEM COBRANÇA"
-              : "CONEXÃO SEGURA · ACESSO INDIVIDUAL"}
+              ? t("DADOS FICTÍCIOS · ESPAÇO ISOLADO · SEM COBRANÇA")
+              : t("CONEXÃO SEGURA · ACESSO INDIVIDUAL")}
           </div>
         </section>
       </div>

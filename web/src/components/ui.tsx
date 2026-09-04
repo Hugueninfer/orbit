@@ -1,3 +1,4 @@
+import { t, useLocale } from "../i18n";
 import {
   createContext,
   useContext,
@@ -24,6 +25,8 @@ export function Button({
 }: ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: "primary" | "secondary" | "danger" | "ghost";
 }) {
+  useLocale();
+
   return (
     <button className={`button ${variant} ${className}`} {...props}>
       {children}
@@ -43,6 +46,8 @@ export const AddButton = ({
   </Button>
 );
 export function Brand() {
+  useLocale();
+
   return (
     <div className="brand">
       <span className="brand-mark">
@@ -51,7 +56,7 @@ export function Brand() {
       </span>
       <div>
         <strong>Orbit</strong>
-        <span className="brand-caption">Personal Operations Hub</span>
+        <span className="brand-caption">{t("Personal Operations Hub")}</span>
       </div>
     </div>
   );
@@ -63,6 +68,8 @@ export function Badge({
   children: ReactNode;
   tone?: string;
 }) {
+  useLocale();
+
   return <span className={`badge ${tone}`}>{children}</span>;
 }
 export function Card({
@@ -72,6 +79,8 @@ export function Card({
   children: ReactNode;
   className?: string;
 }) {
+  useLocale();
+
   return <section className={`card ${className}`}>{children}</section>;
 }
 export function CardTitle({
@@ -81,6 +90,8 @@ export function CardTitle({
   children: ReactNode;
   action?: ReactNode;
 }) {
+  useLocale();
+
   return (
     <div className="card-title">
       <h2>{children}</h2>
@@ -97,6 +108,8 @@ export function Field({
   children: ReactNode;
   hint?: string;
 }) {
+  useLocale();
+
   return (
     <label className="field">
       <span>{label}</span>
@@ -120,6 +133,8 @@ export function Drawer({
   onClose: () => void;
   footer?: ReactNode;
 }) {
+  useLocale();
+
   return (
     <Dialog.Root open={open} onOpenChange={(v) => !v && onClose()}>
       <Dialog.Portal>
@@ -138,7 +153,7 @@ export function Drawer({
                 </Dialog.Description>
               )}
             </div>
-            <Dialog.Close className="icon-button" aria-label="Fechar">
+            <Dialog.Close className="icon-button" aria-label={t("Fechar")}>
               <X size={20} />
             </Dialog.Close>
           </header>
@@ -164,6 +179,8 @@ export function Confirm({
   onConfirm: () => void;
   pending?: boolean;
 }) {
+  useLocale();
+
   return (
     <Dialog.Root open={open} onOpenChange={(v) => !v && onClose()}>
       <Dialog.Portal>
@@ -172,9 +189,9 @@ export function Confirm({
           <Dialog.Title>{title}</Dialog.Title>
           <Dialog.Description>{children}</Dialog.Description>
           <div className="actions">
-            <Button onClick={onClose}>Cancelar</Button>
+            <Button onClick={onClose}>{t("Cancelar")}</Button>
             <Button variant="danger" disabled={pending} onClick={onConfirm}>
-              {pending ? "Aguarde…" : "Confirmar"}
+              {pending ? t("Aguarde…") : t("Confirmar")}
             </Button>
           </div>
         </Dialog.Content>
@@ -183,14 +200,16 @@ export function Confirm({
   );
 }
 export function Empty({
-  title = "Tudo em ordem por aqui",
-  description = "Adicione seu primeiro registro para começar.",
+  title = t("Tudo em ordem por aqui"),
+  description = t("Adicione seu primeiro registro para começar."),
   action,
 }: {
   title?: string;
   description?: string;
   action?: ReactNode;
 }) {
+  useLocale();
+
   return (
     <div className="empty">
       <span className="empty-orbit">
@@ -203,10 +222,12 @@ export function Empty({
   );
 }
 export function Loading() {
+  useLocale();
+
   return (
     <div className="loading" role="status">
       <LoaderCircle className="spin" />
-      Carregando sua órbita…
+      {t("Carregando sua órbita…")}
     </div>
   );
 }
@@ -217,15 +238,17 @@ export function ErrorState({
   error: Error;
   retry?: () => void;
 }) {
+  useLocale();
+
   return (
     <div className="error-state" role="alert">
       <AlertTriangle />
-      <h3>Não foi possível carregar</h3>
-      <p>{error.message}</p>
+      <h3>{t("Não foi possível carregar")}</h3>
+      <p>{t(error.message)}</p>
       {retry && (
         <Button onClick={retry}>
           <RefreshCw size={16} />
-          Tentar novamente
+          {t("Tentar novamente")}
         </Button>
       )}
     </div>
@@ -238,6 +261,8 @@ export function Progress({
   value: number;
   tone?: string;
 }) {
+  useLocale();
+
   return (
     <div
       className={`progress ${tone}`}
@@ -261,6 +286,8 @@ export function CheckButton({
   label: string;
   disabled?: boolean;
 }) {
+  useLocale();
+
   return (
     <button
       className={`check-button ${checked ? "checked" : ""}`}
@@ -284,6 +311,8 @@ export function Stat({
   icon?: ReactNode;
   children?: ReactNode;
 }) {
+  useLocale();
+
   return (
     <Card className="stat">
       <div className="stat-label">
@@ -299,6 +328,8 @@ const ToastContext = createContext<(message: string, error?: boolean) => void>(
   () => {},
 );
 export function ToastProvider({ children }: { children: ReactNode }) {
+  useLocale();
+
   const [toast, setToast] = useState<{
     message: string;
     error: boolean;
@@ -323,7 +354,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
           <span>{toast.message}</span>
           <button
             className="icon-button"
-            aria-label="Dispensar"
+            aria-label={t("Dispensar")}
             onClick={() => setToast(null)}
           >
             <X size={16} />

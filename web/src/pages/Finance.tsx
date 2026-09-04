@@ -51,7 +51,9 @@ import {
   Stat,
   useToast,
 } from "../components/ui";
-import { dateLabel, localDate, money, parseMoney } from "../format";
+import { dateLabel, localDate, money, moneyInput, parseMoney } from "../format";
+import { useT } from "../i18n";
+import { Select } from "../components/Select";
 import {
   FinanceResourceEditor,
   TransactionEditor,
@@ -71,6 +73,7 @@ const statusNames: Record<string, string> = {
   refunded: "Estornada",
 };
 export default function Finance() {
+  const t = useT();
   const me = useApi<Profile>("/me");
   const today = localDate(me.data?.timezone);
   const [month, setMonth] = useState(today.slice(0, 7));
@@ -116,7 +119,7 @@ export default function Finance() {
   const tx = transactions.data ?? [];
   const entries = financeEntries(tx, purchases.data ?? [], month, search, tab);
   const cardName = (id: string) =>
-    ca.find((c) => c.id === id)?.name ?? "Cartão";
+    ca.find((c) => c.id === id)?.name ?? t("Cartão");
   const renderPurchase = (p: Purchase) => (
     <div className="transaction-row" key={p.id}>
       <span className="icon-box">
@@ -125,11 +128,11 @@ export default function Finance() {
       <div className="row-content">
         <strong>{p.description}</strong>
         <small>
-          Crédito · {cardName(p.card_id)} · {p.installment_count} parcelas ·{" "}
+          {t("Crédito")} · {cardName(p.card_id)} · {t("{{count}} parcelas", { count: p.installment_count })} ·{" "}
           {dateLabel(p.purchase_date)}
         </small>
       </div>
-      <Badge tone="red">Despesa · {statusNames[p.status]}</Badge>
+      <Badge tone="red">{t("Despesa")} · {t(statusNames[p.status])}</Badge>
       <span className="mono">{money(p.amount)}</span>
       {p.status === "active" &&
         p.installments.every(
@@ -140,7 +143,7 @@ export default function Finance() {
         ) && (
           <button
             className="icon-button"
-            aria-label={`Editar compra ${p.description}`}
+            aria-label={t("Editar compra {{name}}", { name: p.description })}
             onClick={() => setEditPurchase(p)}
           >
             <Pencil size={15} />
@@ -160,54 +163,54 @@ export default function Finance() {
             });
           }}
         >
-          Estornar
+          {t("Estornar")}
         </Button>
       )}
     </div>
   );
-  const renderTransaction = (t: Transaction) => (
-    <div className="transaction-row" key={t.id}>
+  const renderTransaction = (transaction: Transaction) => (
+    <div className="transaction-row" key={transaction.id}>
       <span className="icon-box">
-        {t.transfer_id ? (
+        {transaction.transfer_id ? (
           <ArrowLeftRight size={18} />
-        ) : t.kind === "income" ? (
+        ) : transaction.kind === "income" ? (
           <ArrowDownLeft size={18} />
         ) : (
           <Receipt size={18} />
         )}
       </span>
       <div className="row-content">
-        <strong className={t.kind === "income" ? "teal" : ""}>
-          {t.description}
+        <strong className={transaction.kind === "income" ? "teal" : ""}>
+          {transaction.description}
         </strong>
         <small>
-          {cats.find((c) => c.id === t.category_id)?.name ??
-            (t.transfer_id ? "Transferência" : "Sem categoria")}{" "}
-          · {ac.find((a) => a.id === t.account_id)?.name}
+          {cats.find((c) => c.id === transaction.category_id)?.name ??
+            (transaction.transfer_id ? t("Transferência") : t("Sem categoria"))}{" "}
+          · {ac.find((a) => a.id === transaction.account_id)?.name}
         </small>
       </div>
-      <div className="mono muted desktop-only">{dateLabel(t.date)}</div>
-      <div className={`amount ${t.kind === "income" ? "teal" : ""}`}>
-        {t.kind === "income" ? "+" : "−"} {money(t.amount)}
-        <small className={t.is_overdue ? "red" : "muted"}>
-          {t.is_overdue ? "Vencida" : statusNames[t.status]}
+      <div className="mono muted desktop-only">{dateLabel(transaction.date)}</div>
+      <div className={`amount ${transaction.kind === "income" ? "teal" : ""}`}>
+        {transaction.kind === "income" ? "+" : "−"} {money(transaction.amount)}
+        <small className={transaction.is_overdue ? "red" : "muted"}>
+          {t(transaction.is_overdue ? "Vencida" : statusNames[transaction.status])}
         </small>
       </div>
-      {t.status === "planned" ? (
+      {transaction.status === "planned" ? (
         <button
           className="icon-button"
-          onClick={() => setEditing(t)}
-          aria-label={`Editar ${t.description}`}
+          onClick={() => setEditing(transaction)}
+          aria-label={t("Editar {{name}}", { name: transaction.description })}
         >
           <Pencil size={15} />
         </button>
-      ) : t.status === "posted" && !t.transfer_id && !t.invoice_id ? (
+      ) : transaction.status === "posted" && !transaction.transfer_id && !transaction.invoice_id ? (
         <button
           className="icon-button"
-          aria-label={`Estornar ${t.description}`}
+          aria-label={t("Estornar {{name}}", { name: transaction.description })}
           onClick={() => {
             setReverseKey(crypto.randomUUID());
-            setReverse({ id: t.id, type: "transaction" });
+            setReverse({ id: transaction.id, type: "transaction" });
           }}
         >
           <Repeat2 size={15} />
@@ -275,8 +278,7 @@ export default function Finance() {
       {failed?.error && (
         <div>
           <p className="form-help">
-            Exibindo os últimos dados recebidos. Não foi possível atualizar os
-            valores.
+            {t("Exibindo os últimos dados recebidos. Não foi possível atualizar os valores.")}
           </p>
           <ErrorState
             error={failed.error}
@@ -292,17 +294,17 @@ export default function Finance() {
             className={basis === "cash" ? "active" : ""}
             onClick={() => setBasis("cash")}
           >
-            Visão de caixa
+            {t("Visão de caixa")}
           </button>
           <button
             className={basis === "accrual" ? "active" : ""}
             onClick={() => setBasis("accrual")}
           >
-            Competência
+            {t("Competência")}
           </button>
         </div>
         <input
-          aria-label="Mês financeiro"
+          aria-label={t("Mês financeiro")}
           className="control"
           type="month"
           value={month}
@@ -310,19 +312,19 @@ export default function Finance() {
           style={{ width: 160 }}
         />
         <AddButton onClick={() => setParams({ new: "1" })}>
-          Nova transação
+          {t("Nova transação")}
         </AddButton>
       </div>
       <div className="stats">
         <Stat
-          label="SALDO CONSOLIDADO"
+          label={t("SALDO CONSOLIDADO")}
           value={money(ac.reduce((s, a) => s + a.current_balance, 0))}
           icon={<Wallet />}
         >
-          <p>{ac.length} contas · saldo atual</p>
+          <p>{t("{{count}} contas · saldo atual", { count: ac.length })}</p>
         </Stat>
         <Stat
-          label="RECEITAS DO MÊS"
+          label={t("RECEITAS DO MÊS")}
           value={
             <span className="teal">{money(report.data?.income ?? 0)}</span>
           }
@@ -330,23 +332,23 @@ export default function Finance() {
         >
           <p>
             {basis === "cash"
-              ? "Entradas realizadas"
-              : "Receitas por competência"}
+              ? t("Entradas realizadas")
+              : t("Receitas por competência")}
           </p>
         </Stat>
         <Stat
-          label="DESPESAS DO MÊS"
+          label={t("DESPESAS DO MÊS")}
           value={money(report.data?.expenses ?? 0)}
           icon={<ArrowUpRight />}
         >
           <p>
             {basis === "cash"
-              ? "Saídas realizadas"
-              : "Despesas por competência"}
+              ? t("Saídas realizadas")
+              : t("Despesas por competência")}
           </p>
         </Stat>
         <Stat
-          label="RESULTADO DO MÊS"
+          label={t("RESULTADO DO MÊS")}
           value={
             <span className={(report.data?.net ?? 0) >= 0 ? "teal" : "red"}>
               {money(report.data?.net ?? 0)}
@@ -354,18 +356,18 @@ export default function Finance() {
           }
           icon={<CalendarDays />}
         >
-          <p>Receitas menos despesas</p>
+          <p>{t("Receitas menos despesas")}</p>
         </Stat>
       </div>
       <section>
         <div className="card-title">
           <h2>
             <CreditCard />
-            Cartões de crédito & faturas <Badge>{ca.length} cartões</Badge>
+            {t("Cartões de crédito & faturas")} <Badge>{t("{{count}} cartões", { count: ca.length })}</Badge>
           </h2>
           <Button onClick={() => setResource("cards")}>
             <Plus size={15} />
-            Novo cartão
+            {t("Novo cartão")}
           </Button>
         </div>
         {ca.length ? (
@@ -382,13 +384,13 @@ export default function Finance() {
                   <div className="between">
                     <span className="mono muted">•••• {c.last_four}</span>
                     <Badge tone="teal">
-                      {inv ? statusNames[inv.status] : "Sem pendências"}
+                      {inv ? t(statusNames[inv.status]) : t("Sem pendências")}
                     </Badge>
                   </div>
                   <h3>{c.name}</h3>
                   <div>
                     <div className="between" style={{ marginBottom: 9 }}>
-                      <small>Próxima fatura</small>
+                      <small>{t("Próxima fatura")}</small>
                       <strong>{money(inv?.remaining ?? 0)}</strong>
                     </div>
                     <Progress
@@ -397,15 +399,15 @@ export default function Finance() {
                       }
                     />
                     <div className="between" style={{ marginTop: 9 }}>
-                      <small className="mono">Fecha dia {c.close_day}</small>
-                      <small className="mono">Vence dia {c.due_day}</small>
+                      <small className="mono">{t("Fecha dia {{day}}", { day: c.close_day })}</small>
+                      <small className="mono">{t("Vence dia {{day}}", { day: c.due_day })}</small>
                     </div>
                   </div>
                   <div className="between">
                     <small>
                       {c.limit_amount
-                        ? `Limite: ${money(c.limit_amount)}`
-                        : "Sem limite informado"}
+                        ? t("Limite: {{amount}}", { amount: money(c.limit_amount) })
+                        : t("Sem limite informado")}
                     </small>
                     <Button
                       onClick={() => {
@@ -416,7 +418,7 @@ export default function Finance() {
                         }
                       }}
                     >
-                      Ver faturas
+                      {t("Ver faturas")}
                     </Button>
                   </div>
                 </div>
@@ -426,11 +428,11 @@ export default function Finance() {
         ) : (
           <Card>
             <Empty
-              title="Seus cartões, organizados"
-              description="Cadastre um cartão para acompanhar parcelas, fechamento e vencimento."
+              title={t("Seus cartões, organizados")}
+              description={t("Cadastre um cartão para acompanhar parcelas, fechamento e vencimento.")}
               action={
                 <AddButton onClick={() => setResource("cards")}>
-                  Adicionar cartão
+                  {t("Adicionar cartão")}
                 </AddButton>
               }
             />
@@ -443,12 +445,12 @@ export default function Finance() {
             action={
               <Button onClick={() => setResource("accounts")}>
                 <Plus size={15} />
-                Nova conta
+                {t("Nova conta")}
               </Button>
             }
           >
             <Wallet />
-            Suas contas
+            {t("Suas contas")}
           </CardTitle>
           {ac.length ? (
             ac.map((a) => (
@@ -458,20 +460,20 @@ export default function Finance() {
                 </div>
                 <div className="row-content">
                   <strong>{a.name}</strong>
-                  <small>Projetado: {money(a.projected_balance)}</small>
+                  <small>{t("Projetado: {{amount}}", { amount: money(a.projected_balance) })}</small>
                 </div>
                 <span className="mono">{money(a.current_balance)}</span>
               </div>
             ))
           ) : (
             <Empty
-              title="Comece pela sua primeira conta"
-              description="Informe o saldo inicial para acompanhar as movimentações."
+              title={t("Comece pela sua primeira conta")}
+              description={t("Informe o saldo inicial para acompanhar as movimentações.")}
             />
           )}
         </Card>
         <Card>
-          <CardTitle>Distribuição de despesas</CardTitle>
+          <CardTitle>{t("Distribuição de despesas")}</CardTitle>
           {(report.data?.categories ?? []).length ? (
             <>
               <div className="chart">
@@ -520,7 +522,7 @@ export default function Finance() {
               ))}
             </>
           ) : (
-            <Empty description="Suas despesas por categoria aparecerão aqui." />
+            <Empty description={t("Suas despesas por categoria aparecerão aqui.")} />
           )}
         </Card>
       </div>
@@ -529,11 +531,11 @@ export default function Finance() {
           action={
             <Button onClick={exportCsv}>
               <Download size={15} />
-              Exportar CSV
+              {t("Exportar CSV")}
             </Button>
           }
         >
-          Transações & compromissos
+          {t("Transações & compromissos")}
         </CardTitle>
         <div className="toolbar" style={{ marginBottom: 20 }}>
           <div className="tabs">
@@ -550,15 +552,15 @@ export default function Finance() {
                 className={tab === k ? "active" : ""}
                 onClick={() => setTab(k)}
               >
-                {l}
+                {t(l)}
               </button>
             ))}
           </div>
           <label className="search">
             <Search size={15} />
             <input
-              aria-label="Buscar transações"
-              placeholder="Buscar transações…"
+              aria-label={t("Buscar transações")}
+              placeholder={t("Buscar transações…")}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -566,9 +568,7 @@ export default function Finance() {
         </div>
         {tab === "expense" && (
           <p className="form-help">
-            Inclui gastos da conta e compras no crédito. Pagamentos de fatura
-            ficam em Todas; os totais acima seguem a visão de caixa ou
-            competência selecionada.
+            {t("Inclui gastos da conta e compras no crédito. Pagamentos de fatura ficam em Todas; os totais acima seguem a visão de caixa ou competência selecionada.")}
           </p>
         )}
         {tab === "invoices" ? (
@@ -581,8 +581,7 @@ export default function Finance() {
                 <div className="row-content">
                   <strong>{cardName(i.card_id)}</strong>
                   <small>
-                    Fecha {dateLabel(i.close_date)} · Vence{" "}
-                    {dateLabel(i.due_date)}
+                    {t("Fecha {{close}} · Vence {{due}}", { close: dateLabel(i.close_date), due: dateLabel(i.due_date) })}
                   </small>
                 </div>
                 <Badge
@@ -594,20 +593,20 @@ export default function Finance() {
                         : "blue"
                   }
                 >
-                  {statusNames[i.status]}
+                  {t(statusNames[i.status])}
                 </Badge>
                 <span className="mono">{money(i.remaining)}</span>
-                <Button onClick={() => setInvoice(i)}>Abrir</Button>
+                <Button onClick={() => setInvoice(i)}>{t("Abrir")}</Button>
               </div>
             ))
           ) : (
-            <Empty description="As faturas são criadas ao registrar compras no cartão." />
+            <Empty description={t("As faturas são criadas ao registrar compras no cartão.")} />
           )
         ) : tab === "recurrences" ? (
           <>
             <div className="between" style={{ marginBottom: 18 }}>
               <small>
-                Lançamentos previstos, sem alterar seu histórico realizado.
+                {t("Lançamentos previstos, sem alterar seu histórico realizado.")}
               </small>
               <Button
                 disabled={busy}
@@ -621,7 +620,7 @@ export default function Finance() {
                       "/recurrences/generate",
                       { through_date: through },
                     );
-                    toast(`${result.created} lançamentos previstos gerados`);
+                    toast(t("{{count}} lançamentos previstos gerados", { count: result.created }));
                   } catch (e) {
                     toast((e as Error).message, true);
                   } finally {
@@ -630,7 +629,7 @@ export default function Finance() {
                 }}
               >
                 <Repeat2 size={15} />
-                Gerar próximos 3 meses
+                {t("Gerar próximos 3 meses")}
               </Button>
             </div>
             {recurrences.data?.map((r) => (
@@ -641,14 +640,13 @@ export default function Finance() {
                 <div className="row-content">
                   <strong>{r.description}</strong>
                   <small>
-                    A cada {r.interval} {frequencyNames[r.frequency]} ·{" "}
-                    {r.active ? "Ativa" : "Pausada"}
+                    {t("A cada {{interval}} {{frequency}}", { interval: r.interval, frequency: t(frequencyNames[r.frequency]) })} · {t(r.active ? "Ativa" : "Pausada")}
                   </small>
                 </div>
                 <span className="mono">{money(r.amount)}</span>
                 <button
                   className="icon-button"
-                  aria-label={`Editar ${r.description}`}
+                  aria-label={t("Editar {{name}}", { name: r.description })}
                   onClick={() => setEditRecurrence(r)}
                 >
                   <Pencil size={15} />
@@ -663,23 +661,21 @@ export default function Finance() {
                         "PATCH",
                       );
                       toast(
-                        r.active
-                          ? "Recorrência pausada"
-                          : "Recorrência ativada",
+                        t(r.active ? "Recorrência pausada" : "Recorrência ativada"),
                       );
                     } catch (e) {
                       toast((e as Error).message, true);
                     }
                   }}
                 >
-                  {r.active ? "Pausar" : "Ativar"}
+                  {t(r.active ? "Pausar" : "Ativar")}
                 </Button>
               </div>
             ))}
             {!recurrences.data?.length && (
               <Empty
-                title="Seu planejamento mensal"
-                description="Ao criar uma transação, marque a opção de repetir."
+                title={t("Seu planejamento mensal")}
+                description={t("Ao criar uma transação, marque a opção de repetir.")}
               />
             )}
           </>
@@ -691,11 +687,11 @@ export default function Finance() {
           )
         ) : (
           <Empty
-            title="Nenhuma transação neste período"
-            description="Registre uma movimentação ou selecione outro mês."
+            title={t("Nenhuma transação neste período")}
+            description={t("Registre uma movimentação ou selecione outro mês.")}
             action={
               <AddButton onClick={() => setParams({ new: "1" })}>
-                Nova transação
+                {t("Nova transação")}
               </AddButton>
             }
           />
@@ -703,7 +699,7 @@ export default function Finance() {
         <div className="divider" />
         <Button variant="ghost" onClick={() => setResource("categories")}>
           <Plus size={15} />
-          Adicionar categoria
+          {t("Adicionar categoria")}
         </Button>
       </Card>
       {(params.has("new") || editing) && (
@@ -756,12 +752,12 @@ export default function Finance() {
         />
       )}
       <Drawer
-        title="Estornar lançamento"
+        title={t("Estornar lançamento")}
         open={!!reverse}
         onClose={() => setReverse(null)}
         footer={
           <>
-            <Button onClick={() => setReverse(null)}>Cancelar</Button>
+            <Button onClick={() => setReverse(null)}>{t("Cancelar")}</Button>
             <Button
               variant="danger"
               disabled={busy || !reason.trim()}
@@ -778,7 +774,7 @@ export default function Finance() {
                   );
                   setReverse(null);
                   setReason("");
-                  toast("Estorno registrado");
+                  toast(t("Estorno registrado"));
                 } catch (e) {
                   toast((e as Error).message, true);
                 } finally {
@@ -786,20 +782,19 @@ export default function Finance() {
                 }
               }}
             >
-              Confirmar estorno
+              {t("Confirmar estorno")}
             </Button>
           </>
         }
       >
         <p className="form-help" style={{ marginBottom: 24 }}>
-          O histórico será preservado. Compras em faturas fechadas geram um
-          crédito em uma fatura aberta.
+          {t("O histórico será preservado. Compras em faturas fechadas geram um crédito em uma fatura aberta.")}
         </p>
-        <Field label="Motivo do estorno">
+        <Field label={t("Motivo do estorno")}>
           <textarea
             value={reason}
             onChange={(e) => setReason(e.target.value)}
-            placeholder="Descreva o motivo desta correção…"
+            placeholder={t("Descreva o motivo desta correção…")}
           />
         </Field>
       </Drawer>
@@ -821,8 +816,9 @@ function InvoiceDrawer({
   today: string;
   onClose: () => void;
 }) {
+  const t = useT();
   const [amount, setAmount] = useState(
-    (Math.max(0, invoice.remaining) / 100).toFixed(2).replace(".", ","),
+    moneyInput(Math.max(0, invoice.remaining)),
   );
   const [account, setAccount] = useState(
     accounts.find((a) => a.id === preferredAccount)?.id ??
@@ -838,26 +834,26 @@ function InvoiceDrawer({
   return (
     <Drawer
       open
-      title={`Fatura · ${cardName}`}
-      description={`Vencimento em ${dateLabel(invoice.due_date, { day: "numeric", month: "long" })}`}
+      title={t("Fatura · {{name}}", { name: cardName })}
+      description={t("Vencimento em {{date}}", { date: dateLabel(invoice.due_date, { day: "numeric", month: "long" }) })}
       onClose={onClose}
-      footer={<Button onClick={onClose}>Fechar</Button>}
+      footer={<Button onClick={onClose}>{t("Fechar")}</Button>}
     >
       <div className="between">
         <h1>{money(invoice.remaining)}</h1>
         <Badge tone={invoice.status === "paid" ? "teal" : "blue"}>
-          {statusNames[invoice.status]}
+          {t(statusNames[invoice.status])}
         </Badge>
       </div>
       <p className="muted" style={{ marginTop: 8 }}>
-        Total {money(invoice.total)} · Pago {money(invoice.paid)}
+        {t("Total {{total}} · Pago {{paid}}", { total: money(invoice.total), paid: money(invoice.paid) })}
       </p>
       <div className="divider" />
       {invoice.items.map((i) => (
         <div className="transaction-row" key={i.id}>
           <div className="row-content">
             <strong>{i.description}</strong>
-            <small>Parcela {i.number}</small>
+            <small>{t("Parcela {{number}}", { number: i.number })}</small>
           </div>
           <span className="mono">{money(i.amount)}</span>
         </div>
@@ -865,9 +861,9 @@ function InvoiceDrawer({
       {invoice.remaining > 0 && (
         <>
           <div className="divider" />
-          <h3 style={{ marginBottom: 20 }}>Registrar pagamento</h3>
-          <Field label="Conta de pagamento">
-            <select
+          <h3 style={{ marginBottom: 20 }}>{t("Registrar pagamento")}</h3>
+          <Field label={t("Conta de pagamento")}>
+            <Select
               value={account}
               onChange={(e) => setAccount(e.target.value)}
             >
@@ -876,10 +872,10 @@ function InvoiceDrawer({
                   {a.name}
                 </option>
               ))}
-            </select>
+            </Select>
           </Field>
           <div className="form-grid">
-            <Field label="Valor (R$)">
+            <Field label={t("Valor (R$)")}>
               <input
                 inputMode="decimal"
                 value={amount}
@@ -889,7 +885,7 @@ function InvoiceDrawer({
                 }}
               />
             </Field>
-            <Field label="Data">
+            <Field label={t("Data")}>
               <input
                 type="date"
                 value={date}
@@ -911,7 +907,7 @@ function InvoiceDrawer({
                   "POST",
                   key,
                 );
-                toast("Pagamento registrado");
+                toast(t("Pagamento registrado"));
                 setKey(crypto.randomUUID());
               } catch (e) {
                 setError((e as Error).message);
@@ -920,7 +916,7 @@ function InvoiceDrawer({
               }
             }}
           >
-            Registrar pagamento
+            {t("Registrar pagamento")}
           </Button>
           {error && (
             <p role="alert" className="form-error">
@@ -928,13 +924,12 @@ function InvoiceDrawer({
             </p>
           )}
           <p className="form-help" style={{ marginTop: 20 }}>
-            Você pode registrar um pagamento parcial. O valor não pode
-            ultrapassar o saldo restante da fatura.
+            {t("Você pode registrar um pagamento parcial. O valor não pode ultrapassar o saldo restante da fatura.")}
           </p>
         </>
       )}
       <div className="divider" />
-      <h3>Pagamentos</h3>
+      <h3>{t("Pagamentos")}</h3>
       {invoice.payments.map((p) => (
         <div key={p.id} className="transaction-row">
           <div className="row-content">
