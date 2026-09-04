@@ -17,3 +17,6 @@ Necessary adaptations:
 - Full dark design is the sole implemented appearance; the settings field communicates the selected theme and does not promise alternate themes.
 
 These changes preserve the selected visual language without treating mockup content as implementation commands. The implementation is reference-based; a claim of pixel-identical reproduction across all 19 reference images would be inaccurate because content and real viewport ratios differ.
+# Ajuste responsivo de compras — 2026-09-04
+
+Na lista financeira mobile, compras no crédito podem ocupar várias linhas: descrição junto ao ícone, seguida de status, valor e ações. A extensão acomoda os controles reais de edição/estorno que excediam o espaço da linha do mockup. Preserva tokens, espaçamentos e o layout desktop; evita overflow horizontal sem esconder ações. Evidência em [e2e-finance.md](reviews/e2e-finance.md).

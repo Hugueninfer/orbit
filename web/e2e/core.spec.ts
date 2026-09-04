@@ -168,8 +168,14 @@ test("card purchase editing, partial payment and recurrence creation persist", a
   dialog = page.getByRole("dialog");
   await dialog.getByRole("button", { name: "Cartão", exact: true }).click();
   await dialog
-    .getByLabel("Cartão de crédito")
-    .selectOption({ label: "Cartão de validação (••0000)" });
+    .getByRole("combobox", { name: "Cartão de crédito", exact: true })
+    .click();
+  await page
+    .getByRole("option", { name: "Cartão de validação (••0000)", exact: true })
+    .click();
+  await expect(
+    dialog.getByRole("combobox", { name: "Cartão de crédito", exact: true }),
+  ).toHaveText("Cartão de validação (••0000)");
   await dialog.getByLabel("Valor da operação · BRL").fill("10,01");
   await dialog
     .getByLabel("Descrição", { exact: true })
@@ -179,7 +185,13 @@ test("card purchase editing, partial payment and recurrence creation persist", a
     .getByRole("button", { name: "Confirmar transação", exact: true })
     .click();
   await expect(dialog).toHaveCount(0);
-  await page.getByRole("button", { name: "Compras", exact: true }).click();
+  await page.getByRole("button", { name: "No crédito", exact: true }).click();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= document.documentElement.clientWidth,
+    ),
+  ).toBe(true);
+
   await page
     .getByRole("button", {
       name: "Editar compra Compra parcelada validada",
@@ -192,7 +204,7 @@ test("card purchase editing, partial payment and recurrence creation persist", a
     .click();
   await expect(dialog).toHaveCount(0);
   await page.reload();
-  await page.getByRole("button", { name: "Compras", exact: true }).click();
+  await page.getByRole("button", { name: "No crédito", exact: true }).click();
   await expect(
     page
       .locator(".transaction-row")
@@ -215,7 +227,7 @@ test("card purchase editing, partial payment and recurrence creation persist", a
     .locator("footer")
     .getByRole("button", { name: "Fechar", exact: true })
     .click();
-  await page.getByRole("button", { name: "Compras", exact: true }).click();
+  await page.getByRole("button", { name: "No crédito", exact: true }).click();
   await expect(
     page.getByRole("button", {
       name: "Editar compra Compra parcelada validada",
@@ -228,7 +240,13 @@ test("card purchase editing, partial payment and recurrence creation persist", a
     .getByLabel("Descrição", { exact: true })
     .fill("Recorrência validada");
   await dialog.getByText("Repetir esta transação", { exact: true }).click();
-  await dialog.getByLabel("Frequência").selectOption("monthly");
+  await dialog
+    .getByRole("combobox", { name: "Frequência", exact: true })
+    .click();
+  await page.getByRole("option", { name: "mês(es)", exact: true }).click();
+  await expect(
+    dialog.getByRole("combobox", { name: "Frequência", exact: true }),
+  ).toHaveText("mês(es)");
   await dialog
     .getByRole("button", { name: "Confirmar transação", exact: true })
     .click();

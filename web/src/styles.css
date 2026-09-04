@@ -1822,6 +1822,13 @@ select.control {
   .transaction-row {
     gap: 10px;
   }
+  .purchase-row {
+    flex-wrap: wrap;
+  }
+  .purchase-row .row-content {
+    flex-basis: calc(100% - 45px);
+    overflow-wrap: anywhere;
+  }
   .transaction-row .icon-box {
     width: 35px;
     height: 35px;

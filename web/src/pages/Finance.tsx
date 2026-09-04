@@ -121,7 +121,7 @@ export default function Finance() {
   const cardName = (id: string) =>
     ca.find((c) => c.id === id)?.name ?? t("Cartão");
   const renderPurchase = (p: Purchase) => (
-    <div className="transaction-row" key={p.id}>
+    <div className="transaction-row purchase-row" key={p.id}>
       <span className="icon-box">
         <CreditCard size={18} />
       </span>
