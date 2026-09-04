@@ -7,6 +7,8 @@ Architecture: versioned bundled snapshot of validated fictitious data, exported 
 - [x] Export a baseline snapshot and implement deterministic in-memory rebasing of IDs, dates and invoices; test month ends/leap years and invariant totals.
 - [x] Replace request-time seed generation with batched cloning. Assert bounded SQL round trips, isolation, reset, quota and expiry in database tests. Batch expired-user cleanup if necessary to avoid per-owner loops blocking entry.
 - [x] Run backend checks/full suite, Docker; review diff for owner IDs, dates, quotas and atomicity. Document source regeneration and behavior.
-- [ ] Publish through Render, measure warm creation latency against 35.43s baseline, verify health and cleanup only synthetic test demos; refresh archive/receipt.
+- [x] Publish through Render, measure warm creation latency against 35.43s baseline, verify health and cleanup only synthetic test demos; refresh archive/receipt.
 
 Verification before publication: 123 backend tests passed; Ruff and mypy passed; Docker image orbit:demo-template built. Local creation uses 51 SQL statements (previously 600), measured at 0.148s. Independent review approved, including calendar/reference checks over 1,462 dates.
+
+Published code 1841ddb0022d65a88dafbf9c8a7b9ba6d0e0cbf8 through Render deployment dep-dadderdg1s2s73834dh0 (succeeded in 53.0s). Warm production measurements: config 0.31s; demo creation 3.79s (baseline 35.43s); dashboard 2.56s; synthetic-demo logout 0.61s. Health and database ok. No environment or migration changes.
