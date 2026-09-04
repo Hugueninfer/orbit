@@ -4,8 +4,253 @@
   "reference_day": "2026-09-04",
   "records": [
     {
+      "kind": "note_folder",
+      "id": "6fed3bb2-db29-47e9-ae87-58d71a1eee2d",
+      "created_at": "2026-09-04T12:00:00.000203+00:00",
+      "data": {
+        "name": "Faculdade",
+        "color": "#7692ff"
+      }
+    },
+    {
+      "kind": "note_folder",
+      "id": "45e6ce17-6918-4e4c-aefa-f24443d945a3",
+      "created_at": "2026-09-04T12:00:00.000204+00:00",
+      "data": {
+        "name": "Presentes",
+        "color": "#ea8dba"
+      }
+    },
+    {
+      "kind": "note",
+      "id": "82e6d429-f6c0-43b1-846d-642a05766d1e",
+      "created_at": "2026-09-04T12:00:00.000206+00:00",
+      "data": {
+        "title": "Pequenos passos, boas ideias",
+        "content": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "heading",
+              "attrs": {
+                "level": 2
+              },
+              "content": [
+                {
+                  "text": "Um momento para desacelerar",
+                  "type": "text"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "text": "Hoje tirei um tempo para organizar as ideias. Às vezes, escrever é tudo que preciso para enxergar o próximo passo.",
+                  "type": "text"
+                }
+              ]
+            },
+            {
+              "type": "blockquote",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "text": "Não preciso resolver tudo hoje. Só preciso continuar.",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "text": "Três coisas boas de hoje",
+                  "type": "text",
+                  "marks": [
+                    {
+                      "type": "bold"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "bulletList",
+              "content": [
+                {
+                  "type": "listItem",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "text": "Uma conversa que trouxe novas ideias.",
+                          "type": "text"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "listItem",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "text": "Uma caminhada sem pressa.",
+                          "type": "text"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "listItem",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "text": "Concluir uma tarefa que estava adiando.",
+                          "type": "text"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "plain_text": "Um momento para desacelerar\nHoje tirei um tempo para organizar as ideias. Às vezes, escrever é tudo que preciso para enxergar o próximo passo.\nNão preciso resolver tudo hoje. Só preciso continuar.\nTrês coisas boas de hoje\nUma conversa que trouxe novas ideias.\nUma caminhada sem pressa.\nConcluir uma tarefa que estava adiando.",
+        "folder_id": null,
+        "journal_date": "2026-09-04",
+        "favorite": true,
+        "deleted_at": null,
+        "updated_at": "2026-09-04T12:00:00.000205+00:00"
+      }
+    },
+    {
+      "kind": "note",
+      "id": "af361436-a287-4e05-a933-e184d060dbcd",
+      "created_at": "2026-09-04T12:00:00.000208+00:00",
+      "data": {
+        "title": "Anotações da aula — ideias que conectam",
+        "content": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "text": "Aprender fica mais fácil quando conecto a teoria com algo do meu dia a dia. Revisar os conceitos principais e separar dúvidas para a próxima aula.",
+                  "type": "text"
+                }
+              ]
+            }
+          ]
+        },
+        "plain_text": "Aprender fica mais fácil quando conecto a teoria com algo do meu dia a dia. Revisar os conceitos principais e separar dúvidas para a próxima aula.",
+        "folder_id": "6fed3bb2-db29-47e9-ae87-58d71a1eee2d",
+        "journal_date": "2026-09-03",
+        "favorite": false,
+        "deleted_at": null,
+        "updated_at": "2026-09-04T12:00:00.000207+00:00"
+      }
+    },
+    {
+      "kind": "note",
+      "id": "38c5edf7-e324-4279-86c9-795d7d3e9532",
+      "created_at": "2026-09-04T12:00:00.000210+00:00",
+      "data": {
+        "title": "Presentes com significado",
+        "content": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "text": "Uma pequena coleção de ideias para surpreender quem faz parte da minha vida.",
+                  "type": "text"
+                }
+              ]
+            },
+            {
+              "type": "taskList",
+              "content": [
+                {
+                  "type": "taskItem",
+                  "attrs": {
+                    "checked": false
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "text": "Um livro com uma dedicatória",
+                          "type": "text"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "taskItem",
+                  "attrs": {
+                    "checked": false
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "text": "Preparar um jantar especial",
+                          "type": "text"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "taskItem",
+                  "attrs": {
+                    "checked": false
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "text": "Um álbum com nossas fotos favoritas",
+                          "type": "text"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "plain_text": "Uma pequena coleção de ideias para surpreender quem faz parte da minha vida.\nUm livro com uma dedicatória\nPreparar um jantar especial\nUm álbum com nossas fotos favoritas",
+        "folder_id": "45e6ce17-6918-4e4c-aefa-f24443d945a3",
+        "journal_date": null,
+        "favorite": false,
+        "deleted_at": null,
+        "updated_at": "2026-09-04T12:00:00.000209+00:00"
+      }
+    },
+    {
       "kind": "task_list",
-      "id": "f7b9ed64-9877-45c9-aec9-f5095ad4bc7b",
+      "id": "62692b7e-b80a-434a-83b8-7b00505a6ca5",
       "created_at": "2026-09-04T12:00:00.000002+00:00",
       "data": {
         "name": "Inbox",
@@ -16,7 +261,7 @@
     },
     {
       "kind": "task_list",
-      "id": "484ba3ba-1eb6-4ad3-b70a-f542749297aa",
+      "id": "ca1b3d7d-a155-49b2-b385-af3767f5a0cc",
       "created_at": "2026-09-04T12:00:00.000010+00:00",
       "data": {
         "name": "Trabalho",
@@ -27,7 +272,7 @@
     },
     {
       "kind": "task_list",
-      "id": "2d9fc978-fb51-45a7-a0ff-fb7291b9df1e",
+      "id": "c8b85b35-a395-4faf-ad5f-6d7475147125",
       "created_at": "2026-09-04T12:00:00.000012+00:00",
       "data": {
         "name": "Pessoal",
@@ -38,10 +283,10 @@
     },
     {
       "kind": "task",
-      "id": "ad0be4c0-5ffa-4830-be06-27e244f4eaf0",
+      "id": "d0b136a2-7a95-460e-a0ea-69ef406240b5",
       "created_at": "2026-09-04T12:00:00.000014+00:00",
       "data": {
-        "list_id": "484ba3ba-1eb6-4ad3-b70a-f542749297aa",
+        "list_id": "ca1b3d7d-a155-49b2-b385-af3767f5a0cc",
         "title": "Revisar proposta do projeto",
         "description": "Um próximo passo para manter tudo em órbita.",
         "status": "in_progress",
@@ -66,10 +311,10 @@
     },
     {
       "kind": "task",
-      "id": "5893165c-530d-4a89-a85f-1556b2929ceb",
+      "id": "3e5ae5bf-d828-475a-8c68-8985bb10864b",
       "created_at": "2026-09-04T12:00:00.000017+00:00",
       "data": {
-        "list_id": "484ba3ba-1eb6-4ad3-b70a-f542749297aa",
+        "list_id": "ca1b3d7d-a155-49b2-b385-af3767f5a0cc",
         "title": "Preparar apresentação de resultados",
         "description": "Um próximo passo para manter tudo em órbita.",
         "status": "todo",
@@ -94,10 +339,10 @@
     },
     {
       "kind": "task",
-      "id": "fe319f4a-692a-4dda-8dd7-97294731d104",
+      "id": "b37a2716-0631-4873-a067-ce1861e4cefb",
       "created_at": "2026-09-04T12:00:00.000020+00:00",
       "data": {
-        "list_id": "2d9fc978-fb51-45a7-a0ff-fb7291b9df1e",
+        "list_id": "c8b85b35-a395-4faf-ad5f-6d7475147125",
         "title": "Agendar consulta de rotina",
         "description": "Um próximo passo para manter tudo em órbita.",
         "status": "todo",
@@ -120,10 +365,10 @@
     },
     {
       "kind": "task",
-      "id": "b7ffdaea-f404-4d9e-b03f-4b1f734e379c",
+      "id": "78f8cea2-f2e6-4f34-9bfc-4d50ec0ff97d",
       "created_at": "2026-09-04T12:00:00.000023+00:00",
       "data": {
-        "list_id": "f7b9ed64-9877-45c9-aec9-f5095ad4bc7b",
+        "list_id": "62692b7e-b80a-434a-83b8-7b00505a6ca5",
         "title": "Ler 20 páginas",
         "description": "Um próximo passo para manter tudo em órbita.",
         "status": "todo",
@@ -146,10 +391,10 @@
     },
     {
       "kind": "task",
-      "id": "dafe9144-50cf-44ce-b661-7270fc19a2a4",
+      "id": "0079c5a9-59bb-475a-950e-3fec1d60d2ad",
       "created_at": "2026-09-04T12:00:00.000026+00:00",
       "data": {
-        "list_id": "f7b9ed64-9877-45c9-aec9-f5095ad4bc7b",
+        "list_id": "62692b7e-b80a-434a-83b8-7b00505a6ca5",
         "title": "Organizar planejamento semanal",
         "description": "Um próximo passo para manter tudo em órbita.",
         "status": "done",
@@ -172,7 +417,7 @@
     },
     {
       "kind": "habit",
-      "id": "9b8a3375-b231-4122-9941-cc133b1096de",
+      "id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
       "created_at": "2026-09-04T12:00:00.000032+00:00",
       "data": {
         "name": "Beber água",
@@ -194,7 +439,7 @@
     },
     {
       "kind": "habit",
-      "id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+      "id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
       "created_at": "2026-09-04T12:00:00.000062+00:00",
       "data": {
         "name": "Leitura diária",
@@ -216,7 +461,7 @@
     },
     {
       "kind": "habit",
-      "id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+      "id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
       "created_at": "2026-09-04T12:00:00.000093+00:00",
       "data": {
         "name": "Meditar",
@@ -238,7 +483,7 @@
     },
     {
       "kind": "habit",
-      "id": "16b2d422-789b-498b-9f30-f559ca83b886",
+      "id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
       "created_at": "2026-09-04T12:00:00.000123+00:00",
       "data": {
         "name": "Caminhar",
@@ -260,10 +505,10 @@
     },
     {
       "kind": "checkin",
-      "id": "f8789359-a858-4e16-8334-38288b0b7751",
+      "id": "1d887839-79e6-4247-b5f3-2f4a978ab001",
       "created_at": "2026-09-04T12:00:00.000035+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-08-07",
         "quantity": 8,
         "note": ""
@@ -271,10 +516,10 @@
     },
     {
       "kind": "checkin",
-      "id": "c3eda9fe-5cb1-4c85-a245-27861fbe111f",
+      "id": "fd9ca899-f652-47c0-9490-ac847eb0f0ad",
       "created_at": "2026-09-04T12:00:00.000036+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-08-09",
         "quantity": 8,
         "note": ""
@@ -282,10 +527,10 @@
     },
     {
       "kind": "checkin",
-      "id": "5fc6001c-e8c2-429d-9f03-8ea9ff72efab",
+      "id": "ccb92525-00ee-4019-ad38-0ab69e7f0db1",
       "created_at": "2026-09-04T12:00:00.000037+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-08-10",
         "quantity": 8,
         "note": ""
@@ -293,10 +538,10 @@
     },
     {
       "kind": "checkin",
-      "id": "97d8bf2f-b0d9-431c-b43d-762b6fa6e924",
+      "id": "d8541faa-a83c-4d89-b0ed-b48221c31518",
       "created_at": "2026-09-04T12:00:00.000038+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-08-11",
         "quantity": 8,
         "note": ""
@@ -304,10 +549,10 @@
     },
     {
       "kind": "checkin",
-      "id": "54c49062-8f9c-460e-be05-536facec5239",
+      "id": "4742da33-d318-43ae-ae5f-d11f5b6c841f",
       "created_at": "2026-09-04T12:00:00.000039+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-08-12",
         "quantity": 8,
         "note": ""
@@ -315,10 +560,10 @@
     },
     {
       "kind": "checkin",
-      "id": "fb5c24b2-6100-4b12-b6e3-9ad72f6d0d2d",
+      "id": "646c36f8-6537-4a71-b5fe-8856f10fc56b",
       "created_at": "2026-09-04T12:00:00.000040+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-08-13",
         "quantity": 8,
         "note": ""
@@ -326,10 +571,10 @@
     },
     {
       "kind": "checkin",
-      "id": "bce91101-641a-4114-8fb6-9a32a2757d31",
+      "id": "d21765c7-f9ad-43d8-9e59-b2b58dfad7db",
       "created_at": "2026-09-04T12:00:00.000041+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-08-14",
         "quantity": 8,
         "note": ""
@@ -337,10 +582,10 @@
     },
     {
       "kind": "checkin",
-      "id": "15bd2ca1-df41-4b56-8854-4ac8003084ff",
+      "id": "8e38f03c-9c02-44ad-8f35-4d529290ddee",
       "created_at": "2026-09-04T12:00:00.000042+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-08-15",
         "quantity": 8,
         "note": ""
@@ -348,10 +593,10 @@
     },
     {
       "kind": "checkin",
-      "id": "fd3b45ec-05ca-496b-a817-70f9be32cf04",
+      "id": "0bf83b4f-eb7a-4488-991f-05c92d9259c6",
       "created_at": "2026-09-04T12:00:00.000043+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-08-16",
         "quantity": 8,
         "note": ""
@@ -359,10 +604,10 @@
     },
     {
       "kind": "checkin",
-      "id": "b8bdafa7-3ee0-4ffd-9ad4-525b650390ae",
+      "id": "a93d5296-f149-48ab-83c6-abecc6071bfb",
       "created_at": "2026-09-04T12:00:00.000044+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-08-18",
         "quantity": 8,
         "note": ""
@@ -370,10 +615,10 @@
     },
     {
       "kind": "checkin",
-      "id": "8843576c-5a96-4c73-9b48-19aba0bdcc99",
+      "id": "ca05051f-46f7-4070-8578-75c9ae99e56a",
       "created_at": "2026-09-04T12:00:00.000045+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-08-19",
         "quantity": 8,
         "note": ""
@@ -381,10 +626,10 @@
     },
     {
       "kind": "checkin",
-      "id": "9cc82277-bf07-452b-b082-dd9be821b082",
+      "id": "48f57229-036e-4665-98b9-1bee53ec6be9",
       "created_at": "2026-09-04T12:00:00.000046+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-08-20",
         "quantity": 8,
         "note": ""
@@ -392,10 +637,10 @@
     },
     {
       "kind": "checkin",
-      "id": "1cc6d9e5-d46c-46b5-bd95-11b8048b9235",
+      "id": "99ca23d0-03d0-45ee-b02d-ed9440c0e76f",
       "created_at": "2026-09-04T12:00:00.000047+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-08-21",
         "quantity": 8,
         "note": ""
@@ -403,10 +648,10 @@
     },
     {
       "kind": "checkin",
-      "id": "0baf13e8-0451-4b92-9d33-c029f81ba43b",
+      "id": "9ee0c0f7-5f2a-43e4-b27a-4317b8036e4b",
       "created_at": "2026-09-04T12:00:00.000048+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-08-22",
         "quantity": 8,
         "note": ""
@@ -414,10 +659,10 @@
     },
     {
       "kind": "checkin",
-      "id": "0f5bd10a-b47a-43cb-977e-21fbb9568e26",
+      "id": "132a4064-354e-4b7b-b69c-6e349b2fe4e4",
       "created_at": "2026-09-04T12:00:00.000049+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-08-23",
         "quantity": 8,
         "note": ""
@@ -425,10 +670,10 @@
     },
     {
       "kind": "checkin",
-      "id": "2f9c6881-29f1-4081-a53b-7f2007f58211",
+      "id": "c579077d-1a2d-46cc-a8be-77d374cea6e1",
       "created_at": "2026-09-04T12:00:00.000050+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-08-24",
         "quantity": 8,
         "note": ""
@@ -436,10 +681,10 @@
     },
     {
       "kind": "checkin",
-      "id": "3ee30de4-7ef3-4513-bbb2-8b45376db740",
+      "id": "280c6107-54b4-497a-9c38-e6d312e7c8a6",
       "created_at": "2026-09-04T12:00:00.000051+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-08-25",
         "quantity": 8,
         "note": ""
@@ -447,10 +692,10 @@
     },
     {
       "kind": "checkin",
-      "id": "0efe7e39-35b8-47ee-81a6-24bbf55f5aa7",
+      "id": "53532574-b588-4f01-b858-4dbfacf993c9",
       "created_at": "2026-09-04T12:00:00.000052+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-08-27",
         "quantity": 8,
         "note": ""
@@ -458,10 +703,10 @@
     },
     {
       "kind": "checkin",
-      "id": "58446f6b-b22f-42b9-a514-4a219e3f852c",
+      "id": "c502946a-3b45-4640-876f-3e78fefb0ff2",
       "created_at": "2026-09-04T12:00:00.000053+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-08-28",
         "quantity": 8,
         "note": ""
@@ -469,10 +714,10 @@
     },
     {
       "kind": "checkin",
-      "id": "15f51c9f-1f8c-4159-b42d-ad94b4b418df",
+      "id": "40047f6a-4ceb-4a63-b618-3dd4984385c2",
       "created_at": "2026-09-04T12:00:00.000054+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-08-29",
         "quantity": 8,
         "note": ""
@@ -480,10 +725,10 @@
     },
     {
       "kind": "checkin",
-      "id": "6b2e0203-01b7-41cc-ba1d-38868b41534e",
+      "id": "b7888148-7307-4e25-b485-8d8e105ac888",
       "created_at": "2026-09-04T12:00:00.000055+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-08-30",
         "quantity": 8,
         "note": ""
@@ -491,10 +736,10 @@
     },
     {
       "kind": "checkin",
-      "id": "78fc5249-9107-4952-9cdd-952f8ce945a6",
+      "id": "386514db-0893-4388-bbe5-1b160732ad7a",
       "created_at": "2026-09-04T12:00:00.000056+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-08-31",
         "quantity": 8,
         "note": ""
@@ -502,10 +747,10 @@
     },
     {
       "kind": "checkin",
-      "id": "495db8da-b5c0-468c-a350-13cb2a74d8c7",
+      "id": "6cc2f078-5569-44a9-b7ca-95a2b29c0b75",
       "created_at": "2026-09-04T12:00:00.000057+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-09-01",
         "quantity": 8,
         "note": ""
@@ -513,10 +758,10 @@
     },
     {
       "kind": "checkin",
-      "id": "0a54e4d4-8ce1-4a6a-8da3-9a746f154f77",
+      "id": "25c0c12d-99fa-4ef1-9e81-2903843e7dec",
       "created_at": "2026-09-04T12:00:00.000058+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-09-02",
         "quantity": 8,
         "note": ""
@@ -524,10 +769,10 @@
     },
     {
       "kind": "checkin",
-      "id": "a79aa9ad-5f73-45e4-9558-6ddf3d1175b8",
+      "id": "eb7f77e5-bdb1-4081-ab3b-cbca73bd57c7",
       "created_at": "2026-09-04T12:00:00.000059+00:00",
       "data": {
-        "habit_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "habit_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "date": "2026-09-03",
         "quantity": 8,
         "note": ""
@@ -535,10 +780,10 @@
     },
     {
       "kind": "checkin",
-      "id": "7cb0d434-6759-4b5e-8e36-aab5f8dd6d5a",
+      "id": "9f1f20fe-47e1-4726-843a-0c31a32ce149",
       "created_at": "2026-09-04T12:00:00.000065+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-08-07",
         "quantity": 20,
         "note": ""
@@ -546,10 +791,10 @@
     },
     {
       "kind": "checkin",
-      "id": "0400d4d4-bd13-4f17-98b2-589e5d5b2409",
+      "id": "7baadfe5-82c4-482d-a699-e2383e2dc698",
       "created_at": "2026-09-04T12:00:00.000066+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-08-08",
         "quantity": 20,
         "note": ""
@@ -557,10 +802,10 @@
     },
     {
       "kind": "checkin",
-      "id": "fda6de50-2b83-4f82-b4c1-235dd2a4be33",
+      "id": "53e706a8-67cc-4dfb-bc04-47480cb96629",
       "created_at": "2026-09-04T12:00:00.000067+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-08-10",
         "quantity": 20,
         "note": ""
@@ -568,10 +813,10 @@
     },
     {
       "kind": "checkin",
-      "id": "546b3c36-b2fc-4de7-9bf2-cc9c6a0a96f5",
+      "id": "3937e7b9-6583-4121-9515-ebec89ecb8b5",
       "created_at": "2026-09-04T12:00:00.000068+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-08-11",
         "quantity": 20,
         "note": ""
@@ -579,10 +824,10 @@
     },
     {
       "kind": "checkin",
-      "id": "178833a8-3a59-475f-90cc-e83528b32bd1",
+      "id": "1d08b4b0-9bed-47b4-8c9b-9962433aba98",
       "created_at": "2026-09-04T12:00:00.000069+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-08-12",
         "quantity": 20,
         "note": ""
@@ -590,10 +835,10 @@
     },
     {
       "kind": "checkin",
-      "id": "ab647617-d620-41c3-bb38-9abf6c6bb883",
+      "id": "b0092e8a-07de-410c-b350-9299d0c6b936",
       "created_at": "2026-09-04T12:00:00.000070+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-08-13",
         "quantity": 20,
         "note": ""
@@ -601,10 +846,10 @@
     },
     {
       "kind": "checkin",
-      "id": "1c25cc20-590b-4c0d-9787-2aab8b295db0",
+      "id": "4613e70e-34bd-42a8-bba0-475df966f1af",
       "created_at": "2026-09-04T12:00:00.000071+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-08-14",
         "quantity": 20,
         "note": ""
@@ -612,10 +857,10 @@
     },
     {
       "kind": "checkin",
-      "id": "3cdd2b18-559a-44ea-be59-b84ebbc8dc6b",
+      "id": "bf53476e-7c6c-49b9-b510-83460bfac462",
       "created_at": "2026-09-04T12:00:00.000072+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-08-15",
         "quantity": 20,
         "note": ""
@@ -623,10 +868,10 @@
     },
     {
       "kind": "checkin",
-      "id": "6064c360-dfb0-4fcc-bddf-7243254ae81d",
+      "id": "4a568073-16f2-404f-993f-c31c778c8ff6",
       "created_at": "2026-09-04T12:00:00.000073+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-08-16",
         "quantity": 20,
         "note": ""
@@ -634,10 +879,10 @@
     },
     {
       "kind": "checkin",
-      "id": "6f41731e-a9ab-4b68-8fa2-1f397f95a046",
+      "id": "2f8d3745-540d-42c5-9ce9-77afa3d6078b",
       "created_at": "2026-09-04T12:00:00.000074+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-08-17",
         "quantity": 20,
         "note": ""
@@ -645,10 +890,10 @@
     },
     {
       "kind": "checkin",
-      "id": "a0d3aee2-e755-4b9b-b6c7-72c8cd4293fd",
+      "id": "6dab4a0d-4f2b-4fd0-8e90-b9292282f6df",
       "created_at": "2026-09-04T12:00:00.000075+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-08-19",
         "quantity": 20,
         "note": ""
@@ -656,10 +901,10 @@
     },
     {
       "kind": "checkin",
-      "id": "439d8915-1a04-437a-bd86-bcca2c6d7204",
+      "id": "5fbfa8e0-9c01-43cc-999a-b07de8168c38",
       "created_at": "2026-09-04T12:00:00.000076+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-08-20",
         "quantity": 20,
         "note": ""
@@ -667,10 +912,10 @@
     },
     {
       "kind": "checkin",
-      "id": "50717043-bca8-4a41-88bf-f72b4c85b5a0",
+      "id": "cc831683-d745-4f4e-b0e1-216e7b95cb57",
       "created_at": "2026-09-04T12:00:00.000077+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-08-21",
         "quantity": 20,
         "note": ""
@@ -678,10 +923,10 @@
     },
     {
       "kind": "checkin",
-      "id": "e32f908e-49d3-4878-a467-a03c1c5e444c",
+      "id": "93b23aa1-76e3-410f-8443-b4b61585b5a3",
       "created_at": "2026-09-04T12:00:00.000078+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-08-22",
         "quantity": 20,
         "note": ""
@@ -689,10 +934,10 @@
     },
     {
       "kind": "checkin",
-      "id": "d29f5b30-dcb8-42e2-a1dd-c9f464d6b653",
+      "id": "a9cf82bc-2d2a-4d07-a925-a222145a96af",
       "created_at": "2026-09-04T12:00:00.000079+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-08-23",
         "quantity": 20,
         "note": ""
@@ -700,10 +945,10 @@
     },
     {
       "kind": "checkin",
-      "id": "f821c5e8-376e-42d0-934c-96031f4bcde5",
+      "id": "e60134fb-99d7-4476-8a85-ff8b1ff0b897",
       "created_at": "2026-09-04T12:00:00.000080+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-08-24",
         "quantity": 20,
         "note": ""
@@ -711,10 +956,10 @@
     },
     {
       "kind": "checkin",
-      "id": "7425586b-afab-4237-ba7d-d69dce40801a",
+      "id": "7d08e5ed-71f3-4a40-8c64-12091ef25a10",
       "created_at": "2026-09-04T12:00:00.000081+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-08-25",
         "quantity": 20,
         "note": ""
@@ -722,10 +967,10 @@
     },
     {
       "kind": "checkin",
-      "id": "996e5a14-b4db-4053-b7db-a3f475e39336",
+      "id": "eb8efb00-b2a7-45b6-aaec-b48f4b6031d5",
       "created_at": "2026-09-04T12:00:00.000082+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-08-26",
         "quantity": 20,
         "note": ""
@@ -733,10 +978,10 @@
     },
     {
       "kind": "checkin",
-      "id": "b36d7b71-a506-4df0-8b4b-9067ded17e9c",
+      "id": "ade1c213-c19a-4cc1-be21-7945b57e2b16",
       "created_at": "2026-09-04T12:00:00.000083+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-08-28",
         "quantity": 20,
         "note": ""
@@ -744,10 +989,10 @@
     },
     {
       "kind": "checkin",
-      "id": "7b95b638-e8bf-4ea7-a956-9c001d7b7dfc",
+      "id": "2516ec54-2b4b-4461-a948-f7342df2e80e",
       "created_at": "2026-09-04T12:00:00.000084+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-08-29",
         "quantity": 20,
         "note": ""
@@ -755,10 +1000,10 @@
     },
     {
       "kind": "checkin",
-      "id": "de40c889-809a-4a43-ae77-35988e3d2356",
+      "id": "a21d5318-bdc8-4fe5-8932-10d8dda1f7ed",
       "created_at": "2026-09-04T12:00:00.000085+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-08-30",
         "quantity": 20,
         "note": ""
@@ -766,10 +1011,10 @@
     },
     {
       "kind": "checkin",
-      "id": "ed044c50-7259-491e-92e5-bb99d74beb9d",
+      "id": "17ff932c-8ace-4856-9394-ff07fa3a575b",
       "created_at": "2026-09-04T12:00:00.000086+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-08-31",
         "quantity": 20,
         "note": ""
@@ -777,10 +1022,10 @@
     },
     {
       "kind": "checkin",
-      "id": "ff4f7e8b-00a3-468d-8e11-9c956a894f1e",
+      "id": "ac825503-c34d-478a-990e-597247bc3079",
       "created_at": "2026-09-04T12:00:00.000087+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-09-01",
         "quantity": 20,
         "note": ""
@@ -788,10 +1033,10 @@
     },
     {
       "kind": "checkin",
-      "id": "596f6d45-03a8-4488-8548-2e9bcda0bebd",
+      "id": "7c6d06fa-54c6-462a-92f2-070c17312cbb",
       "created_at": "2026-09-04T12:00:00.000088+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-09-02",
         "quantity": 20,
         "note": ""
@@ -799,10 +1044,10 @@
     },
     {
       "kind": "checkin",
-      "id": "c0db4b95-5f2b-46f6-8532-686c124a0535",
+      "id": "1facf7ae-8bc1-4340-975d-e0aa59db6668",
       "created_at": "2026-09-04T12:00:00.000089+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-09-03",
         "quantity": 20,
         "note": ""
@@ -810,10 +1055,10 @@
     },
     {
       "kind": "checkin",
-      "id": "73daf532-de51-4592-9416-8918613d6a8e",
+      "id": "db2f86cc-a370-4658-9598-9697d245134d",
       "created_at": "2026-09-04T12:00:00.000090+00:00",
       "data": {
-        "habit_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "habit_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "date": "2026-09-04",
         "quantity": 10,
         "note": ""
@@ -821,10 +1066,10 @@
     },
     {
       "kind": "checkin",
-      "id": "86b74ce5-b6eb-462a-a0da-98e10a70f902",
+      "id": "e0c873f9-d953-4857-b54b-a26a3853cf92",
       "created_at": "2026-09-04T12:00:00.000096+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-08-07",
         "quantity": 10,
         "note": ""
@@ -832,10 +1077,10 @@
     },
     {
       "kind": "checkin",
-      "id": "ec315b05-119e-40d5-a27b-287bc037d455",
+      "id": "dd35ca9a-6533-4b27-b6ba-1e00007097e0",
       "created_at": "2026-09-04T12:00:00.000097+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-08-08",
         "quantity": 10,
         "note": ""
@@ -843,10 +1088,10 @@
     },
     {
       "kind": "checkin",
-      "id": "f72c468c-ee0d-4d93-aca4-3e959c1406c1",
+      "id": "cfef95e4-a2dd-482e-b5fe-5e54a1e2db6b",
       "created_at": "2026-09-04T12:00:00.000098+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-08-09",
         "quantity": 10,
         "note": ""
@@ -854,10 +1099,10 @@
     },
     {
       "kind": "checkin",
-      "id": "a104fa88-c747-44c6-8617-767d1352e141",
+      "id": "aef65554-e1a8-4c17-af8e-25400d0d17df",
       "created_at": "2026-09-04T12:00:00.000099+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-08-11",
         "quantity": 10,
         "note": ""
@@ -865,10 +1110,10 @@
     },
     {
       "kind": "checkin",
-      "id": "9b7aa10b-8375-407f-9259-5580a084e523",
+      "id": "94283044-1537-4ca9-bf0e-7c3647390cb2",
       "created_at": "2026-09-04T12:00:00.000100+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-08-12",
         "quantity": 10,
         "note": ""
@@ -876,10 +1121,10 @@
     },
     {
       "kind": "checkin",
-      "id": "ef11107c-3946-4242-acf6-273d76a28706",
+      "id": "f49cea61-17c0-4ae6-8618-b593c9e8121d",
       "created_at": "2026-09-04T12:00:00.000101+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-08-13",
         "quantity": 10,
         "note": ""
@@ -887,10 +1132,10 @@
     },
     {
       "kind": "checkin",
-      "id": "d7953289-e9c1-41bc-ac60-157c09d75afa",
+      "id": "da1ef9c1-a25b-4cac-9445-98ed3e2bd555",
       "created_at": "2026-09-04T12:00:00.000102+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-08-14",
         "quantity": 10,
         "note": ""
@@ -898,10 +1143,10 @@
     },
     {
       "kind": "checkin",
-      "id": "71571291-644a-4774-8a26-fe454afc6e15",
+      "id": "b7ca18f5-9df9-4369-b860-3c24998926a7",
       "created_at": "2026-09-04T12:00:00.000103+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-08-15",
         "quantity": 10,
         "note": ""
@@ -909,10 +1154,10 @@
     },
     {
       "kind": "checkin",
-      "id": "41693991-d81a-4254-a318-e26bb55f6662",
+      "id": "535fa1be-533f-4ac6-9ec0-06f5ba2aa793",
       "created_at": "2026-09-04T12:00:00.000104+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-08-16",
         "quantity": 10,
         "note": ""
@@ -920,10 +1165,10 @@
     },
     {
       "kind": "checkin",
-      "id": "c31643e6-6b12-4243-ac16-8fdd016b159e",
+      "id": "b3830076-bd7a-4cd2-97b4-8c8a52547800",
       "created_at": "2026-09-04T12:00:00.000105+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-08-17",
         "quantity": 10,
         "note": ""
@@ -931,10 +1176,10 @@
     },
     {
       "kind": "checkin",
-      "id": "8d72bf18-b166-40d8-8d3d-cb3a54e17bb6",
+      "id": "357d8097-f913-4c21-a987-ca44a35a064a",
       "created_at": "2026-09-04T12:00:00.000106+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-08-18",
         "quantity": 10,
         "note": ""
@@ -942,10 +1187,10 @@
     },
     {
       "kind": "checkin",
-      "id": "314b0f60-0030-4363-8853-4cb7d73b7fdc",
+      "id": "56c77c3e-1a47-43bb-9f3d-b2eb5e14e34e",
       "created_at": "2026-09-04T12:00:00.000107+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-08-20",
         "quantity": 10,
         "note": ""
@@ -953,10 +1198,10 @@
     },
     {
       "kind": "checkin",
-      "id": "1b2542bf-e40e-49ad-b745-3913a4c37e6c",
+      "id": "8740fc6e-84c5-4b5e-91a4-2b77115f840f",
       "created_at": "2026-09-04T12:00:00.000108+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-08-21",
         "quantity": 10,
         "note": ""
@@ -964,10 +1209,10 @@
     },
     {
       "kind": "checkin",
-      "id": "57bc42f5-21f0-4ef8-9244-1286ad58e3a2",
+      "id": "0864b898-9376-454e-815f-4f78142dcb8e",
       "created_at": "2026-09-04T12:00:00.000109+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-08-22",
         "quantity": 10,
         "note": ""
@@ -975,10 +1220,10 @@
     },
     {
       "kind": "checkin",
-      "id": "9c339be3-21e4-4e32-b8b4-487349ef7251",
+      "id": "5b534c56-0604-4c55-92fa-18b38f61cdf8",
       "created_at": "2026-09-04T12:00:00.000110+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-08-23",
         "quantity": 10,
         "note": ""
@@ -986,10 +1231,10 @@
     },
     {
       "kind": "checkin",
-      "id": "d5eb9f58-3935-4fae-bcf4-f6291ea2417e",
+      "id": "a19b20bd-54ce-410b-91bd-9952b8c1a309",
       "created_at": "2026-09-04T12:00:00.000111+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-08-24",
         "quantity": 10,
         "note": ""
@@ -997,10 +1242,10 @@
     },
     {
       "kind": "checkin",
-      "id": "cdbfb0dd-441c-4402-a204-3d19cb58e271",
+      "id": "8faf6a78-8e16-4e72-a964-d5b88c1c1a5b",
       "created_at": "2026-09-04T12:00:00.000112+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-08-25",
         "quantity": 10,
         "note": ""
@@ -1008,10 +1253,10 @@
     },
     {
       "kind": "checkin",
-      "id": "c6d3fb08-0ee9-458f-a963-315cc175600e",
+      "id": "aa1845a1-d784-4def-8a0a-5417f64bbf0d",
       "created_at": "2026-09-04T12:00:00.000113+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-08-26",
         "quantity": 10,
         "note": ""
@@ -1019,10 +1264,10 @@
     },
     {
       "kind": "checkin",
-      "id": "620a3b87-ab44-43fc-8a20-a1644a6de055",
+      "id": "23b23a4c-aa16-45ad-9039-1f468a3d8b3b",
       "created_at": "2026-09-04T12:00:00.000114+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-08-27",
         "quantity": 10,
         "note": ""
@@ -1030,10 +1275,10 @@
     },
     {
       "kind": "checkin",
-      "id": "af177f69-9617-45c8-9772-f911d90afca6",
+      "id": "d7b5efc2-05cc-401c-80e2-287085653d99",
       "created_at": "2026-09-04T12:00:00.000115+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-08-29",
         "quantity": 10,
         "note": ""
@@ -1041,10 +1286,10 @@
     },
     {
       "kind": "checkin",
-      "id": "81e68846-f847-4b8b-a04e-1816d5d91775",
+      "id": "8e3cba0b-6a35-41f3-8d12-a9b6e54db18c",
       "created_at": "2026-09-04T12:00:00.000116+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-08-30",
         "quantity": 10,
         "note": ""
@@ -1052,10 +1297,10 @@
     },
     {
       "kind": "checkin",
-      "id": "9f9e4fdc-81f4-47d3-ad07-1a766c0d7312",
+      "id": "992c7a76-4dcb-4e46-b354-55d285a6b283",
       "created_at": "2026-09-04T12:00:00.000117+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-08-31",
         "quantity": 10,
         "note": ""
@@ -1063,10 +1308,10 @@
     },
     {
       "kind": "checkin",
-      "id": "2b496564-6139-4e0e-93cb-6533df83eaf9",
+      "id": "ebbf35b9-3e0d-482f-941c-505aad4dc256",
       "created_at": "2026-09-04T12:00:00.000118+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-09-01",
         "quantity": 10,
         "note": ""
@@ -1074,10 +1319,10 @@
     },
     {
       "kind": "checkin",
-      "id": "a4e2f585-a80f-4d43-8f10-498caeb780b9",
+      "id": "174f81b7-ed5b-4d46-a047-8ef49dc33d84",
       "created_at": "2026-09-04T12:00:00.000119+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-09-02",
         "quantity": 10,
         "note": ""
@@ -1085,10 +1330,10 @@
     },
     {
       "kind": "checkin",
-      "id": "30c7034e-1721-4f3b-8b94-8dba4b9fb6cc",
+      "id": "d6f0e2ba-9136-438c-a974-c6c558d1d466",
       "created_at": "2026-09-04T12:00:00.000120+00:00",
       "data": {
-        "habit_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "habit_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "date": "2026-09-03",
         "quantity": 10,
         "note": ""
@@ -1096,10 +1341,10 @@
     },
     {
       "kind": "checkin",
-      "id": "5e7a1019-38d8-4819-a64d-16652cb5e420",
+      "id": "403c09c2-0aa2-4dd3-8a83-2bb40c56de44",
       "created_at": "2026-09-04T12:00:00.000126+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-08-07",
         "quantity": 1,
         "note": ""
@@ -1107,10 +1352,10 @@
     },
     {
       "kind": "checkin",
-      "id": "ae19d3a3-093e-43d2-93fd-a84541e48d52",
+      "id": "080e7ac9-0ad2-44ee-a76e-ca17c773734c",
       "created_at": "2026-09-04T12:00:00.000127+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-08-08",
         "quantity": 1,
         "note": ""
@@ -1118,10 +1363,10 @@
     },
     {
       "kind": "checkin",
-      "id": "fc0c1f89-95e0-4a14-9b28-04d92d300035",
+      "id": "24280bbe-8c42-4eee-8b35-496ada811a01",
       "created_at": "2026-09-04T12:00:00.000128+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-08-09",
         "quantity": 1,
         "note": ""
@@ -1129,10 +1374,10 @@
     },
     {
       "kind": "checkin",
-      "id": "b4b1a6a7-39df-41ea-a879-91a753ec7b5a",
+      "id": "cc0034a5-c33c-4241-9c99-66331fb3fb5a",
       "created_at": "2026-09-04T12:00:00.000129+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-08-10",
         "quantity": 1,
         "note": ""
@@ -1140,10 +1385,10 @@
     },
     {
       "kind": "checkin",
-      "id": "71205399-8394-49ec-97f5-d31f20d9acbf",
+      "id": "44ee0dc7-0478-4fc5-bf02-336eff645992",
       "created_at": "2026-09-04T12:00:00.000130+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-08-12",
         "quantity": 1,
         "note": ""
@@ -1151,10 +1396,10 @@
     },
     {
       "kind": "checkin",
-      "id": "0a95b1f5-f979-4d68-a21c-e28796a54bd8",
+      "id": "171bfcb1-dc2c-4459-ae33-bf3644675438",
       "created_at": "2026-09-04T12:00:00.000131+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-08-13",
         "quantity": 1,
         "note": ""
@@ -1162,10 +1407,10 @@
     },
     {
       "kind": "checkin",
-      "id": "a14ffffa-e145-4441-95f3-8736e9cb6326",
+      "id": "b9d14d07-b78b-47e3-83e7-8d21ba2dafce",
       "created_at": "2026-09-04T12:00:00.000132+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-08-14",
         "quantity": 1,
         "note": ""
@@ -1173,10 +1418,10 @@
     },
     {
       "kind": "checkin",
-      "id": "ac6b241c-8d80-4619-be26-57dccab640c4",
+      "id": "b03f6aac-25c1-458c-8139-23a68b720f1e",
       "created_at": "2026-09-04T12:00:00.000133+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-08-15",
         "quantity": 1,
         "note": ""
@@ -1184,10 +1429,10 @@
     },
     {
       "kind": "checkin",
-      "id": "cb6606c8-7a7a-4924-9c07-e20d9591aee6",
+      "id": "06d57d76-c759-4309-ab99-0f2db30ca346",
       "created_at": "2026-09-04T12:00:00.000134+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-08-16",
         "quantity": 1,
         "note": ""
@@ -1195,10 +1440,10 @@
     },
     {
       "kind": "checkin",
-      "id": "9b929043-79ca-415e-b5f1-04e1274c10aa",
+      "id": "c0814dfb-7d34-4920-9ea7-5180581387aa",
       "created_at": "2026-09-04T12:00:00.000135+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-08-17",
         "quantity": 1,
         "note": ""
@@ -1206,10 +1451,10 @@
     },
     {
       "kind": "checkin",
-      "id": "350fd8a7-03c8-4a8f-b115-71837c90f32d",
+      "id": "6c8d8e79-fd45-4833-b7d0-b3599429258c",
       "created_at": "2026-09-04T12:00:00.000136+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-08-18",
         "quantity": 1,
         "note": ""
@@ -1217,10 +1462,10 @@
     },
     {
       "kind": "checkin",
-      "id": "d948a720-e578-49d9-8329-d5b12f358876",
+      "id": "dd2e4658-22e6-4710-bfc9-ab5e1755ad46",
       "created_at": "2026-09-04T12:00:00.000137+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-08-19",
         "quantity": 1,
         "note": ""
@@ -1228,10 +1473,10 @@
     },
     {
       "kind": "checkin",
-      "id": "54931853-b4ba-45a2-b21b-6d99e0d7dd59",
+      "id": "52ca38d9-7b24-40a4-a504-30099388a4ee",
       "created_at": "2026-09-04T12:00:00.000138+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-08-21",
         "quantity": 1,
         "note": ""
@@ -1239,10 +1484,10 @@
     },
     {
       "kind": "checkin",
-      "id": "ab060cf5-546f-4b9d-a9e3-9dd0d44df0db",
+      "id": "4f3ea5d8-5a7c-4966-9c90-52c44deffd20",
       "created_at": "2026-09-04T12:00:00.000139+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-08-22",
         "quantity": 1,
         "note": ""
@@ -1250,10 +1495,10 @@
     },
     {
       "kind": "checkin",
-      "id": "e37a9edc-31e2-45bb-ad62-5e0a7f912e27",
+      "id": "4d05eec2-aeb4-413a-89fa-cdcdd6dfda93",
       "created_at": "2026-09-04T12:00:00.000140+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-08-23",
         "quantity": 1,
         "note": ""
@@ -1261,10 +1506,10 @@
     },
     {
       "kind": "checkin",
-      "id": "5b037be4-5e36-4d69-8e2f-7fbf441cee65",
+      "id": "1f37f3ab-2be5-43ea-8fe8-552e0579c68d",
       "created_at": "2026-09-04T12:00:00.000141+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-08-24",
         "quantity": 1,
         "note": ""
@@ -1272,10 +1517,10 @@
     },
     {
       "kind": "checkin",
-      "id": "4dcaa134-db98-43b9-b768-fb9466edc8b1",
+      "id": "0d75ad72-35fd-4285-9b03-75826b6a012b",
       "created_at": "2026-09-04T12:00:00.000142+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-08-25",
         "quantity": 1,
         "note": ""
@@ -1283,10 +1528,10 @@
     },
     {
       "kind": "checkin",
-      "id": "ecb4d93d-ec3f-4307-9016-7fd0cabbc712",
+      "id": "92eb4ab6-c764-4c9b-b411-c4a2bc448906",
       "created_at": "2026-09-04T12:00:00.000143+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-08-26",
         "quantity": 1,
         "note": ""
@@ -1294,10 +1539,10 @@
     },
     {
       "kind": "checkin",
-      "id": "dcb270a0-7224-4dd0-baf6-10447902ab39",
+      "id": "31ced64a-874d-4d52-8272-f395bca7ee92",
       "created_at": "2026-09-04T12:00:00.000144+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-08-27",
         "quantity": 1,
         "note": ""
@@ -1305,10 +1550,10 @@
     },
     {
       "kind": "checkin",
-      "id": "027cf3fc-8456-4114-a237-e4c0581af9c8",
+      "id": "e53f42e1-0d03-414c-b3e0-b9cba975db14",
       "created_at": "2026-09-04T12:00:00.000145+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-08-28",
         "quantity": 1,
         "note": ""
@@ -1316,10 +1561,10 @@
     },
     {
       "kind": "checkin",
-      "id": "593a6a98-7f23-4028-b50e-304f866e7d46",
+      "id": "545ac852-6218-44ed-865f-5fe57755d3cd",
       "created_at": "2026-09-04T12:00:00.000146+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-08-30",
         "quantity": 1,
         "note": ""
@@ -1327,10 +1572,10 @@
     },
     {
       "kind": "checkin",
-      "id": "7a606e21-79ee-4399-b01b-abd3716ef1fb",
+      "id": "c2a13bc8-cf6c-4aa9-ac0e-7259ce2ff49d",
       "created_at": "2026-09-04T12:00:00.000147+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-08-31",
         "quantity": 1,
         "note": ""
@@ -1338,10 +1583,10 @@
     },
     {
       "kind": "checkin",
-      "id": "acf010fc-a284-43ea-94a2-222222bd9796",
+      "id": "9b76a0f5-8cd4-4a1a-a344-0298a3ceae62",
       "created_at": "2026-09-04T12:00:00.000148+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-09-01",
         "quantity": 1,
         "note": ""
@@ -1349,10 +1594,10 @@
     },
     {
       "kind": "checkin",
-      "id": "a585ead7-4f5a-4a4d-b583-a64086dbc548",
+      "id": "bdcd274e-06eb-4cb1-b61d-54a8da4dfa4c",
       "created_at": "2026-09-04T12:00:00.000149+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-09-02",
         "quantity": 1,
         "note": ""
@@ -1360,10 +1605,10 @@
     },
     {
       "kind": "checkin",
-      "id": "9bf36f8b-e653-4c89-ae2b-2aee575db06d",
+      "id": "6445d764-3253-47f2-903c-71876876e357",
       "created_at": "2026-09-04T12:00:00.000150+00:00",
       "data": {
-        "habit_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "habit_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "date": "2026-09-03",
         "quantity": 1,
         "note": ""
@@ -1371,7 +1616,7 @@
     },
     {
       "kind": "account",
-      "id": "edbb4bca-beaf-4d5f-b332-75f7282aaf4a",
+      "id": "0d60e177-f04f-4efb-9d2b-de4e5ed5c80f",
       "created_at": "2026-09-04T12:00:00.000151+00:00",
       "data": {
         "name": "Conta principal",
@@ -1384,7 +1629,7 @@
     },
     {
       "kind": "account",
-      "id": "bc0366a3-b6da-4e19-9bab-de1fbc6593d1",
+      "id": "0e681d0f-8568-46cb-ad6f-887c1fcfb5f5",
       "created_at": "2026-09-04T12:00:00.000153+00:00",
       "data": {
         "name": "Reserva de emergência",
@@ -1397,7 +1642,7 @@
     },
     {
       "kind": "category",
-      "id": "5cbd6749-f499-4a9b-b1f5-6bc515704fb1",
+      "id": "16980d44-57ff-433f-b325-ff62e459b86f",
       "created_at": "2026-09-04T12:00:00.000155+00:00",
       "data": {
         "name": "Salário",
@@ -1408,7 +1653,7 @@
     },
     {
       "kind": "category",
-      "id": "32292aa3-5913-437d-a54b-508e5d3f6856",
+      "id": "88d18d1a-c5d9-4a54-9b6e-14d05d838a87",
       "created_at": "2026-09-04T12:00:00.000157+00:00",
       "data": {
         "name": "Alimentação",
@@ -1419,7 +1664,7 @@
     },
     {
       "kind": "category",
-      "id": "b0fecb78-0768-4775-9436-51870b9f2b34",
+      "id": "1bf62e91-d693-4eb9-9f4a-3691d264dd0e",
       "created_at": "2026-09-04T12:00:00.000159+00:00",
       "data": {
         "name": "Transporte",
@@ -1430,7 +1675,7 @@
     },
     {
       "kind": "category",
-      "id": "bbb9ccd3-dd6a-45d0-a076-e59eddabb0ba",
+      "id": "107e0ef9-bb70-4672-845b-89d3bd713aaa",
       "created_at": "2026-09-04T12:00:00.000161+00:00",
       "data": {
         "name": "Moradia",
@@ -1441,7 +1686,7 @@
     },
     {
       "kind": "category",
-      "id": "93a6cfcc-b6e4-4123-b029-a9b9faf70bae",
+      "id": "b983bf93-b483-4d32-ba32-6ae0aad03201",
       "created_at": "2026-09-04T12:00:00.000163+00:00",
       "data": {
         "name": "Lazer",
@@ -1452,7 +1697,7 @@
     },
     {
       "kind": "category",
-      "id": "7d397601-03f2-4fb7-8472-0fe47d26ef0f",
+      "id": "d116bdbb-2951-420a-869d-288a5d8e198f",
       "created_at": "2026-09-04T12:00:00.000165+00:00",
       "data": {
         "name": "Saúde",
@@ -1463,7 +1708,7 @@
     },
     {
       "kind": "card",
-      "id": "1c30df35-2fed-4036-85b3-4b904a170bb9",
+      "id": "8dd71c55-4e90-46ff-b394-7283a7362264",
       "created_at": "2026-09-04T12:00:00.000173+00:00",
       "data": {
         "name": "Orbit Platinum",
@@ -1472,48 +1717,48 @@
         "close_day": 20,
         "due_day": 28,
         "limit_amount": 1200000,
-        "payment_account_id": "edbb4bca-beaf-4d5f-b332-75f7282aaf4a",
+        "payment_account_id": "0d60e177-f04f-4efb-9d2b-de4e5ed5c80f",
         "color": "#8b5cf6",
         "archived": false
       }
     },
     {
       "kind": "invoice",
-      "id": "f3979c81-b521-4757-ad56-25c3c8508ab3",
+      "id": "b7d63d4a-b28e-4cde-9883-2fc22ca1495b",
       "created_at": "2026-09-04T12:00:00.000176+00:00",
       "data": {
-        "card_id": "1c30df35-2fed-4036-85b3-4b904a170bb9",
+        "card_id": "8dd71c55-4e90-46ff-b394-7283a7362264",
         "close_date": "2026-09-20",
         "due_date": "2026-09-28"
       }
     },
     {
       "kind": "invoice",
-      "id": "4ab39163-3cff-4d6d-b494-eccbd18f9f4a",
+      "id": "a8975527-99e2-4a34-b3c8-25ecc23d3c75",
       "created_at": "2026-09-04T12:00:00.000178+00:00",
       "data": {
-        "card_id": "1c30df35-2fed-4036-85b3-4b904a170bb9",
+        "card_id": "8dd71c55-4e90-46ff-b394-7283a7362264",
         "close_date": "2026-10-20",
         "due_date": "2026-10-28"
       }
     },
     {
       "kind": "invoice",
-      "id": "8c05f36a-2cdf-4dd4-85f5-263ca6f00a9e",
+      "id": "ae875057-12a5-43f6-a3d1-651aef9d1e3c",
       "created_at": "2026-09-04T12:00:00.000180+00:00",
       "data": {
-        "card_id": "1c30df35-2fed-4036-85b3-4b904a170bb9",
+        "card_id": "8dd71c55-4e90-46ff-b394-7283a7362264",
         "close_date": "2026-11-20",
         "due_date": "2026-11-28"
       }
     },
     {
       "kind": "purchase",
-      "id": "df31cafa-e6f1-44b0-8eb3-1ad7a307bd8a",
+      "id": "3e3b8ba3-b89c-4eea-b957-f7877b57931b",
       "created_at": "2026-09-04T12:00:00.000175+00:00",
       "data": {
-        "card_id": "1c30df35-2fed-4036-85b3-4b904a170bb9",
-        "category_id": "93a6cfcc-b6e4-4123-b029-a9b9faf70bae",
+        "card_id": "8dd71c55-4e90-46ff-b394-7283a7362264",
+        "category_id": "b983bf93-b483-4d32-ba32-6ae0aad03201",
         "description": "Fone de ouvido",
         "amount": 89900,
         "installment_count": 3,
@@ -1523,11 +1768,11 @@
     },
     {
       "kind": "installment",
-      "id": "efb10fbc-67ba-4f8e-b257-4999a10b233b",
+      "id": "c501e4a0-ee8a-489c-af9a-9d6d831aa1c6",
       "created_at": "2026-09-04T12:00:00.000177+00:00",
       "data": {
-        "purchase_id": "df31cafa-e6f1-44b0-8eb3-1ad7a307bd8a",
-        "invoice_id": "f3979c81-b521-4757-ad56-25c3c8508ab3",
+        "purchase_id": "3e3b8ba3-b89c-4eea-b957-f7877b57931b",
+        "invoice_id": "b7d63d4a-b28e-4cde-9883-2fc22ca1495b",
         "number": 1,
         "amount": 29967,
         "close_date": "2026-09-20",
@@ -1537,11 +1782,11 @@
     },
     {
       "kind": "installment",
-      "id": "f64e71b7-dd53-4e7b-9a23-65eb6cbc1598",
+      "id": "611bce0a-b69b-4112-9185-eacabe09846e",
       "created_at": "2026-09-04T12:00:00.000179+00:00",
       "data": {
-        "purchase_id": "df31cafa-e6f1-44b0-8eb3-1ad7a307bd8a",
-        "invoice_id": "4ab39163-3cff-4d6d-b494-eccbd18f9f4a",
+        "purchase_id": "3e3b8ba3-b89c-4eea-b957-f7877b57931b",
+        "invoice_id": "a8975527-99e2-4a34-b3c8-25ecc23d3c75",
         "number": 2,
         "amount": 29967,
         "close_date": "2026-10-20",
@@ -1551,11 +1796,11 @@
     },
     {
       "kind": "installment",
-      "id": "c3029986-85db-4f3e-b767-6daa504a5ed0",
+      "id": "65848cca-8a38-463a-91f2-751f9ec2ffab",
       "created_at": "2026-09-04T12:00:00.000181+00:00",
       "data": {
-        "purchase_id": "df31cafa-e6f1-44b0-8eb3-1ad7a307bd8a",
-        "invoice_id": "8c05f36a-2cdf-4dd4-85f5-263ca6f00a9e",
+        "purchase_id": "3e3b8ba3-b89c-4eea-b957-f7877b57931b",
+        "invoice_id": "ae875057-12a5-43f6-a3d1-651aef9d1e3c",
         "number": 3,
         "amount": 29966,
         "close_date": "2026-11-20",
@@ -1565,11 +1810,11 @@
     },
     {
       "kind": "transaction",
-      "id": "d2a0e621-ed5b-49f7-8450-b5171ae98e82",
+      "id": "3ba7c185-e491-4ee8-bbd9-51e58aa4b171",
       "created_at": "2026-09-04T12:00:00.000167+00:00",
       "data": {
-        "account_id": "edbb4bca-beaf-4d5f-b332-75f7282aaf4a",
-        "category_id": "5cbd6749-f499-4a9b-b1f5-6bc515704fb1",
+        "account_id": "0d60e177-f04f-4efb-9d2b-de4e5ed5c80f",
+        "category_id": "16980d44-57ff-433f-b325-ff62e459b86f",
         "transaction_kind": "income",
         "amount": 850000,
         "currency": "BRL",
@@ -1586,11 +1831,11 @@
     },
     {
       "kind": "transaction",
-      "id": "94ec4643-099c-4f44-addd-46e68dce2ebd",
+      "id": "6f6748e3-a44a-4161-8bd2-5055e8f1e6cc",
       "created_at": "2026-09-04T12:00:00.000168+00:00",
       "data": {
-        "account_id": "edbb4bca-beaf-4d5f-b332-75f7282aaf4a",
-        "category_id": "32292aa3-5913-437d-a54b-508e5d3f6856",
+        "account_id": "0d60e177-f04f-4efb-9d2b-de4e5ed5c80f",
+        "category_id": "88d18d1a-c5d9-4a54-9b6e-14d05d838a87",
         "transaction_kind": "expense",
         "amount": 42890,
         "currency": "BRL",
@@ -1607,11 +1852,11 @@
     },
     {
       "kind": "transaction",
-      "id": "cd83c79b-5d81-49d1-aaaa-9dd09c1ad695",
+      "id": "7a0056f8-62e1-49b6-9972-769688ed1b80",
       "created_at": "2026-09-04T12:00:00.000169+00:00",
       "data": {
-        "account_id": "edbb4bca-beaf-4d5f-b332-75f7282aaf4a",
-        "category_id": "32292aa3-5913-437d-a54b-508e5d3f6856",
+        "account_id": "0d60e177-f04f-4efb-9d2b-de4e5ed5c80f",
+        "category_id": "88d18d1a-c5d9-4a54-9b6e-14d05d838a87",
         "transaction_kind": "expense",
         "amount": 4590,
         "currency": "BRL",
@@ -1628,11 +1873,11 @@
     },
     {
       "kind": "transaction",
-      "id": "6a53cd16-9bc0-46d1-9f14-c899dd9dc2ae",
+      "id": "527bee22-0533-4efc-acc8-d2ca2c10bcfb",
       "created_at": "2026-09-04T12:00:00.000170+00:00",
       "data": {
-        "account_id": "edbb4bca-beaf-4d5f-b332-75f7282aaf4a",
-        "category_id": "b0fecb78-0768-4775-9436-51870b9f2b34",
+        "account_id": "0d60e177-f04f-4efb-9d2b-de4e5ed5c80f",
+        "category_id": "1bf62e91-d693-4eb9-9f4a-3691d264dd0e",
         "transaction_kind": "expense",
         "amount": 18500,
         "currency": "BRL",
@@ -1649,11 +1894,11 @@
     },
     {
       "kind": "transaction",
-      "id": "96c3bf39-c3dd-4a9e-b3a0-52b066852d68",
+      "id": "08fa75f9-4cdd-4318-927d-ce4984b17f3a",
       "created_at": "2026-09-04T12:00:00.000171+00:00",
       "data": {
-        "account_id": "edbb4bca-beaf-4d5f-b332-75f7282aaf4a",
-        "category_id": "bbb9ccd3-dd6a-45d0-a076-e59eddabb0ba",
+        "account_id": "0d60e177-f04f-4efb-9d2b-de4e5ed5c80f",
+        "category_id": "107e0ef9-bb70-4672-845b-89d3bd713aaa",
         "transaction_kind": "expense",
         "amount": 220000,
         "currency": "BRL",
@@ -1670,11 +1915,11 @@
     },
     {
       "kind": "transaction",
-      "id": "143ec643-1723-485a-8c5a-5a086f61adc8",
+      "id": "a901ebb7-7010-4eff-9112-f954a27ea8d3",
       "created_at": "2026-09-04T12:00:00.000172+00:00",
       "data": {
-        "account_id": "edbb4bca-beaf-4d5f-b332-75f7282aaf4a",
-        "category_id": "7d397601-03f2-4fb7-8472-0fe47d26ef0f",
+        "account_id": "0d60e177-f04f-4efb-9d2b-de4e5ed5c80f",
+        "category_id": "d116bdbb-2951-420a-869d-288a5d8e198f",
         "transaction_kind": "expense",
         "amount": 12990,
         "currency": "BRL",
@@ -1691,7 +1936,7 @@
     },
     {
       "kind": "exercise",
-      "id": "ff09a983-128b-4124-b11c-7e345f233451",
+      "id": "d67e8dc5-d975-4590-95ad-8dab5740589d",
       "created_at": "2026-09-04T12:00:00.000004+00:00",
       "data": {
         "name": "Supino reto",
@@ -1704,7 +1949,7 @@
     },
     {
       "kind": "exercise",
-      "id": "5ba4b18c-b999-4e11-bb02-830e092b9be8",
+      "id": "7d7ceeab-f0dd-4047-bd13-50db990ab760",
       "created_at": "2026-09-04T12:00:00.000005+00:00",
       "data": {
         "name": "Agachamento livre",
@@ -1717,7 +1962,7 @@
     },
     {
       "kind": "exercise",
-      "id": "50b0b2a0-08b0-4ed9-8090-8c4196c70380",
+      "id": "24fafa9f-26c6-493f-ae63-b932d7014ebd",
       "created_at": "2026-09-04T12:00:00.000006+00:00",
       "data": {
         "name": "Remada curvada",
@@ -1730,7 +1975,7 @@
     },
     {
       "kind": "exercise",
-      "id": "343f0b23-6188-41ef-beaf-2eeb8e045203",
+      "id": "00b1bc8d-dcea-4cf0-8f02-90d24774b97d",
       "created_at": "2026-09-04T12:00:00.000007+00:00",
       "data": {
         "name": "Desenvolvimento",
@@ -1743,7 +1988,7 @@
     },
     {
       "kind": "exercise",
-      "id": "800664eb-e381-4268-8959-24ebca54ad5a",
+      "id": "49146ebe-2ca8-4bd8-9fd6-8d37cab87592",
       "created_at": "2026-09-04T12:00:00.000008+00:00",
       "data": {
         "name": "Rosca direta",
@@ -1756,7 +2001,7 @@
     },
     {
       "kind": "exercise",
-      "id": "12f203a8-3ba2-4991-ba4f-b3eef8444da0",
+      "id": "83775b6f-8d3b-4742-9014-41f6ef1fea0a",
       "created_at": "2026-09-04T12:00:00.000009+00:00",
       "data": {
         "name": "Prancha",
@@ -1769,7 +2014,7 @@
     },
     {
       "kind": "routine",
-      "id": "e6c31090-9cae-4595-8b1e-d13901d0f99a",
+      "id": "89ae5b9b-d774-4380-9db4-073cb8c1eb6f",
       "created_at": "2026-09-04T12:00:00.000183+00:00",
       "data": {
         "name": "Treino A — Superior",
@@ -1780,7 +2025,7 @@
             "name": "Supino reto",
             "reps": 10,
             "sets": 3,
-            "exercise_id": "ff09a983-128b-4124-b11c-7e345f233451",
+            "exercise_id": "d67e8dc5-d975-4590-95ad-8dab5740589d",
             "muscle_group": "Peito",
             "rest_seconds": 90
           },
@@ -1789,7 +2034,7 @@
             "name": "Agachamento livre",
             "reps": 10,
             "sets": 3,
-            "exercise_id": "5ba4b18c-b999-4e11-bb02-830e092b9be8",
+            "exercise_id": "7d7ceeab-f0dd-4047-bd13-50db990ab760",
             "muscle_group": "Pernas",
             "rest_seconds": 90
           },
@@ -1798,7 +2043,7 @@
             "name": "Remada curvada",
             "reps": 10,
             "sets": 3,
-            "exercise_id": "50b0b2a0-08b0-4ed9-8090-8c4196c70380",
+            "exercise_id": "24fafa9f-26c6-493f-ae63-b932d7014ebd",
             "muscle_group": "Costas",
             "rest_seconds": 90
           }
@@ -1808,7 +2053,7 @@
     },
     {
       "kind": "routine",
-      "id": "b104ed5c-c5af-4801-bdca-3102ead7b594",
+      "id": "fc733154-5e14-43f5-a752-59498818c41a",
       "created_at": "2026-09-04T12:00:00.000185+00:00",
       "data": {
         "name": "Treino B — Inferior",
@@ -1819,7 +2064,7 @@
             "name": "Agachamento livre",
             "reps": 8,
             "sets": 4,
-            "exercise_id": "5ba4b18c-b999-4e11-bb02-830e092b9be8",
+            "exercise_id": "7d7ceeab-f0dd-4047-bd13-50db990ab760",
             "muscle_group": "Pernas",
             "rest_seconds": 120
           }
@@ -1829,10 +2074,10 @@
     },
     {
       "kind": "session",
-      "id": "797b33c2-aaaa-4e3b-ae00-2b800f3a8fa5",
+      "id": "f867a217-cf47-44f6-beb6-9505f7ec5cec",
       "created_at": "2026-09-04T12:00:00.000188+00:00",
       "data": {
-        "routine_id": "e6c31090-9cae-4595-8b1e-d13901d0f99a",
+        "routine_id": "89ae5b9b-d774-4380-9db4-073cb8c1eb6f",
         "name": "Treino A — Superior",
         "status": "finished",
         "started_at": "2026-08-23T12:00:00.000190+00:00",
@@ -1845,7 +2090,7 @@
             "name": "Supino reto",
             "sets": [
               {
-                "id": "10a364df-b8cf-481b-b82e-1aa2c3f45b8d",
+                "id": "e2b99a9e-d719-47ae-b477-ce0f6820f4cc",
                 "rir": null,
                 "rpe": null,
                 "load": "30",
@@ -1856,7 +2101,7 @@
                 "completed_at": null
               },
               {
-                "id": "a35b989b-02a2-462e-83bc-a45364d779cb",
+                "id": "3d504b82-f31a-4cd7-8e72-7b73dfad7081",
                 "rir": null,
                 "rpe": null,
                 "load": "30",
@@ -1867,7 +2112,7 @@
                 "completed_at": null
               },
               {
-                "id": "2ea54ea4-1feb-47ad-bb46-968dd6cccc56",
+                "id": "86dfb11c-e42f-431b-9cbc-abc4307c10d0",
                 "rir": null,
                 "rpe": null,
                 "load": "30",
@@ -1878,7 +2123,7 @@
                 "completed_at": null
               }
             ],
-            "exercise_id": "ff09a983-128b-4124-b11c-7e345f233451",
+            "exercise_id": "d67e8dc5-d975-4590-95ad-8dab5740589d",
             "muscle_group": "Peito",
             "rest_seconds": 90
           },
@@ -1886,7 +2131,7 @@
             "name": "Agachamento livre",
             "sets": [
               {
-                "id": "a78ae1e4-722a-450c-aaf3-edec082c9562",
+                "id": "9ba42abf-6d31-4749-9914-9e672407c0eb",
                 "rir": null,
                 "rpe": null,
                 "load": "40",
@@ -1897,7 +2142,7 @@
                 "completed_at": null
               },
               {
-                "id": "61e044b4-bc27-46f8-a207-9850788dd2d3",
+                "id": "615a9d6c-f5e2-41a6-a3bd-ba9fa51479f8",
                 "rir": null,
                 "rpe": null,
                 "load": "40",
@@ -1908,7 +2153,7 @@
                 "completed_at": null
               },
               {
-                "id": "642da003-f9d6-40be-aeda-53690c4b0512",
+                "id": "0be3d750-f358-48b7-ae98-27fada9a2f35",
                 "rir": null,
                 "rpe": null,
                 "load": "40",
@@ -1919,7 +2164,7 @@
                 "completed_at": null
               }
             ],
-            "exercise_id": "5ba4b18c-b999-4e11-bb02-830e092b9be8",
+            "exercise_id": "7d7ceeab-f0dd-4047-bd13-50db990ab760",
             "muscle_group": "Pernas",
             "rest_seconds": 90
           },
@@ -1927,7 +2172,7 @@
             "name": "Remada curvada",
             "sets": [
               {
-                "id": "c372f5a1-057e-48ed-a51f-801bb0717ccb",
+                "id": "74e1de66-119d-4847-bb0b-48d9600ff5bd",
                 "rir": null,
                 "rpe": null,
                 "load": "50",
@@ -1938,7 +2183,7 @@
                 "completed_at": null
               },
               {
-                "id": "141c5803-4bf9-4524-8a10-afecd7ea8e04",
+                "id": "f379a3c1-6de5-43ce-b9e4-48bffc10f39a",
                 "rir": null,
                 "rpe": null,
                 "load": "50",
@@ -1949,7 +2194,7 @@
                 "completed_at": null
               },
               {
-                "id": "9b499975-ccad-42bf-b3e9-67bc4d8096f7",
+                "id": "81f831e5-2781-4605-af6e-40e6404d4eb0",
                 "rir": null,
                 "rpe": null,
                 "load": "50",
@@ -1960,7 +2205,7 @@
                 "completed_at": null
               }
             ],
-            "exercise_id": "50b0b2a0-08b0-4ed9-8090-8c4196c70380",
+            "exercise_id": "24fafa9f-26c6-493f-ae63-b932d7014ebd",
             "muscle_group": "Costas",
             "rest_seconds": 90
           }
@@ -1970,10 +2215,10 @@
     },
     {
       "kind": "session",
-      "id": "b1ff252d-f733-4d50-a3d8-a169c60992f5",
+      "id": "c30fa2fa-c087-4480-9887-9dc4c76160fa",
       "created_at": "2026-09-04T12:00:00.000192+00:00",
       "data": {
-        "routine_id": "e6c31090-9cae-4595-8b1e-d13901d0f99a",
+        "routine_id": "89ae5b9b-d774-4380-9db4-073cb8c1eb6f",
         "name": "Treino A — Superior",
         "status": "finished",
         "started_at": "2026-08-26T12:00:00.000194+00:00",
@@ -1986,7 +2231,7 @@
             "name": "Supino reto",
             "sets": [
               {
-                "id": "801ce526-e58f-493c-b67c-ff57ea8b1a6c",
+                "id": "bfcf6aea-1d58-4cac-a15e-8fc857a598a5",
                 "rir": null,
                 "rpe": null,
                 "load": "30",
@@ -1997,7 +2242,7 @@
                 "completed_at": null
               },
               {
-                "id": "0ab58619-f247-4af2-bbdd-5ea3b5fe186f",
+                "id": "e206eb08-db76-4252-b2b8-5baf1025300c",
                 "rir": null,
                 "rpe": null,
                 "load": "30",
@@ -2008,7 +2253,7 @@
                 "completed_at": null
               },
               {
-                "id": "977a3e91-e444-4723-9f7b-d94f402fe942",
+                "id": "2b469dc3-cfbd-4791-aa02-8977abcac6ae",
                 "rir": null,
                 "rpe": null,
                 "load": "30",
@@ -2019,7 +2264,7 @@
                 "completed_at": null
               }
             ],
-            "exercise_id": "ff09a983-128b-4124-b11c-7e345f233451",
+            "exercise_id": "d67e8dc5-d975-4590-95ad-8dab5740589d",
             "muscle_group": "Peito",
             "rest_seconds": 90
           },
@@ -2027,7 +2272,7 @@
             "name": "Agachamento livre",
             "sets": [
               {
-                "id": "7b20a295-349d-4bfc-bc79-6ae03e87b2d9",
+                "id": "28fb0f04-d23a-4ea4-83fd-85d87b47819a",
                 "rir": null,
                 "rpe": null,
                 "load": "40",
@@ -2038,7 +2283,7 @@
                 "completed_at": null
               },
               {
-                "id": "24e47f64-d9a5-47f7-ba89-0bc6dcf59fd4",
+                "id": "4cab6b9a-09ec-4406-964a-c124b6aac966",
                 "rir": null,
                 "rpe": null,
                 "load": "40",
@@ -2049,7 +2294,7 @@
                 "completed_at": null
               },
               {
-                "id": "b4199592-bece-4387-9db2-7cfef647b01c",
+                "id": "33d27fe6-787b-43f5-9995-1f0204c85ea4",
                 "rir": null,
                 "rpe": null,
                 "load": "40",
@@ -2060,7 +2305,7 @@
                 "completed_at": null
               }
             ],
-            "exercise_id": "5ba4b18c-b999-4e11-bb02-830e092b9be8",
+            "exercise_id": "7d7ceeab-f0dd-4047-bd13-50db990ab760",
             "muscle_group": "Pernas",
             "rest_seconds": 90
           },
@@ -2068,7 +2313,7 @@
             "name": "Remada curvada",
             "sets": [
               {
-                "id": "1fd9e779-6a70-44c5-80af-218280cf6200",
+                "id": "7d974bf3-cd86-416a-847a-75f53a8883b0",
                 "rir": null,
                 "rpe": null,
                 "load": "50",
@@ -2079,7 +2324,7 @@
                 "completed_at": null
               },
               {
-                "id": "d58172fb-c2f1-42d4-89e5-0e0d45fe0406",
+                "id": "4cc19bf1-cea6-4719-9982-7ce57ff2ad9c",
                 "rir": null,
                 "rpe": null,
                 "load": "50",
@@ -2090,7 +2335,7 @@
                 "completed_at": null
               },
               {
-                "id": "112bc78b-518c-4bdb-973d-b9ee1ff8fd61",
+                "id": "b1c6f1a5-1a64-4f95-9c9e-c8a25970cd73",
                 "rir": null,
                 "rpe": null,
                 "load": "50",
@@ -2101,7 +2346,7 @@
                 "completed_at": null
               }
             ],
-            "exercise_id": "50b0b2a0-08b0-4ed9-8090-8c4196c70380",
+            "exercise_id": "24fafa9f-26c6-493f-ae63-b932d7014ebd",
             "muscle_group": "Costas",
             "rest_seconds": 90
           }
@@ -2111,10 +2356,10 @@
     },
     {
       "kind": "session",
-      "id": "16ac7f7a-4451-4f02-a89d-83f8e07a54a2",
+      "id": "38bcaa5d-2d45-4d18-b658-689464998088",
       "created_at": "2026-09-04T12:00:00.000196+00:00",
       "data": {
-        "routine_id": "e6c31090-9cae-4595-8b1e-d13901d0f99a",
+        "routine_id": "89ae5b9b-d774-4380-9db4-073cb8c1eb6f",
         "name": "Treino A — Superior",
         "status": "finished",
         "started_at": "2026-08-30T12:00:00.000198+00:00",
@@ -2127,7 +2372,7 @@
             "name": "Supino reto",
             "sets": [
               {
-                "id": "9d84404d-22ea-42f9-b95c-294c1c0b055c",
+                "id": "78192848-1a39-478e-b5f4-4c81f0054666",
                 "rir": null,
                 "rpe": null,
                 "load": "30",
@@ -2138,7 +2383,7 @@
                 "completed_at": null
               },
               {
-                "id": "2d2d6ef4-be31-4ce6-b239-35818c85e292",
+                "id": "0d64d864-c7f6-4453-9d55-f0747bdaf89f",
                 "rir": null,
                 "rpe": null,
                 "load": "30",
@@ -2149,7 +2394,7 @@
                 "completed_at": null
               },
               {
-                "id": "ad6eabfe-ed7a-471f-9978-53137c1eaa3b",
+                "id": "c97b8045-f86e-4a27-8c6b-148dd44c3f96",
                 "rir": null,
                 "rpe": null,
                 "load": "30",
@@ -2160,7 +2405,7 @@
                 "completed_at": null
               }
             ],
-            "exercise_id": "ff09a983-128b-4124-b11c-7e345f233451",
+            "exercise_id": "d67e8dc5-d975-4590-95ad-8dab5740589d",
             "muscle_group": "Peito",
             "rest_seconds": 90
           },
@@ -2168,7 +2413,7 @@
             "name": "Agachamento livre",
             "sets": [
               {
-                "id": "26df0f80-6b98-40fc-a375-21af77405412",
+                "id": "077603f4-3335-4fcf-a89f-7867415c2ea6",
                 "rir": null,
                 "rpe": null,
                 "load": "40",
@@ -2179,7 +2424,7 @@
                 "completed_at": null
               },
               {
-                "id": "361bad53-8722-45b1-af97-db629ffe5382",
+                "id": "8e06cd5f-199b-4e5c-918e-2307b674566b",
                 "rir": null,
                 "rpe": null,
                 "load": "40",
@@ -2190,7 +2435,7 @@
                 "completed_at": null
               },
               {
-                "id": "4a95de9f-ae4a-4fe1-b419-73883041b047",
+                "id": "946f9b7a-bc2a-4b17-9f03-1363feac7ab8",
                 "rir": null,
                 "rpe": null,
                 "load": "40",
@@ -2201,7 +2446,7 @@
                 "completed_at": null
               }
             ],
-            "exercise_id": "5ba4b18c-b999-4e11-bb02-830e092b9be8",
+            "exercise_id": "7d7ceeab-f0dd-4047-bd13-50db990ab760",
             "muscle_group": "Pernas",
             "rest_seconds": 90
           },
@@ -2209,7 +2454,7 @@
             "name": "Remada curvada",
             "sets": [
               {
-                "id": "31136854-5598-4a66-8b79-7f82b3347967",
+                "id": "2e957330-3650-4e69-8df7-77624c0b285d",
                 "rir": null,
                 "rpe": null,
                 "load": "50",
@@ -2220,7 +2465,7 @@
                 "completed_at": null
               },
               {
-                "id": "8515a284-a642-434e-8857-7b38589aa7b8",
+                "id": "462c79a5-2cfa-479d-a212-176ce434dfed",
                 "rir": null,
                 "rpe": null,
                 "load": "50",
@@ -2231,7 +2476,7 @@
                 "completed_at": null
               },
               {
-                "id": "fa80b8ec-253b-4e25-9e8a-39a1e223185f",
+                "id": "8a7029aa-d3b9-4aec-9f11-bdf02ee63764",
                 "rir": null,
                 "rpe": null,
                 "load": "50",
@@ -2242,7 +2487,7 @@
                 "completed_at": null
               }
             ],
-            "exercise_id": "50b0b2a0-08b0-4ed9-8090-8c4196c70380",
+            "exercise_id": "24fafa9f-26c6-493f-ae63-b932d7014ebd",
             "muscle_group": "Costas",
             "rest_seconds": 90
           }
@@ -2252,10 +2497,10 @@
     },
     {
       "kind": "session",
-      "id": "72669dd1-7967-4448-be96-7562848ced2e",
+      "id": "99c78a3d-30ef-4cb9-a057-2411ef4af5bc",
       "created_at": "2026-09-04T12:00:00.000200+00:00",
       "data": {
-        "routine_id": "e6c31090-9cae-4595-8b1e-d13901d0f99a",
+        "routine_id": "89ae5b9b-d774-4380-9db4-073cb8c1eb6f",
         "name": "Treino A — Superior",
         "status": "finished",
         "started_at": "2026-09-02T12:00:00.000202+00:00",
@@ -2268,7 +2513,7 @@
             "name": "Supino reto",
             "sets": [
               {
-                "id": "d2e34bde-77f8-4f2a-b7d1-0d1d3d62957e",
+                "id": "cf6bc4c0-8f78-4b6d-8db1-40a1bf178e80",
                 "rir": null,
                 "rpe": null,
                 "load": "30",
@@ -2279,7 +2524,7 @@
                 "completed_at": "2026-09-02T12:00:00.000202+00:00"
               },
               {
-                "id": "c2d8b85c-039b-48a5-8bb4-c840f2cad45b",
+                "id": "03159f09-905f-4f51-89ab-86fab81707bb",
                 "rir": null,
                 "rpe": null,
                 "load": "30",
@@ -2290,7 +2535,7 @@
                 "completed_at": "2026-09-02T12:00:00.000202+00:00"
               },
               {
-                "id": "af4ce7aa-e809-4030-86b3-850045ad7881",
+                "id": "8c93fd63-9bc4-4a63-8173-60797fc9d4b9",
                 "rir": null,
                 "rpe": null,
                 "load": "30",
@@ -2301,7 +2546,7 @@
                 "completed_at": "2026-09-02T12:00:00.000202+00:00"
               }
             ],
-            "exercise_id": "ff09a983-128b-4124-b11c-7e345f233451",
+            "exercise_id": "d67e8dc5-d975-4590-95ad-8dab5740589d",
             "muscle_group": "Peito",
             "rest_seconds": 90
           },
@@ -2309,7 +2554,7 @@
             "name": "Agachamento livre",
             "sets": [
               {
-                "id": "ee5d055d-b6b3-43ce-a86a-67705bdca0a7",
+                "id": "3b16e981-8089-477f-bb16-03eec92b1bbd",
                 "rir": null,
                 "rpe": null,
                 "load": "40",
@@ -2320,7 +2565,7 @@
                 "completed_at": "2026-09-02T12:00:00.000202+00:00"
               },
               {
-                "id": "79dfb2f5-ff25-46cf-8b8c-f3190955cca8",
+                "id": "07e422f6-46b9-483e-b9f2-e33cb7ca9ab4",
                 "rir": null,
                 "rpe": null,
                 "load": "40",
@@ -2331,7 +2576,7 @@
                 "completed_at": "2026-09-02T12:00:00.000202+00:00"
               },
               {
-                "id": "626afeb7-4085-4319-89e2-16e31128f184",
+                "id": "5e8b63a6-a20f-4c2f-b395-3872fd0aef4a",
                 "rir": null,
                 "rpe": null,
                 "load": "40",
@@ -2342,7 +2587,7 @@
                 "completed_at": "2026-09-02T12:00:00.000202+00:00"
               }
             ],
-            "exercise_id": "5ba4b18c-b999-4e11-bb02-830e092b9be8",
+            "exercise_id": "7d7ceeab-f0dd-4047-bd13-50db990ab760",
             "muscle_group": "Pernas",
             "rest_seconds": 90
           },
@@ -2350,7 +2595,7 @@
             "name": "Remada curvada",
             "sets": [
               {
-                "id": "0e464128-78b3-4d68-85e6-e6e492b4aa51",
+                "id": "e380e7da-04bc-496b-910c-cf8878aa4c62",
                 "rir": null,
                 "rpe": null,
                 "load": "50",
@@ -2361,7 +2606,7 @@
                 "completed_at": "2026-09-02T12:00:00.000202+00:00"
               },
               {
-                "id": "9ed356c6-3b81-43b1-bd25-28c025945c9d",
+                "id": "180a3c52-8d92-4089-875e-0d0177f982e8",
                 "rir": null,
                 "rpe": null,
                 "load": "50",
@@ -2372,7 +2617,7 @@
                 "completed_at": "2026-09-02T12:00:00.000202+00:00"
               },
               {
-                "id": "fce79628-e961-4ad1-87c4-dccd277a61a0",
+                "id": "8d1ee7f4-f65c-41e5-8ada-ea64786cdf64",
                 "rir": null,
                 "rpe": null,
                 "load": "50",
@@ -2383,7 +2628,7 @@
                 "completed_at": "2026-09-02T12:00:00.000202+00:00"
               }
             ],
-            "exercise_id": "50b0b2a0-08b0-4ed9-8090-8c4196c70380",
+            "exercise_id": "24fafa9f-26c6-493f-ae63-b932d7014ebd",
             "muscle_group": "Costas",
             "rest_seconds": 90
           }
@@ -2393,13 +2638,13 @@
     },
     {
       "kind": "session",
-      "id": "fafb7d25-5789-4b69-826f-669aa6bbcc76",
-      "created_at": "2026-09-04T12:00:00.000204+00:00",
+      "id": "fce50567-82b4-4273-b8ec-46d0267cfe2f",
+      "created_at": "2026-09-04T12:00:00.000212+00:00",
       "data": {
-        "routine_id": "e6c31090-9cae-4595-8b1e-d13901d0f99a",
+        "routine_id": "89ae5b9b-d774-4380-9db4-073cb8c1eb6f",
         "name": "Treino A — Superior",
         "status": "active",
-        "started_at": "2026-09-04T12:00:00.000203+00:00",
+        "started_at": "2026-09-04T12:00:00.000211+00:00",
         "finished_at": null,
         "notes": "",
         "volume": "0.000",
@@ -2409,7 +2654,7 @@
             "name": "Supino reto",
             "sets": [
               {
-                "id": "b08ce105-2752-4ace-a02f-fc0a9eabe0d0",
+                "id": "6499fdc7-4cf6-4256-907b-42e06d6d6449",
                 "rir": null,
                 "rpe": null,
                 "load": "30",
@@ -2420,7 +2665,7 @@
                 "completed_at": null
               },
               {
-                "id": "8b310ca2-4aea-4ac9-a449-319fbafd26db",
+                "id": "3b224c57-606e-4ddb-acaf-7910a768b03f",
                 "rir": null,
                 "rpe": null,
                 "load": "30",
@@ -2431,7 +2676,7 @@
                 "completed_at": null
               },
               {
-                "id": "f29fdcf2-fde1-4d3c-9f50-058c9bb71923",
+                "id": "2735a39d-5863-4b19-a77b-f361ec0cef32",
                 "rir": null,
                 "rpe": null,
                 "load": "30",
@@ -2442,7 +2687,7 @@
                 "completed_at": null
               }
             ],
-            "exercise_id": "ff09a983-128b-4124-b11c-7e345f233451",
+            "exercise_id": "d67e8dc5-d975-4590-95ad-8dab5740589d",
             "muscle_group": "Peito",
             "rest_seconds": 90
           },
@@ -2450,7 +2695,7 @@
             "name": "Agachamento livre",
             "sets": [
               {
-                "id": "2d237814-5246-481e-b4f3-7b9c3b1edfce",
+                "id": "f8fc47db-ec0a-4ecf-a4d9-bec321f4f28f",
                 "rir": null,
                 "rpe": null,
                 "load": "40",
@@ -2461,7 +2706,7 @@
                 "completed_at": null
               },
               {
-                "id": "a3923afc-b7cb-481d-9158-3c98be0fe41e",
+                "id": "435619c6-047f-4b0e-82e5-b3200ae35081",
                 "rir": null,
                 "rpe": null,
                 "load": "40",
@@ -2472,7 +2717,7 @@
                 "completed_at": null
               },
               {
-                "id": "00553c89-0782-4845-bb88-17874e7ac99c",
+                "id": "03fb9d27-e8b9-4ada-8e11-8b2ee33b952f",
                 "rir": null,
                 "rpe": null,
                 "load": "40",
@@ -2483,7 +2728,7 @@
                 "completed_at": null
               }
             ],
-            "exercise_id": "5ba4b18c-b999-4e11-bb02-830e092b9be8",
+            "exercise_id": "7d7ceeab-f0dd-4047-bd13-50db990ab760",
             "muscle_group": "Pernas",
             "rest_seconds": 90
           },
@@ -2491,7 +2736,7 @@
             "name": "Remada curvada",
             "sets": [
               {
-                "id": "a650e4bf-37fa-4987-99fd-a4093dbe9691",
+                "id": "92bceef5-aba7-4810-b48f-ac148432a048",
                 "rir": null,
                 "rpe": null,
                 "load": "50",
@@ -2502,7 +2747,7 @@
                 "completed_at": null
               },
               {
-                "id": "0cd46a1a-40aa-4166-8a55-ef66db97132f",
+                "id": "3e1a8d54-5ad4-4f01-ac7a-69c4422a2268",
                 "rir": null,
                 "rpe": null,
                 "load": "50",
@@ -2513,7 +2758,7 @@
                 "completed_at": null
               },
               {
-                "id": "00ac54da-7d94-4933-94b0-a984203527a1",
+                "id": "4cf6ee30-4023-437c-82ef-88ee3cc4c4db",
                 "rir": null,
                 "rpe": null,
                 "load": "50",
@@ -2524,7 +2769,7 @@
                 "completed_at": null
               }
             ],
-            "exercise_id": "50b0b2a0-08b0-4ed9-8090-8c4196c70380",
+            "exercise_id": "24fafa9f-26c6-493f-ae63-b932d7014ebd",
             "muscle_group": "Costas",
             "rest_seconds": 90
           }
@@ -2534,248 +2779,248 @@
     },
     {
       "kind": "audit",
-      "id": "e5c709b9-94f0-472c-92f1-e8888ec819d2",
+      "id": "f3804d90-1dac-484c-8a4e-7a72fc48a276",
       "created_at": "2026-09-04T12:00:00.000003+00:00",
       "data": {
         "action": "created",
         "entity_type": "task_list",
-        "entity_id": "f7b9ed64-9877-45c9-aec9-f5095ad4bc7b",
+        "entity_id": "62692b7e-b80a-434a-83b8-7b00505a6ca5",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "b9249f98-75bc-4a5c-9501-9b4e5e826a1e",
+      "id": "8dca4a0a-1e99-4d8e-8866-0db94fbca084",
       "created_at": "2026-09-04T12:00:00.000011+00:00",
       "data": {
         "action": "created",
         "entity_type": "task_list",
-        "entity_id": "484ba3ba-1eb6-4ad3-b70a-f542749297aa",
+        "entity_id": "ca1b3d7d-a155-49b2-b385-af3767f5a0cc",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "d403e2f3-2848-4b23-bbfe-159a49f54a3f",
+      "id": "6a789804-dbe1-4030-8d50-3b5095ef6993",
       "created_at": "2026-09-04T12:00:00.000013+00:00",
       "data": {
         "action": "created",
         "entity_type": "task_list",
-        "entity_id": "2d9fc978-fb51-45a7-a0ff-fb7291b9df1e",
+        "entity_id": "c8b85b35-a395-4faf-ad5f-6d7475147125",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "0818778c-fc94-4682-ad66-bccec9cd1056",
+      "id": "fbcdb535-4224-46d2-9b31-c35ec979cc01",
       "created_at": "2026-09-04T12:00:00.000016+00:00",
       "data": {
         "action": "created",
         "entity_type": "task",
-        "entity_id": "ad0be4c0-5ffa-4830-be06-27e244f4eaf0",
+        "entity_id": "d0b136a2-7a95-460e-a0ea-69ef406240b5",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "36475a3f-123a-4be7-966e-4baafbc06a9d",
+      "id": "816e0003-0661-4cae-b195-b0e2a0d45cbf",
       "created_at": "2026-09-04T12:00:00.000019+00:00",
       "data": {
         "action": "created",
         "entity_type": "task",
-        "entity_id": "5893165c-530d-4a89-a85f-1556b2929ceb",
+        "entity_id": "3e5ae5bf-d828-475a-8c68-8985bb10864b",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "09120a28-1cc4-4717-8e00-47941314a56e",
+      "id": "1687a79a-faea-4a36-9277-65a92f1e5a8b",
       "created_at": "2026-09-04T12:00:00.000022+00:00",
       "data": {
         "action": "created",
         "entity_type": "task",
-        "entity_id": "fe319f4a-692a-4dda-8dd7-97294731d104",
+        "entity_id": "b37a2716-0631-4873-a067-ce1861e4cefb",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "da1f0e06-33b4-4500-aa89-2b98dc0c6f0d",
+      "id": "092ab31f-4eca-47eb-a50c-25f71a7377f6",
       "created_at": "2026-09-04T12:00:00.000025+00:00",
       "data": {
         "action": "created",
         "entity_type": "task",
-        "entity_id": "b7ffdaea-f404-4d9e-b03f-4b1f734e379c",
+        "entity_id": "78f8cea2-f2e6-4f34-9bfc-4d50ec0ff97d",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "956c4c0e-2942-4f30-acaa-540b1446b5ff",
+      "id": "49106d9f-2107-4813-b97f-ad219c31d449",
       "created_at": "2026-09-04T12:00:00.000028+00:00",
       "data": {
         "action": "created",
         "entity_type": "task",
-        "entity_id": "dafe9144-50cf-44ce-b661-7270fc19a2a4",
+        "entity_id": "0079c5a9-59bb-475a-950e-3fec1d60d2ad",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "7e1b3b77-f97c-4fe4-96bf-83a6e2b37c96",
+      "id": "549a7a85-2c25-4b8c-ade8-200450bc04da",
       "created_at": "2026-09-04T12:00:00.000034+00:00",
       "data": {
         "action": "created",
         "entity_type": "habit",
-        "entity_id": "9b8a3375-b231-4122-9941-cc133b1096de",
+        "entity_id": "667b1c68-4a0c-46f1-bad4-2cc432b937a9",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "9fef3904-9027-42a4-97c3-a0195849d35b",
+      "id": "23975ee6-07de-4ed1-8787-970ccfdf128c",
       "created_at": "2026-09-04T12:00:00.000064+00:00",
       "data": {
         "action": "created",
         "entity_type": "habit",
-        "entity_id": "cf750cf7-0c3e-4dd9-86ea-6efd825b5f53",
+        "entity_id": "75fac777-e928-4e42-a5c3-4e9fe429f107",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "7f3374b2-0343-4a22-9a41-032ec5ebea6f",
+      "id": "ef86b996-eafa-4373-81ec-d03949e2db2d",
       "created_at": "2026-09-04T12:00:00.000095+00:00",
       "data": {
         "action": "created",
         "entity_type": "habit",
-        "entity_id": "bedc3c00-827e-4143-8d7a-caafd1fbc931",
+        "entity_id": "0b9215c3-b28b-4fef-b426-208ac8be835f",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "a6790e62-da1b-4b91-bf2f-e96c231ac455",
+      "id": "3f95c8bb-2f81-4a11-b5c2-0fea26c8d1e1",
       "created_at": "2026-09-04T12:00:00.000125+00:00",
       "data": {
         "action": "created",
         "entity_type": "habit",
-        "entity_id": "16b2d422-789b-498b-9f30-f559ca83b886",
+        "entity_id": "3f982efa-95c2-49b7-806f-b9dea76a1d73",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "5bf7e9da-8bf2-4891-856d-407f2edc5719",
+      "id": "f50ffde0-b417-4139-9e51-38b0af8c9b56",
       "created_at": "2026-09-04T12:00:00.000152+00:00",
       "data": {
         "action": "created",
         "entity_type": "account",
-        "entity_id": "edbb4bca-beaf-4d5f-b332-75f7282aaf4a",
+        "entity_id": "0d60e177-f04f-4efb-9d2b-de4e5ed5c80f",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "803f1a84-d46a-4b98-8797-09d1aa82df3e",
+      "id": "1393979c-3cdc-4ff3-ab68-4679bce2f379",
       "created_at": "2026-09-04T12:00:00.000154+00:00",
       "data": {
         "action": "created",
         "entity_type": "account",
-        "entity_id": "bc0366a3-b6da-4e19-9bab-de1fbc6593d1",
+        "entity_id": "0e681d0f-8568-46cb-ad6f-887c1fcfb5f5",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "4a1d26ba-f151-488f-bb55-b2ab886bcec6",
+      "id": "061da0b1-c235-4d99-850c-3f6487ea272d",
       "created_at": "2026-09-04T12:00:00.000156+00:00",
       "data": {
         "action": "created",
         "entity_type": "category",
-        "entity_id": "5cbd6749-f499-4a9b-b1f5-6bc515704fb1",
+        "entity_id": "16980d44-57ff-433f-b325-ff62e459b86f",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "3ec43013-bfb2-40c0-910a-eaca3ee3e299",
+      "id": "71d55412-0f19-4d21-b6b5-645cc1aba6be",
       "created_at": "2026-09-04T12:00:00.000158+00:00",
       "data": {
         "action": "created",
         "entity_type": "category",
-        "entity_id": "32292aa3-5913-437d-a54b-508e5d3f6856",
+        "entity_id": "88d18d1a-c5d9-4a54-9b6e-14d05d838a87",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "d12fa648-ecea-41fe-9cfc-aeb14cd09af7",
+      "id": "a4f963cd-454e-4e6e-9e59-2adda0abe5ba",
       "created_at": "2026-09-04T12:00:00.000160+00:00",
       "data": {
         "action": "created",
         "entity_type": "category",
-        "entity_id": "b0fecb78-0768-4775-9436-51870b9f2b34",
+        "entity_id": "1bf62e91-d693-4eb9-9f4a-3691d264dd0e",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "1c265630-e5b7-4c30-be51-08c12ebab1ca",
+      "id": "f96f47cb-5f7b-4e65-8a33-e287bedc7bb2",
       "created_at": "2026-09-04T12:00:00.000162+00:00",
       "data": {
         "action": "created",
         "entity_type": "category",
-        "entity_id": "bbb9ccd3-dd6a-45d0-a076-e59eddabb0ba",
+        "entity_id": "107e0ef9-bb70-4672-845b-89d3bd713aaa",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "74afa57f-7f13-426c-bd7b-25dff00e21cd",
+      "id": "be6aae6a-c230-4ef5-8cf8-a0c4e0b5c7c2",
       "created_at": "2026-09-04T12:00:00.000164+00:00",
       "data": {
         "action": "created",
         "entity_type": "category",
-        "entity_id": "93a6cfcc-b6e4-4123-b029-a9b9faf70bae",
+        "entity_id": "b983bf93-b483-4d32-ba32-6ae0aad03201",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "8ee061fa-129d-45e3-a985-741c2660804e",
+      "id": "5d69bbca-0c70-44b2-a3ef-65569189115b",
       "created_at": "2026-09-04T12:00:00.000166+00:00",
       "data": {
         "action": "created",
         "entity_type": "category",
-        "entity_id": "7d397601-03f2-4fb7-8472-0fe47d26ef0f",
+        "entity_id": "d116bdbb-2951-420a-869d-288a5d8e198f",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "0f8300b7-3d38-448f-bde3-ddf13090f104",
+      "id": "58439c23-7956-440c-8d42-947572da95c5",
       "created_at": "2026-09-04T12:00:00.000174+00:00",
       "data": {
         "action": "created",
         "entity_type": "card",
-        "entity_id": "1c30df35-2fed-4036-85b3-4b904a170bb9",
+        "entity_id": "8dd71c55-4e90-46ff-b394-7283a7362264",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "b74f27cb-a5b2-432e-a3ae-23a2db035879",
+      "id": "27e70cb2-93f1-4be8-ade9-17add479c9a5",
       "created_at": "2026-09-04T12:00:00.000182+00:00",
       "data": {
         "action": "purchased",
         "entity_type": "purchase",
-        "entity_id": "df31cafa-e6f1-44b0-8eb3-1ad7a307bd8a",
+        "entity_id": "3e3b8ba3-b89c-4eea-b957-f7877b57931b",
         "detail": {
           "amount": 89900,
           "status": "active",
-          "card_id": "1c30df35-2fed-4036-85b3-4b904a170bb9",
-          "category_id": "93a6cfcc-b6e4-4123-b029-a9b9faf70bae",
+          "card_id": "8dd71c55-4e90-46ff-b394-7283a7362264",
+          "category_id": "b983bf93-b483-4d32-ba32-6ae0aad03201",
           "description": "Fone de ouvido",
           "purchase_date": "2026-08-27",
           "installment_count": 3
@@ -2784,34 +3029,34 @@
     },
     {
       "kind": "audit",
-      "id": "603b02f5-e948-4e27-bd6e-476596dac8bf",
+      "id": "66011aa2-c0d3-4b3c-a198-beec2bb6db6f",
       "created_at": "2026-09-04T12:00:00.000184+00:00",
       "data": {
         "action": "created",
         "entity_type": "routine",
-        "entity_id": "e6c31090-9cae-4595-8b1e-d13901d0f99a",
+        "entity_id": "89ae5b9b-d774-4380-9db4-073cb8c1eb6f",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "fd2ecd1a-11d2-425c-935d-3be53c42509e",
+      "id": "27333173-2cf2-4442-a284-9d6ecc9a23a5",
       "created_at": "2026-09-04T12:00:00.000186+00:00",
       "data": {
         "action": "created",
         "entity_type": "routine",
-        "entity_id": "b104ed5c-c5af-4801-bdca-3102ead7b594",
+        "entity_id": "fc733154-5e14-43f5-a752-59498818c41a",
         "detail": {}
       }
     },
     {
       "kind": "audit",
-      "id": "bdb958ec-1636-425c-a3e2-49e8e8158d0c",
+      "id": "7a76d166-095a-40d0-aff4-14319d450a20",
       "created_at": "2026-09-04T12:00:00.000189+00:00",
       "data": {
         "action": "session_started",
         "entity_type": "session",
-        "entity_id": "797b33c2-aaaa-4e3b-ae00-2b800f3a8fa5",
+        "entity_id": "f867a217-cf47-44f6-beb6-9505f7ec5cec",
         "detail": {
           "copy_last": false
         }
@@ -2819,12 +3064,12 @@
     },
     {
       "kind": "audit",
-      "id": "dbb0da1a-ff31-4b6d-aeb5-aaa83469c43d",
+      "id": "296c8d1c-fe29-4919-adea-50d319ee8e73",
       "created_at": "2026-09-04T12:00:00.000193+00:00",
       "data": {
         "action": "session_started",
         "entity_type": "session",
-        "entity_id": "b1ff252d-f733-4d50-a3d8-a169c60992f5",
+        "entity_id": "c30fa2fa-c087-4480-9887-9dc4c76160fa",
         "detail": {
           "copy_last": false
         }
@@ -2832,12 +3077,12 @@
     },
     {
       "kind": "audit",
-      "id": "61e1df00-c133-41c6-ba10-e2a6040074c8",
+      "id": "eaa57350-7a74-47a2-ba00-72f7e32f4618",
       "created_at": "2026-09-04T12:00:00.000197+00:00",
       "data": {
         "action": "session_started",
         "entity_type": "session",
-        "entity_id": "16ac7f7a-4451-4f02-a89d-83f8e07a54a2",
+        "entity_id": "38bcaa5d-2d45-4d18-b658-689464998088",
         "detail": {
           "copy_last": false
         }
@@ -2845,12 +3090,12 @@
     },
     {
       "kind": "audit",
-      "id": "0994f4c3-fceb-4c03-95c2-eb43666ca6db",
+      "id": "9010458b-f932-4ba5-864e-071dd23b2b1a",
       "created_at": "2026-09-04T12:00:00.000201+00:00",
       "data": {
         "action": "session_started",
         "entity_type": "session",
-        "entity_id": "72669dd1-7967-4448-be96-7562848ced2e",
+        "entity_id": "99c78a3d-30ef-4cb9-a057-2411ef4af5bc",
         "detail": {
           "copy_last": false
         }
@@ -2858,12 +3103,12 @@
     },
     {
       "kind": "audit",
-      "id": "5c6b2668-d8c3-4ab9-b38a-bb4011b7cda0",
-      "created_at": "2026-09-04T12:00:00.000205+00:00",
+      "id": "4af96cdf-c66c-43c3-baa9-cf1f49ff2516",
+      "created_at": "2026-09-04T12:00:00.000213+00:00",
       "data": {
         "action": "session_started",
         "entity_type": "session",
-        "entity_id": "fafb7d25-5789-4b69-826f-669aa6bbcc76",
+        "entity_id": "fce50567-82b4-4273-b8ec-46d0267cfe2f",
         "detail": {
           "copy_last": false
         }

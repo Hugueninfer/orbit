@@ -119,3 +119,5 @@ Choose Português, English or Deutsch from the compact language dropdown beside 
 New UI text belongs in `web/src/locales/` and must use the locale hooks in `web/src/i18n.ts`. Keep placeholders identical across languages and never translate stored enum values or user content. Every dropdown uses `web/src/components/Select.tsx`, with explicit invariant option values and translated labels. The shared component supports keyboard navigation, required validation and drawers with the Orbit dark theme.
 
 Demo sessions now copy a prepared fictitious base in ORM batches, keeping separate data per visitor and 24-hour expiry. See [demo base documentation](docs/demo.md) for isolation, current-date adjustment and offline snapshot regeneration.
+
+Notas & Diário: [organização, editor e persistência](docs/notes.md).

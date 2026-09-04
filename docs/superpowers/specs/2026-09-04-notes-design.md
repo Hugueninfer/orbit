@@ -1,0 +1,11 @@
+# Notes and journal
+
+User requested a fast, beautiful journal and folder-based notes with rich text. Extend Orbit with /notas, using the existing task collection shell (Stitch orbit_tarefas_drawer and mobile backlog), Geist typography, navy surfaces, subtle borders, blue/teal accents. Deliberate new composition: folder rail, note previews and spacious editor. On mobile show one pane at a time with explicit back navigation. No new paid service.
+
+A note has title, validated rich-text JSON, derived plain text/preview, optional folder, optional journal date, favorite flag, trash timestamp, updated timestamp and optimistic version. Journal and folder membership may coexist: a diary entry can also belong to Faculdade. Multiple entries per date are allowed. Folders are flat, named and colored; deleting one keeps its notes unfiled. Trash can restore notes or permanently delete after confirmation. Owner-scoped foreign keys and transactions preserve personal/demo isolation; include new tables in reset/backups and prepared demo base.
+
+Use Tiptap open-source React editor, lazy loaded with Notes: bold, italic, underline, strike, headings, font size/color, highlight, bullets, numbers, checklists, quotes, code, links, alignment and undo/redo. Store JSON with a strict backend allowlist, size/depth/node limits and safe link/style values. No raw HTML rendering. Lists fetch only previews, paginated; content loads on selection. Search title/plain text and filter by folder, diary, favorites or trash. Sort recent edits or diary dates.
+
+Autosave serializes writes, coalesces typing after a short pause, tracks version and never applies late responses over newer edits. Persist a per-owner per-note draft in sessionStorage while dirty; flush when leaving note, prevent switching on error and warn on unload. Conflicts require explicit reload or save-as-copy, preserving draft. New note creation is explicit, idempotent; toolbar actions don't lose selection. Handle empty/loading/error and saved/saving states accessibly in pt/en/de. No real-time collaboration or attachments in this increment.
+
+Verification: owner isolation, folder deletion, trash, rich text validation, optimistic concurrency, search pagination, reset/template quota; frontend autosave race/failure tests, typecheck/build, desktop/mobile actual rich editor behavior and production synthetic demo.

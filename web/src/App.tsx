@@ -16,6 +16,7 @@ import {
   Repeat2,
   Wallet,
   Dumbbell,
+  NotebookPen,
   Cable,
   Settings as SettingsIcon,
   Search,
@@ -42,6 +43,7 @@ import {
 } from "./components/ui";
 import Login from "./pages/Login";
 const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Notes = lazy(() => import("./pages/Notes"));
 const Tasks = lazy(() => import("./pages/Tasks"));
 const Habits = lazy(() => import("./pages/Habits"));
 const Finance = lazy(() => import("./pages/Finance"));
@@ -56,6 +58,7 @@ const nav = [
   { to: "/tarefas", label: "Tarefas", mobile: "Tarefas", icon: CircleCheck },
   { to: "/habitos", label: "Hábitos", mobile: "Hábitos", icon: Repeat2 },
   { to: "/financas", label: "Finanças", mobile: "Finanças", icon: Wallet },
+  { to: "/notas", label: "Notas & Diário", mobile: "Notas", icon: NotebookPen },
   { to: "/treinos", label: "Treinos", mobile: "Treinos", icon: Dumbbell },
 ];
 let callbackPromise:
@@ -309,6 +312,7 @@ function Shell() {
           <Suspense fallback={<Loading />}>
             <Routes>
               <Route path="/" element={<Dashboard />} />
+              <Route path="/notas" element={<Notes />} />
               <Route path="/tarefas" element={<Tasks />} />
               <Route path="/habitos" element={<Habits />} />
               <Route path="/financas" element={<Finance />} />
@@ -359,6 +363,12 @@ function Shell() {
       >
         <div className="search-results">
           {[
+            {
+              to: "/notas",
+              icon: NotebookPen,
+              title: t("Nova nota"),
+              text: t("Dê espaço aos seus pensamentos."),
+            },
             {
               to: "/tarefas?new=1",
               icon: CircleCheck,

@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from "react";
+import { notesMessages } from "./locales/notes";
 import { coreMessages } from "./locales/core";
 import { operationsMessages } from "./locales/operations";
 import { routinesMessages } from "./locales/routines";
@@ -9,6 +10,7 @@ export const locales: { value: Locale; label: string }[] = [
   { value: "de-DE", label: "Deutsch" },
 ];
 export const messages = {
+  ...notesMessages,
   ...operationsMessages,
   ...routinesMessages,
   ...coreMessages,

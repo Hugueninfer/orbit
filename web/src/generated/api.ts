@@ -561,6 +561,79 @@ export interface paths {
     patch: operations["edit_me_api_v1_me_patch"];
     trace?: never;
   };
+  "/api/v1/note-folders": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Folders */
+    get: operations["folders_api_v1_note_folders_get"];
+    put?: never;
+    /** Create Folder */
+    post: operations["create_folder_api_v1_note_folders_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/note-folders/{identifier}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    /** Remove Folder */
+    delete: operations["remove_folder_api_v1_note_folders__identifier__delete"];
+    options?: never;
+    head?: never;
+    /** Edit Folder */
+    patch: operations["edit_folder_api_v1_note_folders__identifier__patch"];
+    trace?: never;
+  };
+  "/api/v1/notes": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** List Notes */
+    get: operations["list_notes_api_v1_notes_get"];
+    put?: never;
+    /** Create Note */
+    post: operations["create_note_api_v1_notes_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/notes/{identifier}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Get Note */
+    get: operations["get_note_api_v1_notes__identifier__get"];
+    put?: never;
+    post?: never;
+    /** Delete Note */
+    delete: operations["delete_note_api_v1_notes__identifier__delete"];
+    options?: never;
+    head?: never;
+    /** Edit Note */
+    patch: operations["edit_note_api_v1_notes__identifier__patch"];
+    trace?: never;
+  };
   "/api/v1/purchases": {
     parameters: {
       query?: never;
@@ -1436,6 +1509,50 @@ export interface components {
       /** Version */
       version: number;
     };
+    /** FolderBody */
+    FolderBody: {
+      /**
+       * Color
+       * @default #7692ff
+       */
+      color: string;
+      /** Name */
+      name: string;
+    };
+    /** FolderEdit */
+    FolderEdit: {
+      /**
+       * Color
+       * @default #7692ff
+       */
+      color: string;
+      /** Name */
+      name: string;
+      /** Version */
+      version: number;
+    };
+    /** FolderOut */
+    FolderOut: {
+      /**
+       * Color
+       * @default #7692ff
+       */
+      color: string;
+      /**
+       * Count
+       * @default 0
+       */
+      count: number;
+      /**
+       * Id
+       * Format: uuid
+       */
+      id: string;
+      /** Name */
+      name: string;
+      /** Version */
+      version: number;
+    };
     /** Generated */
     Generated: {
       /** Created */
@@ -1736,6 +1853,111 @@ export interface components {
        * Format: password
        */
       password: string;
+    };
+    /** NoteBody */
+    NoteBody: {
+      /** Content */
+      content?: {
+        [key: string]: unknown;
+      };
+      /**
+       * Favorite
+       * @default false
+       */
+      favorite: boolean;
+      /** Folder Id */
+      folder_id?: string | null;
+      /** Journal Date */
+      journal_date?: string | null;
+      /**
+       * Title
+       * @default
+       */
+      title: string;
+    };
+    /** NoteEdit */
+    NoteEdit: {
+      /** Content */
+      content?: {
+        [key: string]: unknown;
+      } | null;
+      /** Favorite */
+      favorite?: boolean | null;
+      /** Folder Id */
+      folder_id?: string | null;
+      /** Journal Date */
+      journal_date?: string | null;
+      /** Title */
+      title?: string | null;
+      /** Trashed */
+      trashed?: boolean | null;
+      /** Version */
+      version: number;
+    };
+    /** NoteOut */
+    NoteOut: {
+      /** Content */
+      content: {
+        [key: string]: unknown;
+      };
+      /** Deleted At */
+      deleted_at: string | null;
+      /** Favorite */
+      favorite: boolean;
+      /** Folder Id */
+      folder_id: string | null;
+      /**
+       * Id
+       * Format: uuid
+       */
+      id: string;
+      /** Journal Date */
+      journal_date: string | null;
+      /** Preview */
+      preview: string;
+      /** Title */
+      title: string;
+      /**
+       * Updated At
+       * Format: date-time
+       */
+      updated_at: string;
+      /** Version */
+      version: number;
+    };
+    /** NotePage */
+    NotePage: {
+      /** Has More */
+      has_more: boolean;
+      /** Items */
+      items: components["schemas"]["NoteSummary"][];
+    };
+    /** NoteSummary */
+    NoteSummary: {
+      /** Deleted At */
+      deleted_at: string | null;
+      /** Favorite */
+      favorite: boolean;
+      /** Folder Id */
+      folder_id: string | null;
+      /**
+       * Id
+       * Format: uuid
+       */
+      id: string;
+      /** Journal Date */
+      journal_date: string | null;
+      /** Preview */
+      preview: string;
+      /** Title */
+      title: string;
+      /**
+       * Updated At
+       * Format: date-time
+       */
+      updated_at: string;
+      /** Version */
+      version: number;
     };
     /** Ok */
     Ok: {
@@ -3935,6 +4157,290 @@ export interface operations {
         };
         content: {
           "application/json": components["schemas"]["Profile"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  folders_api_v1_note_folders_get: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["FolderOut"][];
+        };
+      };
+    };
+  };
+  create_folder_api_v1_note_folders_post: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["FolderBody"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["FolderOut"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  remove_folder_api_v1_note_folders__identifier__delete: {
+    parameters: {
+      query: {
+        version: number;
+      };
+      header?: never;
+      path: {
+        identifier: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      204: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  edit_folder_api_v1_note_folders__identifier__patch: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        identifier: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["FolderEdit"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["FolderOut"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  list_notes_api_v1_notes_get: {
+    parameters: {
+      query?: {
+        view?: "all" | "journal" | "favorites" | "trash" | "unfiled";
+        folder_id?: string | null;
+        q?: string;
+        offset?: number;
+        limit?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["NotePage"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  create_note_api_v1_notes_post: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["NoteBody"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["NoteOut"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  get_note_api_v1_notes__identifier__get: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        identifier: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["NoteOut"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  delete_note_api_v1_notes__identifier__delete: {
+    parameters: {
+      query: {
+        version: number;
+      };
+      header?: never;
+      path: {
+        identifier: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      204: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  edit_note_api_v1_notes__identifier__patch: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        identifier: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["NoteEdit"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["NoteOut"];
         };
       };
       /** @description Validation Error */

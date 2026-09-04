@@ -439,6 +439,32 @@ class WorkoutSession(Aggregate):
     rest_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
+class NoteFolder(Aggregate):
+    __tablename__ = "note_folders"
+    kind = "note_folder"
+    __table_args__ = constraints("note_folders")
+    name: Mapped[str] = mapped_column(String(120))
+    color: Mapped[str] = mapped_column(String(7))
+
+
+class Note(Aggregate):
+    __tablename__ = "notes"
+    kind = "note"
+    __table_args__ = (
+        *constraints("notes", ("folder_id", "note_folders")),
+        Index("ix_notes_owner_updated", "owner_id", "updated_at", "id"),
+        Index("ix_notes_owner_journal", "owner_id", "journal_date"),
+    )
+    title: Mapped[str] = mapped_column(String(300))
+    content: Mapped[dict] = mapped_column(JSONB)
+    plain_text: Mapped[str]
+    folder_id: Mapped[UUID | None]
+    journal_date: Mapped[date | None]
+    favorite: Mapped[bool] = mapped_column(default=False)
+    deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: clock.now())
+
+
 class TelegramLink(Aggregate):
     __tablename__ = "telegram_links"
     kind = "telegram_link"
@@ -493,6 +519,8 @@ class Outbox(Base):
 MODELS: dict[str, type[Aggregate]] = {
     cls.kind: cls
     for cls in [
+        NoteFolder,
+        Note,
         TaskList,
         Task,
         Habit,

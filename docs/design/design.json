@@ -4582,6 +4582,23 @@
         "skeleton sem texto fictício"
       ],
       "note": "Não há screenshot dedicado de loading/skeleton; é uma regra derivada para cumprir v1.1."
+    },
+    {
+      "id": "notes_journal",
+      "status": "implemented_user_requested_2026_09_04",
+      "references": [
+        "orbit_tarefas_drawer",
+        "orbit_tarefas_backlog_mobile"
+      ],
+      "composition": [
+        "shell Orbit",
+        "pastas e filtros laterais",
+        "previews paginados",
+        "editor amplo com toolbar",
+        "diário por data e associação opcional a pasta",
+        "mobile em um painel por vez"
+      ],
+      "deviation": "Novo módulo solicitado: três painéis no desktop, editor rico e sexto destino mobile. Preservar Geist, superfícies navy, bordas sutis e destaques azul/teal."
     }
   ],
   "state_contract": {
