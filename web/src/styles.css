@@ -2082,3 +2082,35 @@ select.control {
     min-height: 46px;
   }
 }
+
+/* Compact global language action beside the profile, matching Orbit's select surface. */
+.topbar-language {
+  min-width: 84px;
+  padding: 8px 10px;
+  gap: 6px;
+}
+.language-short {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.topbar > div:first-child {
+  min-width: 0;
+}
+.topbar h1,
+.topbar p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media (max-width: 700px) {
+  .topbar-language {
+    min-width: 76px;
+    padding: 8px;
+  }
+  .language-short {
+    gap: 4px;
+  }
+}

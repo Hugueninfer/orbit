@@ -1,3 +1,4 @@
+import { LanguageSwitcher } from "./components/LanguageSwitcher";
 import { t, useLocale, getLocale, setLocale } from "./i18n";
 import { useQueryClient } from "@tanstack/react-query";
 import { lazy, Suspense, useEffect, useState, useRef } from "react";
@@ -273,6 +274,7 @@ function Shell() {
             <kbd>⌘K</kbd>
           </button>
           <div className="actions">
+            <LanguageSwitcher disabled={!d.data} />
             <Link
               className="icon-button"
               to="/configuracoes"

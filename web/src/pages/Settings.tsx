@@ -87,7 +87,13 @@ export default function Settings() {
       setWeek(me.data.week_start);
       setWeight(me.data.weight_unit);
     }
-  }, [me.data]);
+  }, [
+    me.data?.id,
+    me.data?.name,
+    me.data?.timezone,
+    me.data?.week_start,
+    me.data?.weight_unit,
+  ]);
   if (me.isLoading) return <Loading />;
   if (me.error)
     return <ErrorState error={me.error} retry={() => me.refetch()} />;

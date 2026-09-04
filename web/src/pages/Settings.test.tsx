@@ -41,9 +41,10 @@ afterEach(() => {
   cleanup();
   setLocale("pt-BR");
   vi.clearAllMocks();
+  profile.version = 1;
 });
 test("language preview preserves entered name and Save persists account locale", async () => {
-  render(
+  const view = render(
     <MemoryRouter>
       <Settings />
     </MemoryRouter>,
@@ -57,6 +58,15 @@ test("language preview preserves entered name and Save persists account locale",
   expect((screen.getByLabelText("Full name") as HTMLInputElement).value).toBe(
     "Nome sem salvar",
   );
+  profile.version = 2;
+  view.rerender(
+    <MemoryRouter>
+      <Settings />
+    </MemoryRouter>,
+  );
+  expect((screen.getByLabelText("Full name") as HTMLInputElement).value).toBe(
+    "Nome sem salvar",
+  );
   fireEvent.click(screen.getByRole("button", { name: "Save changes" }));
   await waitFor(() =>
     expect(action).toHaveBeenCalledWith(
@@ -64,7 +74,7 @@ test("language preview preserves entered name and Save persists account locale",
       expect.objectContaining({
         locale: "en-US",
         name: "Nome sem salvar",
-        version: 1,
+        version: 2,
       }),
       "PATCH",
     ),

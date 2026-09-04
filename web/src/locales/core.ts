@@ -1,4 +1,8 @@
 export const coreMessages: Record<string, { en: string; de: string }> = {
+  "Não foi possível salvar o idioma. Tente novamente.": {
+    en: "Could not save the language. Please try again.",
+    de: "Die Sprache konnte nicht gespeichert werden. Bitte versuche es erneut.",
+  },
   "Visão geral": {
     en: "Overview",
     de: "Übersicht",

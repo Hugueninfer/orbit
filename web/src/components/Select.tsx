@@ -18,7 +18,7 @@ type Option = { value: string; label: ReactNode; disabled: boolean };
 type SelectProps = Omit<
   SelectHTMLAttributes<HTMLSelectElement>,
   "multiple" | "size"
->;
+> & { displayValue?: ReactNode };
 
 function optionText(children: ReactNode): string {
   return Children.toArray(children)
@@ -61,6 +61,7 @@ function collectOptions(children: ReactNode, disabled = false): Option[] {
 /** Single-select adapter: the popup is Radix; the invisible select owns native form semantics. */
 export function Select({
   children,
+  displayValue,
   value,
   defaultValue,
   onChange,
@@ -146,7 +147,7 @@ export function Select({
           aria-invalid={triggerProps["aria-invalid"] ?? (invalid || undefined)}
         >
           <SelectPrimitive.Value placeholder=" ">
-            {options[selectedIndex]?.label}
+            {displayValue ?? options[selectedIndex]?.label}
           </SelectPrimitive.Value>
           <SelectPrimitive.Icon className="orbit-select-chevron">
             <ChevronDown size={16} aria-hidden />
